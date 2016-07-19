@@ -55,7 +55,7 @@ class Chef
         private
 
         def hab(*command)
-          shell_out_with_timeout!(a_to_s("hab", *command)
+          shell_out_with_timeout!(a_to_s("hab", *command))
         end
       end
     end
