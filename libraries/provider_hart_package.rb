@@ -15,7 +15,8 @@
 #
 
 require "chef/provider/package"
-require "chef/http/simple_json"
+require "chef/http/simple"
+require "chef/json_compat"
 
 class Chef
   class Provider
@@ -42,7 +43,7 @@ class Chef
               name_version = [ name, version ].compact.join("/").squeeze("/").chomp("/").sub(/^\//, "")
               url = "https://willem.habitat.sh/v1/depot/pkgs/#{name_version}"
               url << "/latest" unless name_version.count("/") >= 3
-              http.get(url)
+              Chef::JSONCompat.parse(http.get(url))
             rescue Net::HTTPServerException
               nil
             end
@@ -54,24 +55,25 @@ class Chef
         end
 
         def http
-          @http ||= Chef::HTTP::SimpleJSON.new("https://willem.habitat.sh/")
+          # FIXME: use SimpleJSON when the depot mime-type is fixed
+          @http ||= Chef::HTTP::Simple.new("https://willem.habitat.sh/")
         end
 
         def get_candidate_versions
-          names.zip(versions).map do |n, v|
+          package_name_array.zip(new_version_array).map do |n, v|
             package_version(n, v)
           end
         end
 
         def get_current_versions
-          names.zip(versions).map do |n, v|
+          package_name_array.zip(new_version_array).map do |n, v|
             nil
           end
         end
 
-        def install_package(name, version)
+        def install_package(names, versions)
           names.zip(versions).map do |n, v|
-            hab("pkg install #{name}/#{version}")
+            hab("pkg install #{n}/#{v}")
           end
         end
 
