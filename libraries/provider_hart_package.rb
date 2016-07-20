@@ -26,6 +26,29 @@ class Chef
 
         provides :hart_package
 
+        #
+        # TODO list for `hab pkg`:
+        #
+        # kinda sorta analogous to:
+        #   apt-cache search
+        #   dpkg -l
+        #   dpkg -r / dpkg -P (without depsolving?)
+        #   apt-get remove/purge (with depsolving?)
+        #
+        # - hab pkg search ruby
+        # - hab pkg info lamont-granquist/ruby
+        # - hab pkg info lamont-granquist/ruby/2.3.1
+        # - hab pkg info lamont-granquist/ruby/2.3.1/20160101010101
+        #   ^^^^^ these will all need client-side caches for the "universe" of the depot
+        # - hab pkg uninstall lamont-granquist/ruby
+        # - hab pkg uninstall lamont-granquist/ruby/2.3.1
+        # - hab pkg uninstall lamont-granquist/ruby/2.3.1/20160101010101
+        # - hab pkg list (localinfo?) lamont-granquist/ruby
+        # - hab pkg list (localinfo?) lamont-granquist/ruby/2.3.1
+        # - hab pkg list (localinfo?) lamont-granquist/ruby/2.3.1/20160101010101
+        #   ^^^^^ need a better name
+        #
+
         def load_current_resource
           @current_resource = Chef::Resource::HartPackage.new(new_resource.name)
           current_resource.package_name(new_resource.package_name)
@@ -77,7 +100,7 @@ class Chef
 
         def install_package(names, versions)
           names.zip(versions).map do |n, v|
-            hab("pkg install #{n}/#{v}")
+            hab("pkg install #{strip_version(n)}/#{v}")
           end
         end
 
@@ -98,6 +121,14 @@ class Chef
         alias purge_package remove_package
 
         private
+
+        def strip_version(name)
+          n = name.squeeze("/").chomp("/").sub(/^\//, "")
+          while n.count("/") >= 2
+            n = n[0..(n.rindex('/')-1)]
+          end
+          n
+        end
 
         def hab(*command)
           shell_out_with_timeout!(a_to_s("hab", *command))
