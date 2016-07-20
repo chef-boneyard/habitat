@@ -15,6 +15,7 @@
 #
 
 require "chef/provider/package"
+require "chef/http/simple_json"
 
 class Chef
   class Provider
@@ -34,28 +35,66 @@ class Chef
           current_resource
         end
 
+        def depo_package(name, version = nil)
+          @depo_package ||= {}
+          @depo_package[name] ||=
+            begin
+              name_version = [ name, version ].compact.join("/").squeeze("/").chomp("/").sub(/^\//, "")
+              url = "https://willem.habitat.sh/v1/depot/pkgs/#{name_version}"
+              url << "/latest" unless name_version.count("/") >= 3
+              http.get(url)
+            rescue Net::HTTPServerException
+              nil
+            end
+        end
+
+        def package_version(name, version = nil)
+          i = depo_package(name, version)["ident"]
+          "#{i["version"]}/#{i["release"]}"
+        end
+
+        def http
+          @http ||= Chef::HTTP::SimpleJSON.new("https://willem.habitat.sh/")
+        end
+
+        def get_candidate_versions
+          names.zip(versions).map do |n, v|
+            package_version(n, v)
+          end
+        end
+
+        def get_current_versions
+          names.zip(versions).map do |n, v|
+            nil
+          end
+        end
+
         def install_package(name, version)
           names.zip(versions).map do |n, v|
             hab("pkg install #{name}/#{version}")
           end
         end
 
-        alias_method :upgrade_package, :install_package
+        alias upgrade_package install_package
 
         def remove_package(name, version)
           names.zip(versions).map do |n, v|
             # FIXME: `hab pkg uninstall` would be a lot safer here
             path = hab("pkg path #{n}/#{v}").stdout
-            FileUtils.rm_rf(path)
+            Chef::Log.warn "semantics of :remove will almost certainly change in the future"
+            declare_resource(:directory, path) do
+              recursive true
+              action :remove
+            end
           end
         end
 
-        alias_method :purge_package, :remove_package
+        alias purge_package remove_package
 
         private
 
         def hab(*command)
-          shell_out_with_timeout!(a_to_s("hab", *command)
+          shell_out_with_timeout!(a_to_s("hab", *command))
         end
       end
     end

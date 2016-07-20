@@ -16,7 +16,7 @@
 # limitations under the License.
 #
 
-require 'chef/resource'
+require "chef/resource"
 
 class Chef
   class Provider
@@ -43,15 +43,15 @@ class Chef
       private
 
       def hab_path
-        '/usr/local/bin/hab'
+        "/usr/local/bin/hab"
       end
 
       def do_install
         converge_by "installing hab binary to #{hab_path}" do
-          declare_resource(:remote_file, Chef::Config[:file_cache_path] + '/hab-install.sh') do
+          declare_resource(:remote_file, Chef::Config[:file_cache_path] + "/hab-install.sh") do
             source new_resource.install_url
           end
-          declare_resource(:execute, 'installing with install.sh') do
+          declare_resource(:execute, "installing with install.sh") do
             command "bash #{Chef::Config[:file_cache_path]}/hab-install.sh"
           end
         end
