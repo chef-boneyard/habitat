@@ -67,6 +67,7 @@ class Chef
 
         def get_current_versions
           package_name_array.zip(new_version_array).map do |n, v|
+            # FIXME: idempotency is 100% broken
             nil
           end
         end
