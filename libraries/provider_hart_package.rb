@@ -104,7 +104,7 @@ class Chef
           end
         end
 
-        alias upgrade_package install_package
+        alias_method :upgrade_package, :install_package
 
         def remove_package(name, version)
           names.zip(versions).map do |n, v|
@@ -118,7 +118,7 @@ class Chef
           end
         end
 
-        alias purge_package remove_package
+        alias_method :purge_package, :remove_package
 
         private
 
