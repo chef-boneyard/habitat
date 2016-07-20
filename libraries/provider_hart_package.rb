@@ -50,8 +50,11 @@ class Chef
         end
 
         def package_version(name, version = nil)
-          i = depo_package(name, version)["ident"]
-          "#{i["version"]}/#{i["release"]}"
+          p = depo_package(name, version)
+          unless p.nil?
+            i = p["ident"]
+            "#{i["version"]}/#{i["release"]}"
+          end
         end
 
         def http
