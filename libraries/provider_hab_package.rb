@@ -24,7 +24,7 @@ class Chef
       class Hart < Chef::Provider::Package
         use_multipackage_api
 
-        provides :hart_package
+        provides :hab_package
 
         #
         # TODO list for `hab pkg`:

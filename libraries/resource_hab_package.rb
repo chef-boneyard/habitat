@@ -21,8 +21,8 @@ require "chef/resource/package"
 class Chef
   class Resource
     class HartPackage < Chef::Resource::Package
-      resource_name :hart_package
-      provides :hart_package
+      resource_name :hab_package
+      provides :hab_package
     end
   end
 end
