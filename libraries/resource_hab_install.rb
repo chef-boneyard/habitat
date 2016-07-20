@@ -16,7 +16,7 @@
 # limitations under the License.
 #
 
-require 'chef/resource'
+require "chef/resource"
 
 class Chef
   class Resource
@@ -24,7 +24,7 @@ class Chef
       resource_name :hab_install
       provides :hab_install
 
-      property :install_url, String, default: 'https://raw.githubusercontent.com/habitat-sh/habitat/master/components/hab/install.sh'
+      property :install_url, String, default: "https://raw.githubusercontent.com/habitat-sh/habitat/master/components/hab/install.sh"
 
       default_action :install
       allowed_actions :install, :upgrade
