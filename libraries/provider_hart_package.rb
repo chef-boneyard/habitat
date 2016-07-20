@@ -100,7 +100,7 @@ class Chef
 
         def install_package(names, versions)
           names.zip(versions).map do |n, v|
-            hab("pkg install #{n}/#{v}")
+            hab("pkg install #{strip_version(n)}/#{v}")
           end
         end
 
@@ -121,6 +121,14 @@ class Chef
         alias purge_package remove_package
 
         private
+
+        def strip_version(name)
+          n = name.squeeze("/").chomp("/").sub(/^\//, "")
+          while n.count("/") >= 2
+            n = n[0..(n.rindex('/')-1)]
+          end
+          n
+        end
 
         def hab(*command)
           shell_out_with_timeout!(a_to_s("hab", *command))
