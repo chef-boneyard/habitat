@@ -59,45 +59,6 @@ class Chef
           current_resource
         end
 
-        def depo_package(name, version = nil)
-          @depo_package ||= {}
-          @depo_package[name] ||=
-            begin
-              name_version = [ name, version ].compact.join("/").squeeze("/").chomp("/").sub(/^\//, "")
-              url = "https://willem.habitat.sh/v1/depot/pkgs/#{name_version}"
-              url << "/latest" unless name_version.count("/") >= 3
-              Chef::JSONCompat.parse(http.get(url))
-            rescue Net::HTTPServerException
-              nil
-            end
-        end
-
-        def package_version(name, version = nil)
-          p = depo_package(name, version)
-          unless p.nil?
-            i = p["ident"]
-            "#{i["version"]}/#{i["release"]}"
-          end
-        end
-
-        def http
-          # FIXME: use SimpleJSON when the depot mime-type is fixed
-          @http ||= Chef::HTTP::Simple.new("https://willem.habitat.sh/")
-        end
-
-        def get_candidate_versions
-          package_name_array.zip(new_version_array).map do |n, v|
-            package_version(n, v)
-          end
-        end
-
-        def get_current_versions
-          package_name_array.zip(new_version_array).map do |n, v|
-            # FIXME: idempotency is 100% broken
-            nil
-          end
-        end
-
         def install_package(names, versions)
           names.zip(versions).map do |n, v|
             hab("pkg install #{strip_version(n)}/#{v}")
@@ -133,6 +94,46 @@ class Chef
         def hab(*command)
           shell_out_with_timeout!(a_to_s("hab", *command))
         end
+
+        def depot_package(name, version = nil)
+          @depot_package ||= {}
+          @depot_package[name] ||=
+            begin
+              name_version = [ name, version ].compact.join("/").squeeze("/").chomp("/").sub(/^\//, "")
+              url = "https://willem.habitat.sh/v1/depot/pkgs/#{name_version}"
+              url << "/latest" unless name_version.count("/") >= 3
+              Chef::JSONCompat.parse(http.get(url))
+            rescue Net::HTTPServerException
+              nil
+            end
+        end
+
+        def package_version(name, version = nil)
+          p = depot_package(name, version)
+          unless p.nil?
+            i = p["ident"]
+            "#{i["version"]}/#{i["release"]}"
+          end
+        end
+
+        def http
+          # FIXME: use SimpleJSON when the depot mime-type is fixed
+          @http ||= Chef::HTTP::Simple.new("https://willem.habitat.sh/")
+        end
+
+        def get_candidate_versions
+          package_name_array.zip(new_version_array).map do |n, v|
+            package_version(n, v)
+          end
+        end
+
+        def get_current_versions
+          package_name_array.zip(new_version_array).map do |n, v|
+            # FIXME: idempotency is 100% broken
+            nil
+          end
+        end
+
       end
     end
   end
