@@ -68,6 +68,7 @@ class Chef
         alias_method :upgrade_package, :install_package
 
         def remove_package(name, version)
+          raise "this function is too dangerous to use right now"
           names.zip(versions).map do |n, v|
             # FIXME: `hab pkg uninstall` would be a lot safer here
             path = hab("pkg path #{n}/#{v}").stdout
