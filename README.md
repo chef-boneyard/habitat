@@ -13,3 +13,15 @@ Usage:
 ```ruby
 hab_install "install habitat"
 ```
+
+```ruby
+hab_package "core/redis"
+
+hab_package "core/redis" do
+  version "3.2.3"
+end
+
+hab_package "core/redis" do
+  version "3.2.3/20160920131015"
+end
+```
