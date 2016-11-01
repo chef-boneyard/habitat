@@ -17,11 +17,13 @@
 require "chef/provider/package"
 require "chef/http/simple"
 require "chef/json_compat"
+require 'chef/exceptions'
 
 class Chef
   class Provider
     class Package
       class Hart < Chef::Provider::Package
+        use_inline_resources
         use_multipackage_api
 
         provides :hab_package
@@ -51,7 +53,7 @@ class Chef
 
         def load_current_resource
           @current_resource = Chef::Resource::HartPackage.new(new_resource.name)
-          current_resource.package_name(new_resource.package_name)
+          current_resource.package_name(strip_version(new_resource.package_name))
 
           @candidate_version = get_candidate_versions
           current_resource.version(get_current_versions)
@@ -68,7 +70,7 @@ class Chef
         alias_method :upgrade_package, :install_package
 
         def remove_package(name, version)
-          raise "this function is too dangerous to use right now"
+          raise "It is too dangerous to :remove packages with the hab_package resource right now. This functionality should be deferred to the hab cli."
           names.zip(versions).map do |n, v|
             # FIXME: `hab pkg uninstall` would be a lot safer here
             path = hab("pkg path #{n}/#{v}").stdout
@@ -84,7 +86,14 @@ class Chef
 
         private
 
+        def validate_name!(name)
+          unless name.squeeze("/").count("/") < 2
+            raise ArgumentError, "package name must be specified as 'origin/name', use the 'version' property to specify a version"
+          end
+        end
+
         def strip_version(name)
+          validate_name!(name)
           n = name.squeeze("/").chomp("/").sub(/^\//, "")
           while n.count("/") >= 2
             n = n[0..(n.rindex('/')-1)]
@@ -93,7 +102,14 @@ class Chef
         end
 
         def hab(*command)
-          shell_out_with_timeout!(a_to_s("hab", *command))
+          begin
+            shell_out_with_timeout!(a_to_s("hab", *command))
+          rescue Errno::ENOENT
+            Chef::Log.fatal("'hab' binary not found! Install habitat before attempting to")
+            Chef::Log.fatal("manage habitat resources! The 'hab_install' resource can be")
+            Chef::Log.fatal("used to handle installation.")
+            raise
+          end
         end
 
         def depot_package(name, version = nil)
@@ -130,8 +146,27 @@ class Chef
 
         def get_current_versions
           package_name_array.zip(new_version_array).map do |n, v|
-            # FIXME: idempotency is 100% broken
+            get_installed_version(n)
+          end
+        end
+
+        def get_installed_version(ident)
+          begin
+            hab("pkg path #{ident}").stdout.chomp.split("/")[-2..-1].join("/")
+          rescue Mixlib::ShellOut::ShellCommandFailed
             nil
+          end
+        end
+
+        def version_requirement_satisfied?(current_version, new_version)
+          return false if new_version.nil? || current_version.nil?
+
+          nv_parts = new_version.squeeze("/").split("/")
+
+          if nv_parts.count < 2
+            return current_version.squeeze("/").split("/")[0] == new_version.squeeze("/")
+          else
+            return current_version.squeeze("/") == new_resource.version.squeeze("/")
           end
         end
 

@@ -43,7 +43,15 @@ class Chef
       private
 
       def hab_path
-        "/usr/local/bin/hab"
+        if platform_family?("mac_os_x")
+          "/usr/local/bin"
+        elsif platform_family?("windows")
+          Chef::Log.warn "Habitat installation on Windows is not yet supported by this cookbook."
+          Chef::Log.warn "The installation location on Windows will probably change in the future."
+          "C:/Program Files/Habitat/hab.exe"
+        else
+          "/bin/hab"
+        end
       end
 
       def do_install
