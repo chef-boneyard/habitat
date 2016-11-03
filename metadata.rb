@@ -12,3 +12,6 @@ end
 
 source_url "https://github.com/chef-cookbooks/habitat" if respond_to?(:source_url)
 issues_url "https://github.com/chef-cookbooks/habitat/issues" if respond_to?(:issues_url)
+
+# we need chef 12.5 for custom resources, and 12.11 for systemd_unit
+chef_version ">= 12.11"
