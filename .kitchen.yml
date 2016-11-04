@@ -9,6 +9,6 @@ platforms:
 
 suites:
   - name: install
-    run_list: fake::install
+    run_list: test::install
   - name: package
-    run_list: fake::package
+    run_list: test::package
