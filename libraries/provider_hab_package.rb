@@ -64,7 +64,7 @@ class Chef
 
         def install_package(names, versions)
           names.zip(versions).map do |n, v|
-            hab("pkg install #{strip_version(n)}/#{v}")
+            hab("pkg", "install", "#{strip_version(n)}/#{v}")
           end
         end
 
@@ -74,7 +74,7 @@ class Chef
           raise "It is too dangerous to :remove packages with the hab_package resource right now. This functionality should be deferred to the hab cli."
           names.zip(versions).map do |n, v|
             # FIXME: `hab pkg uninstall` would be a lot safer here
-            path = hab("pkg path #{n}/#{v}").stdout
+            path = hab("pkg", "path", "#{n}/#{v}").stdout
             Chef::Log.warn "semantics of :remove will almost certainly change in the future"
             declare_resource(:directory, path) do
               recursive true
@@ -88,7 +88,7 @@ class Chef
         private
 
         def hab(*command)
-          shell_out_with_timeout!(a_to_s("hab", *command))
+          shell_out_with_timeout!(clean_array("hab", *command))
         rescue  Errno::ENOENT
           Chef::Log.fatal("'hab' binary not found, use the 'hab_install' resource to install it first")
           raise
@@ -149,7 +149,7 @@ class Chef
 
         def get_installed_version(ident)
           begin
-            hab("pkg path #{ident}").stdout.chomp.split("/")[-2..-1].join("/")
+            hab("pkg", "path", "#{ident}").stdout.chomp.split("/")[-2..-1].join("/")
           rescue Mixlib::ShellOut::ShellCommandFailed
             nil
           end

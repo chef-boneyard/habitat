@@ -25,14 +25,14 @@ class Chef
       provides :hab_service
 
       property :unit_content, [String, Hash]
-      property :environment, String, default: lazy { "SSL_CERT_FILE=#{hab('pkg path core/cacerts').stdout.chomp}/ssl/cert.pem" }
+      property :environment, String, default: lazy { "SSL_CERT_FILE=#{hab("pkg", "path", "core/cacerts").stdout.chomp}/ssl/cert.pem" }
 
       default_action :start
 
       private
 
       def hab(*command)
-        shell_out_with_systems_locale!(a_to_s("hab", *command))
+        shell_out_with_systems_locale!(clean_array("hab", *command))
       rescue  Errno::ENOENT
         Chef::Log.fatal("'hab' binary not found, use the 'hab_install' resource to install it first")
         raise
