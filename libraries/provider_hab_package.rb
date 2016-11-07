@@ -23,6 +23,7 @@ class Chef
   class Provider
     class Package
       class Hart < Chef::Provider::Package
+
         use_inline_resources
         use_multipackage_api
 
@@ -86,6 +87,13 @@ class Chef
 
         private
 
+        def hab(*command)
+          shell_out_with_timeout!(a_to_s("hab", *command))
+        rescue  Errno::ENOENT
+          Chef::Log.fatal("'hab' binary not found, use the 'hab_install' resource to install it first")
+          raise
+        end
+
         def validate_name!(name)
           unless name.squeeze("/").count("/") < 2
             raise ArgumentError, "package name must be specified as 'origin/name', use the 'version' property to specify a version"
@@ -99,17 +107,6 @@ class Chef
             n = n[0..(n.rindex('/')-1)]
           end
           n
-        end
-
-        def hab(*command)
-          begin
-            shell_out_with_timeout!(a_to_s("hab", *command))
-          rescue Errno::ENOENT
-            Chef::Log.fatal("'hab' binary not found! Install habitat before attempting to")
-            Chef::Log.fatal("manage habitat resources! The 'hab_install' resource can be")
-            Chef::Log.fatal("used to handle installation.")
-            raise
-          end
         end
 
         def depot_package(name, version = nil)

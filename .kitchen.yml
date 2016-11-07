@@ -12,3 +12,5 @@ suites:
     run_list: test::install
   - name: package
     run_list: test::package
+  - name: service
+    run_list: test::service

@@ -25,3 +25,9 @@ hab_package "core/redis" do
   version "3.2.3/20160920131015"
 end
 ```
+
+```ruby
+hab_package "core/nginx"
+
+hab_service "core/nginx"
+```
