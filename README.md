@@ -1,3 +1,7 @@
+# Habitat Cookbook
+
+[![Build Status](https://travis-ci.org/chef-cookbooks/habitat.svg?branch=master)](https://travis-ci.org/chef-cookbooks/habitat) [![Cookbook Version](https://img.shields.io/cookbook/v/habitat.svg)](https://supermarket.chef.io/cookbooks/habitat)
+
 This cookbook provides resources for working with [Habitat](https://habitat.sh). It is intended that these resources will be included in core Chef at some point in the future, so it is important to note:
 
 - APIs are subject to change
@@ -8,6 +12,12 @@ This cookbook provides resources for working with [Habitat](https://habitat.sh).
 
 ## Requirements
 
+### Platforms
+- RHEL 6+
+- Ubuntu 12.04+
+
+### Chef
+
 Chef 12.11, for the `systemd_unit` resource.
 
 Resources are written in the style of Chef 12.5 [custom resources](https://docs.chef.io/custom_resources.html) where applicable or available.
@@ -15,10 +25,6 @@ Resources are written in the style of Chef 12.5 [custom resources](https://docs.
 ### Cookbooks
 
 This cookbook has no external cookbook dependencies. It does not attempt to maintain backwards compatibility with previous Chef versions.
-
-### Platforms
-
-See the [Habitat downloads](https://www.habitat.sh/docs/get-habitat/) page for more information on platforms where Habitat is available.
 
 ## Resources
 
@@ -140,7 +146,7 @@ end
 * Author: Joshua Timberman [joshua@chef.io](mailto:joshua@chef.io)
 
 ```text
-Copyright 2008-2016, Chef Software, Inc
+Copyright 2016, Chef Software, Inc
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
