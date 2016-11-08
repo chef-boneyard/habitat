@@ -2,10 +2,10 @@
 
 require_relative "tasks/maintainers"
 
-# Style tests. cookstyle (rubocop) and Foodcritic
+# Style tests. chefstyle (rubocop) and Foodcritic
 namespace :style do
   begin
-    require "cookstyle"
+    require "chefstyle"
     require "rubocop/rake_task"
 
     desc "Run Ruby style checks"
