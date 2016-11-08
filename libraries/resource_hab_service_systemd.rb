@@ -33,7 +33,7 @@ class Chef
 
       def hab(*command)
         shell_out!(clean_array("hab", *command))
-      rescue  Errno::ENOENT
+      rescue Errno::ENOENT
         Chef::Log.fatal("'hab' binary not found, use the 'hab_install' resource to install it first")
         raise
       end

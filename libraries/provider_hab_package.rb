@@ -17,7 +17,7 @@
 require "chef/provider/package"
 require "chef/http/simple"
 require "chef/json_compat"
-require 'chef/exceptions'
+require "chef/exceptions"
 
 class Chef
   class Provider
@@ -72,7 +72,7 @@ class Chef
 
         def remove_package(name, version)
           raise "It is too dangerous to :remove packages with the hab_package resource right now. This functionality should be deferred to the hab cli."
-          names.zip(versions).map do |n, v|
+          names.zip(versions).map do |n, v| # rubocop:disable UnreachableCode
             # FIXME: `hab pkg uninstall` would be a lot safer here
             path = hab("pkg", "path", "#{n}/#{v}").stdout
             Chef::Log.warn "semantics of :remove will almost certainly change in the future"
@@ -89,7 +89,7 @@ class Chef
 
         def hab(*command)
           shell_out_with_timeout!(clean_array("hab", *command))
-        rescue  Errno::ENOENT
+        rescue Errno::ENOENT
           Chef::Log.fatal("'hab' binary not found, use the 'hab_install' resource to install it first")
           raise
         end
@@ -103,9 +103,7 @@ class Chef
         def strip_version(name)
           validate_name!(name)
           n = name.squeeze("/").chomp("/").sub(/^\//, "")
-          while n.count("/") >= 2
-            n = n[0..(n.rindex('/')-1)]
-          end
+          n = n[0..(n.rindex("/") - 1)] while n.count("/") >= 2
           n
         end
 
