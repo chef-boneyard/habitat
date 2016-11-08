@@ -71,15 +71,6 @@ class Chef
             }
           }
         end
-
-        private
-
-        def hab(*command)
-          shell_out_with_systems_locale!(a_to_s("hab", *command))
-        rescue  Errno::ENOENT
-          Chef::Log.fatal("'hab' binary not found, use the 'hab_install' resource to install it first")
-          raise
-        end
       end
     end
   end
