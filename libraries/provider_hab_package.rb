@@ -147,7 +147,7 @@ class Chef
 
         def get_installed_version(ident)
           begin
-            hab("pkg", "path", "#{ident}").stdout.chomp.split("/")[-2..-1].join("/")
+            hab("pkg", "path", ident).stdout.chomp.split("/")[-2..-1].join("/")
           rescue Mixlib::ShellOut::ShellCommandFailed
             nil
           end
