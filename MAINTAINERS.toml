@@ -16,7 +16,7 @@ Check out [How Cookbooks are Maintained](https://github.com/chef-cookbooks/commu
     [Org.Components.Core]
       title = "Project Maintainer"
 
-      lieutenant = 'tas50'
+      lieutenant = 'jtimberman'
 
       maintainers = [
         'sigje',
@@ -25,6 +25,10 @@ Check out [How Cookbooks are Maintained](https://github.com/chef-cookbooks/commu
       ]
 
 [people]
+  [people.jtimberman]
+    name = "Joshua Timberman"
+    github = "jtimberman"
+
   [people.sigje]
     name = "Jennifer Davis"
     github = "sigje"
