@@ -1,5 +1,7 @@
 include_recipe "::install"
 
+package "curl"
+
 user "hab"
 
 hab_package "core/nginx"
