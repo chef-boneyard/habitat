@@ -30,11 +30,6 @@ env:
   - INSTANCE=package-ubuntu-1604
   - INSTANCE=package-centos-6
   - INSTANCE=package-centos-7
-  - INSTANCE=service-ubuntu-1204
-  - INSTANCE=service-ubuntu-1404
-  - INSTANCE=service-ubuntu-1604
-  - INSTANCE=service-centos-6
-  - INSTANCE=service-centos-7
 
 before_script:
   - sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables -N DOCKER )
