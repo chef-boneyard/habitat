@@ -1,3 +1,19 @@
+# habitat CHANGELOG
+
+This file is used to list changes made in each version of the habitat cookbook.
+
+## v0.1.1 (2016-11-10)
+
+- Removed Chef 11 compatibility in the metadata
+- Resolved Chefstyle warnings
+- Resolved foodcritic warnings
+- Added a chefignore file
+- Updated the gitignore file
+- Improve the readme format and add badges
+- Update all test deps to current
+- Remove the apt testing dependency
+- Add integration testing in Travis using kitchen-dokken
+
 ## v0.1.0 (2016-11-08)
 
 - add `hab_service` resource
