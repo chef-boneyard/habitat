@@ -1,13 +1,15 @@
 include_recipe "::install"
 
-user 'hab'
+package "curl"
 
-hab_package 'core/nginx'
+user "hab"
 
-hab_service 'core/nginx'
+hab_package "core/nginx"
 
-hab_package 'core/redis'
+hab_service "core/nginx"
 
-hab_service 'core/redis' do
+hab_package "core/redis"
+
+hab_service "core/redis" do
   action :enable
 end

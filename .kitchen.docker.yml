@@ -20,7 +20,7 @@ platforms:
     pid_one_command: /sbin/init
     intermediate_instructions:
       - RUN /usr/bin/apt-get update
-      - RUN /usr/bin/apt-get install lsb-release -y
+      - RUN /usr/bin/apt-get install lsb-release procps -y
 
 - name: debian-8
   driver:
@@ -41,6 +41,7 @@ platforms:
 - name: centos-6
   driver:
     image: centos:6
+    platform: rhel
     pid_one_command: /sbin/init
     intermediate_instructions:
       - RUN yum -y install which initscripts
@@ -48,13 +49,14 @@ platforms:
 - name: centos-7
   driver:
     image: centos:7
+    platform: rhel
     pid_one_command: /usr/lib/systemd/systemd
     intermediate_instructions:
       - RUN yum -y install lsof which
 
-- name: fedora-23
+- name: fedora-latest
   driver:
-    image: fedora:23
+    image: fedora:latest
     pid_one_command: /usr/lib/systemd/systemd
     intermediate_instructions:
       - RUN dnf -y install yum which
@@ -79,14 +81,26 @@ platforms:
     pid_one_command: /bin/systemd
     intermediate_instructions:
       - RUN /usr/bin/apt-get update
+      - RUN /usr/bin/apt-get install -y wget
 
 - name: opensuse-13.2
   driver:
     image: opensuse:13.2
     pid_one_command: /bin/systemd
     intermediate_instructions:
-      - RUN zypper refresh
+      - RUN zypper --non-interactive install aaa_base perl-Getopt-Long-Descriptive which
+
+- name: opensuse-42.1
+  driver:
+    image: opensuse:42.1
+    pid_one_command: /bin/systemd
+    intermediate_instructions:
+      - RUN zypper --non-interactive install aaa_base perl-Getopt-Long-Descriptive which
 
 suites:
-  - name: default
-    run_list: habitat::default
+  - name: install
+    run_list: test::install
+  - name: package
+    run_list: test::package
+  - name: service
+    run_list: test::service

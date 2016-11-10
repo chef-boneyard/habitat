@@ -62,13 +62,13 @@ class Chef
           {
             Unit: {
               Description: short_service_name,
-              After: "network.target audit.service"
+              After: "network.target audit.service",
             },
-              Service: {
+            Service: {
               Environment: new_resource.environment,
               ExecStart: "/bin/hab start #{new_resource.service_name}",
-              Restart: "on-failure"
-            }
+              Restart: "on-failure",
+            },
           }
         end
       end
