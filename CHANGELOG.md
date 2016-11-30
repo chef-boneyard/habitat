@@ -2,9 +2,10 @@
 
 This file is used to list changes made in each version of the habitat cookbook.
 
-## v0.2.0 (2016-11-29)
+## v0.2.0 (2016-11-30)
 
 - Added `version` and `channel` properties to install resource
+- Added `depot_url` property to hab_package resource
 
 ## v0.1.1 (2016-11-10)
 

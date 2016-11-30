@@ -24,3 +24,8 @@ describe command("hab pkg path core/bundler/1.13.3/20161011123917") do
   its("exit_status") { should eq 0 }
   its("stdout") { should match(%r{/hab/pkgs/core/bundler/1.13.3/20161011123917}) }
 end
+
+describe command("hab pkg path core/hab-sup") do
+  its("exit_status") { should eq 0 }
+  its("stdout") { should match(%r{/hab/pkgs/core/hab-sup}) }
+end
