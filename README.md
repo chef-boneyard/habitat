@@ -72,6 +72,7 @@ This resource is written as a library resource because it subclasses Chef's `pac
 
 * `package_name`: A Habitat package name, must include the origin and package name separated by `/`, for example, `core/redis`
 * `version`: A Habitat version which contains the version and optionally a release separated by `/`, for example, `3.2.3` or `3.2.3/20160920131015`
+* `depot_url`: The habitat depot url where packages will be downloaded from (defaults to public habitat depot)
 
 While it is valid to pass the version and release with a Habitat package as a "fully qualified package identifier" when using the `hab` CLI, they must be specified using the `version` property when using this resource. See the examples below.
 

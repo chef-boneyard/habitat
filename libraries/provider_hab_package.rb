@@ -64,7 +64,7 @@ class Chef
 
         def install_package(names, versions)
           names.zip(versions).map do |n, v|
-            hab("pkg", "install", "#{strip_version(n)}/#{v}")
+            hab("pkg", "install", "--url", new_resource.depot_url, "#{strip_version(n)}/#{v}")
           end
         end
 
@@ -112,7 +112,7 @@ class Chef
           @depot_package[name] ||=
             begin
               name_version = [ name, version ].compact.join("/").squeeze("/").chomp("/").sub(/^\//, "")
-              url = "https://willem.habitat.sh/v1/depot/pkgs/#{name_version}"
+              url = "#{new_resource.depot_url.chomp("/")}/pkgs/#{name_version}"
               url << "/latest" unless name_version.count("/") >= 3
               Chef::JSONCompat.parse(http.get(url))
             rescue Net::HTTPServerException

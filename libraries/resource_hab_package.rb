@@ -23,6 +23,8 @@ class Chef
     class HartPackage < Chef::Resource::Package
       resource_name :hab_package
       provides :hab_package
+
+      property :depot_url, String, regex: /.*/, default: "https://willem.habitat.sh/v1/depot"
     end
   end
 end

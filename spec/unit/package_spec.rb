@@ -22,5 +22,10 @@ describe "test::package" do
       expect(chef_run).to install_hab_package("core/bundler")
         .with(version: "1.13.3/20161011123917")
     end
+
+    it "installs core/hab-sup with a specific depot url" do
+      expect(chef_run).to install_hab_package("core/hab-sup")
+        .with(depot_url: "http://app.acceptance.habitat.sh/v1/depot")
+    end
   end
 end
