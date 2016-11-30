@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of the habitat cookbook.
 
+## v0.2.0 (2016-11-29)
+
+- Added `version` and `channel` properties to install resource
+
 ## v0.1.1 (2016-11-10)
 
 - Removed Chef 11 compatibility in the metadata

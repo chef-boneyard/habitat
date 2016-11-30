@@ -21,16 +21,23 @@ resource_name :hab_install
 provides :hab_install
 
 property :install_url, String, default: "https://raw.githubusercontent.com/habitat-sh/habitat/master/components/hab/install.sh"
+property :version, String
+property :channel, String
 
 action :install do
-  return if ::File.exist?(hab_path)
+  if ::File.exist?(hab_path)
+    return unless new_resource.version
+    cmd = shell_out!([hab_path, "--version"])
+    version = /hab (\d*\.\d*\.\d[^\/]*)/.match(cmd.stdout)[1]
+    return if new_resource.version == version
+  end
 
   remote_file ::File.join(Chef::Config[:file_cache_path], "hab-install.sh") do
     source new_resource.install_url
   end
 
   execute "installing with hab-install.sh" do
-    command "bash #{Chef::Config[:file_cache_path]}/hab-install.sh"
+    command hab_command
   end
 end
 
@@ -40,7 +47,7 @@ action :upgrade do
   end
 
   execute "installing with hab-install.sh" do
-    command "bash #{Chef::Config[:file_cache_path]}/hab-install.sh"
+    command hab_command
   end
 end
 
@@ -55,5 +62,12 @@ action_class do
     else
       "/bin/hab"
     end
+  end
+
+  def hab_command
+    cmd = [ "bash #{Chef::Config[:file_cache_path]}/hab-install.sh" ]
+    cmd.push("-v #{new_resource.version}") if new_resource.version
+    cmd.push("-c #{new_resource.channel}") if new_resource.channel
+    cmd.join(" ")
   end
 end

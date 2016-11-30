@@ -13,4 +13,11 @@ describe "test::install" do
       expect(chef_run).to install_hab_install("install habitat")
     end
   end
+
+  context "when compiling the install recipe with a version" do
+    it "installs habitat" do
+      expect(chef_run).to install_hab_install("install habitat with version")
+        .with(version: "0.12.0")
+    end
+  end
 end
