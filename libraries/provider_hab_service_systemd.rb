@@ -53,6 +53,12 @@ class Chef
           end
         end
 
+        action :restart do
+          declare_resource(:service, short_service_name) do
+            action :restart
+          end
+        end
+
         def short_service_name
           new_resource.service_name.split("/")[1]
         end
