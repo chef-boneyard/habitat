@@ -20,4 +20,11 @@ describe "test::install" do
         .with(version: "0.12.0")
     end
   end
+
+  context "when compiling the install recipe with a depot url" do
+    it "installs habitat" do
+      expect(chef_run).to install_hab_install("install habitat with depot url")
+        .with(depot_url: "https://localhost/v1/depot")
+    end
+  end
 end

@@ -42,6 +42,7 @@ This resource is written as a Chef 12.5 custom resource.
 #### Properties
 
 * `install_url`: URL to the install script, default is from the [habitat repo](https://raw.githubusercontent.com/habitat-sh/habitat/master/components/hab/install.sh)
+* `depot_url`: Optional URL to an alternate Depot (defaults to the public Depot)
 * `version`: The version of habitat to install (defaults to latest)
 * `channel`: The release channel to install from (defaults to `stable`)
 
@@ -54,6 +55,12 @@ hab_install 'install habitat'
 ```ruby
 hab_install 'install habitat' do
   version "0.12.0"
+end
+```
+
+```ruby
+hab_install 'install habitat' do
+  depot_url "http://localhost/v1/depot"
 end
 ```
 

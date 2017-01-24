@@ -21,6 +21,7 @@ resource_name :hab_install
 provides :hab_install
 
 property :install_url, String, default: "https://raw.githubusercontent.com/habitat-sh/habitat/master/components/hab/install.sh"
+property :depot_url, String
 property :version, String
 property :channel, String
 
@@ -38,6 +39,7 @@ action :install do
 
   execute "installing with hab-install.sh" do
     command hab_command
+    environment "HAB_DEPOT_URL" => new_resource.depot_url if new_resource.depot_url
   end
 end
 
@@ -48,6 +50,7 @@ action :upgrade do
 
   execute "installing with hab-install.sh" do
     command hab_command
+    environment "HAB_DEPOT_URL" => new_resource.depot_url if new_resource.depot_url
   end
 end
 
