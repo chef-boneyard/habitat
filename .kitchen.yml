@@ -20,6 +20,8 @@ platforms:
   - name: ubuntu-16.04
 
 suites:
+  - name: default
+    run_list: test::default
   - name: install
     run_list: test::install
   - name: package

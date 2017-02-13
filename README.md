@@ -26,6 +26,21 @@ Resources are written in the style of Chef 12.5 [custom resources](https://docs.
 
 This cookbook has no external cookbook dependencies. It does not attempt to maintain backwards compatibility with previous Chef versions.
 
+## Recipes
+
+### default
+
+Installs Habitat on the system using `hab_install`.  If
+`node["habitat"]["package"]` is defined, it will install that package and set
+up that package as a service.
+
+#### Examples
+
+```ruby
+node.default["habitat"]["package"] = "core/redis"
+include_recipe "habitat"
+```
+
 ## Resources
 
 ### hab_install

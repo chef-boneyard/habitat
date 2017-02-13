@@ -98,6 +98,8 @@ platforms:
       - RUN zypper --non-interactive install aaa_base perl-Getopt-Long-Descriptive which
 
 suites:
+  - name: default
+    run_list: test::default
   - name: install
     run_list: test::install
   - name: package
