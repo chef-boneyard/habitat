@@ -14,5 +14,14 @@ hab_package "core/redis" do
 end
 
 hab_service "core/redis" do
+  # Use an array of options!
+  exec_start_options ["--listen-gossip 9999", "--listen-http 9998"]
   action :enable
+end
+
+hab_package "core/haproxy"
+
+hab_service "core/haproxy" do
+  # Use a string of option [sic]
+  exec_start_options "--permanent-peer"
 end

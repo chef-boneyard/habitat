@@ -117,6 +117,7 @@ A future version of this resource may support other service providers.
 
 * `unit_content`: Content passed into the `systemd_unit` resource as its `content` property. By default this is a hash that starts the service with `/bin/hab start`.
 * `environment`: An environment string to pass into the unit file. By default this contains the location of the SSL certificate from the Habitat `core/cacerts` package.
+* `exec_start_options`: A `String` or `Array` of command line options to pass to `ExecStart` in the systemd unit.
 
 #### Examples
 
@@ -153,6 +154,17 @@ Environment = "HAB_MAPP=workers=3"
 ExecStart = "/bin/hab start myorigin/myapp"
 Restart = "on-failure"
 EOF
+end
+
+# ExecStart options as an array
+hab_service 'core/redis' do
+  exec_start_options ['--listen-gossip 9999', '--listen-http 9998']
+  action :enable
+end
+
+# ExecStart options as a string
+hab_service 'core/haproxy' do
+  exec_start_options '--permanent-peer'
 end
 ```
 

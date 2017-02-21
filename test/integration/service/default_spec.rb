@@ -33,3 +33,8 @@ describe systemd_service("redis") do
   it { should_not be_running }
   it { should be_enabled }
 end
+
+describe file("/etc/systemd/system/haproxy.service") do
+  it { should exist }
+  its(:content) { should match(%r{^ExecStart = /bin/hab start core/haproxy --permanent-peer$}) }
+end

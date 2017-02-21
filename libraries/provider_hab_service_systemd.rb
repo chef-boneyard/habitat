@@ -63,6 +63,10 @@ class Chef
           new_resource.service_name.split("/")[1]
         end
 
+        def combine_exec_start_options
+          Array(new_resource.exec_start_options).join(" ")
+        end
+
         def unit_content
           return new_resource.unit_content if new_resource.unit_content
           {
@@ -72,7 +76,8 @@ class Chef
             },
             Service: {
               Environment: new_resource.environment,
-              ExecStart: "/bin/hab start #{new_resource.service_name}",
+              ExecStart: ["/bin/hab start #{new_resource.service_name}",
+                          combine_exec_start_options].join("\s"),
               Restart: "on-failure",
             },
           }
