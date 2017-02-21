@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "test::install" do
+describe "test::install_for_chefspec" do
   cached(:chef_run) do
     ChefSpec::ServerRunner.new(
       platform: "ubuntu",
@@ -8,21 +8,17 @@ describe "test::install" do
     ).converge(described_recipe)
   end
 
-  context "when compiling the install recipe" do
+  context "when compiling the install recipe for chefspec" do
     it "installs habitat" do
       expect(chef_run).to install_hab_install("install habitat")
     end
-  end
 
-  context "when compiling the install recipe with a version" do
-    it "installs habitat" do
+    it "installs habitat with a version" do
       expect(chef_run).to install_hab_install("install habitat with version")
         .with(version: "0.12.0")
     end
-  end
 
-  context "when compiling the install recipe with a depot url" do
-    it "installs habitat" do
+    it "installs habitat with a depot url" do
       expect(chef_run).to install_hab_install("install habitat with depot url")
         .with(depot_url: "https://localhost/v1/depot")
     end

@@ -25,6 +25,7 @@ class Chef
       provides :hab_service
 
       property :unit_content, [String, Hash]
+      property :exec_start_options, [String, Array]
       property :environment, String, default: lazy { "SSL_CERT_FILE=#{hab('pkg', 'path', 'core/cacerts').stdout.chomp}/ssl/cert.pem" }
 
       default_action :start
