@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of the habitat cookbook.
 
+## v0.3.0 (2017-02-21)
+
+- Add property for ExecStart options. See readme for usage
+
 ## v0.2.0 (2016-11-30)
 
 - Added `version` and `channel` properties to install resource
