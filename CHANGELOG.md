@@ -5,6 +5,8 @@ This file is used to list changes made in each version of the habitat cookbook.
 ## v0.3.0 (2017-02-21)
 
 - Add property for ExecStart options. See readme for usage
+- Add property for depot_url. See readme for usage
+- Added restart action to the resource
 
 ## v0.2.0 (2016-11-30)
 
