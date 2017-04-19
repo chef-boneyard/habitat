@@ -81,5 +81,17 @@ suites:
     run_list: test::install
   - name: package
     run_list: test::package
+  - name: sup
+    run_list: test::sup
+    # these platforms don't have systemd as the default init system
+    excludes:
+      - debian-7
+      - centos-6
+      - ubuntu-14.04
   - name: service
     run_list: test::service
+    # these platforms don't have systemd as the default init system
+    excludes:
+      - debian-7
+      - centos-6
+      - ubuntu-14.04

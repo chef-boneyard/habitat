@@ -19,6 +19,7 @@ if defined?(ChefSpec)
   ChefSpec.define_matcher :hab_package
   ChefSpec.define_matcher :hab_service
   ChefSpec.define_matcher :hab_service_systemd
+  ChefSpec.define_matcher :hab_sup
 
   def install_hab_install(resource_name)
     ChefSpec::Matchers::ResourceMatcher.new(:hab_install, :install, resource_name)
@@ -58,5 +59,13 @@ if defined?(ChefSpec)
 
   def stop_hab_service(resource_name)
     ChefSpec::Matchers::ResourceMatcher.new(:hab_service, :stop, resource_name)
+  end
+
+  def run_hab_sup(resource_name)
+    ChefSpec::Matchers::ResourceMatcher.new(:hab_sup, :run, resource_name)
+  end
+
+  def run_hab_sup_systemd(resource_name)
+    ChefSpec::Matchers::ResourceMatcher.new(:hab_sup_systemd, :run, resource_name)
   end
 end

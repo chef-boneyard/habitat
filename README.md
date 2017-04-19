@@ -14,7 +14,7 @@ This cookbook provides resources for working with [Habitat](https://habitat.sh).
 
 ### Platforms
 - RHEL 6+
-- Ubuntu 12.04+
+- Ubuntu 14.04+
 
 ### Chef
 
@@ -70,9 +70,9 @@ Install the specified Habitat package. Requires that Habitat is installed
 
 This resource is written as a library resource because it subclasses Chef's `package` resource/provider to get features such as the multi-package API).
 
-#### Actions
+#### actions
 
-* `install`: Installs the specified package
+* `install`: installs the specified package
 * `upgrade`: aliased to install
 
 #### Properties
@@ -99,72 +99,85 @@ end
 
 ### hab_service
 
-Manages a Habitat application service using systemd. It will drop off a unit file using the `systemd_unit` provider in Chef.
-
-This resource is written as a library resource because it subclasses Chef's `service` resource/provider to get built in properties and actions.
-
-This resource requires Chef 12.11 or higher.
-
-A future version of this resource may support other service providers.
+Manages a Habitat application service using `hab sup`/`hab service`. This requires [Habitat version 0.20 or higher](https://forums.habitat.sh/t/habitat-0-20-0-released/317). It also requires that `core/hab-sup` be running as a service. See the `hab_sup` resource documentation below for more information about how to set that up with this cookbook.
 
 #### Actions
 
-* `start`: (default action) writes a `systemd_unit` for the application and starts the service
-* `enable`: writes the `systemd_unit` for the application
-* `stop`: stops the application service
+* `load`: (default action) runs `hab service load` to load and start the specified application service
+* `unload`: runs `hab service unload` to unload and stop the specified application service
+* `start`: runs `hab service start` to start the specified application service
+* `stop`: runs `hab service stop` to stop the specified application service
 
 #### Properties
 
-* `unit_content`: Content passed into the `systemd_unit` resource as its `content` property. By default this is a hash that starts the service with `/bin/hab start`.
-* `environment`: An environment string to pass into the unit file. By default this contains the location of the SSL certificate from the Habitat `core/cacerts` package.
-* `exec_start_options`: A `String` or `Array` of command line options to pass to `ExecStart` in the systemd unit.
+* `service_name`: name property, the name of the service, must be in the form of `origin/name`
+* `loaded`: state property indicating whether the service is loaded in the supervisor
+* `running`: state property indicating whether the service is running in the supervisor
+* `permanent_peer`: Only valid for `:start` action, passes `--permanent-peer` to the hab command
+* `listen_gossip`: Only valid for `:start` action, passes `--listen-gossip` with the specified address and port, e.g., `0.0.0.0:9638`, to the hab command
+* `listen_http`: Only valid for `:start` action, passes `--listen-http` with the specified address and port, e.g., `0.0.0.0:9631`, to the hab command
+* `org`: Only valid for `:start` action, passes `--org` with the specified org name to the hab command
+* `peer`: Only valid for `:start` action, passes `--peer` with the specified initial peer to the hab command
+* `ring`: Only valid for `:start` action, passes `--ring` with the specified ring key name to the hab command
+* `strategy`: Only valid for `:start` or `:load` actions, passes `--strategy` with the specified update strategy to the hab command
+* `topology`: Only valid for `:start` or `:load` actions, passes `--topology` with the specified service topology to the hab command
+* `depot_url`: Only valid for `:start` or `:load` actions, passes `--url` with the specified Depot URL to the hab command
+* `bind`: Only valid for `:start` or `:load` actions, passes `--bind` with the specified services to bind to the hab command
+* `service_group`: Only valid for `:start` or `:load` actions, passes `--group` with the specified service group to the hab command
+* `config_from`: Only valid for `:start` action, passes `--config-from` with the specified directory to the hab command
+* `override_name`: **Advanced Use** Valid for all actions, passes `--override-name` with the specified name to the hab command; used for running services in multiple supervisors
 
 #### Examples
 
 ```ruby
-hab_package 'core/redis'
+# install and load nginx
+hab_package "core/nginx"
+hab_service "core/nginx"
 
-hab_service 'core/redis' do
-  action :enable
+hab_service "core/nginx unload" do
+  service_name "core/nginx"
+  action :unload
 end
 
-# unit_content as a hash
-hab_service 'myorigin/myapp' do
-  unit_content({
-    Unit: {
-      Description: 'myapp',
-      After: 'network.target audit.service'
-    },
-    Service: {
-      Environment: 'HAB_MYAPP=workers=3'
-      ExecStart: '/bin/hab start myorigin/myapp'
-    }
-  })
+# pass the strategy and topology options to hab service commands (load by default)
+hab_service "core/redis" do
+  strategy 'rolling'
+  topology 'standalone'
 end
+```
 
-# unit_content as a string
-hab_service 'myorigin/myapp' do
-  unit_content <<-EOF
-[Unit]
-Description = myapp
-After = network.target audit.service
+### hab_sup
 
-[Service]
-Environment = "HAB_MAPP=workers=3"
-ExecStart = "/bin/hab start myorigin/myapp"
-Restart = "on-failure"
-EOF
-end
+Runs a Habitat Supervisor for one or more Habitat Services. This requires [Habitat version 0.20 or higher](https://forums.habitat.sh/t/habitat-0-20-0-released/317). It is used in conjunction with `hab_service` which will manage the services loaded and started within the supervisor.
 
-# ExecStart options as an array
-hab_service 'core/redis' do
-  exec_start_options ['--listen-gossip 9999', '--listen-http 9998']
-  action :enable
-end
+The `run` action handles installing Habitat using the `hab_install` resource, ensures that the `core/hab-sup` package is installed using `hab_package`, and then drops off the appropriate init system definitions and manages the service. At this time, only systemd is supported.
 
-# ExecStart options as a string
-hab_service 'core/haproxy' do
-  exec_start_options '--permanent-peer'
+#### Actions
+
+* `run`: starts the `hab-sup` service
+
+#### Properties
+
+* `permanent_peer`: Only valid for `:start` action, passes `--permanent-peer` to the hab command
+* `listen_gossip`: Only valid for `:start` action, passes `--listen-gossip` with the specified address and port, e.g., `0.0.0.0:9638`, to the hab command
+* `listen_http`: Only valid for `:start` action, passes `--listen-http` with the specified address and port, e.g., `0.0.0.0:9631`, to the hab command
+* `org`: Only valid for `:start` action, passes `--org` with the specified org name to the hab command
+* `peer`: Only valid for `:start` action, passes `--peer` with the specified initial peer to the hab command
+* `ring`: Only valid for `:start` action, passes `--ring` with the specified ring key name to the hab command
+* `override_name`: **Advanced Use** Valid for all actions, passes `--override-name` with the specified name to the hab command; used for running services in multiple supervisors
+
+#### Examples
+
+```ruby
+# set up with just the defaults
+hab_sup "default"
+
+# run with an override name, requires changing listen_http and
+# listen_gossip if a default supervisor is running
+hab_sup 'test-options' do
+  override_name 'myapps'
+  listen_http '0.0.0.0:9999'
+  listen_gossip '0.0.0.0:9998'
 end
 ```
 
@@ -174,7 +187,7 @@ end
 * Author: Joshua Timberman [joshua@chef.io](mailto:joshua@chef.io)
 
 ```text
-Copyright 2016, Chef Software, Inc
+Copyright 2016-2017, Chef Software, Inc
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
