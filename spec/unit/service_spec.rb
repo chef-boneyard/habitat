@@ -8,29 +8,23 @@ describe "test::service" do
     ).converge(described_recipe)
   end
 
-  context "when compiling the service recipe" do
-    it "creates a hab user" do
-      expect(chef_run).to create_user("hab")
+  context "when compiling the service recipe for chefspec" do
+    it "loads service" do
+      expect(chef_run).to load_hab_service("core/nginx")
     end
 
-    it "starts the core/nginx service" do
-      expect(chef_run).to start_hab_service("core/nginx")
-    end
-
-    it "enables the core/redis service" do
-      expect(chef_run).to enable_hab_service("core/redis")
-    end
-
-    it "enables core/redis with an Array of ExecStart options" do
-      expect(chef_run).to enable_hab_service("core/redis").with(
-        exec_start_options: ["--listen-gossip 9999", "--listen-http 9998"]
+    it "loads a service with sup options" do
+      expect(chef_run).to load_hab_service("core/haproxy").with(
+        sup_options: "--topology leader"
       )
     end
 
-    it "takes ExecStart options for core/haproxy service" do
-      expect(chef_run).to start_hab_service("core/haproxy").with(
-        exec_start_options: "--permanent-peer"
-      )
+    it "stops service" do
+      expect(chef_run).to stop_hab_service("core/redis stop")
+    end
+
+    it "unloads service" do
+      expect(chef_run).to unload_hab_service("core/haproxy")
     end
   end
 end

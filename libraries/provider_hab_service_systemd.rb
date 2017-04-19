@@ -24,9 +24,6 @@ class Chef
         use_inline_resources
 
         provides :hab_service_systemd
-        provides :hab_service do |node|
-          Chef::Platform::ServiceHelpers.service_resource_providers.include?(:systemd)
-        end
 
         action :start do
           declare_resource(:systemd_unit, "#{short_service_name}.service") do

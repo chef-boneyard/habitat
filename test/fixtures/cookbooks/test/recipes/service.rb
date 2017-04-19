@@ -1,7 +1,5 @@
 include_recipe "::install"
 
-package "curl"
-
 user "hab"
 
 hab_package "core/nginx"
@@ -10,18 +8,25 @@ hab_service "core/nginx"
 
 hab_package "core/redis" do
   action :upgrade
-  notifies :restart, "hab_service[core/redis]"
 end
 
 hab_service "core/redis" do
   # Use an array of options!
-  exec_start_options ["--listen-gossip 9999", "--listen-http 9998"]
-  action :enable
+  sup_options ["--strategy rolling", "--topology standalone"]
 end
 
 hab_package "core/haproxy"
 
 hab_service "core/haproxy" do
   # Use a string of option [sic]
-  exec_start_options "--permanent-peer"
+  sup_options "--topology leader"
+end
+
+hab_service "core/redis stop" do
+  service_name "core/redis"
+  action :stop
+end
+
+hab_service "core/haproxy" do
+  action :unload
 end

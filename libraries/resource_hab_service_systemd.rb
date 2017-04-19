@@ -21,8 +21,8 @@ class Chef
   class Resource
     class HabServiceSystemd < Chef::Resource::Service
 
-      resource_name :hab_service
-      provides :hab_service
+      resource_name :hab_service_systemd
+      provides :hab_service_systemd
 
       property :unit_content, [String, Hash]
       property :exec_start_options, [String, Array]

@@ -25,3 +25,5 @@ suites:
     run_list: test::package
   - name: service
     run_list: test::service
+  - name: service_systemd
+    run_list: test::service_systemd
