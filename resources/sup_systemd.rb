@@ -18,7 +18,7 @@
 resource_name :hab_sup
 
 provides :hab_sup_systemd
-provides :hab_sup do |node|
+provides :hab_sup do |_node|
   Chef::Platform::ServiceHelpers.service_resource_providers.include?(:systemd)
 end
 
@@ -35,18 +35,16 @@ action :run do
   hab_package 'core/hab-sup'
 
   systemd_unit "hab-sup-#{override_name}.service" do
-    content({
-      Unit: {
-        Description: "The Habitat Supervisor",
-      },
-      Service: {
-        ExecStart: "/bin/hab sup run #{exec_start_options}",
-        Restart: 'on-failure',
-      },
-      Install: {
-        WantedBy: 'default.target',
-      },
-    })
+    content(Unit: {
+              Description: 'The Habitat Supervisor',
+            },
+            Service: {
+              ExecStart: "/bin/hab sup run #{exec_start_options}",
+              Restart: 'on-failure',
+            },
+            Install: {
+              WantedBy: 'default.target',
+            })
     action :create
   end
 
@@ -59,7 +57,7 @@ end
 action_class do
   def exec_start_options
     opts = []
-    opts << "--permanent-peer" if permanent_peer
+    opts << '--permanent-peer' if permanent_peer
     opts << "--listen-gossip #{listen_gossip}" if listen_gossip
     opts << "--listen-http #{listen_http}" if listen_http
     opts << "--override-name #{override_name}" unless override_name == 'default'

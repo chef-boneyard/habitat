@@ -4,10 +4,10 @@
 #
 # Run 'chef exec bundle install' to install these dependencies
 
-source "https://rubygems.org"
+source 'https://rubygems.org'
 
-gem "tomlrb"
-gem "rake"
-gem "stove"
-gem "community_cookbook_releaser"
-gem "chefstyle"
+gem 'tomlrb'
+gem 'rake'
+gem 'stove'
+gem 'community_cookbook_releaser'
+gem 'chefstyle'

@@ -37,9 +37,9 @@ property :config_from, String
 property :override_name, String, default: 'default'
 
 load_current_value do
-  require "json"
-  require "net/http"
-  require "uri"
+  require 'json'
+  require 'net/http'
+  require 'uri'
 
   http_uri = if listen_http
                URI(listen_http)
@@ -47,15 +47,15 @@ load_current_value do
                URI('http://localhost:9631')
              end
 
-  services_uri = URI.join(http_uri, "services")
+  services_uri = URI.join(http_uri, 'services')
   svcs = JSON.parse(Net::HTTP.get(services_uri))
 
   sup_for_service_name = svcs.find do |s|
-    [s["spec_ident"]["origin"], s["spec_ident"]["name"]].join('/') =~ %r{#{service_name}}
+    [s['spec_ident']['origin'], s['spec_ident']['name']].join('/') =~ /#{service_name}/
   end
 
   running begin
-            sup_for_service_name["supervisor"]["state"] == "Up"
+            sup_for_service_name['supervisor']['state'] == 'Up'
           rescue
             false
           end
@@ -66,27 +66,19 @@ load_current_value do
 end
 
 action :load do
-  unless loaded
-    execute "hab sup load #{service_name} #{sup_options.join(' ')}"
-  end
+  execute "hab sup load #{service_name} #{sup_options.join(' ')}" unless loaded
 end
 
 action :unload do
-  if loaded
-    execute "hab sup unload #{service_name} #{sup_options.join}"
-  end
+  execute "hab sup unload #{service_name} #{sup_options.join}" if loaded
 end
 
 action :start do
-  unless running
-    execute "hab sup start #{service_name} #{sup_options.join}"
-  end
+  execute "hab sup start #{service_name} #{sup_options.join}" unless running
 end
 
 action :stop do
-  if running
-    execute "hab sup stop #{service_name} #{sup_options.join}"
-  end
+  execute "hab sup stop #{service_name} #{sup_options.join}" if running
 end
 
 action :restart do
@@ -114,7 +106,7 @@ action_class do
       opts << "--strategy #{strategy}" if strategy
       opts << "--topology #{topology}" if topology
     when :start
-      opts << "--permanent-peer" if permanent_peer
+      opts << '--permanent-peer' if permanent_peer
       opts << "--bind #{bind}" if bind
       opts << "--config-from #{config_from}" if config_from
       opts << "--url #{depot_url}" if depot_url
@@ -140,15 +132,13 @@ action_class do
     #
     # hab sup load core/redis --strategy rolling
     #
-    opts.map {|o| o.split}.flatten.compact
+    opts.map(&:split).flatten.compact
   end
 
   def service_loaded?
-
   end
 
   def service_running?
-
   end
 
   def hab(*command)

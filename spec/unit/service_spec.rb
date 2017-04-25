@@ -1,10 +1,10 @@
-require "spec_helper"
+require 'spec_helper'
 
-describe "test::service" do
+describe 'test::service' do
   cached(:chef_run) do
     ChefSpec::ServerRunner.new(
-      platform: "ubuntu",
-      version: "16.04"
+      platform: 'ubuntu',
+      version: '16.04'
     ).converge(described_recipe)
   end
 
@@ -12,23 +12,23 @@ describe "test::service" do
     allow(Chef::Platform::ServiceHelpers).to receive(:service_resource_providers).and_return([:systemd])
   end
 
-  context "when compiling the service recipe for chefspec" do
-    it "loads service" do
-      expect(chef_run).to load_hab_service("core/nginx")
+  context 'when compiling the service recipe for chefspec' do
+    it 'loads service' do
+      expect(chef_run).to load_hab_service('core/nginx')
     end
 
-    it "stops service" do
-      expect(chef_run).to stop_hab_service("core/redis stop")
+    it 'stops service' do
+      expect(chef_run).to stop_hab_service('core/redis stop')
     end
 
-    it "unloads service" do
-      expect(chef_run).to unload_hab_service("core/nginx unload")
+    it 'unloads service' do
+      expect(chef_run).to unload_hab_service('core/nginx unload')
     end
 
-    it "loads a service with options" do
-      expect(chef_run).to load_hab_service("core/redis").with(
-        strategy: "rolling",
-        topology: "standalone"
+    it 'loads a service with options' do
+      expect(chef_run).to load_hab_service('core/redis').with(
+        strategy: 'rolling',
+        topology: 'standalone'
       )
     end
   end
