@@ -9,5 +9,3 @@ version '0.0.1'
 name 'test'
 
 depends 'habitat'
-
-chef_version '>= 12.0.3' if respond_to?(:chef_version)

@@ -13,8 +13,9 @@ This cookbook provides resources for working with [Habitat](https://habitat.sh).
 ## Requirements
 
 ### Platforms
-- RHEL 6+
-- Ubuntu 14.04+
+
+- RHEL 7+
+- Ubuntu 16.04+
 
 ### Chef
 

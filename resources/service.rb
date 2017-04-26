@@ -37,18 +37,8 @@ property :config_from, String
 property :override_name, String, default: 'default'
 
 load_current_value do
-  require 'json'
-  require 'net/http'
-  require 'uri'
-
-  http_uri = if listen_http
-               URI(listen_http)
-             else
-               URI('http://localhost:9631')
-             end
-
-  services_uri = URI.join(http_uri, 'services')
-  svcs = JSON.parse(Net::HTTP.get(services_uri))
+  http_uri = listen_http ? listen_http : 'http://localhost:9631'
+  svcs = Chef::HTTP::SimpleJSON.new(http_uri).get('/services')
 
   sup_for_service_name = svcs.find do |s|
     [s['spec_ident']['origin'], s['spec_ident']['name']].join('/') =~ /#{service_name}/
@@ -70,15 +60,15 @@ action :load do
 end
 
 action :unload do
-  execute "hab sup unload #{service_name} #{sup_options.join}" if loaded
+  execute "hab sup unload #{service_name} #{sup_options.join(' ')}" if loaded
 end
 
 action :start do
-  execute "hab sup start #{service_name} #{sup_options.join}" unless running
+  execute "hab sup start #{service_name} #{sup_options.join(' ')}" unless running
 end
 
 action :stop do
-  execute "hab sup stop #{service_name} #{sup_options.join}" if running
+  execute "hab sup stop #{service_name} #{sup_options.join(' ')}" if running
 end
 
 action :restart do
@@ -122,29 +112,6 @@ action_class do
 
     opts << "--override-name #{override_name}" unless override_name == 'default'
 
-    # we need to pass the options to the `hab` method, and if we don't
-    # split them, we'll end up with an invalid argument because it
-    # will be something like this:
-    #
-    # hab sup load core/redis '--strategy rolling'
-    #
-    # instead of this:
-    #
-    # hab sup load core/redis --strategy rolling
-    #
     opts.map(&:split).flatten.compact
-  end
-
-  def service_loaded?
-  end
-
-  def service_running?
-  end
-
-  def hab(*command)
-    shell_out!(clean_array('hab', *command))
-  rescue Errno::ENOENT
-    Chef::Log.fatal("'hab' binary not found, use the 'hab_install' resource to install it first")
-    raise
   end
 end

@@ -13,6 +13,8 @@ ruby_block 'wait-for-nginx-startup' do
   block do
     sleep 3
   end
+  action :nothing
+  subscribes :run, 'hab_service[core/nginx]', :immediately
 end
 
 hab_service 'core/nginx unload' do
@@ -28,6 +30,7 @@ end
 hab_service 'core/redis' do
   strategy 'rolling'
   topology 'standalone'
+  action [:load, :start]
 end
 
 # we need this sleep to let redis stop and for the hab supervisor to
@@ -37,6 +40,8 @@ ruby_block 'wait-for-redis-stop' do
   block do
     sleep 3
   end
+  action :nothing
+  subscribes :run, 'hab_service[core/redis]', :immediately
 end
 
 hab_service 'core/redis stop' do

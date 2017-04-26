@@ -55,8 +55,8 @@ class Chef
           @current_resource = Chef::Resource::HartPackage.new(new_resource.name)
           current_resource.package_name(strip_version(new_resource.package_name))
 
-          @candidate_version = retrieve_candidate_versions
-          current_resource.version(retrieve_current_versions)
+          @candidate_version = candidate_versions
+          current_resource.version(current_versions)
 
           current_resource
         end
@@ -127,19 +127,19 @@ class Chef
           @http ||= Chef::HTTP::Simple.new('https://willem.habitat.sh/')
         end
 
-        def retrieve_candidate_versions
+        def candidate_versions
           package_name_array.zip(new_version_array).map do |n, v|
             package_version(n, v)
           end
         end
 
-        def retrieve_current_versions
+        def current_versions
           package_name_array.zip(new_version_array).map do |n, _v|
-            retrieve_installed_version(n)
+            installed_version(n)
           end
         end
 
-        def retrieve_installed_version(ident)
+        def installed_version(ident)
           hab('pkg', 'path', ident).stdout.chomp.split('/')[-2..-1].join('/')
         rescue Mixlib::ShellOut::ShellCommandFailed
           nil
