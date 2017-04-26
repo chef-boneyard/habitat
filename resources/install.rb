@@ -20,7 +20,7 @@
 resource_name :hab_install
 provides :hab_install
 
-property :install_url, String, default: "https://raw.githubusercontent.com/habitat-sh/habitat/master/components/hab/install.sh"
+property :install_url, String, default: 'https://raw.githubusercontent.com/habitat-sh/habitat/master/components/hab/install.sh'
 property :depot_url, String
 property :version, String
 property :channel, String
@@ -28,49 +28,49 @@ property :channel, String
 action :install do
   if ::File.exist?(hab_path)
     return unless new_resource.version
-    cmd = shell_out!([hab_path, "--version"])
-    version = /hab (\d*\.\d*\.\d[^\/]*)/.match(cmd.stdout)[1]
+    cmd = shell_out!([hab_path, '--version'])
+    version = %r{hab (\d*\.\d*\.\d[^\/]*)}.match(cmd.stdout)[1]
     return if new_resource.version == version
   end
 
-  remote_file ::File.join(Chef::Config[:file_cache_path], "hab-install.sh") do
+  remote_file ::File.join(Chef::Config[:file_cache_path], 'hab-install.sh') do
     source new_resource.install_url
   end
 
-  execute "installing with hab-install.sh" do
+  execute 'installing with hab-install.sh' do
     command hab_command
-    environment "HAB_DEPOT_URL" => new_resource.depot_url if new_resource.depot_url
+    environment 'HAB_DEPOT_URL' => new_resource.depot_url if new_resource.depot_url
   end
 end
 
 action :upgrade do
-  remote_file ::File.join(Chef::Config[:file_cache_path], "hab-install.sh") do
+  remote_file ::File.join(Chef::Config[:file_cache_path], 'hab-install.sh') do
     source new_resource.install_url
   end
 
-  execute "installing with hab-install.sh" do
+  execute 'installing with hab-install.sh' do
     command hab_command
-    environment "HAB_DEPOT_URL" => new_resource.depot_url if new_resource.depot_url
+    environment 'HAB_DEPOT_URL' => new_resource.depot_url if new_resource.depot_url
   end
 end
 
 action_class do
   def hab_path
-    if platform_family?("mac_os_x")
-      "/usr/local/bin/hab"
-    elsif platform_family?("windows")
-      Chef::Log.warn "Habitat installation on Windows is not yet supported by this cookbook."
-      Chef::Log.warn "The installation location on Windows will probably change in the future."
-      "C:/Program Files/Habitat/hab.exe"
+    if platform_family?('mac_os_x')
+      '/usr/local/bin/hab'
+    elsif platform_family?('windows')
+      Chef::Log.warn 'Habitat installation on Windows is not yet supported by this cookbook.'
+      Chef::Log.warn 'The installation location on Windows will probably change in the future.'
+      'C:/Program Files/Habitat/hab.exe'
     else
-      "/bin/hab"
+      '/bin/hab'
     end
   end
 
   def hab_command
-    cmd = [ "bash #{Chef::Config[:file_cache_path]}/hab-install.sh" ]
+    cmd = ["bash #{Chef::Config[:file_cache_path]}/hab-install.sh"]
     cmd.push("-v #{new_resource.version}") if new_resource.version
     cmd.push("-c #{new_resource.channel}") if new_resource.channel
-    cmd.join(" ")
+    cmd.join(' ')
   end
 end

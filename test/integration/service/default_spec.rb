@@ -1,40 +1,25 @@
-describe user("hab") do
+describe user('hab') do
   it { should exist }
 end
 
-describe directory("/hab/pkgs/core/nginx") do
+describe directory('/hab/pkgs/core/nginx') do
   it { should exist }
 end
 
-describe file("/etc/systemd/system/nginx.service") do
+describe directory('/hab/pkgs/core/redis') do
   it { should exist }
 end
 
-describe systemd_service("nginx") do
-  it { should be_running }
-  it { should be_enabled }
+describe file('/hab/sup/default/specs/haproxy.spec') do
+  it { should_not exist }
 end
 
-describe command("curl http://localhost/") do
-  # without this sleep we consistently fail the test O.o
-  sleep 3
-  its("exit_status") { should eq 0 }
-end
-
-describe directory("/hab/pkgs/core/redis") do
+describe file('/hab/sup/default/specs/redis.spec') do
   it { should exist }
+  its(:content) { should match(/desired_state = "down"/) }
 end
 
-describe file("/etc/systemd/system/redis.service") do
+describe file('/hab/sup/default/specs/memcached.spec') do
   it { should exist }
-end
-
-describe systemd_service("redis") do
-  it { should_not be_running }
-  it { should be_enabled }
-end
-
-describe file("/etc/systemd/system/haproxy.service") do
-  it { should exist }
-  its(:content) { should match(%r{^ExecStart = /bin/hab start core/haproxy --permanent-peer$}) }
+  its(:content) { should match(/^desired_state = "up"$/) }
 end

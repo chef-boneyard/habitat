@@ -1,27 +1,54 @@
-include_recipe "::install"
+include_recipe '::install'
+hab_sup 'default'
 
-package "curl"
+user 'hab'
+group 'hab'
 
-user "hab"
+hab_package 'core/nginx'
+hab_service 'core/nginx'
 
-hab_package "core/nginx"
+# we need to sleep to let the nginx service have enough time to
+# startup properly before we can unload it.
+ruby_block 'wait-for-nginx-startup' do
+  block do
+    sleep 3
+  end
+  action :nothing
+  subscribes :run, 'hab_service[core/nginx]', :immediately
+end
 
-hab_service "core/nginx"
+hab_service 'core/nginx unload' do
+  service_name 'core/nginx'
+  action :unload
+end
 
-hab_package "core/redis" do
+# redis: options, and then stop
+hab_package 'core/redis' do
   action :upgrade
-  notifies :restart, "hab_service[core/redis]"
 end
 
-hab_service "core/redis" do
-  # Use an array of options!
-  exec_start_options ["--listen-gossip 9999", "--listen-http 9998"]
-  action :enable
+hab_service 'core/redis' do
+  strategy 'rolling'
+  topology 'standalone'
+  action [:load, :start]
 end
 
-hab_package "core/haproxy"
-
-hab_service "core/haproxy" do
-  # Use a string of option [sic]
-  exec_start_options "--permanent-peer"
+# we need this sleep to let redis stop and for the hab supervisor to
+# recognize this and write the state file out otherwise our functional
+# tests fail.
+ruby_block 'wait-for-redis-stop' do
+  block do
+    sleep 3
+  end
+  action :nothing
+  subscribes :run, 'hab_service[core/redis]', :immediately
 end
+
+hab_service 'core/redis stop' do
+  service_name 'core/redis'
+  action :stop
+end
+
+# memcached
+hab_package 'core/memcached'
+hab_service 'core/memcached'
