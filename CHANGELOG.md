@@ -2,6 +2,12 @@
 
 This file is used to list changes made in each version of the habitat cookbook.
 
+## v0.4.0 (2017-04-26)
+
+- Backwards incompatible version, requires habitat 0.20 or higher
+- Add `hab_sup` resource for managing Habitat supervisor. See readme for usage.
+- Rewrite `hab_service` resource to manage services in Habitat supervisor
+
 ## v0.3.0 (2017-02-21)
 
 - Add property for ExecStart options. See readme for usage
