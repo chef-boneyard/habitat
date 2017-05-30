@@ -9,7 +9,7 @@ verifier:
   name: inspec
 
 platforms:
-  - name: centos-6.8
+  - name: centos-6.9
   - name: centos-7.3
   - name: debian-7.11
   - name: debian-8.7
@@ -27,13 +27,13 @@ suites:
     run_list: test::service
     # these platforms don't have systemd as the default init system
     excludes:
-      - centos-6.8
+      - centos-6.9
       - debian-7.11
       - ubuntu-14.04
   - name: sup
     run_list: test::sup
     # these platforms don't have systemd as the default init system
     excludes:
-      - centos-6.8
+      - centos-6.9
       - debian-7.11
       - ubuntu-14.04
