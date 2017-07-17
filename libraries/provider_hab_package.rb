@@ -63,7 +63,7 @@ class Chef
 
         def install_package(names, versions)
           names.zip(versions).map do |n, v|
-            hab('pkg', 'install', '--url', new_resource.depot_url, "#{strip_version(n)}/#{v}")
+            hab('pkg', 'install', '--channel', new_resource.channel, '--url', new_resource.depot_url, "#{strip_version(n)}/#{v}")
           end
         end
 
