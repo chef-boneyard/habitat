@@ -32,15 +32,15 @@ Installs Habitat on the system using the [install script](https://raw.githubuser
 
 #### Actions
 
-* `install`: Installs Habitat. Does nothing if the `hab` binary is found in the default location for the system (`/bin/hab` on Linux, `/usr/local/bin/hab` on macOS)
-* `upgrade`: Installs the latest version of Habitat, does not check if the binary exists
+- `install`: Installs Habitat. Does nothing if the `hab` binary is found in the default location for the system (`/bin/hab` on Linux, `/usr/local/bin/hab` on macOS)
+- `upgrade`: Installs the latest version of Habitat, does not check if the binary exists
 
 #### Properties
 
-* `install_url`: URL to the install script, default is from the [habitat repo](https://raw.githubusercontent.com/habitat-sh/habitat/master/components/hab/install.sh)
-* `depot_url`: Optional URL to an alternate Depot (defaults to the public Depot)
-* `version`: The version of habitat to install (defaults to latest)
-* `channel`: The release channel to install from (defaults to `stable`)
+- `install_url`: URL to the install script, default is from the [habitat repo](https://raw.githubusercontent.com/habitat-sh/habitat/master/components/hab/install.sh)
+- `depot_url`: Optional URL to an alternate Depot (defaults to the public Depot)
+- `version`: The version of habitat to install (defaults to latest)
+- `channel`: The release channel to install from (defaults to `stable`)
 
 #### Examples
 
@@ -68,14 +68,14 @@ This resource is written as a library resource because it subclasses Chef's `pac
 
 #### actions
 
-* `install`: installs the specified package
-* `upgrade`: aliased to install
+- `install`: installs the specified package
+- `upgrade`: aliased to install
 
 #### Properties
 
-* `package_name`: A Habitat package name, must include the origin and package name separated by `/`, for example, `core/redis`
-* `version`: A Habitat version which contains the version and optionally a release separated by `/`, for example, `3.2.3` or `3.2.3/20160920131015`
-* `depot_url`: The habitat depot url where packages will be downloaded from (defaults to public habitat depot)
+- `package_name`: A Habitat package name, must include the origin and package name separated by `/`, for example, `core/redis`
+- `version`: A Habitat version which contains the version and optionally a release separated by `/`, for example, `3.2.3` or `3.2.3/20160920131015`
+- `depot_url`: The habitat depot url where packages will be downloaded from (defaults to public habitat depot)
 
 While it is valid to pass the version and release with a Habitat package as a "fully qualified package identifier" when using the `hab` CLI, they must be specified using the `version` property when using this resource. See the examples below.
 
@@ -99,29 +99,29 @@ Manages a Habitat application service using `hab sup`/`hab service`. This requir
 
 #### Actions
 
-* `load`: (default action) runs `hab service load` to load and start the specified application service
-* `unload`: runs `hab service unload` to unload and stop the specified application service
-* `start`: runs `hab service start` to start the specified application service
-* `stop`: runs `hab service stop` to stop the specified application service
+- `load`: (default action) runs `hab service load` to load and start the specified application service
+- `unload`: runs `hab service unload` to unload and stop the specified application service
+- `start`: runs `hab service start` to start the specified application service
+- `stop`: runs `hab service stop` to stop the specified application service
 
 #### Properties
 
-* `service_name`: name property, the name of the service, must be in the form of `origin/name`
-* `loaded`: state property indicating whether the service is loaded in the supervisor
-* `running`: state property indicating whether the service is running in the supervisor
-* `permanent_peer`: Only valid for `:start` action, passes `--permanent-peer` to the hab command
-* `listen_gossip`: Only valid for `:start` action, passes `--listen-gossip` with the specified address and port, e.g., `0.0.0.0:9638`, to the hab command
-* `listen_http`: Only valid for `:start` action, passes `--listen-http` with the specified address and port, e.g., `0.0.0.0:9631`, to the hab command
-* `org`: Only valid for `:start` action, passes `--org` with the specified org name to the hab command
-* `peer`: Only valid for `:start` action, passes `--peer` with the specified initial peer to the hab command
-* `ring`: Only valid for `:start` action, passes `--ring` with the specified ring key name to the hab command
-* `strategy`: Only valid for `:start` or `:load` actions, passes `--strategy` with the specified update strategy to the hab command
-* `topology`: Only valid for `:start` or `:load` actions, passes `--topology` with the specified service topology to the hab command
-* `depot_url`: Only valid for `:start` or `:load` actions, passes `--url` with the specified Depot URL to the hab command
-* `bind`: Only valid for `:start` or `:load` actions, passes `--bind` with the specified services to bind to the hab command
-* `service_group`: Only valid for `:start` or `:load` actions, passes `--group` with the specified service group to the hab command
-* `config_from`: Only valid for `:start` action, passes `--config-from` with the specified directory to the hab command
-* `override_name`: **Advanced Use** Valid for all actions, passes `--override-name` with the specified name to the hab command; used for running services in multiple supervisors
+- `service_name`: name property, the name of the service, must be in the form of `origin/name`
+- `loaded`: state property indicating whether the service is loaded in the supervisor
+- `running`: state property indicating whether the service is running in the supervisor
+- `permanent_peer`: Only valid for `:start` action, passes `--permanent-peer` to the hab command
+- `listen_gossip`: Only valid for `:start` action, passes `--listen-gossip` with the specified address and port, e.g., `0.0.0.0:9638`, to the hab command
+- `listen_http`: Only valid for `:start` action, passes `--listen-http` with the specified address and port, e.g., `0.0.0.0:9631`, to the hab command
+- `org`: Only valid for `:start` action, passes `--org` with the specified org name to the hab command
+- `peer`: Only valid for `:start` action, passes `--peer` with the specified initial peer to the hab command
+- `ring`: Only valid for `:start` action, passes `--ring` with the specified ring key name to the hab command
+- `strategy`: Only valid for `:start` or `:load` actions, passes `--strategy` with the specified update strategy to the hab command
+- `topology`: Only valid for `:start` or `:load` actions, passes `--topology` with the specified service topology to the hab command
+- `depot_url`: Only valid for `:start` or `:load` actions, passes `--url` with the specified Depot URL to the hab command
+- `bind`: Only valid for `:start` or `:load` actions, passes `--bind` with the specified services to bind to the hab command
+- `service_group`: Only valid for `:start` or `:load` actions, passes `--group` with the specified service group to the hab command
+- `config_from`: Only valid for `:start` action, passes `--config-from` with the specified directory to the hab command
+- `override_name`: **Advanced Use** Valid for all actions, passes `--override-name` with the specified name to the hab command; used for running services in multiple supervisors
 
 #### Examples
 
@@ -150,17 +150,17 @@ The `run` action handles installing Habitat using the `hab_install` resource, en
 
 #### Actions
 
-* `run`: starts the `hab-sup` service
+- `run`: starts the `hab-sup` service
 
 #### Properties
 
-* `permanent_peer`: Only valid for `:start` action, passes `--permanent-peer` to the hab command
-* `listen_gossip`: Only valid for `:start` action, passes `--listen-gossip` with the specified address and port, e.g., `0.0.0.0:9638`, to the hab command
-* `listen_http`: Only valid for `:start` action, passes `--listen-http` with the specified address and port, e.g., `0.0.0.0:9631`, to the hab command
-* `org`: Only valid for `:start` action, passes `--org` with the specified org name to the hab command
-* `peer`: Only valid for `:start` action, passes `--peer` with the specified initial peer to the hab command
-* `ring`: Only valid for `:start` action, passes `--ring` with the specified ring key name to the hab command
-* `override_name`: **Advanced Use** Valid for all actions, passes `--override-name` with the specified name to the hab command; used for running services in multiple supervisors
+- `permanent_peer`: Only valid for `:start` action, passes `--permanent-peer` to the hab command
+- `listen_gossip`: Only valid for `:start` action, passes `--listen-gossip` with the specified address and port, e.g., `0.0.0.0:9638`, to the hab command
+- `listen_http`: Only valid for `:start` action, passes `--listen-http` with the specified address and port, e.g., `0.0.0.0:9631`, to the hab command
+- `org`: Only valid for `:start` action, passes `--org` with the specified org name to the hab command
+- `peer`: Only valid for `:start` action, passes `--peer` with the specified initial peer to the hab command
+- `ring`: Only valid for `:start` action, passes `--ring` with the specified ring key name to the hab command
+- `override_name`: **Advanced Use** Valid for all actions, passes `--override-name` with the specified name to the hab command; used for running services in multiple supervisors
 
 #### Examples
 
