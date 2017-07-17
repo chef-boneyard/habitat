@@ -18,21 +18,17 @@ This cookbook provides resources for working with [Habitat](https://habitat.sh).
 
 ### Chef
 
-Chef 12.11, for the `systemd_unit` resource.
-
-Resources are written in the style of Chef 12.5 [custom resources](https://docs.chef.io/custom_resources.html) where applicable or available.
+- Chef 12.11+
 
 ### Cookbooks
 
-This cookbook has no external cookbook dependencies. It does not attempt to maintain backwards compatibility with previous Chef versions.
+- None
 
 ## Resources
 
 ### hab_install
 
 Installs Habitat on the system using the [install script](https://raw.githubusercontent.com/habitat-sh/habitat/master/components/hab/install.sh).
-
-This resource is written as a Chef 12.5 custom resource.
 
 #### Actions
 
