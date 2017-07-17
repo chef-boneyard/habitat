@@ -3,6 +3,7 @@ include_recipe '::install'
 hab_package 'core/redis'
 
 hab_package 'lamont-granquist/ruby' do
+  channel 'unstable'
   version '2.3.1'
 end
 

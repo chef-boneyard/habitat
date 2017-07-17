@@ -25,6 +25,7 @@ class Chef
       provides :hab_package
 
       property :depot_url, String, regex: /.*/, default: 'https://willem.habitat.sh/v1/depot'
+      property :channel, String, default: 'stable'
     end
   end
 end

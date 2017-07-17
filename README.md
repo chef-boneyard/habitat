@@ -16,6 +16,10 @@ This cookbook provides resources for working with [Habitat](https://habitat.sh).
 - RHEL 7+
 - Ubuntu 16.04+
 
+### Habitat
+
+- 0.26+ (for channel support)
+
 ### Chef
 
 - Chef 12.11+
