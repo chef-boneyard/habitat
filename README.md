@@ -182,14 +182,19 @@ hab_sup 'test-options' do
 end
 ```
 
-## License and Authors
+## Maintainers
 
-* Author: Lamont Granquist [lamont@chef.io](mailto:lamont@chef.io)
-* Author: Joshua Timberman [joshua@chef.io](mailto:joshua@chef.io)
+This cookbook is maintained by Chef's Community Cookbook Engineering team along with the following maintainers:
 
-```text
-Copyright 2016-2017, Chef Software, Inc
+- Joshua Timberman [joshua@chef.io](mailto:joshua@chef.io)
 
+The goal of the Community Cookbook Engineering team is to improve cookbook quality and to aid the community in contributing to cookbooks. To learn more about our team, process, and design goals see our [team documentation](https://github.com/chef-cookbooks/community_cookbook_documentation/blob/master/COOKBOOK_TEAM.MD). To learn more about contributing to cookbooks like this see our [contributing documentation](https://github.com/chef-cookbooks/community_cookbook_documentation/blob/master/CONTRIBUTING.MD), or if you have general questions about this cookbook come chat with us in #cookbok-engineering on the [Chef Community Slack](http://community-slack.chef.io/)
+
+## License
+
+**Copyright:** 2016-2017, Chef Software, Inc.
+
+```
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
