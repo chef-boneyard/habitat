@@ -5,7 +5,6 @@
 This cookbook provides resources for working with [Habitat](https://habitat.sh). It is intended that these resources will be included in core Chef at some point in the future, so it is important to note:
 
 - APIs are subject to change
-- Code style adheres to chef-core (chefstyle)
 - Habitat is a rapidly changing product, and this cookbook may change rapidly as well
 
 (this is a pre-1.0 version, after all)
@@ -19,13 +18,11 @@ This cookbook provides resources for working with [Habitat](https://habitat.sh).
 
 ### Chef
 
-Chef 12.11, for the `systemd_unit` resource.
-
-Resources are written in the style of Chef 12.5 [custom resources](https://docs.chef.io/custom_resources.html) where applicable or available.
+- Chef 12.11+
 
 ### Cookbooks
 
-This cookbook has no external cookbook dependencies. It does not attempt to maintain backwards compatibility with previous Chef versions.
+- None
 
 ## Resources
 
@@ -33,19 +30,17 @@ This cookbook has no external cookbook dependencies. It does not attempt to main
 
 Installs Habitat on the system using the [install script](https://raw.githubusercontent.com/habitat-sh/habitat/master/components/hab/install.sh).
 
-This resource is written as a Chef 12.5 custom resource.
-
 #### Actions
 
-* `install`: Installs Habitat. Does nothing if the `hab` binary is found in the default location for the system (`/bin/hab` on Linux, `/usr/local/bin/hab` on macOS)
-* `upgrade`: Installs the latest version of Habitat, does not check if the binary exists
+- `install`: Installs Habitat. Does nothing if the `hab` binary is found in the default location for the system (`/bin/hab` on Linux, `/usr/local/bin/hab` on macOS)
+- `upgrade`: Installs the latest version of Habitat, does not check if the binary exists
 
 #### Properties
 
-* `install_url`: URL to the install script, default is from the [habitat repo](https://raw.githubusercontent.com/habitat-sh/habitat/master/components/hab/install.sh)
-* `depot_url`: Optional URL to an alternate Depot (defaults to the public Depot)
-* `version`: The version of habitat to install (defaults to latest)
-* `channel`: The release channel to install from (defaults to `stable`)
+- `install_url`: URL to the install script, default is from the [habitat repo](https://raw.githubusercontent.com/habitat-sh/habitat/master/components/hab/install.sh)
+- `depot_url`: Optional URL to an alternate Depot (defaults to the public Depot)
+- `version`: The version of habitat to install (defaults to latest)
+- `channel`: The release channel to install from (defaults to `stable`)
 
 #### Examples
 
@@ -73,14 +68,14 @@ This resource is written as a library resource because it subclasses Chef's `pac
 
 #### actions
 
-* `install`: installs the specified package
-* `upgrade`: aliased to install
+- `install`: installs the specified package
+- `upgrade`: aliased to install
 
 #### Properties
 
-* `package_name`: A Habitat package name, must include the origin and package name separated by `/`, for example, `core/redis`
-* `version`: A Habitat version which contains the version and optionally a release separated by `/`, for example, `3.2.3` or `3.2.3/20160920131015`
-* `depot_url`: The habitat depot url where packages will be downloaded from (defaults to public habitat depot)
+- `package_name`: A Habitat package name, must include the origin and package name separated by `/`, for example, `core/redis`
+- `version`: A Habitat version which contains the version and optionally a release separated by `/`, for example, `3.2.3` or `3.2.3/20160920131015`
+- `depot_url`: The habitat depot url where packages will be downloaded from (defaults to public habitat depot)
 
 While it is valid to pass the version and release with a Habitat package as a "fully qualified package identifier" when using the `hab` CLI, they must be specified using the `version` property when using this resource. See the examples below.
 
@@ -104,29 +99,29 @@ Manages a Habitat application service using `hab sup`/`hab service`. This requir
 
 #### Actions
 
-* `load`: (default action) runs `hab service load` to load and start the specified application service
-* `unload`: runs `hab service unload` to unload and stop the specified application service
-* `start`: runs `hab service start` to start the specified application service
-* `stop`: runs `hab service stop` to stop the specified application service
+- `load`: (default action) runs `hab service load` to load and start the specified application service
+- `unload`: runs `hab service unload` to unload and stop the specified application service
+- `start`: runs `hab service start` to start the specified application service
+- `stop`: runs `hab service stop` to stop the specified application service
 
 #### Properties
 
-* `service_name`: name property, the name of the service, must be in the form of `origin/name`
-* `loaded`: state property indicating whether the service is loaded in the supervisor
-* `running`: state property indicating whether the service is running in the supervisor
-* `permanent_peer`: Only valid for `:start` action, passes `--permanent-peer` to the hab command
-* `listen_gossip`: Only valid for `:start` action, passes `--listen-gossip` with the specified address and port, e.g., `0.0.0.0:9638`, to the hab command
-* `listen_http`: Only valid for `:start` action, passes `--listen-http` with the specified address and port, e.g., `0.0.0.0:9631`, to the hab command
-* `org`: Only valid for `:start` action, passes `--org` with the specified org name to the hab command
-* `peer`: Only valid for `:start` action, passes `--peer` with the specified initial peer to the hab command
-* `ring`: Only valid for `:start` action, passes `--ring` with the specified ring key name to the hab command
-* `strategy`: Only valid for `:start` or `:load` actions, passes `--strategy` with the specified update strategy to the hab command
-* `topology`: Only valid for `:start` or `:load` actions, passes `--topology` with the specified service topology to the hab command
-* `depot_url`: Only valid for `:start` or `:load` actions, passes `--url` with the specified Depot URL to the hab command
-* `bind`: Only valid for `:start` or `:load` actions, passes `--bind` with the specified services to bind to the hab command
-* `service_group`: Only valid for `:start` or `:load` actions, passes `--group` with the specified service group to the hab command
-* `config_from`: Only valid for `:start` action, passes `--config-from` with the specified directory to the hab command
-* `override_name`: **Advanced Use** Valid for all actions, passes `--override-name` with the specified name to the hab command; used for running services in multiple supervisors
+- `service_name`: name property, the name of the service, must be in the form of `origin/name`
+- `loaded`: state property indicating whether the service is loaded in the supervisor
+- `running`: state property indicating whether the service is running in the supervisor
+- `permanent_peer`: Only valid for `:start` action, passes `--permanent-peer` to the hab command
+- `listen_gossip`: Only valid for `:start` action, passes `--listen-gossip` with the specified address and port, e.g., `0.0.0.0:9638`, to the hab command
+- `listen_http`: Only valid for `:start` action, passes `--listen-http` with the specified address and port, e.g., `0.0.0.0:9631`, to the hab command
+- `org`: Only valid for `:start` action, passes `--org` with the specified org name to the hab command
+- `peer`: Only valid for `:start` action, passes `--peer` with the specified initial peer to the hab command
+- `ring`: Only valid for `:start` action, passes `--ring` with the specified ring key name to the hab command
+- `strategy`: Only valid for `:start` or `:load` actions, passes `--strategy` with the specified update strategy to the hab command
+- `topology`: Only valid for `:start` or `:load` actions, passes `--topology` with the specified service topology to the hab command
+- `depot_url`: Only valid for `:start` or `:load` actions, passes `--url` with the specified Depot URL to the hab command
+- `bind`: Only valid for `:start` or `:load` actions, passes `--bind` with the specified services to bind to the hab command
+- `service_group`: Only valid for `:start` or `:load` actions, passes `--group` with the specified service group to the hab command
+- `config_from`: Only valid for `:start` action, passes `--config-from` with the specified directory to the hab command
+- `override_name`: **Advanced Use** Valid for all actions, passes `--override-name` with the specified name to the hab command; used for running services in multiple supervisors
 
 #### Examples
 
@@ -155,17 +150,17 @@ The `run` action handles installing Habitat using the `hab_install` resource, en
 
 #### Actions
 
-* `run`: starts the `hab-sup` service
+- `run`: starts the `hab-sup` service
 
 #### Properties
 
-* `permanent_peer`: Only valid for `:start` action, passes `--permanent-peer` to the hab command
-* `listen_gossip`: Only valid for `:start` action, passes `--listen-gossip` with the specified address and port, e.g., `0.0.0.0:9638`, to the hab command
-* `listen_http`: Only valid for `:start` action, passes `--listen-http` with the specified address and port, e.g., `0.0.0.0:9631`, to the hab command
-* `org`: Only valid for `:start` action, passes `--org` with the specified org name to the hab command
-* `peer`: Only valid for `:start` action, passes `--peer` with the specified initial peer to the hab command
-* `ring`: Only valid for `:start` action, passes `--ring` with the specified ring key name to the hab command
-* `override_name`: **Advanced Use** Valid for all actions, passes `--override-name` with the specified name to the hab command; used for running services in multiple supervisors
+- `permanent_peer`: Only valid for `:start` action, passes `--permanent-peer` to the hab command
+- `listen_gossip`: Only valid for `:start` action, passes `--listen-gossip` with the specified address and port, e.g., `0.0.0.0:9638`, to the hab command
+- `listen_http`: Only valid for `:start` action, passes `--listen-http` with the specified address and port, e.g., `0.0.0.0:9631`, to the hab command
+- `org`: Only valid for `:start` action, passes `--org` with the specified org name to the hab command
+- `peer`: Only valid for `:start` action, passes `--peer` with the specified initial peer to the hab command
+- `ring`: Only valid for `:start` action, passes `--ring` with the specified ring key name to the hab command
+- `override_name`: **Advanced Use** Valid for all actions, passes `--override-name` with the specified name to the hab command; used for running services in multiple supervisors
 
 #### Examples
 
@@ -182,14 +177,19 @@ hab_sup 'test-options' do
 end
 ```
 
-## License and Authors
+## Maintainers
 
-* Author: Lamont Granquist [lamont@chef.io](mailto:lamont@chef.io)
-* Author: Joshua Timberman [joshua@chef.io](mailto:joshua@chef.io)
+This cookbook is maintained by Chef's Community Cookbook Engineering team along with the following maintainers:
 
-```text
-Copyright 2016-2017, Chef Software, Inc
+- Joshua Timberman [joshua@chef.io](mailto:joshua@chef.io)
 
+The goal of the Community Cookbook Engineering team is to improve cookbook quality and to aid the community in contributing to cookbooks. To learn more about our team, process, and design goals see our [team documentation](https://github.com/chef-cookbooks/community_cookbook_documentation/blob/master/COOKBOOK_TEAM.MD). To learn more about contributing to cookbooks like this see our [contributing documentation](https://github.com/chef-cookbooks/community_cookbook_documentation/blob/master/CONTRIBUTING.MD), or if you have general questions about this cookbook come chat with us in #cookbok-engineering on the [Chef Community Slack](http://community-slack.chef.io/)
+
+## License
+
+**Copyright:** 2016-2017, Chef Software, Inc.
+
+```
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at

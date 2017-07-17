@@ -18,7 +18,6 @@
 #
 
 resource_name :hab_install
-provides :hab_install
 
 property :install_url, String, default: 'https://raw.githubusercontent.com/habitat-sh/habitat/master/components/hab/install.sh'
 property :depot_url, String

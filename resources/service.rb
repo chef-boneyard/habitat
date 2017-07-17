@@ -15,7 +15,6 @@
 #
 
 resource_name :hab_service
-provides :hab_service
 
 property :service_name, String, name_property: true
 property :loaded, [true, false], default: false, desired_state: true
