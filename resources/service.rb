@@ -55,19 +55,19 @@ load_current_value do
 end
 
 action :load do
-  execute "hab sup load #{service_name} #{sup_options.join(' ')}" unless loaded
+  execute "hab sup load #{new_resource.service_name} #{sup_options.join(' ')}" unless current_resource.loaded
 end
 
 action :unload do
-  execute "hab sup unload #{service_name} #{sup_options.join(' ')}" if loaded
+  execute "hab sup unload #{new_resource.service_name} #{sup_options.join(' ')}" if current_resource.loaded
 end
 
 action :start do
-  execute "hab sup start #{service_name} #{sup_options.join(' ')}" unless running
+  execute "hab sup start #{new_resource.service_name} #{sup_options.join(' ')}" unless current_resource.running
 end
 
 action :stop do
-  execute "hab sup stop #{service_name} #{sup_options.join(' ')}" if running
+  execute "hab sup stop #{new_resource.service_name} #{sup_options.join(' ')}" if current_resource.running
 end
 
 action :restart do
@@ -89,27 +89,27 @@ action_class do
     # certain options are only valid for specific `hab sup` subcommands.
     case action
     when :load
-      opts << "--bind #{bind}" if bind
-      opts << "--url #{depot_url}" if depot_url
-      opts << "--group #{service_group}" if service_group
-      opts << "--strategy #{strategy}" if strategy
-      opts << "--topology #{topology}" if topology
+      opts << "--bind #{new_resource.bind}" if new_resource.bind
+      opts << "--url #{new_resource.depot_url}" if new_resource.depot_url
+      opts << "--group #{new_resource.service_group}" if new_resource.service_group
+      opts << "--strategy #{new_resource.strategy}" if new_resource.strategy
+      opts << "--topology #{new_resource.topology}" if new_resource.topology
     when :start
-      opts << '--permanent-peer' if permanent_peer
-      opts << "--bind #{bind}" if bind
-      opts << "--config-from #{config_from}" if config_from
-      opts << "--url #{depot_url}" if depot_url
-      opts << "--group #{service_group}" if service_group
-      opts << "--listen-gossip #{listen_gossip}" if listen_gossip
-      opts << "--listen-http #{listen_http}" if listen_http
-      opts << "--org #{org}" unless org == 'default'
-      opts << "--peer #{peer}" if peer
-      opts << "--ring #{ring}" if ring
-      opts << "--strategy #{strategy}" if strategy
-      opts << "--topology #{topology}" if topology
+      opts << '--permanent-peer' if new_resource.permanent_peer
+      opts << "--bind #{new_resource.bind}" if new_resource.bind
+      opts << "--config-from #{new_resource.config_from}" if new_resource.config_from
+      opts << "--url #{new_resource.depot_url}" if new_resource.depot_url
+      opts << "--group #{new_resource.service_group}" if new_resource.service_group
+      opts << "--listen-gossip #{new_resource.listen_gossip}" if new_resource.listen_gossip
+      opts << "--listen-http #{new_resource.listen_http}" if new_resource.listen_http
+      opts << "--org #{new_resource.org}" unless new_resource.org == 'default'
+      opts << "--peer #{new_resource.peer}" if new_resource.peer
+      opts << "--ring #{new_resource.ring}" if new_resource.ring
+      opts << "--strategy #{new_resource.strategy}" if new_resource.strategy
+      opts << "--topology #{new_resource.topology}" if new_resource.topology
     end
 
-    opts << "--override-name #{override_name}" unless override_name == 'default'
+    opts << "--override-name #{new_resource.override_name}" unless new_resource.override_name == 'default'
 
     opts.map(&:split).flatten.compact
   end
