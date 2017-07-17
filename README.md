@@ -5,7 +5,6 @@
 This cookbook provides resources for working with [Habitat](https://habitat.sh). It is intended that these resources will be included in core Chef at some point in the future, so it is important to note:
 
 - APIs are subject to change
-- Code style adheres to chef-core (chefstyle)
 - Habitat is a rapidly changing product, and this cookbook may change rapidly as well
 
 (this is a pre-1.0 version, after all)
