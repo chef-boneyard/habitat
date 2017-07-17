@@ -31,10 +31,10 @@ property :peer, String
 property :ring, String
 
 action :run do
-  hab_install name
+  hab_install new_resource.name
   hab_package 'core/hab-sup'
 
-  systemd_unit "hab-sup-#{override_name}.service" do
+  systemd_unit "hab-sup-#{new_resource.override_name}.service" do
     content(Unit: {
               Description: 'The Habitat Supervisor',
             },
@@ -48,7 +48,7 @@ action :run do
     action :create
   end
 
-  service "hab-sup-#{override_name}" do
+  service "hab-sup-#{new_resource.override_name}" do
     subscribes :restart, 'systemd_unit[hab-sup.service]'
     action :start
   end
@@ -57,13 +57,13 @@ end
 action_class do
   def exec_start_options
     opts = []
-    opts << '--permanent-peer' if permanent_peer
-    opts << "--listen-gossip #{listen_gossip}" if listen_gossip
-    opts << "--listen-http #{listen_http}" if listen_http
-    opts << "--override-name #{override_name}" unless override_name == 'default'
-    opts << "--org #{org}" unless org == 'default'
-    opts << "--peer #{peer}" if peer
-    opts << "--ring #{ring}" if ring
+    opts << '--permanent-peer' if new_resource.permanent_peer
+    opts << "--listen-gossip #{new_resource.listen_gossip}" if new_resource.listen_gossip
+    opts << "--listen-http #{new_resource.listen_http}" if new_resource.listen_http
+    opts << "--override-name #{new_resource.override_name}" unless new_resource.override_name == 'default'
+    opts << "--org #{new_resource.org}" unless new_resource.org == 'default'
+    opts << "--peer #{new_resource.peer}" if new_resource.peer
+    opts << "--ring #{new_resource.ring}" if new_resource.ring
     opts.join(' ')
   end
 end
