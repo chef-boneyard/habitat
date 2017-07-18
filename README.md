@@ -80,6 +80,7 @@ This resource is written as a library resource because it subclasses Chef's `pac
 - `package_name`: A Habitat package name, must include the origin and package name separated by `/`, for example, `core/redis`
 - `version`: A Habitat version which contains the version and optionally a release separated by `/`, for example, `3.2.3` or `3.2.3/20160920131015`
 - `depot_url`: The habitat depot url where packages will be downloaded from (defaults to public habitat depot)
+- `channel`: The release channel to install from (defaults to `stable`)
 
 While it is valid to pass the version and release with a Habitat package as a "fully qualified package identifier" when using the `hab` CLI, they must be specified using the `version` property when using this resource. See the examples below.
 
@@ -90,6 +91,7 @@ hab_package "core/redis"
 
 hab_package "core/redis" do
   version "3.2.3"
+  channel "unstable"
 end
 
 hab_package "core/redis" do
@@ -99,7 +101,7 @@ end
 
 ### hab_service
 
-Manages a Habitat application service using `hab sup`/`hab service`. This requires [Habitat version 0.20 or higher](https://forums.habitat.sh/t/habitat-0-20-0-released/317). It also requires that `core/hab-sup` be running as a service. See the `hab_sup` resource documentation below for more information about how to set that up with this cookbook.
+Manages a Habitat application service using `hab sup`/`hab service`. This requires that `core/hab-sup` be running as a service. See the `hab_sup` resource documentation below for more information about how to set that up with this cookbook.
 
 #### Actions
 

@@ -2,6 +2,19 @@
 
 This file is used to list changes made in each version of the habitat cookbook.
 
+## 0.26.0 (2017-07-17)
+
+### Breaking Changes
+
+This cookbook was updated to be compatible with the changes made in Habitat 0.26. With these updates the cookbook now requires Habitat 0.26 or later. The version has been updated to match that of habitat. In the event of future breaking habitat changes the version of this cookbook will be updated to reflect the new minimum habitat release.
+  - The cookbook now correctly parses the process status returned by the hab sup services endpoint
+  - Packages now pull from the 'stable' channel by default. If you need to pull from another channel there is a new 'channel' property in the package resource that accepts a string.
+
+### Other Changes
+  - Resolves deprecation warnings introduced in Chef 13.2
+  - Removed references in the readme to Chefstyle and simplified some of the requirements information 
+  - Added maintainer information to the readme and removed the maintainers file
+
 ## v0.4.0 (2017-04-26)
 
 - Backwards incompatible version, requires habitat 0.20 or higher
