@@ -44,7 +44,7 @@ load_current_value do
   end
 
   running begin
-            sup_for_service_name['supervisor']['state'] == 'Up'
+            sup_for_service_name['process']['state'] == 'Up'
           rescue
             false
           end
