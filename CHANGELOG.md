@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of the habitat cookbook.
 
+## 0.26.1 (2017-07-21)
+
+- `hab_package` now properly selects latest version from the specified channel.
+
 ## 0.26.0 (2017-07-17)
 
 ### Breaking Changes
@@ -12,7 +16,7 @@ This cookbook was updated to be compatible with the changes made in Habitat 0.26
 
 ### Other Changes
   - Resolves deprecation warnings introduced in Chef 13.2
-  - Removed references in the readme to Chefstyle and simplified some of the requirements information 
+  - Removed references in the readme to Chefstyle and simplified some of the requirements information
   - Added maintainer information to the readme and removed the maintainers file
 
 ## v0.4.0 (2017-04-26)
