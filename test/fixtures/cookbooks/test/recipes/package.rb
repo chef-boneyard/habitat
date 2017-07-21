@@ -8,6 +8,7 @@ hab_package 'lamont-granquist/ruby' do
 end
 
 hab_package 'core/bundler' do
+  channel 'unstable'
   version '1.13.3/20161011123917'
 end
 

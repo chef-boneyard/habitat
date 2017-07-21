@@ -108,9 +108,10 @@ class Chef
           @depot_package ||= {}
           @depot_package[name] ||=
             begin
-              name_version = [name, version].compact.join('/').squeeze('/').chomp('/').sub(%r{^\/}, '')
-              url = "#{new_resource.depot_url.chomp('/')}/pkgs/#{name_version}"
-              url << '/latest' unless name_version.count('/') >= 3
+              origin, pkg_name = name.split('/')
+              name_version = [pkg_name, version].compact.join('/').squeeze('/').chomp('/').sub(%r{^\/}, '')
+              url = "#{new_resource.depot_url.chomp('/')}/channels/#{origin}/#{new_resource.channel}/pkgs/#{name_version}"
+              url << '/latest' unless name_version.count('/') >= 2
               Chef::JSONCompat.parse(http.get(url))
             rescue Net::HTTPServerException
               nil
