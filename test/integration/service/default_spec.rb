@@ -23,3 +23,8 @@ describe file('/hab/sup/default/specs/memcached.spec') do
   it { should exist }
   its(:content) { should match(/^desired_state = "up"$/) }
 end
+
+describe file('/hab/sup/default/specs/ruby-rails-sample.spec') do
+  it { should exist }
+  its(:content) { should match(/binds = \["database:postgresql.default", "fakething:otherthing.default"\]/) }
+end

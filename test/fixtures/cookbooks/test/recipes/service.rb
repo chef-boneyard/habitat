@@ -54,3 +54,12 @@ end
 # memcached
 hab_package 'core/memcached'
 hab_service 'core/memcached'
+
+# Test binds
+hab_package 'core/ruby-rails-sample'
+hab_service 'core/ruby-rails-sample' do
+  bind [
+    'database:postgresql.default',
+    'fakething:otherthing.default'
+  ]
+end
