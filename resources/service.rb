@@ -89,14 +89,14 @@ action_class do
     # certain options are only valid for specific `hab sup` subcommands.
     case action
     when :load
-      opts.push(*new_resource.bind.map{|b| "--bind #{b}"}) if new_resource.bind
+      opts.push(*new_resource.bind.map { |b| "--bind #{b}" }) if new_resource.bind
       opts << "--url #{new_resource.depot_url}" if new_resource.depot_url
       opts << "--group #{new_resource.service_group}" if new_resource.service_group
       opts << "--strategy #{new_resource.strategy}" if new_resource.strategy
       opts << "--topology #{new_resource.topology}" if new_resource.topology
     when :start
       opts << '--permanent-peer' if new_resource.permanent_peer
-      opts.push(*new_resource.bind.map{|b| "--bind #{b}"}) if new_resource.bind
+      opts.push(*new_resource.bind.map { |b| "--bind #{b}" }) if new_resource.bind
       opts << "--config-from #{new_resource.config_from}" if new_resource.config_from
       opts << "--url #{new_resource.depot_url}" if new_resource.depot_url
       opts << "--group #{new_resource.service_group}" if new_resource.service_group

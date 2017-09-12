@@ -60,6 +60,6 @@ hab_package 'core/ruby-rails-sample'
 hab_service 'core/ruby-rails-sample' do
   bind [
     'database:postgresql.default',
-    'fakething:otherthing.default'
+    'fakething:otherthing.default',
   ]
 end
