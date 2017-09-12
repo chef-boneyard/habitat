@@ -2,6 +2,11 @@
 
 This file is used to list changes made in each version of the habitat cookbook.
 
+## 0.27.0 (2017-09-11)
+
+- Add hab_version and hab_channel to the sup service
+- Support multiple binds with hab_service
+
 ## 0.26.1 (2017-07-21)
 
 - `hab_package` now properly selects latest version from the specified channel.
