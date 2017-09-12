@@ -166,6 +166,8 @@ The `run` action handles installing Habitat using the `hab_install` resource, en
 - `org`: Only valid for `:start` action, passes `--org` with the specified org name to the hab command
 - `peer`: Only valid for `:start` action, passes `--peer` with the specified initial peer to the hab command
 - `ring`: Only valid for `:start` action, passes `--ring` with the specified ring key name to the hab command
+- `hab_version`: The version of Habitat to install. Defaults to latest
+- `hab_channel`: The channel to install Habitat from. Defaults to stable
 - `override_name`: **Advanced Use** Valid for all actions, passes `--override-name` with the specified name to the hab command; used for running services in multiple supervisors
 
 #### Examples

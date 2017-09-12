@@ -1,5 +1,7 @@
-include_recipe '::install'
-hab_sup 'default'
+hab_sup 'default' do
+  hab_version '0.26.1'
+  hab_channel 'stable'
+end
 
 user 'hab'
 group 'hab'

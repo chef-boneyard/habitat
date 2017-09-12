@@ -29,9 +29,15 @@ property :override_name, String, default: 'default'
 property :org, String, default: 'default'
 property :peer, String
 property :ring, String
+property :hab_version, String
+property :hab_channel, String
 
 action :run do
-  hab_install new_resource.name
+  hab_install new_resource.name do
+    version new_resource.hab_version if new_resource.hab_version
+    channel new_resource.hab_channel if new_resource.hab_channel
+  end
+
   hab_package 'core/hab-sup'
 
   systemd_unit "hab-sup-#{new_resource.override_name}.service" do
