@@ -34,6 +34,7 @@ property :bind, [String, Array], coerce: proc { |b| b.is_a?(String) ? [b] : b }
 property :service_group, String
 property :config_from, String
 property :override_name, String, default: 'default'
+property :channel, [Symbol, String], equal_to: [:unstable, 'unstable', :current, 'current', :stable, 'stable'], default: :stable
 
 load_current_value do
   http_uri = listen_http ? listen_http : 'http://localhost:9631'
@@ -94,6 +95,7 @@ action_class do
       opts << "--group #{new_resource.service_group}" if new_resource.service_group
       opts << "--strategy #{new_resource.strategy}" if new_resource.strategy
       opts << "--topology #{new_resource.topology}" if new_resource.topology
+      opts << "--channel #{new_resource.channel}"
     when :start
       opts << '--permanent-peer' if new_resource.permanent_peer
       opts.push(*new_resource.bind.map { |b| "--bind #{b}" }) if new_resource.bind
@@ -107,6 +109,7 @@ action_class do
       opts << "--ring #{new_resource.ring}" if new_resource.ring
       opts << "--strategy #{new_resource.strategy}" if new_resource.strategy
       opts << "--topology #{new_resource.topology}" if new_resource.topology
+      opts << "--channel #{new_resource.channel}"
     end
 
     opts << "--override-name #{new_resource.override_name}" unless new_resource.override_name == 'default'

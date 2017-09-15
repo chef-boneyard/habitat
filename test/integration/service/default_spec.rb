@@ -17,6 +17,7 @@ end
 describe file('/hab/sup/default/specs/redis.spec') do
   it { should exist }
   its(:content) { should match(/desired_state = "down"/) }
+  its(:content) { should match(/channel = "stable"/) }
 end
 
 describe file('/hab/sup/default/specs/memcached.spec') do

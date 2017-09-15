@@ -28,7 +28,8 @@ describe 'test::service' do
     it 'loads a service with options' do
       expect(chef_run).to load_hab_service('core/redis').with(
         strategy: 'rolling',
-        topology: 'standalone'
+        topology: 'standalone',
+        channel: :stable
       )
     end
   end
