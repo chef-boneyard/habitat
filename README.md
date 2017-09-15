@@ -128,6 +128,7 @@ Manages a Habitat application service using `hab sup`/`hab service`. This requir
 - `service_group`: Only valid for `:start` or `:load` actions, passes `--group` with the specified service group to the hab command
 - `config_from`: Only valid for `:start` action, passes `--config-from` with the specified directory to the hab command
 - `override_name`: **Advanced Use** Valid for all actions, passes `--override-name` with the specified name to the hab command; used for running services in multiple supervisors
+- `channel`: Only valid for `:start` or `:load` actions, passes `--channel` with the specified channel to the hab command
 
 #### Examples
 

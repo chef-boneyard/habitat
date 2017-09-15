@@ -32,6 +32,7 @@ end
 hab_service 'core/redis' do
   strategy 'rolling'
   topology 'standalone'
+  channel :stable
   action [:load, :start]
 end
 
