@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of the habitat cookbook.
 
+## 0.28.0 (2017-09-19)
+
+- Add channel support to sup load/start
+
 ## 0.27.0 (2017-09-11)
 
 - Add hab_version and hab_channel to the sup service
