@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of the habitat cookbook.
 
+## 0.29.0 (2017-09-25)
+
+- Fix to account for [habitat-sh/habitat#3239](https://github.com/habitat-sh/habitat/pull/3239) - do not provide `/v1/depot` to Depot URL.
+
 ## 0.28.0 (2017-09-19)
 
 - Add channel support to sup load/start

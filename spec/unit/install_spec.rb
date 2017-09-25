@@ -20,7 +20,7 @@ describe 'test::install_for_chefspec' do
 
     it 'installs habitat with a depot url' do
       expect(chef_run).to install_hab_install('install habitat with depot url')
-        .with(depot_url: 'https://localhost/v1/depot')
+        .with(depot_url: 'https://localhost')
     end
   end
 end

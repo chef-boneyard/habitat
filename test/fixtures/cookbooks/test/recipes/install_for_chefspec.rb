@@ -7,5 +7,5 @@ hab_install 'install habitat with version' do
 end
 
 hab_install 'install habitat with depot url' do
-  depot_url 'https://localhost/v1/depot'
+  depot_url 'https://localhost'
 end
