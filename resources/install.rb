@@ -26,7 +26,7 @@ property :channel, String
 
 action :install do
   if new_resource.version
-    Chef::Log.warn("Do not specify a version of Habitat with the 'hab_install' resource.")
+    Chef::Log.warn("Do not specify a version of Habitat with the 'hab_install' resource, it is ignored.")
     Chef::Log.warn("The version property of the 'hab_install' resource will be removed in a future version.")
     Chef::Log.warn("See https://github.com/chef-cookbooks/habitat/blob/master/README.md#habitat")
   end
