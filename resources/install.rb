@@ -21,7 +21,12 @@ resource_name :hab_install
 
 property :install_url, String, default: 'https://raw.githubusercontent.com/habitat-sh/habitat/master/components/hab/install.sh'
 property :depot_url, String
-property :version, String
+
+# Default the installation version to one that we know the rest of
+# this cookbook will work with. This must be updated along with any
+# relevant code updates when new versions of Habitat are released.
+
+property :version, String, default: '0.33.2'
 property :channel, String
 
 action :install do

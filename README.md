@@ -18,7 +18,16 @@ This cookbook provides resources for working with [Habitat](https://habitat.sh).
 
 ### Habitat
 
-- 0.26+ (for channel support)
+- 0.33.2
+
+This cookbook installs a specific version of Habitat by default, as the upstream project is still pre-1.0 and APIs or similar behavior can change. When new versions of Habitat are released, the version should be updated:
+
+- `README.md`: note required version in this file
+- `resources/install.rb`: set the default to the new version
+- `spec/unit/install_spec`: to match the version from the resource
+- `test/integration/install/default_spec.rb`: to match the version from the resource
+
+Additionally, new versions must be tested that all behavior in the cookbook still works, otherwise the cookbook must be updated to match the behavior in the new version of Habitat.
 
 ### Chef
 
@@ -43,7 +52,7 @@ Installs Habitat on the system using the [install script](https://raw.githubuser
 
 - `install_url`: URL to the install script, default is from the [habitat repo](https://raw.githubusercontent.com/habitat-sh/habitat/master/components/hab/install.sh)
 - `depot_url`: Optional URL to an alternate Depot (defaults to the public Depot)
-- `version`: The version of habitat to install (defaults to latest)
+- `version`: The version of habitat to install (defaults to `0.33.2`, see Requirements/Habitat above)
 - `channel`: The release channel to install from (defaults to `stable`)
 
 #### Examples

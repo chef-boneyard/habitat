@@ -4,6 +4,6 @@ describe file('/bin/hab') do
 end
 
 describe command('hab -V') do
-  its('stdout') { should match(/^hab \d+\.\d+.\d+/) }
+  its('stdout') { should match(/^hab 0.33.2\//) }
   its('exit_status') { should eq 0 }
 end
