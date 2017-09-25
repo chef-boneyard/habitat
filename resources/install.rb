@@ -21,9 +21,16 @@ resource_name :hab_install
 
 property :install_url, String, default: 'https://raw.githubusercontent.com/habitat-sh/habitat/master/components/hab/install.sh'
 property :bldr_url, String
+property :version, String
 property :channel, String
 
 action :install do
+  if new_resource.version
+    Chef::Log.warn("Do not specify a version of Habitat with the 'hab_install' resource.")
+    Chef::Log.warn("The version property of the 'hab_install' resource will be removed in a future version.")
+    Chef::Log.warn("See https://github.com/chef-cookbooks/habitat/blob/master/README.md#habitat")
+  end
+
   if ::File.exist?(hab_path)
     cmd = shell_out!([hab_path, '--version', '0.33.2'])
     version = %r{hab (\d*\.\d*\.\d[^\/]*)}.match(cmd.stdout)[1]

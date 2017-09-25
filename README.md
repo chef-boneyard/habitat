@@ -20,15 +20,15 @@ This cookbook provides resources for working with [Habitat](https://habitat.sh).
 
 - 0.33.2
 
-This cookbook is developed lockstep with the latest release of Habitat to ensure compatibility, going forward from 0.33.0 of the cookbook and 0.33.2 of Habitat itself.
-When new versions of Habitat are released, the version should be updated in these files:
+This cookbook is developed lockstep with the latest release of Habitat to ensure compatibility, going forward from 0.33.0 of the cookbook and 0.33.2 of Habitat itself. When new versions of Habitat are released, the version should be updated in these files:
 
 - `README.md`: note required version in this file
 - `resources/install.rb`: set the default to the new version
-- `spec/unit/install_spec`: to match the version from the resource
 - `test/integration/install/default_spec.rb`: to match the version from the resource
 
 Additionally, new versions must be tested that all behavior in the cookbook still works, otherwise the cookbook must be updated to match the behavior in the new version of Habitat.
+
+Users who wish to install a specific version of Habitat should use an older (0.28 or earlier) release of this cookbook, but note that is unsupported and they are advised to upgrade ASAP.
 
 ### Chef
 
@@ -170,7 +170,6 @@ The `run` action handles installing Habitat using the `hab_install` resource, en
 - `org`: Only valid for `:start` action, passes `--org` with the specified org name to the hab command
 - `peer`: Only valid for `:start` action, passes `--peer` with the specified initial peer to the hab command
 - `ring`: Only valid for `:start` action, passes `--ring` with the specified ring key name to the hab command
-- `hab_version`: The version of Habitat to install. Defaults to latest
 - `hab_channel`: The channel to install Habitat from. Defaults to stable
 - `override_name`: **Advanced Use** Valid for all actions, passes `--override-name` with the specified name to the hab command; used for running services in multiple supervisors
 
