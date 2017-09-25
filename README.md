@@ -20,7 +20,8 @@ This cookbook provides resources for working with [Habitat](https://habitat.sh).
 
 - 0.33.2
 
-This cookbook installs a specific version of Habitat by default, as the upstream project is still pre-1.0 and APIs or similar behavior can change. When new versions of Habitat are released, the version should be updated:
+This cookbook is developed lockstep with the latest release of Habitat to ensure compatibility, going forward from 0.33.0 of the cookbook and 0.33.2 of Habitat itself.
+When new versions of Habitat are released, the version should be updated in these files:
 
 - `README.md`: note required version in this file
 - `resources/install.rb`: set the default to the new version
@@ -51,8 +52,7 @@ Installs Habitat on the system using the [install script](https://raw.githubuser
 #### Properties
 
 - `install_url`: URL to the install script, default is from the [habitat repo](https://raw.githubusercontent.com/habitat-sh/habitat/master/components/hab/install.sh)
-- `depot_url`: Optional URL to an alternate Depot (defaults to the public Depot)
-- `version`: The version of habitat to install (defaults to `0.33.2`, see Requirements/Habitat above)
+- `bldr_url`: Optional URL to an alternate Builder (defaults to the public Builder)
 - `channel`: The release channel to install from (defaults to `stable`)
 
 #### Examples
@@ -63,13 +63,7 @@ hab_install 'install habitat'
 
 ```ruby
 hab_install 'install habitat' do
-  version "0.12.0"
-end
-```
-
-```ruby
-hab_install 'install habitat' do
-  depot_url "http://localhost/v1/depot"
+  bldr_url "http://localhost"
 end
 ```
 
@@ -88,7 +82,7 @@ This resource is written as a library resource because it subclasses Chef's `pac
 
 - `package_name`: A Habitat package name, must include the origin and package name separated by `/`, for example, `core/redis`
 - `version`: A Habitat version which contains the version and optionally a release separated by `/`, for example, `3.2.3` or `3.2.3/20160920131015`
-- `depot_url`: The habitat depot url where packages will be downloaded from (defaults to public habitat depot)
+- `bldr_url`: The habitat builder url where packages will be downloaded from (defaults to public habitat builder)
 - `channel`: The release channel to install from (defaults to `stable`)
 
 While it is valid to pass the version and release with a Habitat package as a "fully qualified package identifier" when using the `hab` CLI, they must be specified using the `version` property when using this resource. See the examples below.
@@ -132,7 +126,7 @@ Manages a Habitat application service using `hab sup`/`hab service`. This requir
 - `ring`: Only valid for `:start` action, passes `--ring` with the specified ring key name to the hab command
 - `strategy`: Only valid for `:start` or `:load` actions, passes `--strategy` with the specified update strategy to the hab command
 - `topology`: Only valid for `:start` or `:load` actions, passes `--topology` with the specified service topology to the hab command
-- `depot_url`: Only valid for `:start` or `:load` actions, passes `--url` with the specified Depot URL to the hab command
+- `bldr_url`: Only valid for `:start` or `:load` actions, passes `--url` with the specified Builder URL to the hab command
 - `bind`: Only valid for `:start` or `:load` actions, passes `--bind` with the specified services to bind to the hab command
 - `service_group`: Only valid for `:start` or `:load` actions, passes `--group` with the specified service group to the hab command
 - `config_from`: Only valid for `:start` action, passes `--config-from` with the specified directory to the hab command

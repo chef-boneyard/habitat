@@ -63,7 +63,7 @@ class Chef
 
         def install_package(names, versions)
           names.zip(versions).map do |n, v|
-            hab('pkg', 'install', '--channel', new_resource.channel, '--url', new_resource.depot_url, "#{strip_version(n)}/#{v}")
+            hab('pkg', 'install', '--channel', new_resource.channel, '--url', new_resource.bldr_url, "#{strip_version(n)}/#{v}")
           end
         end
 
@@ -110,7 +110,7 @@ class Chef
             begin
               origin, pkg_name = name.split('/')
               name_version = [pkg_name, version].compact.join('/').squeeze('/').chomp('/').sub(%r{^\/}, '')
-              url = "#{new_resource.depot_url.chomp('/')}/v1/depot/channels/#{origin}/#{new_resource.channel}/pkgs/#{name_version}"
+              url = "#{new_resource.bldr_url.chomp('/')}/v1/depot/channels/#{origin}/#{new_resource.channel}/pkgs/#{name_version}"
               url << '/latest' unless name_version.count('/') >= 2
               Chef::JSONCompat.parse(http.get(url))
             rescue Net::HTTPServerException
