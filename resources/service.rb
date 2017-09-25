@@ -29,7 +29,7 @@ property :peer, String
 property :ring, String
 property :strategy, String
 property :topology, String
-property :depot_url, String
+property :bldr_url, String
 property :bind, [String, Array], coerce: proc { |b| b.is_a?(String) ? [b] : b }
 property :service_group, String
 property :config_from, String
@@ -91,7 +91,7 @@ action_class do
     case action
     when :load
       opts.push(*new_resource.bind.map { |b| "--bind #{b}" }) if new_resource.bind
-      opts << "--url #{new_resource.depot_url}" if new_resource.depot_url
+      opts << "--url #{new_resource.bldr_url}" if new_resource.bldr_url
       opts << "--group #{new_resource.service_group}" if new_resource.service_group
       opts << "--strategy #{new_resource.strategy}" if new_resource.strategy
       opts << "--topology #{new_resource.topology}" if new_resource.topology
@@ -100,7 +100,7 @@ action_class do
       opts << '--permanent-peer' if new_resource.permanent_peer
       opts.push(*new_resource.bind.map { |b| "--bind #{b}" }) if new_resource.bind
       opts << "--config-from #{new_resource.config_from}" if new_resource.config_from
-      opts << "--url #{new_resource.depot_url}" if new_resource.depot_url
+      opts << "--url #{new_resource.bldr_url}" if new_resource.bldr_url
       opts << "--group #{new_resource.service_group}" if new_resource.service_group
       opts << "--listen-gossip #{new_resource.listen_gossip}" if new_resource.listen_gossip
       opts << "--listen-http #{new_resource.listen_http}" if new_resource.listen_http

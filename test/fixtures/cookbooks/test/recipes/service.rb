@@ -1,5 +1,4 @@
 hab_sup 'default' do
-  hab_version '0.26.1'
   hab_channel 'stable'
 end
 

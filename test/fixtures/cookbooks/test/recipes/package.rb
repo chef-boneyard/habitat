@@ -13,5 +13,5 @@ hab_package 'core/bundler' do
 end
 
 hab_package 'core/hab-sup' do
-  depot_url 'http://app.acceptance.habitat.sh/v1/depot'
+  bldr_url 'http://app.acceptance.habitat.sh'
 end

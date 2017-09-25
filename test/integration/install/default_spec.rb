@@ -3,7 +3,9 @@ describe file('/bin/hab') do
   it { should be_symlink }
 end
 
+# This needs to be updated each time Habitat is released so we ensure we're getting the version
+# required by this cookbook.
 describe command('hab -V') do
-  its('stdout') { should match(/^hab \d+\.\d+.\d+/) }
+  its('stdout') { should match(%r{^hab 0.33.2/}) }
   its('exit_status') { should eq 0 }
 end
