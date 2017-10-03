@@ -1,5 +1,5 @@
 describe command('/bin/hab sup -h') do
-  its(:exit_status) { should be_zero }
+  its(:stdout) { should match(/The Habitat Supervisor/) }
 end
 
 describe file('/hab/sup/default/data/services.dat') do
