@@ -32,9 +32,9 @@ action :install do
   end
 
   if ::File.exist?(hab_path)
-    cmd = shell_out!([hab_path, '--version', '0.33.2'])
+    cmd = shell_out!([hab_path, '--version', hab_version])
     version = %r{hab (\d*\.\d*\.\d[^\/]*)}.match(cmd.stdout)[1]
-    return if version == '0.33.2'
+    return if version == hab_version
   end
 
   remote_file ::File.join(Chef::Config[:file_cache_path], 'hab-install.sh') do
@@ -59,6 +59,12 @@ action :upgrade do
 end
 
 action_class do
+  HAB_VERSION = '0.34.1'
+
+  def hab_version
+    HAB_VERSION
+  end
+
   def hab_path
     if platform_family?('mac_os_x')
       '/usr/local/bin/hab'
@@ -72,7 +78,7 @@ action_class do
   end
 
   def hab_command
-    cmd = ["bash #{Chef::Config[:file_cache_path]}/hab-install.sh", '-v 0.33.2']
+    cmd = ["bash #{Chef::Config[:file_cache_path]}/hab-install.sh", "-v #{hab_version}"]
     cmd.join(' ')
   end
 end
