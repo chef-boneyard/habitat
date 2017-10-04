@@ -158,6 +158,17 @@ class Chef
             return current_version.squeeze('/') == new_resource.version.squeeze('/')
           end
         end
+
+        # This is used by the superclass Chef::Provider::Package
+        def version_compare(v1, v2)
+          return unless Chef::Provider::Package.methods.include?(:version_compare)
+
+          # Convert the package version (X.Y.Z/DATE) into a version that Mixlib::Versioning understands (X.Y.Z+DATE)
+          hab_v1 = Mixlib::Versioning.parse(v1.tr('/', '+'))
+          hab_v2 = Mixlib::Versioning.parse(v2.tr('/', '+'))
+
+          hab_v1 <=> hab_v2
+        end
       end
     end
   end

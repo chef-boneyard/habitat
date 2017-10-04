@@ -25,7 +25,7 @@ describe 'test::package' do
 
     it 'installs core/hab-sup with a specific depot url' do
       expect(chef_run).to install_hab_package('core/hab-sup')
-        .with(bldr_url: 'http://app.acceptance.habitat.sh')
+        .with(bldr_url: 'http://bldr.acceptance.habitat.sh')
     end
   end
 end
