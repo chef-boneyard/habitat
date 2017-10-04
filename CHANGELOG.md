@@ -2,6 +2,14 @@
 
 This file is used to list changes made in each version of the habitat cookbook.
 
+## 0.34.1 (2017-10-04)
+
+- Add `version_compare` method to work with latest Chef
+
+## 0.34.0 (2017-10-03)
+
+- Update `hab_install` to Habitat version 0.34.1
+
 ## 0.33.0 (2017-09-25)
 
 **Breaking change**
