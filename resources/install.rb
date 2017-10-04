@@ -28,7 +28,7 @@ action :install do
   if new_resource.version
     Chef::Log.warn("Do not specify a version of Habitat with the 'hab_install' resource, it is ignored.")
     Chef::Log.warn("The version property of the 'hab_install' resource will be removed in a future version.")
-    Chef::Log.warn("See https://github.com/chef-cookbooks/habitat/blob/master/README.md#habitat")
+    Chef::Log.warn('See https://github.com/chef-cookbooks/habitat/blob/master/README.md#habitat')
   end
 
   if ::File.exist?(hab_path)
@@ -59,7 +59,7 @@ action :upgrade do
 end
 
 action_class do
-  HAB_VERSION = '0.34.1'
+  HAB_VERSION = '0.34.1'.freeze
 
   def hab_version
     HAB_VERSION
