@@ -2,6 +2,16 @@
 
 This file is used to list changes made in each version of the habitat cookbook.
 
+## 0.34.3 (2017-10-06)
+
+- Clarify in the README about action-specific properties
+
+## 0.34.2 (2017-10-06)
+
+- Add `hab_config` resource
+- Add `toml` gem to metadata for older versions of Chef that don't have it
+- Require Chef 12.20.3 or higher to make use of helper methods and classes in newer versions of Chef
+
 ## 0.34.1 (2017-10-04)
 
 - Add `version_compare` method to work with latest Chef

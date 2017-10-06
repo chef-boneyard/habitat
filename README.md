@@ -115,6 +115,8 @@ Manages a Habitat application service using `hab sup`/`hab service`. This requir
 
 #### Properties
 
+Some properties are only valid for `start` or `load` actions. See the description of each option for indication which action(s) the property is used. This is because the underlying `hab sup` commands have different options available in their context.
+
 - `service_name`: name property, the name of the service, must be in the form of `origin/name`
 - `loaded`: state property indicating whether the service is loaded in the supervisor
 - `running`: state property indicating whether the service is running in the supervisor
