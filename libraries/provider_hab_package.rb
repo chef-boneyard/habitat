@@ -135,7 +135,7 @@ class Chef
         end
 
         def current_versions
-          package_name_array.zip(new_version_array).map do |n, _v|
+          package_name_array.map do |n|
             installed_version(n)
           end
         end
