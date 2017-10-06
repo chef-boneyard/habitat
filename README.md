@@ -188,6 +188,48 @@ hab_sup 'test-options' do
 end
 ```
 
+### hab_config
+
+Applies a given configuration to a habitat service using `hab config apply`.
+
+#### Actions
+
+- `apply`: (default action) apply the given configuration
+
+#### Properties
+
+- `service_group`: The service group to apply the configuration to, for
+  example, `nginx.default`
+- `config`: The configuration to apply as a ruby hash, for example,
+  `{ worker_count: 2, http: { keepalive_timeout: 120 } }`
+- `org`: (optional) passes the `--org` option with the specified org name
+  to the hab config command.
+- `peer`: (optional) passes the `--peer` option with the specified peer to the
+  hab config command.
+- `ring`: (optional) passes the `--ring` option with the specified ring key
+  name to the hab config command.
+- `api_host`: Hostname for the habitat api in order to look up the existing
+  configuration. Defaults to `127.0.0.1`.
+- `api_port`: Port number for the habitat api. Defaults to `9631`.
+
+#### Notes
+
+The version number of the configuration is automatically generated and will be
+the current timestamp in seconds since 1970-01-01 00:00:00 UTC.
+
+#### Examples
+
+```ruby
+hab_config "nginx.default" do
+  config({
+    worker_count: 2,
+    http: {
+      keepalive_timeout: 120
+    }
+  })
+end
+```
+
 ## Maintainers
 
 This cookbook is maintained by Chef's Community Cookbook Engineering team along with the following maintainers:

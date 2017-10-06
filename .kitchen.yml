@@ -41,3 +41,10 @@ suites:
       - centos-6
       - debian-7
       - ubuntu-14.04
+  - name: config
+    run_list: test::config
+    # these platforms don't have systemd as the default init system
+    excludes:
+      - centos-6.9
+      - debian-7.11
+      - ubuntu-14.04

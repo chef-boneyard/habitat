@@ -29,6 +29,8 @@ env:
   - INSTANCE=package-centos-7
   - INSTANCE=service-ubuntu-1604
   - INSTANCE=service-centos-7
+  - INSTANCE=config-ubuntu-1604
+  - INSTANCE=config-centos-7
 
 before_script:
   - sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables -N DOCKER )
