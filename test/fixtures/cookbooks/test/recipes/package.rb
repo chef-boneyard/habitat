@@ -12,6 +12,10 @@ hab_package 'core/bundler' do
   version '1.13.3/20161011123917'
 end
 
+hab_package 'core/htop' do
+  options '--binlink'
+end
+
 hab_package 'core/hab-sup' do
-  bldr_url 'http://bldr.acceptance.habitat.sh'
+  bldr_url 'https://bldr.acceptance.habitat.sh'
 end
