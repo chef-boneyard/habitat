@@ -2,6 +2,12 @@
 
 This file is used to list changes made in each version of the habitat cookbook.
 
+## 0.36.0 (2017-10-09)
+
+- Simplify Chef::Provider::Package::Hart#current_versions.
+- honor options from package provider
+- update for habitat 0.36.0
+
 ## 0.34.3 (2017-10-06)
 
 - Clarify in the README about action-specific properties
