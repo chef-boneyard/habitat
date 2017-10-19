@@ -5,3 +5,9 @@ hab_sup 'test-options' do
   listen_http '0.0.0.0:9999'
   listen_gossip '0.0.0.0:9998'
 end
+
+ruby_block 'wait-right-here' do
+  block do
+    sleep 5
+  end
+end
