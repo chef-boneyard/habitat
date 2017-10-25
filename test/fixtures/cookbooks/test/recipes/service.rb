@@ -2,9 +2,6 @@ hab_sup 'default' do
   hab_channel 'stable'
 end
 
-user 'hab'
-group 'hab'
-
 hab_package 'core/nginx'
 hab_service 'core/nginx'
 

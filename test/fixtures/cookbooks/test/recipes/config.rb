@@ -1,9 +1,6 @@
 include_recipe '::install'
 hab_sup 'default'
 
-user 'hab'
-group 'hab'
-
 hab_package 'core/nginx'
 hab_service 'core/nginx'
 

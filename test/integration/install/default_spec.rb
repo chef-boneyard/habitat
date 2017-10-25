@@ -1,3 +1,7 @@
+describe user('hab') do
+  it { should exist }
+end
+
 describe file('/bin/hab') do
   it { should exist }
   it { should be_symlink }
