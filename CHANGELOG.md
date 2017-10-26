@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of the habitat cookbook.
 
+## 0.37.1 (2017-10-26)
+
+- create user in hab_install
+
 ## 0.37.0 (2017-10-19)
 
 - update for habitat 0.37.0 release
