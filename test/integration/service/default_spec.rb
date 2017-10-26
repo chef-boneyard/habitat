@@ -1,7 +1,3 @@
-describe user('hab') do
-  it { should exist }
-end
-
 describe directory('/hab/pkgs/core/nginx') do
   it { should exist }
 end

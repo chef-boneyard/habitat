@@ -18,7 +18,7 @@ This cookbook provides resources for working with [Habitat](https://habitat.sh).
 
 ### Habitat
 
-- 0.36.0
+- 0.37.0
 
 This cookbook is developed lockstep with the latest release of Habitat to ensure compatibility, going forward from 0.33.0 of the cookbook and 0.33.2 of Habitat itself. When new versions of Habitat are released, the version should be updated in these files:
 
@@ -54,6 +54,7 @@ Installs Habitat on the system using the [install script](https://raw.githubuser
 - `install_url`: URL to the install script, default is from the [habitat repo](https://raw.githubusercontent.com/habitat-sh/habitat/master/components/hab/install.sh)
 - `bldr_url`: Optional URL to an alternate Builder (defaults to the public Builder)
 - `channel`: The release channel to install from (defaults to `stable`)
+- `create_user`: Creates the `hab` system user (defaults to `true`)
 
 #### Examples
 
@@ -63,7 +64,7 @@ hab_install 'install habitat'
 
 ```ruby
 hab_install 'install habitat' do
-  bldr_url "http://localhost"
+  bldr_url 'http://localhost'
 end
 ```
 
@@ -85,26 +86,28 @@ This resource is written as a library resource because it subclasses Chef's `pac
 - `bldr_url`: The habitat builder url where packages will be downloaded from (defaults to public habitat builder)
 - `channel`: The release channel to install from (defaults to `stable`)
 
-While it is valid to pass the version and release with a Habitat package as a "fully qualified package identifier" when using the `hab` CLI, they must be specified using the `version` property when using this resource. See the examples below.
+While it is valid to pass the version and release with a Habitat package as a fully qualified package identifier when using the `hab` CLI, they must be specified using the `version` property when using this resource. See the examples below.
 
 #### Examples
 
 ```ruby
-hab_package "core/redis"
+hab_package 'core/redis'
 
-hab_package "core/redis" do
-  version "3.2.3"
-  channel "unstable"
+hab_package 'core/redis' do
+  version '3.2.3'
+  channel 'unstable'
 end
 
-hab_package "core/redis" do
-  version "3.2.3/20160920131015"
+hab_package 'core/redis' do
+  version '3.2.3/20160920131015'
 end
 ```
 
 ### hab_service
 
 Manages a Habitat application service using `hab sup`/`hab service`. This requires that `core/hab-sup` be running as a service. See the `hab_sup` resource documentation below for more information about how to set that up with this cookbook.
+
+*Note:* Applications may run as a specific user. Often with Habitat, the default is `hab`, or `root`. If the application requires another user, then it should be created with Chef's `user` resource.
 
 #### Actions
 
@@ -139,19 +142,33 @@ Some properties are only valid for `start` or `load` actions. See the descriptio
 
 ```ruby
 # install and load nginx
-hab_package "core/nginx"
-hab_service "core/nginx"
+hab_package 'core/nginx'
+hab_service 'core/nginx'
 
-hab_service "core/nginx unload" do
-  service_name "core/nginx"
+hab_service 'core/nginx unload' do
+  service_name 'core/nginx'
   action :unload
 end
 
 # pass the strategy and topology options to hab service commands (load by default)
-hab_service "core/redis" do
+hab_service 'core/redis' do
   strategy 'rolling'
   topology 'standalone'
 end
+```
+
+If the service has it's own user specified that is not the `hab` user, don't create the `hab` user on install, and instead create the application user with Chef's `user` resource
+
+```ruby
+hab_install 'install habitat' do
+  create_user false
+end
+
+user 'acme-apps' do
+  system true
+end
+
+hab_service 'acme/apps'
 ```
 
 ### hab_sup
@@ -179,7 +196,7 @@ The `run` action handles installing Habitat using the `hab_install` resource, en
 
 ```ruby
 # set up with just the defaults
-hab_sup "default"
+hab_sup 'default'
 
 # run with an override name, requires changing listen_http and
 # listen_gossip if a default supervisor is running
@@ -222,7 +239,7 @@ the current timestamp in seconds since 1970-01-01 00:00:00 UTC.
 #### Examples
 
 ```ruby
-hab_config "nginx.default" do
+hab_config 'nginx.default' do
   config({
     worker_count: 2,
     http: {
