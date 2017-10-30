@@ -2,9 +2,13 @@
 
 This file is used to list changes made in each version of the habitat cookbook.
 
+## 0.38.0 (2017-10-30)
+
+- update version to install for habitat 0.38.0
+
 ## 0.37.1 (2017-10-26)
 
-- create user in hab_install
+- create user in `hab_install`
 
 ## 0.37.0 (2017-10-19)
 
@@ -12,7 +16,7 @@ This file is used to list changes made in each version of the habitat cookbook.
 
 ## 0.36.0 (2017-10-09)
 
-- Simplify Chef::Provider::Package::Hart#current_versions.
+- Simplify `Chef::Provider::Package::Hart#current_versions`.
 - honor options from package provider
 - update for habitat 0.36.0
 
