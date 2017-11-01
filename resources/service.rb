@@ -37,22 +37,56 @@ property :override_name, String, default: 'default'
 property :channel, [Symbol, String], equal_to: [:unstable, 'unstable', :current, 'current', :stable, 'stable'], default: :stable
 
 load_current_value do
-  http_uri = listen_http ? listen_http : 'http://localhost:9631'
-  svcs = Chef::HTTP::SimpleJSON.new(http_uri).get('/services')
-
-  sup_for_service_name = svcs.find do |s|
-    [s['spec_ident']['origin'], s['spec_ident']['name']].join('/') =~ /#{service_name}/
-  end
-
-  running begin
-            sup_for_service_name['process']['state'] == 'Up'
-          rescue
-            false
-          end
+  running is_service_up?(service_name)
   loaded ::File.exist?("/hab/sup/#{override_name}/specs/#{service_name.split('/').last}.spec")
 
   Chef::Log.debug("service #{service_name} running state: #{running}")
   Chef::Log.debug("service #{service_name} loaded state: #{loaded}")
+end
+
+# This method is defined here otherwise it isn't usable in the
+# `load_current_value` method.
+#
+# It performs a check with TCPSocket to ensure that the HTTP API is
+# available first. If it cannot connect, it assumes that the service
+# is not running. It then attempts to reach the `/services` path of
+# the API to get a list of services. If this fails for some reason,
+# then it assumes the service is not running.
+#
+# Finally, it walks the services returned by the API to look for the
+# service we're configuring. If it is "Up", then we know the service
+# is running and fully operational according to Habitat. This is
+# wrapped in a begin/rescue block because if the service isn't
+# present and `sup_for_service_name` will be nil and we will get a
+# NoMethodError.
+#
+def is_service_up?(svc_name)
+  http_uri = listen_http ? listen_http : 'http://localhost:9631'
+
+  begin
+    TCPSocket.new(URI(http_uri).host, URI(http_uri).port).close
+  rescue Errno::ECONNREFUSED, Errno::EHOSTUNREACH
+    Chef::Log.debug("Could not connect to #{http_uri} to retrieve status for #{service_name}")
+    return false
+  end
+
+  begin
+    svcs = Chef::HTTP::SimpleJSON.new(http_uri).get('/services')
+  rescue
+    Chef::Log.debug("Could not connect to #{http_uri}/services to retrieve status for #{service_name}")
+    return false
+  end
+
+  sup_for_service_name = svcs.find do |s|
+    [s['spec_ident']['origin'], s['spec_ident']['name']].join('/') =~ /#{svc_name}/
+  end
+
+  return begin
+           sup_for_service_name['process']['state'] == 'Up'
+         rescue
+           Chef::Log.debug("#{service_name} not found the Habitat supervisor")
+           false
+         end
 end
 
 action :load do
@@ -82,6 +116,7 @@ action :reload do
   sleep 1
   action_load
 end
+
 
 action_class do
   def sup_options
