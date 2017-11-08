@@ -2,6 +2,14 @@ hab_sup 'default' do
   hab_channel 'stable'
 end
 
+ruby_block 'wait-for-sup-default-startup' do
+  block do
+    raise unless File.exist?('/hab/sup/default/data/services.dat')
+  end
+  retries 30
+  retry_delay 1
+end
+
 hab_package 'core/nginx'
 hab_service 'core/nginx'
 
