@@ -17,5 +17,5 @@ hab_package 'core/htop' do
 end
 
 hab_package 'core/hab-sup' do
-  bldr_url 'https://bldr.habitat.sh'
+  bldr_url 'https://bldr.acceptance.habitat.sh'
 end
