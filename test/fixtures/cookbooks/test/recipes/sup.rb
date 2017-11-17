@@ -8,6 +8,6 @@ end
 
 ruby_block 'wait-right-here' do
   block do
-    sleep 5
+    sleep 10
   end
 end
