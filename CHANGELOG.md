@@ -2,6 +2,11 @@
 
 This file is used to list changes made in each version of the habitat cookbook.
 
+## 0.39.0 (2017-11-17)
+
+- Install version 0.39.0
+- Defer running check to a predicate method in service resource
+
 ## 0.38.0 (2017-10-30)
 
 - update version to install for habitat 0.38.0
