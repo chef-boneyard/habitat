@@ -7,7 +7,7 @@ This cookbook provides resources for working with [Habitat](https://habitat.sh).
 - APIs are subject to change
 - Habitat is a rapidly changing product, and this cookbook may change rapidly as well
 
-(this is a pre-1.0 version, after all)
+    (this is a pre-1.0 version, after all)
 
 ## Requirements
 
@@ -18,17 +18,18 @@ This cookbook provides resources for working with [Habitat](https://habitat.sh).
 
 ### Habitat
 
-- 0.39.0
+- 0.39.1
 
-This cookbook is developed lockstep with the latest release of Habitat to ensure compatibility, going forward from 0.33.0 of the cookbook and 0.33.2 of Habitat itself. When new versions of Habitat are released, the version should be updated in these files:
+    This cookbook is developed lockstep with the latest release of Habitat to ensure compatibility, going forward from 0.33.0 of the cookbook and 0.33.2 of Habitat itself. When new versions of Habitat are released, the version should be updated in these files:
 
 - `README.md`: note required version in this file
 - `resources/install.rb`: set the default to the new version
 - `test/integration/install/default_spec.rb`: to match the version from the resource
 
-Additionally, new versions must be tested that all behavior in the cookbook still works, otherwise the cookbook must be updated to match the behavior in the new version of Habitat.
+    Additionally, new versions must be tested that all behavior in the cookbook still works, otherwise the cookbook must be updated to match the behavior in the new version of Habitat.
 
-Users who wish to install a specific version of Habitat should use an older (0.28 or earlier) release of this cookbook, but note that is unsupported and they are advised to upgrade ASAP.
+    Users who wish to install a specific version of Habitat should use an older (0.28 or earlier) release of this cookbook, but note that is unsupported and they are advised to upgrade ASAP.
+
 
 ### Chef
 
@@ -37,6 +38,7 @@ Users who wish to install a specific version of Habitat should use an older (0.2
 ### Cookbooks
 
 - None
+
 
 ## Resources
 
@@ -64,7 +66,7 @@ hab_install 'install habitat'
 
 ```ruby
 hab_install 'install habitat' do
-  bldr_url 'http://localhost'
+bldr_url 'http://localhost'
 end
 ```
 
@@ -86,7 +88,7 @@ This resource is written as a library resource because it subclasses Chef's `pac
 - `bldr_url`: The habitat builder url where packages will be downloaded from (defaults to public habitat builder)
 - `channel`: The release channel to install from (defaults to `stable`)
 
-While it is valid to pass the version and release with a Habitat package as a fully qualified package identifier when using the `hab` CLI, they must be specified using the `version` property when using this resource. See the examples below.
+    While it is valid to pass the version and release with a Habitat package as a fully qualified package identifier when using the `hab` CLI, they must be specified using the `version` property when using this resource. See the examples below.
 
 #### Examples
 
@@ -94,12 +96,12 @@ While it is valid to pass the version and release with a Habitat package as a fu
 hab_package 'core/redis'
 
 hab_package 'core/redis' do
-  version '3.2.3'
-  channel 'unstable'
+version '3.2.3'
+channel 'unstable'
 end
 
 hab_package 'core/redis' do
-  version '3.2.3/20160920131015'
+version '3.2.3/20160920131015'
 end
 ```
 
@@ -146,14 +148,14 @@ hab_package 'core/nginx'
 hab_service 'core/nginx'
 
 hab_service 'core/nginx unload' do
-  service_name 'core/nginx'
-  action :unload
+service_name 'core/nginx'
+action :unload
 end
 
 # pass the strategy and topology options to hab service commands (load by default)
 hab_service 'core/redis' do
-  strategy 'rolling'
-  topology 'standalone'
+strategy 'rolling'
+topology 'standalone'
 end
 ```
 
@@ -161,11 +163,11 @@ If the service has it's own user specified that is not the `hab` user, don't cre
 
 ```ruby
 hab_install 'install habitat' do
-  create_user false
+create_user false
 end
 
 user 'acme-apps' do
-  system true
+system true
 end
 
 hab_service 'acme/apps'
@@ -201,9 +203,9 @@ hab_sup 'default'
 # run with an override name, requires changing listen_http and
 # listen_gossip if a default supervisor is running
 hab_sup 'test-options' do
-  override_name 'myapps'
-  listen_http '0.0.0.0:9999'
-  listen_gossip '0.0.0.0:9998'
+override_name 'myapps'
+listen_http '0.0.0.0:9999'
+listen_gossip '0.0.0.0:9998'
 end
 ```
 
@@ -218,17 +220,17 @@ Applies a given configuration to a habitat service using `hab config apply`.
 #### Properties
 
 - `service_group`: The service group to apply the configuration to, for
-  example, `nginx.default`
+    example, `nginx.default`
 - `config`: The configuration to apply as a ruby hash, for example,
-  `{ worker_count: 2, http: { keepalive_timeout: 120 } }`
+    `{ worker_count: 2, http: { keepalive_timeout: 120 } }`
 - `org`: (optional) passes the `--org` option with the specified org name
-  to the hab config command.
+    to the hab config command.
 - `peer`: (optional) passes the `--peer` option with the specified peer to the
-  hab config command.
+    hab config command.
 - `ring`: (optional) passes the `--ring` option with the specified ring key
-  name to the hab config command.
+    name to the hab config command.
 - `api_host`: Hostname for the habitat api in order to look up the existing
-  configuration. Defaults to `127.0.0.1`.
+    configuration. Defaults to `127.0.0.1`.
 - `api_port`: Port number for the habitat api. Defaults to `9631`.
 
 #### Notes
@@ -240,12 +242,12 @@ the current timestamp in seconds since 1970-01-01 00:00:00 UTC.
 
 ```ruby
 hab_config 'nginx.default' do
-  config({
-    worker_count: 2,
-    http: {
-      keepalive_timeout: 120
-    }
-  })
+config({
+worker_count: 2,
+http: {
+keepalive_timeout: 120
+}
+})
 end
 ```
 
@@ -255,7 +257,7 @@ This cookbook is maintained by Chef's Community Cookbook Engineering team along 
 
 - Joshua Timberman [joshua@chef.io](mailto:joshua@chef.io)
 
-The goal of the Community Cookbook Engineering team is to improve cookbook quality and to aid the community in contributing to cookbooks. To learn more about our team, process, and design goals see our [team documentation](https://github.com/chef-cookbooks/community_cookbook_documentation/blob/master/COOKBOOK_TEAM.MD). To learn more about contributing to cookbooks like this see our [contributing documentation](https://github.com/chef-cookbooks/community_cookbook_documentation/blob/master/CONTRIBUTING.MD), or if you have general questions about this cookbook come chat with us in #cookbok-engineering on the [Chef Community Slack](http://community-slack.chef.io/)
+    The goal of the Community Cookbook Engineering team is to improve cookbook quality and to aid the community in contributing to cookbooks. To learn more about our team, process, and design goals see our [team documentation](https://github.com/chef-cookbooks/community_cookbook_documentation/blob/master/COOKBOOK_TEAM.MD). To learn more about contributing to cookbooks like this see our [contributing documentation](https://github.com/chef-cookbooks/community_cookbook_documentation/blob/master/CONTRIBUTING.MD), or if you have general questions about this cookbook come chat with us in #cookbok-engineering on the [Chef Community Slack](http://community-slack.chef.io/)
 
 ## License
 
@@ -266,7 +268,7 @@ Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
-    http://www.apache.org/licenses/LICENSE-2.0
+http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
@@ -274,3 +276,4 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ```
+
