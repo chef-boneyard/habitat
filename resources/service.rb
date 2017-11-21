@@ -60,7 +60,9 @@ end
 # present and `sup_for_service_name` will be nil and we will get a
 # NoMethodError.
 #
+# rubocop:disable PredicateName
 def is_service_up?(svc_name)
+  # rubocop:enable PredicateName
   http_uri = listen_http ? listen_http : 'http://localhost:9631'
 
   begin
@@ -81,12 +83,12 @@ def is_service_up?(svc_name)
     [s['spec_ident']['origin'], s['spec_ident']['name']].join('/') =~ /#{svc_name}/
   end
 
-  return begin
-           sup_for_service_name['process']['state'] == 'Up'
-         rescue
-           Chef::Log.debug("#{service_name} not found the Habitat supervisor")
-           false
-         end
+  begin
+    sup_for_service_name['process']['state'] == 'Up'
+  rescue
+    Chef::Log.debug("#{service_name} not found the Habitat supervisor")
+    false
+  end
 end
 
 action :load do
@@ -116,7 +118,6 @@ action :reload do
   sleep 1
   action_load
 end
-
 
 action_class do
   def sup_options

@@ -1,48 +1,43 @@
 sudo: required
 dist: trusty
-
 addons:
-  apt:
-    sources:
-      - chef-current-trusty
-    packages:
-      - chefdk
-
-# Don't `bundle install` which takes about 1.5 mins
+    apt:
+        sources:
+            - chef-current-trusty
+        packages:
+            - chefdk
 install: echo "skip bundle install"
-
 branches:
-  only:
-    - master
-
+    only:
+        - master
 services: docker
-
 env:
-  matrix:
-  - INSTANCE=install-ubuntu-1404
-  - INSTANCE=install-ubuntu-1604
-  - INSTANCE=install-centos-6
-  - INSTANCE=install-centos-7
-  - INSTANCE=package-ubuntu-1404
-  - INSTANCE=package-ubuntu-1604
-  - INSTANCE=package-centos-6
-  - INSTANCE=package-centos-7
-  - INSTANCE=service-ubuntu-1604
-  - INSTANCE=service-centos-7
-  - INSTANCE=config-ubuntu-1604
-  - INSTANCE=config-centos-7
-
+    matrix:
+        - INSTANCE=install-ubuntu-1404
+        - INSTANCE=install-ubuntu-1604
+        - INSTANCE=install-centos-6
+        - INSTANCE=install-centos-7
+        - INSTANCE=package-ubuntu-1404
+        - INSTANCE=package-ubuntu-1604
+        - INSTANCE=package-centos-6
+        - INSTANCE=package-centos-7
+        - INSTANCE=service-ubuntu-1604
+        - INSTANCE=service-centos-7
+        - INSTANCE=config-ubuntu-1604
+        - INSTANCE=config-centos-7
 before_script:
-  - sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables -N DOCKER )
-  - eval "$(chef shell-init bash)"
-  - chef --version
-  - cookstyle --version
-  - foodcritic --version
-
-script: KITCHEN_LOCAL_YAML=.kitchen.dokken.yml kitchen verify ${INSTANCE}
-
+    - >-
+        sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo
+        iptables -N DOCKER )
+    - eval "$(chef shell-init bash)"
+    - chef gem install toml || echo "Failed to install 'toml' gem"
+    - chef --version
+    - cookstyle --version
+    - foodcritic --version
+script: 'KITCHEN_LOCAL_YAML=.kitchen.dokken.yml kitchen verify ${INSTANCE}'
 matrix:
-  include:
-    - script:
-      - chef exec delivery local all
-      env: UNIT_AND_LINT=1
+    include:
+        -
+            script:
+                - chef exec delivery local all
+            env: UNIT_AND_LINT=1
