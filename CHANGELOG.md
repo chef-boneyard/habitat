@@ -2,6 +2,11 @@
 
 This file is used to list changes made in each version of the habitat cookbook.
 
+## 0.39.1 (2017-11-27)
+
+- update for 0.39.1
+- fix rubocop findings too
+
 ## 0.39.0 (2017-11-17)
 
 - Install version 0.39.0
