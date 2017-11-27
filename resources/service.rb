@@ -37,7 +37,7 @@ property :override_name, String, default: 'default'
 property :channel, [Symbol, String], equal_to: [:unstable, 'unstable', :current, 'current', :stable, 'stable'], default: :stable
 
 load_current_value do
-  running is_service_up?(service_name)
+  running service_up?(service_name)
   loaded ::File.exist?("/hab/sup/#{override_name}/specs/#{service_name.split('/').last}.spec")
 
   Chef::Log.debug("service #{service_name} running state: #{running}")
@@ -60,7 +60,7 @@ end
 # present and `sup_for_service_name` will be nil and we will get a
 # NoMethodError.
 #
-def is_service_up?(svc_name)
+def service_up?(svc_name)
   http_uri = listen_http ? listen_http : 'http://localhost:9631'
 
   begin
@@ -81,12 +81,12 @@ def is_service_up?(svc_name)
     [s['spec_ident']['origin'], s['spec_ident']['name']].join('/') =~ /#{svc_name}/
   end
 
-  return begin
-           sup_for_service_name['process']['state'] == 'Up'
-         rescue
-           Chef::Log.debug("#{service_name} not found the Habitat supervisor")
-           false
-         end
+  begin
+    sup_for_service_name['process']['state'] == 'Up'
+  rescue
+    Chef::Log.debug("#{service_name} not found the Habitat supervisor")
+    false
+  end
 end
 
 action :load do
@@ -116,7 +116,6 @@ action :reload do
   sleep 1
   action_load
 end
-
 
 action_class do
   def sup_options
