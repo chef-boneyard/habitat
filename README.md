@@ -13,8 +13,8 @@ This cookbook provides resources for working with [Habitat](https://habitat.sh).
 
 ### Platforms
 
-- RHEL 7+
-- Ubuntu 16.04+
+- RHEL 6+
+- Ubuntu 14.04+
 
 ### Habitat
 
@@ -175,7 +175,7 @@ hab_service 'acme/apps'
 
 Runs a Habitat Supervisor for one or more Habitat Services. This requires [Habitat version 0.20 or higher](https://forums.habitat.sh/t/habitat-0-20-0-released/317). It is used in conjunction with `hab_service` which will manage the services loaded and started within the supervisor.
 
-The `run` action handles installing Habitat using the `hab_install` resource, ensures that the `core/hab-sup` package is installed using `hab_package`, and then drops off the appropriate init system definitions and manages the service. At this time, only systemd is supported.
+The `run` action handles installing Habitat using the `hab_install` resource, ensures that the `core/hab-sup` package is installed using `hab_package`, and then drops off the appropriate init system definitions and manages the service.
 
 #### Actions
 
