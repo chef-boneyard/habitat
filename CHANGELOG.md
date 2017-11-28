@@ -2,6 +2,15 @@
 
 This file is used to list changes made in each version of the habitat cookbook.
 
+## 0.39.2 (2017-11-28)
+
+- Add Supervisor service support for non-Systemd platforms
+
+Development environment/CI changes:
+
+- need to install toml gem for travis
+- Ignore failure when installing from acceptance
+
 ## 0.39.1 (2017-11-27)
 
 - update for 0.39.1
