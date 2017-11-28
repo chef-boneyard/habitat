@@ -18,4 +18,8 @@ end
 
 hab_package 'core/hab-sup' do
   bldr_url 'https://bldr.acceptance.habitat.sh'
+  # The Habitat bldr for acceptance isn't monitored and can sometimes
+  # be down when we want to run tests in travis. This shouldn't stop
+  # us from doing our tests, so ignore failures.
+  ignore_failure true
 end
