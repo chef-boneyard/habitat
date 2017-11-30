@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of the habitat cookbook.
 
+## 0.40.0 (2017-11-30)
+
+- Update for Habitat version 0.40.0
+
 ## 0.39.2 (2017-11-28)
 
 - Add Supervisor service support for non-Systemd platforms
