@@ -131,7 +131,7 @@ Some properties are only valid for `start` or `load` actions. See the descriptio
 - `ring`: Only valid for `:start` action, passes `--ring` with the specified ring key name to the hab command
 - `strategy`: Only valid for `:start` or `:load` actions, passes `--strategy` with the specified update strategy to the hab command
 - `topology`: Only valid for `:start` or `:load` actions, passes `--topology` with the specified service topology to the hab command
-- `bldr_url`: Only valid for `:start` or `:load` actions, passes `--url` with the specified Builder URL to the hab command
+- `bldr_url`: Only valid for `:start` or `:load` actions, passes `--url` with the specified Builder URL to the hab command. For local repos, use 'local'.
 - `bind`: Only valid for `:start` or `:load` actions, passes `--bind` with the specified services to bind to the hab command
 - `service_group`: Only valid for `:start` or `:load` actions, passes `--group` with the specified service group to the hab command
 - `config_from`: Only valid for `:start` action, passes `--config-from` with the specified directory to the hab command
