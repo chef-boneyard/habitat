@@ -4,7 +4,7 @@ This file is used to list changes made in each version of the habitat cookbook.
 
 ## 0.41.0 (2017-12-02)
 
-- Update service resource to allow local deployment (from tarball)
+- Update service resource to allow local deployment (from tarball). 
 
 ## 0.40.0 (2017-11-30)
 
