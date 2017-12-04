@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of the habitat cookbook.
 
+## 0.50.3 (2017-12-04)
+
+- Update for Habitat version 0.50.3
+
 ## 0.40.0 (2017-11-30)
 
 - Update for Habitat version 0.40.0
