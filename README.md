@@ -109,10 +109,10 @@ Manages a Habitat application service using `hab sup`/`hab service`. This requir
 
 #### Actions
 
-- `load`: (default action) runs `hab service load` to load and start the specified application service
-- `unload`: runs `hab service unload` to unload and stop the specified application service
-- `start`: runs `hab service start` to start the specified application service
-- `stop`: runs `hab service stop` to stop the specified application service
+- `:load`: (default action) runs `hab service load` to load and start the specified application service
+- `:unload`: runs `hab service unload` to unload and stop the specified application service
+- `:start`: runs `hab service start` to start the specified application service
+- `:stop`: runs `hab service stop` to stop the specified application service
 
 #### Properties
 
