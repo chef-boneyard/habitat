@@ -171,7 +171,7 @@ hab_service 'acme/apps'
 
 ### hab_sup
 
-Runs a Habitat Supervisor for one or more Habitat Services. This requires [Habitat version 0.20 or higher](https://forums.habitat.sh/t/habitat-0-20-0-released/317). It is used in conjunction with `hab_service` which will manage the services loaded and started within the supervisor.
+Runs a Habitat Supervisor for one or more Habitat Services. It is used in conjunction with `hab_service` which will manage the services loaded and started within the supervisor.
 
 The `run` action handles installing Habitat using the `hab_install` resource, ensures that the `core/hab-sup` package is installed using `hab_package`, and then drops off the appropriate init system definitions and manages the service.
 
