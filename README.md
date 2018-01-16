@@ -32,7 +32,7 @@ Users who wish to install a specific version of Habitat should use an older (0.2
 
 ### Chef
 
-- Chef 12.11+
+- Chef 12.20.3+
 
 ### Cookbooks
 
