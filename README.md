@@ -72,8 +72,6 @@ end
 
 Install the specified Habitat package. Requires that Habitat is installed
 
-This resource is written as a library resource because it subclasses Chef's `package` resource/provider to get features such as the multi-package API).
-
 #### actions
 
 - `install`: installs the specified package
