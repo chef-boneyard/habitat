@@ -32,7 +32,7 @@ Users who wish to install a specific version of Habitat should use an older (0.2
 
 ### Chef
 
-- Chef 12.11+
+- Chef 12.20.3+
 
 ### Cookbooks
 
@@ -72,8 +72,6 @@ end
 
 Install the specified Habitat package. Requires that Habitat is installed
 
-This resource is written as a library resource because it subclasses Chef's `package` resource/provider to get features such as the multi-package API).
-
 #### actions
 
 - `install`: installs the specified package
@@ -111,10 +109,10 @@ Manages a Habitat application service using `hab sup`/`hab service`. This requir
 
 #### Actions
 
-- `load`: (default action) runs `hab service load` to load and start the specified application service
-- `unload`: runs `hab service unload` to unload and stop the specified application service
-- `start`: runs `hab service start` to start the specified application service
-- `stop`: runs `hab service stop` to stop the specified application service
+- `:load`: (default action) runs `hab service load` to load and start the specified application service
+- `:unload`: runs `hab service unload` to unload and stop the specified application service
+- `:start`: runs `hab service start` to start the specified application service
+- `:stop`: runs `hab service stop` to stop the specified application service
 
 #### Properties
 
@@ -173,7 +171,7 @@ hab_service 'acme/apps'
 
 ### hab_sup
 
-Runs a Habitat Supervisor for one or more Habitat Services. This requires [Habitat version 0.20 or higher](https://forums.habitat.sh/t/habitat-0-20-0-released/317). It is used in conjunction with `hab_service` which will manage the services loaded and started within the supervisor.
+Runs a Habitat Supervisor for one or more Habitat Services. It is used in conjunction with `hab_service` which will manage the services loaded and started within the supervisor.
 
 The `run` action handles installing Habitat using the `hab_install` resource, ensures that the `core/hab-sup` package is installed using `hab_package`, and then drops off the appropriate init system definitions and manages the service.
 
@@ -217,24 +215,17 @@ Applies a given configuration to a habitat service using `hab config apply`.
 
 #### Properties
 
-- `service_group`: The service group to apply the configuration to, for
-  example, `nginx.default`
-- `config`: The configuration to apply as a ruby hash, for example,
-  `{ worker_count: 2, http: { keepalive_timeout: 120 } }`
-- `org`: (optional) passes the `--org` option with the specified org name
-  to the hab config command.
-- `peer`: (optional) passes the `--peer` option with the specified peer to the
-  hab config command.
-- `ring`: (optional) passes the `--ring` option with the specified ring key
-  name to the hab config command.
-- `api_host`: Hostname for the habitat api in order to look up the existing
-  configuration. Defaults to `127.0.0.1`.
+- `service_group`: The service group to apply the configuration to, for example, `nginx.default`
+- `config`: The configuration to apply as a ruby hash, for example, `{ worker_count: 2, http: { keepalive_timeout: 120 } }`
+- `org`: (optional) passes the `--org` option with the specified org name to the hab config command.
+- `peer`: (optional) passes the `--peer` option with the specified peer to the hab config command.
+- `ring`: (optional) passes the `--ring` option with the specified ring key name to the hab config command.
+- `api_host`: Hostname for the habitat api in order to look up the existing configuration. Defaults to `127.0.0.1`.
 - `api_port`: Port number for the habitat api. Defaults to `9631`.
 
 #### Notes
 
-The version number of the configuration is automatically generated and will be
-the current timestamp in seconds since 1970-01-01 00:00:00 UTC.
+The version number of the configuration is automatically generated and will be the current timestamp in seconds since 1970-01-01 00:00:00 UTC.
 
 #### Examples
 
