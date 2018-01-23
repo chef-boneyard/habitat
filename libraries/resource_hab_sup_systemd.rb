@@ -44,7 +44,7 @@ class Chef
 
         service "hab-sup-#{new_resource.override_name}" do
           subscribes :restart, "systemd_unit[hab-sup-#{new_resource.override_name}.service]"
-          action :start
+          action [:enable, :start]
         end
       end
     end

@@ -42,7 +42,7 @@ class Chef
 
         service "hab-sup-#{new_resource.override_name}" do
           subscribes :restart, "template[/etc/init.d/hab-sup-#{new_resource.override_name}]"
-          action :start
+          action [:enable, :start]
         end
       end
     end
