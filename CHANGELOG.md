@@ -2,6 +2,17 @@
 
 This file is used to list changes made in each version of the habitat cookbook.
 
+## 0.52.0 (2018-01-23)
+
+- Remove Debian 7 testing
+- Remove stove gem that's in ChefDK now
+- Align Chef in readme with Chef in metadata
+- Format readme markdown
+- Remove implementation detail
+- Actions are symbols so document them that way
+- Remove reference to old Hab since we require the latest now
+- update to habitat 0.52.0
+
 ## 0.51.0 (2018-01-08)
 
 - Update for Habitat version 0.51.0
