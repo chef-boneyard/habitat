@@ -1,6 +1,6 @@
 apt_update
 
-hab_install 'latest'
+hab_install
 
 hab_package 'core/redis'
 
