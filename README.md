@@ -15,6 +15,7 @@ This cookbook provides resources for working with [Habitat](https://habitat.sh).
 
 - RHEL 6+
 - Ubuntu 14.04+
+- Debian 7+
 
 ### Habitat
 
