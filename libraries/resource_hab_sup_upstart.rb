@@ -43,7 +43,7 @@ class Chef
           # RHEL 6 includes Upstart but Chef won't use it unless we specify the provider.
           provider Chef::Provider::Service::Upstart
           subscribes :restart, "template[/etc/init/hab-sup-#{new_resource.override_name}.conf]"
-          action :start
+          action [:enable, :start]
         end
       end
     end
