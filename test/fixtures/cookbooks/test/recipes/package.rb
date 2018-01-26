@@ -1,4 +1,6 @@
-include_recipe '::install'
+apt_update
+
+hab_install 'latest'
 
 hab_package 'core/redis'
 

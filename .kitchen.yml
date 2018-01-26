@@ -22,8 +22,6 @@ platforms:
   - name: ubuntu-16.04
 
 suites:
-  - name: install
-    run_list: test::install
   - name: package
     run_list: test::package
   - name: service

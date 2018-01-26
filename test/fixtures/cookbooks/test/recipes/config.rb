@@ -1,4 +1,7 @@
-include_recipe '::install'
+apt_update
+
+hab_install 'latest'
+
 hab_sup 'default'
 
 ruby_block 'wait-for-sup-default-startup' do
