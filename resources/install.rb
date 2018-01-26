@@ -1,5 +1,6 @@
 #
 # Author:: Thom May (<thom@chef.io>)
+# Copyright:: 2017-2018 Chef Software, Inc.
 #
 # Copyright:: Copyright (c) 2016 Chef Software, Inc.
 # License:: Apache License, Version 2.0
