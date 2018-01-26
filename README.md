@@ -59,9 +59,13 @@ Installs Habitat on the system using the [install script](https://raw.githubuser
 
 #### Examples
 
+Nameless installation
+
 ```ruby
-hab_install 'install habitat'
+hab_install
 ```
+
+Instalaltion specifying a bldr URL
 
 ```ruby
 hab_install 'install habitat' do
@@ -106,7 +110,7 @@ end
 
 Manages a Habitat application service using `hab sup`/`hab service`. This requires that `core/hab-sup` be running as a service. See the `hab_sup` resource documentation below for more information about how to set that up with this cookbook.
 
-*Note:* Applications may run as a specific user. Often with Habitat, the default is `hab`, or `root`. If the application requires another user, then it should be created with Chef's `user` resource.
+_Note:_ Applications may run as a specific user. Often with Habitat, the default is `hab`, or `root`. If the application requires another user, then it should be created with Chef's `user` resource.
 
 #### Actions
 
@@ -251,7 +255,7 @@ The goal of the Community Cookbook Engineering team is to improve cookbook quali
 
 ## License
 
-**Copyright:** 2016-2017, Chef Software, Inc.
+**Copyright:** 2016-2018, Chef Software, Inc.
 
 ```
 Licensed under the Apache License, Version 2.0 (the "License");
