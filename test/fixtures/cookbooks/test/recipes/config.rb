@@ -1,7 +1,5 @@
 apt_update
 
-hab_install
-
 hab_sup 'default'
 
 ruby_block 'wait-for-sup-default-startup' do
