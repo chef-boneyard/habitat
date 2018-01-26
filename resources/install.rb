@@ -21,17 +21,10 @@ resource_name :hab_install
 
 property :install_url, String, default: 'https://raw.githubusercontent.com/habitat-sh/habitat/master/components/hab/install.sh'
 property :bldr_url, String
-property :version, String
 property :channel, String
 property :create_user, [true, false], default: true
 
 action :install do
-  if new_resource.version
-    Chef::Log.warn("Do not specify a version of Habitat with the 'hab_install' resource, it is ignored.")
-    Chef::Log.warn("The version property of the 'hab_install' resource will be removed in a future version.")
-    Chef::Log.warn('See https://github.com/chef-cookbooks/habitat/blob/master/README.md#habitat')
-  end
-
   if new_resource.create_user
     user 'hab' do
       system true
