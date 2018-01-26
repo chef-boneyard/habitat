@@ -68,15 +68,3 @@ platforms:
   driver:
     image: dokken/opensuse-leap
     pid_one_command: /bin/systemd
-
-suites:
-  - name: install
-    run_list: test::install
-  - name: package
-    run_list: test::package
-  - name: sup
-    run_list: test::sup
-  - name: service
-    run_list: test::service
-  - name: config
-    run_list: test::config

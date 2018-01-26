@@ -152,7 +152,7 @@ describe 'test::sup' do
         ChefSpec::ServerRunner.new(
           step_into: ['hab_sup'],
           platform: 'debian',
-          version: '7.9'
+          version: '7.11'
         ).converge(described_recipe)
       end
 
