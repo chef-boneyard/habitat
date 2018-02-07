@@ -2,6 +2,25 @@
 
 This file is used to list changes made in each version of the habitat cookbook.
 
+## 0.53.0 (2018-02-07)
+
+- Set supervisor service to enable
+- Remove the legacy version property
+- Update copyrights and format
+- Test on the latest Fedora
+- Remove the suite from dokken.
+- Move installation into config and package
+- Use a non-deprecated Fauxhai mock
+- Remove author info from the test recipe
+- Remove the install test recipe
+- Remove the ChefSpec matchers
+- Make sure package and curl are installed in the install resource
+- Add Debian 7+ to the readme as supported
+- Allow nameless hab_install resource
+- Turns out we don't even need to install before installing the sup
+- Update the hab_install readme examples
+- update to habitat 0.53.0
+
 ## 0.52.0 (2018-01-23)
 
 - Remove Debian 7 testing
