@@ -27,7 +27,9 @@ property :channel, String
 property :create_user, [true, false], default: true
 
 action :install do
-  package %w(curl tar)
+  %w(curl tar).each do |pkg|
+    package pkg
+  end
 
   if new_resource.create_user
     user 'hab' do
