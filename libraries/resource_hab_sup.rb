@@ -29,7 +29,7 @@ class Chef
       property :listen_http, String
       property :override_name, String, default: 'default'
       property :org, String, default: 'default'
-      property :peer, String
+      property :peer, [String, Array]
       property :ring, String
       property :hab_channel, String
 
@@ -49,7 +49,9 @@ class Chef
           opts << "--listen-http #{new_resource.listen_http}" if new_resource.listen_http
           opts << "--override-name #{new_resource.override_name}" unless new_resource.override_name == 'default'
           opts << "--org #{new_resource.org}" unless new_resource.org == 'default'
-          opts << "--peer #{new_resource.peer}" if new_resource.peer
+          new_resource.peer.flatten.each do |peer|
+            opts << "--peer #{peer}"
+          end if new_resource.peer
           opts << "--ring #{new_resource.ring}" if new_resource.ring
           opts.join(' ')
         end
