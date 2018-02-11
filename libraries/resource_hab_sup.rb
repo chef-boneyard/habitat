@@ -32,6 +32,7 @@ class Chef
       property :peer, String
       property :ring, String
       property :hab_channel, String
+      property :auto_update, [true, false], default: false
 
       action :run do
         hab_install new_resource.name do
@@ -51,6 +52,7 @@ class Chef
           opts << "--org #{new_resource.org}" unless new_resource.org == 'default'
           opts << "--peer #{new_resource.peer}" if new_resource.peer
           opts << "--ring #{new_resource.ring}" if new_resource.ring
+          opts << '--auto-update' if new_resource.auto_update
           opts.join(' ')
         end
       end
