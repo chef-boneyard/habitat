@@ -125,16 +125,21 @@ action_class do
     case action
     when :load
       opts.push(*new_resource.bind.map { |b| "--bind #{b}" }) if new_resource.bind
-      opts << "--url #{new_resource.bldr_url}" if new_resource.bldr_url
+      unless new_resource.bldr_url == 'local'
+        opts << "--url #{new_resource.bldr_url}" if new_resource.bldr_url
+        opts << "--channel #{new_resource.channel}"
+      end
       opts << "--group #{new_resource.service_group}" if new_resource.service_group
       opts << "--strategy #{new_resource.strategy}" if new_resource.strategy
       opts << "--topology #{new_resource.topology}" if new_resource.topology
-      opts << "--channel #{new_resource.channel}"
     when :start
       opts << '--permanent-peer' if new_resource.permanent_peer
       opts.push(*new_resource.bind.map { |b| "--bind #{b}" }) if new_resource.bind
       opts << "--config-from #{new_resource.config_from}" if new_resource.config_from
-      opts << "--url #{new_resource.bldr_url}" if new_resource.bldr_url
+      unless new_resource.bldr_url == 'local'
+        opts << "--url #{new_resource.bldr_url}" if new_resource.bldr_url
+        opts << "--channel #{new_resource.channel}"
+      end
       opts << "--group #{new_resource.service_group}" if new_resource.service_group
       opts << "--listen-gossip #{new_resource.listen_gossip}" if new_resource.listen_gossip
       opts << "--listen-http #{new_resource.listen_http}" if new_resource.listen_http
@@ -143,7 +148,6 @@ action_class do
       opts << "--ring #{new_resource.ring}" if new_resource.ring
       opts << "--strategy #{new_resource.strategy}" if new_resource.strategy
       opts << "--topology #{new_resource.topology}" if new_resource.topology
-      opts << "--channel #{new_resource.channel}"
     end
 
     opts << "--override-name #{new_resource.override_name}" unless new_resource.override_name == 'default'
