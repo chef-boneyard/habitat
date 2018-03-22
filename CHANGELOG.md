@@ -3,11 +3,17 @@
 This file is used to list changes made in each version of the habitat cookbook.
 
 <!-- latest_release -->
+## 0.55.0 (2018-03-22)
+
+- Adding ability to use local repos
+- Add expeditor configuration
+- update for 0.55.0
+<!-- latest_release -->
+
 ## 0.54.0 (2018-02-22)
 
 - Add auto_update property to hab_sup resource.
 - update for 0.54.0 release
-<!-- latest_release -->
 
 ## 0.53.0 (2018-02-07)
 
