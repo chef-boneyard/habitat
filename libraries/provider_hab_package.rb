@@ -87,7 +87,7 @@ class Chef
         private
 
         def hab(*command)
-          shell_out_with_timeout!(['hab', *command].flatten.join(' '))
+          shell_out_with_timeout!(['hab', *command].flatten.compact.join(' '))
         rescue Errno::ENOENT
           Chef::Log.fatal("'hab' binary not found, use the 'hab_install' resource to install it first")
           raise

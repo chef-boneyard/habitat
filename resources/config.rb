@@ -57,9 +57,11 @@ action :apply do
     begin
       tempfile.write(TOML::Generator.new(new_resource.config).body)
       tempfile.close
-      shell_out_compact!(['hab', 'config', 'apply', opts,
-                          new_resource.service_group, incarnation,
-                          tempfile.path])
+      args = ['hab', 'config', 'apply', opts,
+              new_resource.service_group, incarnation,
+              tempfile.path].flatten.compact.join(' ')
+
+      shell_out(args)
     ensure
       tempfile.close
       tempfile.unlink
