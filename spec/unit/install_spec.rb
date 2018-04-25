@@ -17,5 +17,10 @@ describe 'test::install_for_chefspec' do
       expect(chef_run).to install_hab_install('install habitat with depot url')
         .with(bldr_url: 'https://localhost')
     end
+
+    it 'installs habitat with tmp_dir' do
+      expect(chef_run).to install_hab_install('install habitat with tmp_dir')
+        .with(tmp_dir: '/foo/bar')
+    end
   end
 end
