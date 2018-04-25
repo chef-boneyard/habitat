@@ -9,8 +9,8 @@ if node['platform'].eql?('windows')
     config(
       directories: {
         path: [
-          'C:/hab/pkgs/.../*.log'
-        ]
+          'C:/hab/pkgs/.../*.log',
+        ],
       }
     )
   end
