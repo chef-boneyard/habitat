@@ -1,62 +1,44 @@
-if node['platform'].eql?('windows')
-  include_recipe 'chocolatey'
-  chocolatey_package 'habitat'
-  hab_package 'skylerto/splunkforwarder' do
-    version '7.0.3/20180418161444'
+apt_update
+
+hab_sup 'default'
+
+ruby_block 'wait-for-sup-default-startup' do
+  block do
+    raise unless File.exist?('/hab/sup/default/data/services.dat')
   end
+  retries 30
+  retry_delay 1
+end
 
-  hab_config 'splunkforwarder.default' do
-    config(
-      directories: {
-        path: [
-          'C:/hab/pkgs/.../*.log',
-        ],
-      }
-    )
+hab_package 'core/nginx'
+hab_service 'core/nginx'
+
+# we need to sleep to let the nginx service have enough time to
+# startup properly before we can configure it.
+# This is here due to https://github.com/habitat-sh/habitat/issues/3155 and
+# can be removed if that issue is fixed.
+ruby_block 'wait-for-nginx-startup' do
+  block do
+    sleep 3
   end
-else
-  apt_update
+  action :nothing
+  subscribes :run, 'hab_service[core/nginx]', :immediately
+end
 
-  hab_sup 'default'
+hab_config 'nginx.default' do
+  config(
+    worker_processes: 2,
+    http: {
+      keepalive_timeout: 120,
+    }
+  )
+end
 
-  ruby_block 'wait-for-sup-default-startup' do
-    block do
-      raise unless File.exist?('/hab/sup/default/data/services.dat')
-    end
-    retries 30
-    retry_delay 1
+# Allow some time for the config to apply before running tests
+ruby_block 'wait-for-nginx-config' do
+  block do
+    sleep 3
   end
-
-  hab_package 'core/nginx'
-  hab_service 'core/nginx'
-
-  # we need to sleep to let the nginx service have enough time to
-  # startup properly before we can configure it.
-  # This is here due to https://github.com/habitat-sh/habitat/issues/3155 and
-  # can be removed if that issue is fixed.
-  ruby_block 'wait-for-nginx-startup' do
-    block do
-      sleep 3
-    end
-    action :nothing
-    subscribes :run, 'hab_service[core/nginx]', :immediately
-  end
-
-  hab_config 'nginx.default' do
-    config(
-      worker_processes: 2,
-      http: {
-        keepalive_timeout: 120,
-      }
-    )
-  end
-
-  # Allow some time for the config to apply before running tests
-  ruby_block 'wait-for-nginx-config' do
-    block do
-      sleep 3
-    end
-    action :nothing
-    subscribes :run, 'hab_config[nginx.default]', :immediately
-  end
+  action :nothing
+  subscribes :run, 'hab_config[nginx.default]', :immediately
 end
