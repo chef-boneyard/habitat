@@ -23,7 +23,7 @@ class Chef
   class Provider
     class Package
       class Hart < Chef::Provider::Package
-        use_inline_resources
+        use_inline_resources # ~FC113
         use_multipackage_api
 
         provides :hab_package
