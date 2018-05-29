@@ -1,4 +1,6 @@
-hab_sup 'tester'
+hab_sup 'tester' do
+  bldr_url 'https://willem.habitat.sh'
+end
 
 ruby_block 'wait-for-sup-default-startup' do
   block do
