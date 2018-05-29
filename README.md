@@ -186,6 +186,7 @@ The `run` action handles installing Habitat using the `hab_install` resource, en
 
 #### Properties
 
+- `bldr_url`: The Builder URL for the `hab_package` resource, if needed
 - `permanent_peer`: Only valid for `:start` action, passes `--permanent-peer` to the hab command
 - `listen_gossip`: Only valid for `:start` action, passes `--listen-gossip` with the specified address and port, e.g., `0.0.0.0:9638`, to the hab command
 - `listen_http`: Only valid for `:start` action, passes `--listen-http` with the specified address and port, e.g., `0.0.0.0:9631`, to the hab command
@@ -207,6 +208,14 @@ hab_sup 'test-options' do
   override_name 'myapps'
   listen_http '0.0.0.0:9999'
   listen_gossip '0.0.0.0:9998'
+end
+```
+
+```ruby
+# Use with an on-prem Builder
+# Access to public builder may not be available
+hab_sup 'default' do
+  bldr_url 'https://bldr.private.net'
 end
 ```
 
