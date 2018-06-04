@@ -90,19 +90,19 @@ def service_up?(svc_name)
 end
 
 action :load do
-  execute "hab sup load #{new_resource.service_name} #{sup_options.join(' ')}" unless current_resource.loaded
+  execute "hab svc load #{new_resource.service_name} #{sup_options.join(' ')}" unless current_resource.loaded
 end
 
 action :unload do
-  execute "hab sup unload #{new_resource.service_name} #{sup_options.join(' ')}" if current_resource.loaded
+  execute "hab svc unload #{new_resource.service_name} #{sup_options.join(' ')}" if current_resource.loaded
 end
 
 action :start do
-  execute "hab sup start #{new_resource.service_name} #{sup_options.join(' ')}" unless current_resource.running
+  execute "hab svc start #{new_resource.service_name} #{sup_options.join(' ')}" unless current_resource.running
 end
 
 action :stop do
-  execute "hab sup stop #{new_resource.service_name} #{sup_options.join(' ')}" if current_resource.running
+  execute "hab svc stop #{new_resource.service_name} #{sup_options.join(' ')}" if current_resource.running
 end
 
 action :restart do
