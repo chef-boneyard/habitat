@@ -4,6 +4,9 @@ This file is used to list changes made in each version of the habitat cookbook.
 
 <!-- latest_release unreleased -->
 ## Unreleased
+
+#### Merged Pull Requests
+- Include toml in the bundle [#100](https://github.com/chef-cookbooks/habitat/pull/100) ([jtimberman](https://github.com/jtimberman))
 <!-- latest_release -->
 
 ## 0.56.0 (2018-06-05)
