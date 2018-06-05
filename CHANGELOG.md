@@ -4,10 +4,15 @@ This file is used to list changes made in each version of the habitat cookbook.
 
 <!-- latest_release unreleased -->
 ## Unreleased
-
-#### Merged Pull Requests
-- Update for 0.56.0 [#97](https://github.com/chef-cookbooks/habitat/pull/97) ([nsdavidson](https://github.com/nsdavidson))
 <!-- latest_release -->
+
+## 0.56.0 (2018-06-05)
+
+- Update for 0.56.0
+- Cookstyle fix
+- Disable FC113 for now
+- Update the platforms we test
+- Update CHANGELOG.md with details from pull request #97
 
 ## 0.55.0 (2018-03-22)
 
