@@ -23,7 +23,7 @@ property :running, [true, false], default: false, desired_state: true
 # hab sup options which get included based on the action of the resource
 property :permanent_peer, [true, false], default: false
 property :listen_gossip, String
-property :listen_http, String
+property :listen_http, String, desired_state: false
 property :org, String, default: 'default'
 property :peer, String
 property :ring, String
@@ -61,7 +61,7 @@ end
 # NoMethodError.
 #
 def service_up?(svc_name)
-  http_uri = listen_http ? listen_http : 'http://localhost:9631'
+  http_uri = listen_http ? "http://#{listen_http}" : 'http://localhost:9631'
 
   begin
     TCPSocket.new(URI(http_uri).host, URI(http_uri).port).close
