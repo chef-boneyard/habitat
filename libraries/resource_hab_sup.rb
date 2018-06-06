@@ -24,6 +24,7 @@ class Chef
         false
       end
 
+      property :bldr_url, String
       property :permanent_peer, [true, false], default: false
       property :listen_gossip, String
       property :listen_http, String
@@ -39,7 +40,9 @@ class Chef
           channel new_resource.hab_channel if new_resource.hab_channel
         end
 
-        hab_package 'core/hab-sup'
+        hab_package 'core/hab-sup' do
+          bldr_url new_resource.bldr_url if new_resource.bldr_url
+        end
       end
 
       action_class do
