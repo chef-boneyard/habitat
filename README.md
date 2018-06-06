@@ -56,6 +56,7 @@ Installs Habitat on the system using the [install script](https://raw.githubuser
 - `bldr_url`: Optional URL to an alternate Builder (defaults to the public Builder)
 - `channel`: The release channel to install from (defaults to `stable`)
 - `create_user`: Creates the `hab` system user (defaults to `true`)
+- `tmp_dir`: Sets TMPDIR environment variable for location to place temp files.  (required if `/tmp` and `/var/tmp` are mounted `noexec`)
 
 #### Examples
 
