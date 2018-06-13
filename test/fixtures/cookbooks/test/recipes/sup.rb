@@ -26,6 +26,8 @@ end
 
 hab_sup 'single_peer' do
   override_name 'single_peer'
+  listen_http '0.0.0.0:8999'
+  listen_gossip '0.0.0.0:8998'
   peer '127.0.0.2'
 end
 
@@ -40,8 +42,8 @@ end
 hab_sup 'multiple_peers' do
   override_name 'multiple_peers'
   peer ['127.0.0.2', '127.0.0.3']
-  listen_http '0.0.0.0:9999'
-  listen_gossip '0.0.0.0:9998'
+  listen_http '0.0.0.0:7999'
+  listen_gossip '0.0.0.0:7998'
 end
 
 ruby_block 'wait-for-sup-multiple_peers-startup' do
