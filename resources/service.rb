@@ -121,7 +121,7 @@ end
 action_class do
   def sup_options
     opts = []
-    
+
     # certain options are only valid for specific `hab sup` subcommands.
     case action
     when :load

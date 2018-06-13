@@ -29,7 +29,7 @@ hab_sup 'single_peer' do
   peer '127.0.0.2'
 end
 
-ruby_block 'wait-for-sup-default-startup' do
+ruby_block 'wait-for-sup-single_peer-startup' do
   block do
     raise unless File.exist?('/hab/sup/single_peer/data/services.dat')
   end
@@ -44,7 +44,7 @@ hab_sup 'multiple_peers' do
   listen_gossip '0.0.0.0:9998'
 end
 
-ruby_block 'wait-for-sup-chef-es-startup' do
+ruby_block 'wait-for-sup-multiple_peers-startup' do
   block do
     raise unless File.exist?('/hab/sup/multiple_peers/data/services.dat')
   end
