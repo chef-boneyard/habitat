@@ -16,6 +16,21 @@ describe 'test::sup' do
           )
       end
 
+      it 'run hab sup with a single peer' do
+        expect(chef_run).to run_hab_sup('single_peer').with(
+          override_name: 'single_peer',
+          peer: ['127.0.0.2']
+        )
+      end
+
+      it 'runs hab sup with multiple peers' do
+        expect(chef_run).to run_hab_sup('multiple_peers')
+          .with(
+            override_name: 'multiple_peers',
+            peer: ['127.0.0.2', '127.0.0.3']
+          )
+      end
+
       it 'handles installing hab for us' do
         expect(chef_run).to install_hab_install('tester')
       end

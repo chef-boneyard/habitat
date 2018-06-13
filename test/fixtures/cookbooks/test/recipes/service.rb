@@ -68,3 +68,14 @@ hab_service 'core/ruby-rails-sample' do
     'fakething:otherthing.default',
   ]
 end
+
+# Test peers
+hab_package 'core/postgresql-client'
+hab_service 'core/postgresql-client' do
+  peer '127.0.0.2'
+end
+
+hab_package 'core/postgresql'
+hab_service 'core/postgresql' do
+  peer ['127.0.0.2', '127.0.0.3']
+end
