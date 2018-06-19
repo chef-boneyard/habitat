@@ -5,6 +5,8 @@ This file is used to list changes made in each version of the habitat cookbook.
 <!-- latest_release unreleased -->
 ## Unreleased
 
+#### Merged Pull Requests
+- Fix #103 and remove options from svc start [#104](https://github.com/chef-cookbooks/habitat/pull/104) ([jonlives](https://github.com/jonlives))
 <!-- latest_release -->
 
 ## 0.56.1 (2018-06-06)
