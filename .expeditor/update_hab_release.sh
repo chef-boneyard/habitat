@@ -24,6 +24,7 @@ echo "${VERSION}" > VERSION
 git add .
 git commit -m "update to habitat $VERSION"
 
+. /helper_functions.sh
 open_pull_request
 
 git checkout -
