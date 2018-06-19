@@ -82,7 +82,7 @@ def service_up?(svc_name)
   end
 
   begin
-    sup_for_service_name['process']['state'] == 'Up'
+    sup_for_service_name['process']['state'] == 'up'
   rescue
     Chef::Log.debug("#{service_name} not found the Habitat supervisor")
     false
@@ -98,6 +98,7 @@ action :unload do
 end
 
 action :start do
+  action_load
   execute "hab svc start #{new_resource.service_name} #{sup_options.join(' ')}" unless current_resource.running
 end
 
@@ -132,13 +133,12 @@ action_class do
       opts << "--group #{new_resource.service_group}" if new_resource.service_group
       opts << "--strategy #{new_resource.strategy}" if new_resource.strategy
       opts << "--topology #{new_resource.topology}" if new_resource.topology
-    when :start
+    when :start, :stop
       opts << '--permanent-peer' if new_resource.permanent_peer
       opts.push(*new_resource.bind.map { |b| "--bind #{b}" }) if new_resource.bind
       opts << "--config-from #{new_resource.config_from}" if new_resource.config_from
       unless new_resource.bldr_url == 'local'
         opts << "--url #{new_resource.bldr_url}" if new_resource.bldr_url
-        opts << "--channel #{new_resource.channel}"
       end
       opts << "--group #{new_resource.service_group}" if new_resource.service_group
       opts << "--listen-gossip #{new_resource.listen_gossip}" if new_resource.listen_gossip
@@ -146,8 +146,6 @@ action_class do
       opts << "--org #{new_resource.org}" unless new_resource.org == 'default'
       opts << "--peer #{new_resource.peer}" if new_resource.peer
       opts << "--ring #{new_resource.ring}" if new_resource.ring
-      opts << "--strategy #{new_resource.strategy}" if new_resource.strategy
-      opts << "--topology #{new_resource.topology}" if new_resource.topology
     end
 
     opts << "--override-name #{new_resource.override_name}" unless new_resource.override_name == 'default'
