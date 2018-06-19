@@ -1,3 +1,4 @@
+
 # habitat CHANGELOG
 
 This file is used to list changes made in each version of the habitat cookbook.
@@ -5,10 +6,17 @@ This file is used to list changes made in each version of the habitat cookbook.
 <!-- latest_release unreleased -->
 ## Unreleased
 
+<!-- latest_release -->
+
+## 0.57.0 (2018-06-19)
+
+- Fix #103
+- Add @jonlives as a maintainer
+- Source helper functions script
+
 #### Merged Pull Requests
 - Source helper functions script [#105](https://github.com/chef-cookbooks/habitat/pull/105) ([jtimberman](https://github.com/jtimberman))
 - Fix #103 and remove options from svc start [#104](https://github.com/chef-cookbooks/habitat/pull/104) ([jonlives](https://github.com/jonlives))
-<!-- latest_release -->
 
 ## 0.56.1 (2018-06-06)
 
