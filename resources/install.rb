@@ -32,6 +32,7 @@ action :install do
 
   if new_resource.create_user
     group 'hab'
+
     user 'hab' do
       gid 'hab'
       system true
