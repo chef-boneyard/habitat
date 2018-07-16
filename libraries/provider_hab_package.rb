@@ -87,7 +87,7 @@ class Chef
         private
 
         def hab(*command)
-          shell_out_with_timeout!(clean_array('hab', *command))
+          shell_out_with_timeout!(*Chef::Mixin::ShellOut.clean_array('hab', *command))
         rescue Errno::ENOENT
           Chef::Log.fatal("'hab' binary not found, use the 'hab_install' resource to install it first")
           raise
