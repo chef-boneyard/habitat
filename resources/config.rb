@@ -53,9 +53,9 @@ action :apply do
     opts << ['--org', new_resource.org] if new_resource.org
     opts << ['--ring', new_resource.ring] if new_resource.ring
 
+    tempfile = Tempfile.new(['hab_config', '.toml'])
     command = [ 'hab', 'config', 'apply', opts, new_resource.service_group,
                 incarnation, tempfile.path ]
-    tempfile = Tempfile.new(['hab_config', '.toml'])
     begin
       tempfile.write(TOML::Generator.new(new_resource.config).body)
       tempfile.close
