@@ -1,4 +1,4 @@
-# Copyright:: 2017-2018 Chef Software, Inc.
+# Copyright:: 2017-2018, Chef Software Inc.
 # License:: Apache License, Version 2.0
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -53,13 +53,17 @@ action :apply do
     opts << ['--org', new_resource.org] if new_resource.org
     opts << ['--ring', new_resource.ring] if new_resource.ring
 
+    command = [ 'hab', 'config', 'apply', opts, new_resource.service_group,
+                incarnation, tempfile.path ]
     tempfile = Tempfile.new(['hab_config', '.toml'])
     begin
       tempfile.write(TOML::Generator.new(new_resource.config).body)
       tempfile.close
-      shell_out_compact!(['hab', 'config', 'apply', opts,
-                          new_resource.service_group, incarnation,
-                          tempfile.path])
+      if Gem::Requirement.new(">= 14.3.20").satisfied_by?(Gem::Version.new(Chef::VERSION))
+        shell_out!(*command)
+      else
+        shell_out_compact!(*command)
+      end
     ensure
       tempfile.close
       tempfile.unlink
