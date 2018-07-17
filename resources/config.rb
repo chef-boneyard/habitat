@@ -59,7 +59,7 @@ action :apply do
     begin
       tempfile.write(TOML::Generator.new(new_resource.config).body)
       tempfile.close
-      if Gem::Requirement.new(">= 14.3.20").satisfied_by?(Gem::Version.new(Chef::VERSION))
+      if Gem::Requirement.new('>= 14.3.20').satisfied_by?(Gem::Version.new(Chef::VERSION))
         shell_out!(*command)
       else
         shell_out_compact!(*command)

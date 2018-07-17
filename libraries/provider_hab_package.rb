@@ -87,7 +87,7 @@ class Chef
         private
 
         def hab(*command)
-          if Gem::Requirement.new(">= 14.3.20").satisfied_by?(Gem::Version.new(Chef::VERSION))
+          if Gem::Requirement.new('>= 14.3.20').satisfied_by?(Gem::Version.new(Chef::VERSION))
             shell_out!('hab', *command)
           else
             shell_out_with_timeout!(clean_array('hab', *command))
