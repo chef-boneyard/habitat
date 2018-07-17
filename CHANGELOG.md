@@ -1,4 +1,3 @@
-
 # habitat CHANGELOG
 
 This file is used to list changes made in each version of the habitat cookbook.
@@ -6,6 +5,8 @@ This file is used to list changes made in each version of the habitat cookbook.
 <!-- latest_release unreleased -->
 ## Unreleased
 
+#### Merged Pull Requests
+- address chef 14.3.x shell_out deprecations [#111](https://github.com/chef-cookbooks/habitat/pull/111) ([lamont-granquist](https://github.com/lamont-granquist))
 <!-- latest_release -->
 
 ## 0.57.0 (2018-06-19)
