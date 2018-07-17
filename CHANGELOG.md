@@ -5,9 +5,20 @@ This file is used to list changes made in each version of the habitat cookbook.
 <!-- latest_release unreleased -->
 ## Unreleased
 
+<!-- latest_release -->
+
+## 0.59.0 (2018-07-17)
+
+- Update README to reflect new version of Hab
+- address chef 14.3.x shell_out deprecations
+- fix shell_out_compact deprecation
+- move to after tempfile creation
+- Update CHANGELOG.md with details from pull request #111
+- Use the new kitchen config file names
+- Cookstyle fixes
+
 #### Merged Pull Requests
 - address chef 14.3.x shell_out deprecations [#111](https://github.com/chef-cookbooks/habitat/pull/111) ([lamont-granquist](https://github.com/lamont-granquist))
-<!-- latest_release -->
 
 ## 0.57.0 (2018-06-19)
 
