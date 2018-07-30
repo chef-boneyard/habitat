@@ -24,8 +24,9 @@ class Chef
       resource_name :hab_package
       provides :hab_package
 
-      property :bldr_url, String, regex: /.*/, default: 'https://willem.habitat.sh'
+      property :bldr_url, String, regex: /.*/, default: 'https://bldr.habitat.sh'
       property :channel, String, default: 'stable'
+      property :auth_token, String
     end
   end
 end

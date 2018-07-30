@@ -35,7 +35,8 @@ class Chef
           owner 'root'
           group 'root'
           mode '0644'
-          variables exec_start_options: exec_start_options
+          variables(exec_start_options: exec_start_options,
+                    auth_token: new_resource.auth_token)
           action :create
         end
 
@@ -43,6 +44,8 @@ class Chef
           # RHEL 6 includes Upstart but Chef won't use it unless we specify the provider.
           provider Chef::Provider::Service::Upstart
           subscribes :restart, "template[/etc/init/hab-sup-#{new_resource.override_name}.conf]"
+          subscribes :restart, 'hab_package[core/hab-sup]'
+          subscribes :restart, 'hab_package[core/hab-launcher]'
           action [:enable, :start]
         end
       end

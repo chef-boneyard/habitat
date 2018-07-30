@@ -50,6 +50,9 @@ class Chef
         # - hab pkg list (localinfo?) lamont-granquist/ruby/2.3.1/20160101010101
         #   ^^^^^ need a better name
         #
+        # Probably also want to support installation of local packages
+        # Service resource supports running services from locally installed packages
+        # But we provide no way to handle installation
 
         def load_current_resource
           @current_resource = Chef::Resource::HartPackage.new(new_resource.name)
@@ -63,7 +66,10 @@ class Chef
 
         def install_package(names, versions)
           names.zip(versions).map do |n, v|
-            hab('pkg', 'install', '--channel', new_resource.channel, '--url', new_resource.bldr_url, "#{strip_version(n)}/#{v}", new_resource.options)
+            opts = ['pkg', 'install', '--channel', new_resource.channel, '--url', new_resource.bldr_url]
+            opts += ['--auth', new_resource.auth_token] if new_resource.auth_token
+            opts += ["#{strip_version(n)}/#{v}", new_resource.options]
+            hab(opts)
           end
         end
 
@@ -129,7 +135,7 @@ class Chef
 
         def http
           # FIXME: use SimpleJSON when the depot mime-type is fixed
-          @http ||= Chef::HTTP::Simple.new('https://willem.habitat.sh/')
+          @http ||= Chef::HTTP::Simple.new('https://bldr.habitat.sh/')
         end
 
         def candidate_versions
