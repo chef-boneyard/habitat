@@ -122,7 +122,7 @@ class Chef
               name_version = [pkg_name, version].compact.join('/').squeeze('/').chomp('/').sub(%r{^\/}, '')
               url = "#{new_resource.bldr_url.chomp('/')}/v1/depot/channels/#{origin}/#{new_resource.channel}/pkgs/#{name_version}"
               url << '/latest' unless name_version.count('/') >= 2
-              Chef::JSONCompat.parse(http.get(url))
+              Chef::JSONCompat.parse(http.get(url, Authorization: "Bearer #{new_resource.auth_token}"))
             rescue Net::HTTPServerException
               nil
             end
