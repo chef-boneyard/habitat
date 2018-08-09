@@ -23,7 +23,7 @@ property :running, [true, false], default: false, desired_state: true
 # hab sup options which get included based on the action of the resource
 property :permanent_peer, [true, false], default: false
 property :listen_gossip, String
-property :listen_http, String
+property :listen_http, String, desired_state: false
 property :org, String, default: 'default'
 property :peer, String
 property :ring, String
@@ -61,7 +61,7 @@ end
 # NoMethodError.
 #
 def service_up?(svc_name)
-  http_uri = listen_http ? listen_http : 'http://localhost:9631'
+  http_uri = listen_http ? "http://#{listen_http}" : 'http://localhost:9631'
 
   begin
     TCPSocket.new(URI(http_uri).host, URI(http_uri).port).close
@@ -82,7 +82,7 @@ def service_up?(svc_name)
   end
 
   begin
-    sup_for_service_name['process']['state'] == 'Up'
+    sup_for_service_name['process']['state'] == 'up'
   rescue
     Chef::Log.debug("#{service_name} not found the Habitat supervisor")
     false
@@ -90,19 +90,20 @@ def service_up?(svc_name)
 end
 
 action :load do
-  execute "hab sup load #{new_resource.service_name} #{sup_options.join(' ')}" unless current_resource.loaded
+  execute "hab svc load #{new_resource.service_name} #{sup_options.join(' ')}" unless current_resource.loaded
 end
 
 action :unload do
-  execute "hab sup unload #{new_resource.service_name} #{sup_options.join(' ')}" if current_resource.loaded
+  execute "hab svc unload #{new_resource.service_name} #{sup_options.join(' ')}" if current_resource.loaded
 end
 
 action :start do
-  execute "hab sup start #{new_resource.service_name} #{sup_options.join(' ')}" unless current_resource.running
+  action_load
+  execute "hab svc start #{new_resource.service_name} #{sup_options.join(' ')}" unless current_resource.running
 end
 
 action :stop do
-  execute "hab sup stop #{new_resource.service_name} #{sup_options.join(' ')}" if current_resource.running
+  execute "hab svc stop #{new_resource.service_name} #{sup_options.join(' ')}" if current_resource.running
 end
 
 action :restart do
@@ -132,13 +133,12 @@ action_class do
       opts << "--group #{new_resource.service_group}" if new_resource.service_group
       opts << "--strategy #{new_resource.strategy}" if new_resource.strategy
       opts << "--topology #{new_resource.topology}" if new_resource.topology
-    when :start
+    when :start, :stop
       opts << '--permanent-peer' if new_resource.permanent_peer
       opts.push(*new_resource.bind.map { |b| "--bind #{b}" }) if new_resource.bind
       opts << "--config-from #{new_resource.config_from}" if new_resource.config_from
       unless new_resource.bldr_url == 'local'
         opts << "--url #{new_resource.bldr_url}" if new_resource.bldr_url
-        opts << "--channel #{new_resource.channel}"
       end
       opts << "--group #{new_resource.service_group}" if new_resource.service_group
       opts << "--listen-gossip #{new_resource.listen_gossip}" if new_resource.listen_gossip
@@ -146,8 +146,6 @@ action_class do
       opts << "--org #{new_resource.org}" unless new_resource.org == 'default'
       opts << "--peer #{new_resource.peer}" if new_resource.peer
       opts << "--ring #{new_resource.ring}" if new_resource.ring
-      opts << "--strategy #{new_resource.strategy}" if new_resource.strategy
-      opts << "--topology #{new_resource.topology}" if new_resource.topology
     end
 
     opts << "--override-name #{new_resource.override_name}" unless new_resource.override_name == 'default'

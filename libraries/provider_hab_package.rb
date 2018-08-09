@@ -1,4 +1,4 @@
-# Copyright:: 2016-2018, Chef Software, Inc.
+# Copyright:: 2016-2018, Chef Software Inc.
 # License:: Apache License, Version 2.0
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -23,7 +23,7 @@ class Chef
   class Provider
     class Package
       class Hart < Chef::Provider::Package
-        use_inline_resources
+        use_inline_resources # ~FC113
         use_multipackage_api
 
         provides :hab_package
@@ -87,7 +87,11 @@ class Chef
         private
 
         def hab(*command)
-          shell_out_with_timeout!(clean_array('hab', *command).join(' '))
+          if Gem::Requirement.new('>= 14.3.20').satisfied_by?(Gem::Version.new(Chef::VERSION))
+            shell_out!('hab', *command)
+          else
+            shell_out_with_timeout!(clean_array('hab', *command).join(' '))
+          end
         rescue Errno::ENOENT
           Chef::Log.fatal("'hab' binary not found, use the 'hab_install' resource to install it first")
           raise
@@ -152,7 +156,7 @@ class Chef
 
           nv_parts = new_version.squeeze('/').split('/')
 
-          if nv_parts.count < 2 # rubocop:disable Style/GuardClause
+          if nv_parts.count < 2
             return current_version.squeeze('/').split('/')[0] == new_version.squeeze('/')
           else
             return current_version.squeeze('/') == new_resource.version.squeeze('/')

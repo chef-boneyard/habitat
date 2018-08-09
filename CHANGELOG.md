@@ -2,13 +2,62 @@
 
 This file is used to list changes made in each version of the habitat cookbook.
 
+<!-- latest_release unreleased -->
+## Unreleased
+
 <!-- latest_release -->
+
+## 0.59.0 (2018-07-17)
+
+- Update README to reflect new version of Hab
+- address chef 14.3.x shell_out deprecations
+- fix shell_out_compact deprecation
+- move to after tempfile creation
+- Update CHANGELOG.md with details from pull request #111
+- Use the new kitchen config file names
+- Cookstyle fixes
+
+#### Merged Pull Requests
+- address chef 14.3.x shell_out deprecations [#111](https://github.com/chef-cookbooks/habitat/pull/111) ([lamont-granquist](https://github.com/lamont-granquist))
+
+## 0.57.0 (2018-06-19)
+
+- Fix #103
+- Add @jonlives as a maintainer
+- Source helper functions script
+
+#### Merged Pull Requests
+- Source helper functions script [#105](https://github.com/chef-cookbooks/habitat/pull/105) ([jtimberman](https://github.com/jtimberman))
+- Fix #103 and remove options from svc start [#104](https://github.com/chef-cookbooks/habitat/pull/104) ([jonlives](https://github.com/jonlives))
+
+## 0.56.1 (2018-06-06)
+
+- Support passing TMPDIR attribute to Habitat install.sh script.  Addresses Issue #90
+- Add: bldr_url property for hab_sup
+- Fix hab_svc when using custom ip:port for supervisor
+- Include toml in the bundle
+- Update CHANGELOG.md with details from pull request #96
+
+#### Merged Pull Requests
+
+- Fix hab_svc when using custom ip:port for supervisor [#96](https://github.com/chef-cookbooks/habitat/pull/96) ([JonathanTron](https://github.com/JonathanTron))
+- Add: bldr_url property for hab_sup [#93](https://github.com/chef-cookbooks/habitat/pull/93) ([Atalanta](https://github.com/Atalanta))
+- Support passing TMPDIR attribute to Habitat install.sh script.  #90 [#91](https://github.com/chef-cookbooks/habitat/pull/91) ([qubitrenegade](https://github.com/qubitrenegade))
+- Include toml in the bundle [#100](https://github.com/chef-cookbooks/habitat/pull/100) ([jtimberman](https://github.com/jtimberman))
+
+## 0.56.0 (2018-06-05)
+
+- Update for 0.56.0
+- Cookstyle fix
+- Disable FC113 for now
+- Update the platforms we test
+- Update CHANGELOG.md with details from pull request #97
+
 ## 0.55.0 (2018-03-22)
 
 - Adding ability to use local repos
 - Add expeditor configuration
 - update for 0.55.0
-<!-- latest_release -->
 
 ## 0.54.0 (2018-02-22)
 

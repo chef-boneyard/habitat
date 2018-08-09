@@ -19,7 +19,7 @@ This cookbook provides resources for working with [Habitat](https://habitat.sh).
 
 ### Habitat
 
-- Habitat version: 0.55.0
+- Habitat version: 0.59.0
 
 This cookbook is developed lockstep with the latest release of Habitat to ensure compatibility, going forward from 0.33.0 of the cookbook and 0.33.2 of Habitat itself. When new versions of Habitat are released, the version should be updated in these files:
 
@@ -56,6 +56,7 @@ Installs Habitat on the system using the [install script](https://raw.githubuser
 - `bldr_url`: Optional URL to an alternate Builder (defaults to the public Builder)
 - `channel`: The release channel to install from (defaults to `stable`)
 - `create_user`: Creates the `hab` system user (defaults to `true`)
+- `tmp_dir`: Sets TMPDIR environment variable for location to place temp files.  (required if `/tmp` and `/var/tmp` are mounted `noexec`)
 
 #### Examples
 
@@ -186,6 +187,7 @@ The `run` action handles installing Habitat using the `hab_install` resource, en
 
 #### Properties
 
+- `bldr_url`: The Builder URL for the `hab_package` resource, if needed
 - `permanent_peer`: Only valid for `:start` action, passes `--permanent-peer` to the hab command
 - `listen_gossip`: Only valid for `:start` action, passes `--listen-gossip` with the specified address and port, e.g., `0.0.0.0:9638`, to the hab command
 - `listen_http`: Only valid for `:start` action, passes `--listen-http` with the specified address and port, e.g., `0.0.0.0:9631`, to the hab command
@@ -207,6 +209,14 @@ hab_sup 'test-options' do
   override_name 'myapps'
   listen_http '0.0.0.0:9999'
   listen_gossip '0.0.0.0:9998'
+end
+```
+
+```ruby
+# Use with an on-prem Builder
+# Access to public builder may not be available
+hab_sup 'default' do
+  bldr_url 'https://bldr.private.net'
 end
 ```
 
@@ -250,6 +260,7 @@ end
 This cookbook is maintained by Chef's Community Cookbook Engineering team along with the following maintainers:
 
 - Joshua Timberman [joshua@chef.io](mailto:joshua@chef.io)
+- Jon Cowie [jcowie@chef.io](mailto:jcowie@chef.io)
 
 The goal of the Community Cookbook Engineering team is to improve cookbook quality and to aid the community in contributing to cookbooks. To learn more about our team, process, and design goals see our [team documentation](https://github.com/chef-cookbooks/community_cookbook_documentation/blob/master/COOKBOOK_TEAM.MD). To learn more about contributing to cookbooks like this see our [contributing documentation](https://github.com/chef-cookbooks/community_cookbook_documentation/blob/master/CONTRIBUTING.MD), or if you have general questions about this cookbook come chat with us in #cookbok-engineering on the [Chef Community Slack](http://community-slack.chef.io/)
 

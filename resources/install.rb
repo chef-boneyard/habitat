@@ -25,12 +25,16 @@ property :install_url, String, default: 'https://raw.githubusercontent.com/habit
 property :bldr_url, String
 property :channel, String
 property :create_user, [true, false], default: true
+property :tmp_dir, String
 
 action :install do
   package %w(curl tar)
 
   if new_resource.create_user
+    group 'hab'
+
     user 'hab' do
+      gid 'hab'
       system true
     end
   end
@@ -48,7 +52,14 @@ action :install do
 
   execute 'installing with hab-install.sh' do
     command hab_command
-    environment 'HAB_BLDR_URL' => new_resource.bldr_url if new_resource.bldr_url
+    environment(
+      {
+        'HAB_BLDR_URL' => 'bldr_url',
+        'TMPDIR' => 'tmp_dir',
+      }.each_with_object({}) do |(var, property), env|
+        env[var] = new_resource.send(property.to_sym) if new_resource.send(property.to_sym)
+      end
+    )
   end
 end
 
@@ -60,12 +71,19 @@ action :upgrade do
 
   execute 'installing with hab-install.sh' do
     command hab_command
-    environment 'HAB_BLDR_URL' => new_resource.bldr_url if new_resource.bldr_url
+    environment(
+      {
+        'HAB_BLDR_URL' => 'bldr_url',
+        'TMPDIR' => 'tmp_dir',
+      }.each_with_object({}) do |(var, property), env|
+        env[var] = new_resource.send(property.to_sym) if new_resource.send(property.to_sym)
+      end
+    )
   end
 end
 
 action_class do
-  HAB_VERSION = '0.55.0'.freeze
+  HAB_VERSION = '0.59.0'.freeze
 
   def hab_version
     HAB_VERSION
