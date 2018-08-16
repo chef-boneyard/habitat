@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #
 # Updates the Habitat version everywhere in this cookbook so it works with new
 # versions of Habitat.
