@@ -19,7 +19,7 @@ This cookbook provides resources for working with [Habitat](https://habitat.sh).
 
 ### Habitat
 
-- Habitat version: 0.59.0
+- Habitat version: 0.61.0
 
 This cookbook is developed lockstep with the latest release of Habitat to ensure compatibility, going forward from 0.33.0 of the cookbook and 0.33.2 of Habitat itself. When new versions of Habitat are released, the version should be updated in these files:
 
