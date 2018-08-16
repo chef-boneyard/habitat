@@ -23,14 +23,11 @@ property :config, Mash,
          required: true,
          coerce: proc { |m| m.is_a?(Hash) ? Mash.new(m) : m }
 property :service_group, String, name_property: true, desired_state: false
-property :peer, String, desired_state: false
-property :org, String, desired_state: false
-property :ring, String, desired_state: false
-property :api_host, String, default: '127.0.0.1', desired_state: false
-property :api_port, Integer, default: 9631, desired_state: false
+property :remote_sup, String, desired_state: false
+property :user, String, desired_state: false
 
 load_current_value do
-  uri = URI("http://#{api_host}:#{api_port}/census")
+  uri = URI("http://#{remote_sup}/census")
   begin
     census = Mash.new(JSON.parse(Net::HTTP.get(uri)))
     sc = census['census_groups'][service_group]['service_config']['value']
@@ -49,13 +46,12 @@ action :apply do
 
     opts = []
     # opts gets flattened by shell_out_compact later
-    opts << ['--peer', new_resource.peer] if new_resource.peer
-    opts << ['--org', new_resource.org] if new_resource.org
-    opts << ['--ring', new_resource.ring] if new_resource.ring
+    opts << ['--remote-sup', new_resource.remote_sup] if new_resource.remote_sup
+    opts << ['--user', new_resource.user] if new_resource.user
 
     tempfile = Tempfile.new(['hab_config', '.toml'])
-    command = [ 'hab', 'config', 'apply', opts, new_resource.service_group,
-                incarnation, tempfile.path ]
+    command = ['hab', 'config', 'apply', opts, new_resource.service_group,
+               incarnation, tempfile.path]
     begin
       tempfile.write(TOML::Generator.new(new_resource.config).body)
       tempfile.close

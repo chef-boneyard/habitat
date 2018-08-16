@@ -23,3 +23,18 @@ ruby_block 'wait-for-sup-chef-es-startup' do
   retries 30
   retry_delay 1
 end
+
+hab_sup 'test-auth-token' do
+  auth_token 'test'
+  override_name 'auth-token'
+  listen_http '0.0.0.0:10001'
+  listen_gossip '0.0.0.0:10000'
+end
+
+ruby_block 'wait-for-sup-test-auth-token-startup' do
+  block do
+    raise unless File.exist?('/hab/sup/auth-token/data/services.dat')
+  end
+  retries 30
+  retry_delay 1
+end
