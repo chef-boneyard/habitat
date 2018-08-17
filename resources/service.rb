@@ -34,7 +34,7 @@ property :bind, [String, Array], coerce: proc { |b| b.is_a?(String) ? [b] : b }
 property :service_group, String
 property :config_from, String
 property :override_name, String, default: 'default'
-property :channel, [Symbol, String], equal_to: [:unstable, 'unstable', :current, 'current', :stable, 'stable'], default: :stable
+property :channel, [Symbol, String], default: :stable
 
 load_current_value do
   running service_up?(service_name)
