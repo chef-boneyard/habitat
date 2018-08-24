@@ -33,9 +33,10 @@ class Chef
                     Description: 'The Habitat Supervisor',
                   },
                   Service: {
+                    Environment: ("HAB_AUTH_TOKEN=#{new_resource.auth_token}" if new_resource.auth_token),
                     ExecStart: "/bin/hab sup run #{exec_start_options}",
                     Restart: 'on-failure',
-                  },
+                  }.compact,
                   Install: {
                     WantedBy: 'default.target',
                   })
@@ -44,6 +45,8 @@ class Chef
 
         service "hab-sup-#{new_resource.override_name}" do
           subscribes :restart, "systemd_unit[hab-sup-#{new_resource.override_name}.service]"
+          subscribes :restart, 'hab_package[core/hab-sup]'
+          subscribes :restart, 'hab_package[core/hab-launcher]'
           action [:enable, :start]
         end
       end

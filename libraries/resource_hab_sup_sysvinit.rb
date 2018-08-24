@@ -36,12 +36,15 @@ class Chef
           group 'root'
           mode '0755'
           variables(name: "hab-sup-#{new_resource.override_name}",
-                    exec_start_options: exec_start_options)
+                    exec_start_options: exec_start_options,
+                    auth_token: new_resource.auth_token)
           action :create
         end
 
         service "hab-sup-#{new_resource.override_name}" do
           subscribes :restart, "template[/etc/init.d/hab-sup-#{new_resource.override_name}]"
+          subscribes :restart, 'hab_package[core/hab-sup]'
+          subscribes :restart, 'hab_package[core/hab-launcher]'
           action [:enable, :start]
         end
       end

@@ -6,6 +6,10 @@ stop on runlevel [!2345]
 respawn
 respawn limit 5 30
 
+<% if @auth_token %>
+env HAB_AUTH_TOKEN=<%= @auth_token %>
+<% end %>
+
 script
     exec /bin/hab sup run <%= @exec_start_options %>
 end script
