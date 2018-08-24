@@ -234,11 +234,8 @@ Applies a given configuration to a habitat service using `hab config apply`.
 
 - `service_group`: The service group to apply the configuration to, for example, `nginx.default`
 - `config`: The configuration to apply as a ruby hash, for example, `{ worker_count: 2, http: { keepalive_timeout: 120 } }`
-- `org`: (optional) passes the `--org` option with the specified org name to the hab config command.
-- `peer`: (optional) passes the `--peer` option with the specified peer to the hab config command.
-- `ring`: (optional) passes the `--ring` option with the specified ring key name to the hab config command.
-- `api_host`: Hostname for the habitat api in order to look up the existing configuration. Defaults to `127.0.0.1`.
-- `api_port`: Port number for the habitat api. Defaults to `9631`.
+- `remote_sup`: **Advanced Use** Address for remote supervisor. This replaces `--override-name` now that hab purely communicates over TCP. This may specify an alternate local port or a remote supervisor
+- `user`: Name of user key to use for encryption. Passes `--user` to `hab config apply`
 
 #### Notes
 
