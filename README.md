@@ -76,7 +76,7 @@ end
 
 ### hab_package
 
-Install the specified Habitat package. Requires that Habitat is installed
+Install the specified Habitat package from builder. Requires that Habitat is installed
 
 #### actions
 
@@ -89,6 +89,7 @@ Install the specified Habitat package. Requires that Habitat is installed
 - `version`: A Habitat version which contains the version and optionally a release separated by `/`, for example, `3.2.3` or `3.2.3/20160920131015`
 - `bldr_url`: The habitat builder url where packages will be downloaded from (defaults to public habitat builder)
 - `channel`: The release channel to install from (defaults to `stable`)
+- `auth_token`: Auth token for installing a package from a private organization on builder
 
 While it is valid to pass the version and release with a Habitat package as a fully qualified package identifier when using the `hab` CLI, they must be specified using the `version` property when using this resource. See the examples below.
 
