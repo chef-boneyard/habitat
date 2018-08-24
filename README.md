@@ -76,7 +76,7 @@ end
 
 ### hab_package
 
-Install the specified Habitat package. Requires that Habitat is installed
+Install the specified Habitat package from builder. Requires that Habitat is installed
 
 #### actions
 
@@ -246,6 +246,33 @@ The version number of the configuration is automatically generated and will be t
 
 ```ruby
 hab_config 'nginx.default' do
+  config({
+    worker_count: 2,
+    http: {
+      keepalive_timeout: 120
+    }
+  })
+end
+```
+
+### hab_user_toml
+
+Templates a user.toml for the specified service. This is written to `/hab/user/<service_name>/config/user.toml`. User.toml can be used to set configuration overriding the default.toml for a given package as an alternative to applying service group level configuration.
+
+#### Actions
+
+- `create`: (default action) Create the user.toml from the specified config.
+- `delete`: Delete the user.toml
+
+#### Properties
+
+- `service_name`: The service group to apply the configuration to, for example, `nginx.default`
+- `config`: Only valid for `:create` action. The configuration to apply as a ruby hash, for example, `{ worker_count: 2, http: { keepalive_timeout: 120 } }`
+
+#### Examples
+
+```ruby
+hab_user_toml 'nginx' do
   config({
     worker_count: 2,
     http: {
