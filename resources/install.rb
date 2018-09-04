@@ -83,7 +83,7 @@ action :upgrade do
 end
 
 action_class do
-  HAB_VERSION = '0.59.0'.freeze
+  HAB_VERSION = '0.62.0'.freeze
 
   def hab_version
     HAB_VERSION
