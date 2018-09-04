@@ -23,5 +23,5 @@ end
 
 describe file('/hab/sup/default/specs/ruby-rails-sample.spec') do
   it { should exist }
-  its(:content) { should match(/binds = \["database:postgresql.default", "fakething:otherthing.default"\]/) }
+  its(:content) { should match(/binds = \["database:postgresql.default"\]/) }
 end

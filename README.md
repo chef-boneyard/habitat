@@ -131,12 +131,12 @@ Some properties are only valid for `start` or `load` actions. See the descriptio
 - `listen_gossip`: Only valid for `:start` action, passes `--listen-gossip` with the specified address and port, e.g., `0.0.0.0:9638`, to the hab command
 - `listen_http`: Only valid for `:start` action, passes `--listen-http` with the specified address and port, e.g., `0.0.0.0:9631`, to the hab command
 - `org`: Only valid for `:start` action, passes `--org` with the specified org name to the hab command
-- `peer`: Only valid for `:start` action, passes `--peer` with the specified initial peer to the hab command
+- `peer`: Only valid for `:start` action, passes `--peer` with the specified initial peer to the hab command. If an array of multiple peers are specified then a `--peer` flag is added for each.
 - `ring`: Only valid for `:start` action, passes `--ring` with the specified ring key name to the hab command
 - `strategy`: Only valid for `:start` or `:load` actions, passes `--strategy` with the specified update strategy to the hab command
 - `topology`: Only valid for `:start` or `:load` actions, passes `--topology` with the specified service topology to the hab command
 - `bldr_url`: Only valid for `:start` or `:load` actions, passes `--url` with the specified Builder URL to the hab command. For local repos, use 'local'.
-- `bind`: Only valid for `:start` or `:load` actions, passes `--bind` with the specified services to bind to the hab command
+- `bind`: Only valid for `:start` or `:load` actions, passes `--bind` with the specified services to bind to the hab command. If an array of multiple service binds are specified then a `--bind` flag is added for each.
 - `service_group`: Only valid for `:start` or `:load` actions, passes `--group` with the specified service group to the hab command
 - `config_from`: Only valid for `:start` action, passes `--config-from` with the specified directory to the hab command
 - `override_name`: **Advanced Use** Valid for all actions, passes `--override-name` with the specified name to the hab command; used for running services in multiple supervisors

@@ -32,5 +32,34 @@ describe 'test::service' do
         channel: :stable
       )
     end
+
+    it 'loads a service with a single peer' do
+      expect(chef_run).to load_hab_service('core/rabbitmq').with(
+        peer: ['127.0.0.2']
+      )
+    end
+
+    it 'loads a service with multiple peers' do
+      expect(chef_run).to load_hab_service('core/sensu').with(
+        peer: ['127.0.0.2', '127.0.0.3']
+      )
+    end
+
+    it 'loads a service with a single bind' do
+      expect(chef_run).to load_hab_service('core/ruby-rails-sample').with(
+        bind: [
+          'database:postgresql.default',
+        ]
+      )
+    end
+
+    it 'loads a service with multiple binds' do
+      expect(chef_run).to load_hab_service('core/sensu').with(
+        bind: [
+          'rabbitmq:rabbitmq.default',
+          'redis:redis.default',
+        ]
+      )
+    end
   end
 end
