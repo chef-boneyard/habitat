@@ -90,7 +90,7 @@ class Chef
           if Gem::Requirement.new('>= 14.3.20').satisfied_by?(Gem::Version.new(Chef::VERSION))
             shell_out!('hab', *command)
           else
-            shell_out_with_timeout!(clean_array('hab', *command))
+            shell_out_with_timeout!(clean_array('hab', *command).join(' '))
           end
         rescue Errno::ENOENT
           Chef::Log.fatal("'hab' binary not found, use the 'hab_install' resource to install it first")

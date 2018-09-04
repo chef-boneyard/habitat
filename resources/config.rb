@@ -55,14 +55,14 @@ action :apply do
 
     tempfile = Tempfile.new(['hab_config', '.toml'])
     command = [ 'hab', 'config', 'apply', opts, new_resource.service_group,
-                incarnation, tempfile.path ]
+                incarnation, tempfile.path ].flatten.compact.join(' ')
     begin
       tempfile.write(TOML::Generator.new(new_resource.config).body)
       tempfile.close
       if Gem::Requirement.new('>= 14.3.20').satisfied_by?(Gem::Version.new(Chef::VERSION))
-        shell_out!(*command)
+        shell_out!(command)
       else
-        shell_out_compact!(*command)
+        shell_out_compact!(command)
       end
     ensure
       tempfile.close
