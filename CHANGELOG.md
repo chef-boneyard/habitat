@@ -6,6 +6,7 @@ This file is used to list changes made in each version of the habitat cookbook.
 ## Unreleased
 
 #### Merged Pull Requests
+- Change expeditor notification channel [#128](https://github.com/chef-cookbooks/habitat/pull/128) ([mivok](https://github.com/mivok))
 - adding supervisor and service multiple peering support [#101](https://github.com/chef-cookbooks/habitat/pull/101) ([jkerry](https://github.com/jkerry))
 - Basic support for windows platform [#89](https://github.com/chef-cookbooks/habitat/pull/89) ([skylerto](https://github.com/skylerto))
 - Allow any channel in a service [#120](https://github.com/chef-cookbooks/habitat/pull/120) ([jsirex](https://github.com/jsirex))
