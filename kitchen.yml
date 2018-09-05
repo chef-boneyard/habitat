@@ -30,3 +30,5 @@ suites:
     run_list: test::sup
   - name: config
     run_list: test::config
+  - name: user-toml
+    run_list: test::user_toml
