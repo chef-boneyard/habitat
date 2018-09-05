@@ -122,7 +122,7 @@ _Note:_ Applications may run as a specific user. Often with Habitat, the default
 
 #### Properties
 
-Some properties are only valid for `start` or `load` actions. See the description of each option for indication which action(s) the property is used. This is because the underlying `hab sup` commands have different options available in their context.
+Some properties are only valid for `start` or `load` actions. See the description of each option for indication as to which action(s) the property is used with. This is because the underlying `hab sup` commands have different options available in their context.
 
 - `service_name`: name property, the name of the service, must be in the form of `origin/name`
 - `loaded`: state property indicating whether the service is loaded in the supervisor
