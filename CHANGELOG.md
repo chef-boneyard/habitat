@@ -6,6 +6,7 @@ This file is used to list changes made in each version of the habitat cookbook.
 ## Unreleased
 
 #### Merged Pull Requests
+- Updated Supervisor Resource for 0.56 and to Support Auth Token [#123](https://github.com/chef-cookbooks/habitat/pull/123) ([wduncanfraser](https://github.com/wduncanfraser))
 - Added user-toml resource [#121](https://github.com/chef-cookbooks/habitat/pull/121) ([wduncanfraser](https://github.com/wduncanfraser))
 - Change expeditor notification channel [#128](https://github.com/chef-cookbooks/habitat/pull/128) ([mivok](https://github.com/mivok))
 - adding supervisor and service multiple peering support [#101](https://github.com/chef-cookbooks/habitat/pull/101) ([jkerry](https://github.com/jkerry))
