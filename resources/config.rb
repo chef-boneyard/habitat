@@ -23,7 +23,7 @@ property :config, Mash,
          required: true,
          coerce: proc { |m| m.is_a?(Hash) ? Mash.new(m) : m }
 property :service_group, String, name_property: true, desired_state: false
-property :remote_sup, String, desired_state: false
+property :remote_sup, String, default: '127.0.0.1:9632', desired_state: false
 property :user, String, desired_state: false
 
 load_current_value do
