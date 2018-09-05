@@ -122,7 +122,7 @@ _Note:_ Applications may run as a specific user. Often with Habitat, the default
 
 #### Properties
 
-Some properties are only valid for `start` or `load` actions. See the description of each option for indication which action(s) the property is used. This is because the underlying `hab sup` commands have different options available in their context.
+Some properties are only valid for `start` or `load` actions. See the description of each option for indication as to which action(s) the property is used with. This is because the underlying `hab sup` commands have different options available in their context.
 
 - `service_name`: name property, the name of the service, must be in the form of `origin/name`
 - `loaded`: state property indicating whether the service is loaded in the supervisor
@@ -179,7 +179,7 @@ hab_service 'acme/apps'
 
 Runs a Habitat Supervisor for one or more Habitat Services. It is used in conjunction with `hab_service` which will manage the services loaded and started within the supervisor.
 
-The `run` action handles installing Habitat using the `hab_install` resource, ensures that the `core/hab-sup` package is installed using `hab_package`, and then drops off the appropriate init system definitions and manages the service.
+The `run` action handles installing Habitat using the `hab_install` resource, ensures that the appropriate versions of the `core/hab-sup` and `core/hab-launcher` packages are installed using `hab_package`, and then drops off the appropriate init system definitions and manages the service.
 
 #### Actions
 
@@ -188,14 +188,16 @@ The `run` action handles installing Habitat using the `hab_install` resource, en
 #### Properties
 
 - `bldr_url`: The Builder URL for the `hab_package` resource, if needed
-- `permanent_peer`: Only valid for `:start` action, passes `--permanent-peer` to the hab command
-- `listen_gossip`: Only valid for `:start` action, passes `--listen-gossip` with the specified address and port, e.g., `0.0.0.0:9638`, to the hab command
-- `listen_http`: Only valid for `:start` action, passes `--listen-http` with the specified address and port, e.g., `0.0.0.0:9631`, to the hab command
-- `org`: Only valid for `:start` action, passes `--org` with the specified org name to the hab command
-- `peer`: Only valid for `:start` action, passes `--peer` with the specified initial peer to the hab command
-- `ring`: Only valid for `:start` action, passes `--ring` with the specified ring key name to the hab command
+- `permanent_peer`: Only valid for `:run` action, passes `--permanent-peer` to the hab command
+- `listen_ctl`: Only valid for `:run` action, passes `--listen-ctl` with the specified address and port, e.g., `0.0.0.0:9632`, to the hab command
+- `listen_gossip`: Only valid for `:run` action, passes `--listen-gossip` with the specified address and port, e.g., `0.0.0.0:9638`, to the hab command
+- `listen_http`: Only valid for `:run` action, passes `--listen-http` with the specified address and port, e.g., `0.0.0.0:9631`, to the hab command
+- `org`: Only valid for `:run` action, passes `--org` with the specified org name to the hab command
+- `peer`: Only valid for `:run` action, passes `--peer` with the specified initial peer to the hab command
+- `ring`: Only valid for `:run` action, passes `--ring` with the specified ring key name to the hab command
 - `hab_channel`: The channel to install Habitat from. Defaults to stable
 - `override_name`: **Advanced Use** Valid for all actions, passes `--override-name` with the specified name to the hab command; used for running services in multiple supervisors
+- `auth_token`: Auth token for accessing a private organization on bldr. This value is templated into the appropriate service file.
 
 #### Examples
 
