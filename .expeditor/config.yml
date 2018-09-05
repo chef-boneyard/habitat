@@ -1,5 +1,5 @@
 slack:
-  notify_channel: ops
+  notify_channel: ops-notify
 
 merge_actions:
   - built_in:update_changelog:

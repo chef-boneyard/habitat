@@ -25,7 +25,7 @@ property :permanent_peer, [true, false], default: false
 property :listen_gossip, String
 property :listen_http, String, desired_state: false
 property :org, String, default: 'default'
-property :peer, String
+property :peer, [String, Array], coerce: proc { |b| b.is_a?(String) ? [b] : b }
 property :ring, String
 property :strategy, String
 property :topology, String
@@ -144,7 +144,7 @@ action_class do
       opts << "--listen-gossip #{new_resource.listen_gossip}" if new_resource.listen_gossip
       opts << "--listen-http #{new_resource.listen_http}" if new_resource.listen_http
       opts << "--org #{new_resource.org}" unless new_resource.org == 'default'
-      opts << "--peer #{new_resource.peer}" if new_resource.peer
+      opts.push(*new_resource.peer.map { |b| "--peer #{b}" }) if new_resource.peer
       opts << "--ring #{new_resource.ring}" if new_resource.ring
     end
 
