@@ -54,8 +54,8 @@ class Chef
       end
 
       action_class do
-        HAB_VERSION = '0.59.0'.freeze
-        LINUX_LAUNCHER_VERSION = '7797'.freeze
+        HAB_VERSION = '0.62.1'.freeze
+        LINUX_LAUNCHER_VERSION = '8380'.freeze
 
         def hab_version
           HAB_VERSION
