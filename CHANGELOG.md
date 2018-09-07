@@ -2,8 +2,15 @@
 
 This file is used to list changes made in each version of the habitat cookbook.
 
-<!-- latest_release unreleased -->
-## Unreleased
+## 0.62.1 (2018-09-07)
+
+* Update hab version to 0.62.1 and pin supervisor version to 8380
+* Refactor cookbook resources for 0.62.1 compatibility
+* Add user_toml resource
+* Add remote supervisor support
+* Add multiple peer support
+* Add auth token support to package resource
+* Add basic support for Windows
 
 #### Merged Pull Requests
 - Refactor hab_service resource [#124](https://github.com/chef-cookbooks/habitat/pull/124) ([wduncanfraser](https://github.com/wduncanfraser))
@@ -16,7 +23,9 @@ This file is used to list changes made in each version of the habitat cookbook.
 - Basic support for windows platform [#89](https://github.com/chef-cookbooks/habitat/pull/89) ([skylerto](https://github.com/skylerto))
 - Allow any channel in a service [#120](https://github.com/chef-cookbooks/habitat/pull/120) ([jsirex](https://github.com/jsirex))
 - fix hashbang in expeditor update script [#118](https://github.com/chef-cookbooks/habitat/pull/118) ([joshbrand](https://github.com/joshbrand))
-<!-- latest_release -->
+
+<!-- latest_release unreleased -->
+## Unreleased
 
 ## 0.59.0 (2018-07-17)
 
