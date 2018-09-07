@@ -60,7 +60,7 @@ end
 hab_package 'core/memcached'
 hab_service 'core/memcached'
 
-# Test Peers and Binds
+# Test Binds
 
 # Single string bind
 hab_package 'core/ruby-rails-sample'
@@ -68,19 +68,12 @@ hab_service 'core/ruby-rails-sample' do
   bind 'database:postgresql.default'
 end
 
-# Single string peer
+# Multiple  binds
 hab_package 'core/rabbitmq'
-hab_service 'core/rabbitmq' do
-  peer '127.0.0.2'
-end
+hab_service 'core/rabbitmq'
 
-# Multiple peers and binds
 hab_package 'core/sensu'
 hab_service 'core/sensu' do
-  peer [
-    '127.0.0.2',
-    '127.0.0.3',
-  ]
   bind [
     'rabbitmq:rabbitmq.default',
     'redis:redis.default',
