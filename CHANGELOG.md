@@ -2,6 +2,7 @@
 
 This file is used to list changes made in each version of the habitat cookbook.
 
+<!-- latest_release -->
 ## 0.62.1 (2018-09-07)
 
 * Update hab version to 0.62.1 and pin supervisor version to 8380
