@@ -6,6 +6,7 @@ This file is used to list changes made in each version of the habitat cookbook.
 ## Unreleased
 
 #### Merged Pull Requests
+- Update to habitat 0.63.0 [#132](https://github.com/chef-cookbooks/habitat/pull/132) ([chef-ci](https://github.com/chef-ci))
 - [WIP] Update expeditor config [#131](https://github.com/chef-cookbooks/habitat/pull/131) ([jonlives](https://github.com/jonlives))
 <!-- latest_release -->
 
