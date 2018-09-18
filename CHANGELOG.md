@@ -2,6 +2,13 @@
 
 This file is used to list changes made in each version of the habitat cookbook.
 
+<!-- latest_release unreleased -->
+## Unreleased
+
+#### Merged Pull Requests
+- [WIP] Update expeditor config [#131](https://github.com/chef-cookbooks/habitat/pull/131) ([jonlives](https://github.com/jonlives))
+<!-- latest_release -->
+
 ## 0.62.1 (2018-09-07)
 
 * Update hab version to 0.62.1 and pin supervisor version to 8380
@@ -24,7 +31,6 @@ This file is used to list changes made in each version of the habitat cookbook.
 - Allow any channel in a service [#120](https://github.com/chef-cookbooks/habitat/pull/120) ([jsirex](https://github.com/jsirex))
 - fix hashbang in expeditor update script [#118](https://github.com/chef-cookbooks/habitat/pull/118) ([joshbrand](https://github.com/joshbrand))
 
-<!-- latest_release unreleased -->
 ## Unreleased
 
 ## 0.59.0 (2018-07-17)
