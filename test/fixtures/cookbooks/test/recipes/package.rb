@@ -25,3 +25,13 @@ hab_package 'core/hab-sup' do
   # us from doing our tests, so ignore failures.
   ignore_failure true
 end
+
+hab_package 'binlink' do
+  package_name 'core/binlink'
+  binlink true
+end
+
+hab_package 'binlink_force' do
+  package_name 'core/binlink'
+  binlink :force
+end

@@ -90,6 +90,8 @@ Install the specified Habitat package from builder. Requires that Habitat is ins
 - `bldr_url`: The habitat builder url where packages will be downloaded from (defaults to public habitat builder)
 - `channel`: The release channel to install from (defaults to `stable`)
 - `auth_token`: Auth token for installing a package from a private organization on builder
+- `binlink`: If habitat should attempt to binlink the package.  Acceptable values: `true`, `false`, `:force`.  Will faill on binlinking if set to `true` and binary or binlink exists.
+- `options`: Pass any additional parameters to the habitat install command.
 
 While it is valid to pass the version and release with a Habitat package as a fully qualified package identifier when using the `hab` CLI, they must be specified using the `version` property when using this resource. See the examples below.
 
@@ -105,6 +107,14 @@ end
 
 hab_package 'core/redis' do
   version '3.2.3/20160920131015'
+end
+
+hab_package 'core/nginx' do
+  binlink :force
+end
+
+hab_package 'core/nginx' do
+  options '--binlink'
 end
 ```
 
