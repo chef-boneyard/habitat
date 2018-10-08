@@ -27,11 +27,12 @@ hab_package 'core/hab-sup' do
 end
 
 hab_package 'binlink' do
-  package_name 'core/binlink'
+  package_name 'core/nginx'
+  version '1.15.2'
   binlink true
 end
 
 hab_package 'binlink_force' do
-  package_name 'core/binlink'
+  package_name 'core/nginx'
   binlink :force
 end
