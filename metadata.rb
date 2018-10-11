@@ -6,7 +6,7 @@ description 'Habitat related resources for chef-client'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version '0.67.0'
 
-%w(ubuntu debian redhat centos suse scientific oracle amazon opensuse opensuseleap).each do |os|
+%w(ubuntu debian redhat centos suse scientific oracle amazon opensuse opensuseleap windows).each do |os|
   supports os
 end
 
@@ -16,3 +16,5 @@ issues_url 'https://github.com/chef-cookbooks/habitat/issues'
 chef_version '>= 12.20.3'
 
 gem 'toml'
+
+depends 'windows'

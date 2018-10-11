@@ -20,15 +20,48 @@ platforms:
   #- name: opensuse-leap-42
   - name: ubuntu-14.04
   - name: ubuntu-16.04
+  - name: windows-2016
+    driver:
+      box: chef/windows-server-2016-standard # private box
 
 suites:
   - name: package
     run_list: test::package
+    excludes:
+      - windows-2016
   - name: service
     run_list: test::service
+    excludes:
+      - windows-2016
   - name: sup
     run_list: test::sup
+    excludes:
+      - windows-2016
   - name: config
     run_list: test::config
+    excludes:
+      - windows-2016
   - name: user-toml
     run_list: test::user_toml
+    excludes:
+      - windows-2016
+  - name: win-package
+    run_list: test::win_package
+    includes:
+      - windows-2016
+  - name: win-service
+    run_list: test::win_service
+    includes:
+      - windows-2016
+  - name: win-sup
+    run_list: test::win_sup
+    includes:
+      - windows-2016
+  - name: win-config
+    run_list: test::win_config
+    includes:
+      - windows-2016
+  - name: win-user-toml
+    run_list: test::win_user_toml
+    includes:
+      - windows-2016

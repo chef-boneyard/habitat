@@ -19,6 +19,9 @@ require 'chef/http/simple'
 require 'chef/json_compat'
 require 'chef/exceptions'
 
+# Bring in needed shared methods
+include Habitat::Shared
+
 class Chef
   class Provider
     class Package
@@ -92,17 +95,6 @@ class Chef
 
         private
 
-        def hab(*command)
-          if Gem::Requirement.new('>= 14.3.20').satisfied_by?(Gem::Version.new(Chef::VERSION))
-            shell_out!(['hab', *command].join(' '))
-          else
-            shell_out_with_timeout!(clean_array('hab', *command).join(' '))
-          end
-        rescue Errno::ENOENT
-          Chef::Log.fatal("'hab' binary not found, use the 'hab_install' resource to install it first")
-          raise
-        end
-
         def validate_name!(name)
           raise ArgumentError, "package name must be specified as 'origin/name', use the 'version' property to specify a version" unless name.squeeze('/').count('/') < 2
         end
@@ -122,6 +114,7 @@ class Chef
               name_version = [pkg_name, version].compact.join('/').squeeze('/').chomp('/').sub(%r{^\/}, '')
               url = "#{new_resource.bldr_url.chomp('/')}/v1/depot/channels/#{origin}/#{new_resource.channel}/pkgs/#{name_version}"
               url << '/latest' unless name_version.count('/') >= 2
+              url << '?target=x86_64-windows' if platform_family?('windows')
 
               headers = {}
               headers['Authorization'] = "Bearer #{new_resource.auth_token}" if new_resource.auth_token

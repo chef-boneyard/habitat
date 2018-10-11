@@ -37,9 +37,7 @@ class Chef
       property :auth_token, String
 
       action :run do
-        hab_install new_resource.name do
-          channel new_resource.hab_channel if new_resource.hab_channel
-        end
+        hab_install new_resource.name
 
         hab_package 'core/hab-sup' do
           bldr_url new_resource.bldr_url if new_resource.bldr_url
@@ -48,21 +46,12 @@ class Chef
 
         hab_package 'core/hab-launcher' do
           bldr_url new_resource.bldr_url if new_resource.bldr_url
-          version launcher_version
+          version hab_launcher_version
         end
       end
 
       action_class do
-        HAB_VERSION = '0.67.0'.freeze
-        LINUX_LAUNCHER_VERSION = '8282'.freeze
-
-        def hab_version
-          HAB_VERSION
-        end
-
-        def launcher_version
-          LINUX_LAUNCHER_VERSION
-        end
+        include Habitat::Shared
 
         def exec_start_options
           opts = []

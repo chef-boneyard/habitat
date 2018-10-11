@@ -18,84 +18,141 @@
 # limitations under the License.
 #
 
+require 'chef/http/simple'
+
 resource_name :hab_install
 
 property :name, String, default: '' # ~FC108 This allows for bare names like hab_install
+# The following are only used on *nix
 property :install_url, String, default: 'https://raw.githubusercontent.com/habitat-sh/habitat/master/components/hab/install.sh'
 property :bldr_url, String
-property :channel, String
 property :create_user, [true, false], default: true
 property :tmp_dir, String
 
 action :install do
-  package %w(curl tar)
-
-  if new_resource.create_user
-    group 'hab'
-
-    user 'hab' do
-      gid 'hab'
-      system true
-    end
-  end
-
   if ::File.exist?(hab_path)
-    cmd = shell_out!([hab_path, '--version', hab_version])
+    cmd = shell_out!([hab_path, '--version'].flatten.compact.join(' '))
     version = %r{hab (\d*\.\d*\.\d[^\/]*)}.match(cmd.stdout)[1]
     return if version == hab_version
   end
 
-  remote_file ::File.join(Chef::Config[:file_cache_path], 'hab-install.sh') do
-    source new_resource.install_url
-    sensitive true
-  end
+  if platform_family?('windows')
+    # Retrieve version information
+    uri = 'https://api.bintray.com'
+    result = Chef::HTTP::SimpleJSON.new(uri).get('/packages/habitat/stable/hab-x86_64-windows')
+    build_version = result['versions'].grep(/^#{hab_version}/).first
+    package_name = "hab-#{build_version}-x86_64-windows"
 
-  execute 'installing with hab-install.sh' do
-    command hab_command
-    environment(
-      {
-        'HAB_BLDR_URL' => 'bldr_url',
-        'TMPDIR' => 'tmp_dir',
-      }.each_with_object({}) do |(var, property), env|
-        env[var] = new_resource.send(property.to_sym) if new_resource.send(property.to_sym)
+    # TODO: Figure out how to properly validate the shasum for windows. Doesn't seem it's published
+    # as a .sha265sum like for the linux .tar.gz
+    download = "#{uri}/content/habitat/stable/windows/x86_64/#{package_name}.zip?bt_package=hab-x86_64-windows"
+
+    windows_zipfile Chef::Config[:file_cache_path] do
+      source download
+      action :unzip
+    end
+
+    extracted_path = ::File.join(Chef::Config[:file_cache_path], package_name)
+
+    powershell_script 'installing from archive' do
+      code <<-EOH
+      Move-Item -Path #{extracted_path} -Destination C:/habitat -Force
+      EOH
+    end
+
+    # TODO: This won't self heal if missing until the next upgrade
+    windows_path 'C:\habitat' do
+      action :add
+    end
+  else
+    package %w(curl tar)
+
+    if new_resource.create_user
+      group 'hab'
+
+      user 'hab' do
+        gid 'hab'
+        system true
       end
-    )
+    end
+
+    remote_file ::File.join(Chef::Config[:file_cache_path], 'hab-install.sh') do
+      source new_resource.install_url
+      sensitive true
+    end
+
+    execute 'installing with hab-install.sh' do
+      command hab_command
+      environment(
+        {
+          'HAB_BLDR_URL' => 'bldr_url',
+          'TMPDIR' => 'tmp_dir',
+        }.each_with_object({}) do |(var, property), env|
+          env[var] = new_resource.send(property.to_sym) if new_resource.send(property.to_sym)
+        end
+      )
+    end
   end
 end
 
+# TODO: What is the point of the upgrade action? We are version locking and the install action safely handles upgrades.
 action :upgrade do
-  remote_file ::File.join(Chef::Config[:file_cache_path], 'hab-install.sh') do
-    source new_resource.install_url
-    sensitive true
-  end
+  if platform_family?('windows')
+    # Retrieve version information
+    uri = 'https://api.bintray.com'
+    result = Chef::HTTP::SimpleJSON.new(uri).get('/packages/habitat/stable/hab-x86_64-windows')
+    build_version = result['versions'].grep(/^#{hab_version}/).first
+    package_name = "hab-#{build_version}-x86_64-windows"
 
-  execute 'installing with hab-install.sh' do
-    command hab_command
-    environment(
-      {
-        'HAB_BLDR_URL' => 'bldr_url',
-        'TMPDIR' => 'tmp_dir',
-      }.each_with_object({}) do |(var, property), env|
-        env[var] = new_resource.send(property.to_sym) if new_resource.send(property.to_sym)
-      end
-    )
+    # TODO: Figure out how to properly validate the shasum for windows. Doesn't seem it's published
+    # as a .sha265sum like for the linux .tar.gz
+    download = "#{uri}/content/habitat/stable/windows/x86_64/#{package_name}.zip?bt_package=hab-x86_64-windows"
+
+    windows_zipfile Chef::Config[:file_cache_path] do
+      source download
+      action :unzip
+    end
+
+    extracted_path = ::File.join(Chef::Config[:file_cache_path], package_name)
+
+    powershell_script 'installing from archive' do
+      code <<-EOH
+      Move-Item -Path #{extracted_path} -Destination C:/habitat -Force
+      EOH
+    end
+
+    # TODO: This won't self heal if missing until the next upgrade
+    windows_path 'C:\habitat' do
+      action :add
+    end
+  else
+    remote_file ::File.join(Chef::Config[:file_cache_path], 'hab-install.sh') do
+      source new_resource.install_url
+      sensitive true
+    end
+
+    execute 'installing with hab-install.sh' do
+      command hab_command
+      environment(
+        {
+          'HAB_BLDR_URL' => 'bldr_url',
+          'TMPDIR' => 'tmp_dir',
+        }.each_with_object({}) do |(var, property), env|
+          env[var] = new_resource.send(property.to_sym) if new_resource.send(property.to_sym)
+        end
+      )
+    end
   end
 end
 
 action_class do
-  HAB_VERSION = '0.67.0'.freeze
-
-  def hab_version
-    HAB_VERSION
-  end
+  include Habitat::Shared
 
   def hab_path
     if platform_family?('mac_os_x')
       '/usr/local/bin/hab'
     elsif platform_family?('windows')
-      Chef::Log.warn 'Habitat installation on Windows is not yet supported by this cookbook.'
-      Chef::Log.warn 'The installation location on Windows will probably change in the future.'
-      'C:/Program Files/Habitat/hab.exe'
+      'C:/habitat/hab.exe'
     else
       '/bin/hab'
     end

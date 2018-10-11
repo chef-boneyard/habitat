@@ -16,6 +16,7 @@ This cookbook provides resources for working with [Habitat](https://habitat.sh).
 - RHEL 6+
 - Ubuntu 14.04+
 - Debian 7+
+- Windows 2016
 
 ### Habitat
 
@@ -47,14 +48,13 @@ Installs Habitat on the system using the [install script](https://raw.githubuser
 
 #### Actions
 
-- `install`: Installs Habitat. Does nothing if the `hab` binary is found in the default location for the system (`/bin/hab` on Linux, `/usr/local/bin/hab` on macOS)
+- `install`: Installs Habitat. Does nothing if the `hab` binary is found in the default location for the system (`/bin/hab` on Linux, `/usr/local/bin/hab` on macOS, `C:/habitat/hab.exe` on Windows)
 - `upgrade`: Installs the latest version of Habitat, does not check if the binary exists
 
 #### Properties
 
 - `install_url`: URL to the install script, default is from the [habitat repo](https://raw.githubusercontent.com/habitat-sh/habitat/master/components/hab/install.sh)
 - `bldr_url`: Optional URL to an alternate Builder (defaults to the public Builder)
-- `channel`: The release channel to install from (defaults to `stable`)
 - `create_user`: Creates the `hab` system user (defaults to `true`)
 - `tmp_dir`: Sets TMPDIR environment variable for location to place temp files.  (required if `/tmp` and `/var/tmp` are mounted `noexec`)
 
@@ -128,6 +128,7 @@ _Note:_ Applications may run as a specific user. Often with Habitat, the default
 The remote_sup property is valid for all actions.
 
 - `remote_sup`: Address to a remote Supervisor's Control Gateway [default: 127.0.0.1:9632]
+- `remote_sup_http`: Address for remote supervisor http port. Used to pull existing configuration data. If this is invalid, config will be applied on every Chef run.
 
 The follow properties are valid for the `load` action.
 
@@ -231,6 +232,7 @@ Applies a given configuration to a habitat service using `hab config apply`.
 - `service_group`: The service group to apply the configuration to, for example, `nginx.default`
 - `config`: The configuration to apply as a ruby hash, for example, `{ worker_count: 2, http: { keepalive_timeout: 120 } }`
 - `remote_sup`: Address to a remote Supervisor's Control Gateway [default: 127.0.0.1:9632]
+- `remote_sup_http`: Address for remote supervisor http port. Used to pull existing configuration data. If this is invalid, config will be applied on every Chef run.
 - `user`: Name of user key to use for encryption. Passes `--user` to `hab config apply`
 
 #### Notes

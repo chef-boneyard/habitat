@@ -23,27 +23,46 @@ property :config, Mash,
 property :service_name, String, name_property: true, desired_state: false
 
 action :create do
-  config_directory = "/hab/user/#{new_resource.service_name}/config"
-
   directory config_directory do
-    owner 'root'
-    group 'root'
     mode '0755'
+    owner root_owner
+    group node['root_group']
     recursive true
   end
 
   file "#{config_directory}/user.toml" do
     mode '0600'
-    owner 'root'
-    group 'root'
+    owner root_owner
+    group node['root_group']
     content TOML::Generator.new(new_resource.config).body
     sensitive true
   end
 end
 
 action :delete do
-  file "/hab/user/#{new_resource.service_name}/config/user.toml" do
+  file "#{config_directory}/user.toml" do
     sensitive true
     action :delete
+  end
+end
+
+action_class do
+  def config_directory
+    platform_family?('windows') ? "C:/hab/user/#{new_resource.service_name}/config" : "/hab/user/#{new_resource.service_name}/config"
+  end
+
+  def wmi_property_from_query(wmi_property, wmi_query)
+    @wmi = ::WIN32OLE.connect('winmgmts://')
+    result = @wmi.ExecQuery(wmi_query)
+    return nil unless result.each.count > 0
+    result.each.next.send(wmi_property)
+  end
+
+  def root_owner
+    if platform_family?('windows')
+      wmi_property_from_query(:name, "select * from Win32_UserAccount where sid like 'S-1-5-21-%-500' and LocalAccount=True")
+    else
+      'root'
+    end
   end
 end

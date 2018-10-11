@@ -24,10 +24,12 @@ property :config, Mash,
          coerce: proc { |m| m.is_a?(Hash) ? Mash.new(m) : m }
 property :service_group, String, name_property: true, desired_state: false
 property :remote_sup, String, default: '127.0.0.1:9632', desired_state: false
+# Http port needed for querying/comparing current config value
+property :remote_sup_http, String, default: '127.0.0.1:9631', desired_state: false
 property :user, String, desired_state: false
 
 load_current_value do
-  uri = URI("http://#{remote_sup}/census")
+  uri = URI("http://#{remote_sup_http}/census")
   begin
     census = Mash.new(JSON.parse(Net::HTTP.get(uri)))
     sc = census['census_groups'][service_group]['service_config']['value']
@@ -50,19 +52,18 @@ action :apply do
     opts << ['--user', new_resource.user] if new_resource.user
 
     tempfile = Tempfile.new(['hab_config', '.toml'])
-    command = [ 'hab', 'config', 'apply', opts, new_resource.service_group,
-                incarnation, tempfile.path ].flatten.compact.join(' ')
     begin
       tempfile.write(TOML::Generator.new(new_resource.config).body)
       tempfile.close
-      if Gem::Requirement.new('>= 14.3.20').satisfied_by?(Gem::Version.new(Chef::VERSION))
-        shell_out!(command)
-      else
-        shell_out_compact!(command)
-      end
+
+      hab('config', 'apply', opts, new_resource.service_group, incarnation, tempfile.path)
     ensure
       tempfile.close
       tempfile.unlink
     end
   end
+end
+
+action_class do
+  include Habitat::Shared
 end

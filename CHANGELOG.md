@@ -5,6 +5,11 @@ This file is used to list changes made in each version of the habitat cookbook.
 <!-- latest_release unreleased -->
 ## Unreleased
 
+* Added full windows support
+* Fixed bug introduced by transition to remote_sup cli option. Needed an additional property to specify the http port for the supervisor
+* Moved version pins and shared code into habitat_shared library to reduce duplication of code
+* Update Linux Launcher to 8659 to correspond to habitat >0.65.0
+
 <!-- latest_release -->
 
 ## 0.67.0 (2018-11-01)
@@ -39,8 +44,6 @@ This file is used to list changes made in each version of the habitat cookbook.
 - Basic support for windows platform [#89](https://github.com/chef-cookbooks/habitat/pull/89) ([skylerto](https://github.com/skylerto))
 - Allow any channel in a service [#120](https://github.com/chef-cookbooks/habitat/pull/120) ([jsirex](https://github.com/jsirex))
 - fix hashbang in expeditor update script [#118](https://github.com/chef-cookbooks/habitat/pull/118) ([joshbrand](https://github.com/joshbrand))
-
-## Unreleased
 
 ## 0.59.0 (2018-07-17)
 
