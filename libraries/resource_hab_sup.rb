@@ -26,14 +26,16 @@ class Chef
 
       property :bldr_url, String
       property :permanent_peer, [true, false], default: false
+      property :listen_ctl, String
       property :listen_gossip, String
       property :listen_http, String
       property :override_name, String, default: 'default'
       property :org, String, default: 'default'
-      property :peer, String
+      property :peer, [String, Array], coerce: proc { |b| b.is_a?(String) ? [b] : b }
       property :ring, String
       property :hab_channel, String
       property :auto_update, [true, false], default: false
+      property :auth_token, String
 
       action :run do
         hab_install new_resource.name do
@@ -42,18 +44,36 @@ class Chef
 
         hab_package 'core/hab-sup' do
           bldr_url new_resource.bldr_url if new_resource.bldr_url
+          version hab_version
+        end
+
+        hab_package 'core/hab-launcher' do
+          bldr_url new_resource.bldr_url if new_resource.bldr_url
+          version launcher_version
         end
       end
 
       action_class do
+        HAB_VERSION = '0.63.0'.freeze
+        LINUX_LAUNCHER_VERSION = '8282'.freeze
+
+        def hab_version
+          HAB_VERSION
+        end
+
+        def launcher_version
+          LINUX_LAUNCHER_VERSION
+        end
+
         def exec_start_options
           opts = []
           opts << '--permanent-peer' if new_resource.permanent_peer
+          opts << "--listen-ctl #{new_resource.listen_ctl}" if new_resource.listen_ctl
           opts << "--listen-gossip #{new_resource.listen_gossip}" if new_resource.listen_gossip
           opts << "--listen-http #{new_resource.listen_http}" if new_resource.listen_http
           opts << "--override-name #{new_resource.override_name}" unless new_resource.override_name == 'default'
           opts << "--org #{new_resource.org}" unless new_resource.org == 'default'
-          opts << "--peer #{new_resource.peer}" if new_resource.peer
+          opts.push(*new_resource.peer.map { |b| "--peer #{b}" }) if new_resource.peer
           opts << "--ring #{new_resource.ring}" if new_resource.ring
           opts << '--auto-update' if new_resource.auto_update
           opts.join(' ')

@@ -20,25 +20,19 @@ property :service_name, String, name_property: true
 property :loaded, [true, false], default: false, desired_state: true
 property :running, [true, false], default: false, desired_state: true
 
-# hab sup options which get included based on the action of the resource
-property :permanent_peer, [true, false], default: false
-property :listen_gossip, String
-property :listen_http, String, desired_state: false
-property :org, String, default: 'default'
-property :peer, String
-property :ring, String
+# hab svc options which get included based on the action of the resource
 property :strategy, String
 property :topology, String
 property :bldr_url, String
+property :channel, [Symbol, String]
 property :bind, [String, Array], coerce: proc { |b| b.is_a?(String) ? [b] : b }
+property :binding_mode, [Symbol, String], equal_to: [:strict, 'strict', :relaxed, 'relaxed'], default: :strict
 property :service_group, String
-property :config_from, String
-property :override_name, String, default: 'default'
-property :channel, [Symbol, String], equal_to: [:unstable, 'unstable', :current, 'current', :stable, 'stable'], default: :stable
+property :remote_sup, String
 
 load_current_value do
   running service_up?(service_name)
-  loaded ::File.exist?("/hab/sup/#{override_name}/specs/#{service_name.split('/').last}.spec")
+  loaded service_loaded?(service_name)
 
   Chef::Log.debug("service #{service_name} running state: #{running}")
   Chef::Log.debug("service #{service_name} loaded state: #{loaded}")
@@ -60,8 +54,8 @@ end
 # present and `sup_for_service_name` will be nil and we will get a
 # NoMethodError.
 #
-def service_up?(svc_name)
-  http_uri = listen_http ? "http://#{listen_http}" : 'http://localhost:9631'
+def get_service_details(svc_name)
+  http_uri = remote_sup ? "http://#{remote_sup}" : 'http://localhost:9631'
 
   begin
     TCPSocket.new(URI(http_uri).host, URI(http_uri).port).close
@@ -77,9 +71,13 @@ def service_up?(svc_name)
     return false
   end
 
-  sup_for_service_name = svcs.find do |s|
+  svcs.find do |s|
     [s['spec_ident']['origin'], s['spec_ident']['name']].join('/') =~ /#{svc_name}/
   end
+end
+
+def service_up?(svc_name)
+  sup_for_service_name = get_service_details(svc_name)
 
   begin
     sup_for_service_name['process']['state'] == 'up'
@@ -89,21 +87,40 @@ def service_up?(svc_name)
   end
 end
 
+def service_loaded?(svc_name)
+  sup_for_service_name = get_service_details(svc_name)
+
+  if sup_for_service_name
+    true
+  else
+    false
+  end
+end
+
+# TODO: Load should detect if options such as bldr_url, channel, binds, etc have changed and reload if they have
 action :load do
-  execute "hab svc load #{new_resource.service_name} #{sup_options.join(' ')}" unless current_resource.loaded
+  execute "hab svc load #{new_resource.service_name} #{svc_options.join(' ')}" unless current_resource.loaded
 end
 
 action :unload do
-  execute "hab svc unload #{new_resource.service_name} #{sup_options.join(' ')}" if current_resource.loaded
+  execute "hab svc unload #{new_resource.service_name} #{svc_options.join(' ')}" if current_resource.loaded
 end
 
 action :start do
-  action_load
-  execute "hab svc start #{new_resource.service_name} #{sup_options.join(' ')}" unless current_resource.running
+  # FIXME: Should we do this, which matches the expected Hab workflow, or call action_load?
+  unless current_resource.loaded
+    Chef::Log.fatal("No service named #{new_resource.service_name} is loaded in the Habitat supervisor")
+    raise
+  end
+  execute "hab svc start #{new_resource.service_name} #{svc_options.join(' ')}" unless current_resource.running
 end
 
 action :stop do
-  execute "hab svc stop #{new_resource.service_name} #{sup_options.join(' ')}" if current_resource.running
+  unless current_resource.loaded
+    Chef::Log.fatal("No service named #{new_resource.service_name} is loaded in the Habitat supervisor")
+    raise
+  end
+  execute "hab svc stop #{new_resource.service_name} #{svc_options.join(' ')}" if current_resource.running
 end
 
 action :restart do
@@ -119,36 +136,22 @@ action :reload do
 end
 
 action_class do
-  def sup_options
+  def svc_options
     opts = []
 
-    # certain options are only valid for specific `hab sup` subcommands.
+    # certain options are only valid for specific `hab svc` subcommands.
     case action
     when :load
       opts.push(*new_resource.bind.map { |b| "--bind #{b}" }) if new_resource.bind
-      unless new_resource.bldr_url == 'local'
-        opts << "--url #{new_resource.bldr_url}" if new_resource.bldr_url
-        opts << "--channel #{new_resource.channel}"
-      end
+      opts << "--binding-mode #{new_resource.binding_mode}"
+      opts << "--url #{new_resource.bldr_url}" if new_resource.bldr_url
+      opts << "--channel #{new_resource.channel}" if new_resource.channel
       opts << "--group #{new_resource.service_group}" if new_resource.service_group
       opts << "--strategy #{new_resource.strategy}" if new_resource.strategy
       opts << "--topology #{new_resource.topology}" if new_resource.topology
-    when :start, :stop
-      opts << '--permanent-peer' if new_resource.permanent_peer
-      opts.push(*new_resource.bind.map { |b| "--bind #{b}" }) if new_resource.bind
-      opts << "--config-from #{new_resource.config_from}" if new_resource.config_from
-      unless new_resource.bldr_url == 'local'
-        opts << "--url #{new_resource.bldr_url}" if new_resource.bldr_url
-      end
-      opts << "--group #{new_resource.service_group}" if new_resource.service_group
-      opts << "--listen-gossip #{new_resource.listen_gossip}" if new_resource.listen_gossip
-      opts << "--listen-http #{new_resource.listen_http}" if new_resource.listen_http
-      opts << "--org #{new_resource.org}" unless new_resource.org == 'default'
-      opts << "--peer #{new_resource.peer}" if new_resource.peer
-      opts << "--ring #{new_resource.ring}" if new_resource.ring
     end
 
-    opts << "--override-name #{new_resource.override_name}" unless new_resource.override_name == 'default'
+    opts << "--remote-sup #{new_resource.remote_sup}" if new_resource.remote_sup
 
     opts.map(&:split).flatten.compact
   end

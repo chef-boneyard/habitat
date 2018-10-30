@@ -2,10 +2,39 @@
 
 This file is used to list changes made in each version of the habitat cookbook.
 
-<!-- latest_release unreleased -->
-## Unreleased
+<!-- latest_release -->
+
+## 0.63.0 (2018-09-18)
+
+*  Update to habitat 0.63.0
 
 <!-- latest_release -->
+
+## Unreleased
+
+## 0.62.1 (2018-09-07)
+
+* Update hab version to 0.62.1 and pin supervisor version to 8380
+* Refactor cookbook resources for 0.62.1 compatibility
+* Add user_toml resource
+* Add remote supervisor support
+* Add multiple peer support
+* Add auth token support to package resource
+* Add basic support for Windows
+
+#### Merged Pull Requests
+- Refactor hab_service resource [#124](https://github.com/chef-cookbooks/habitat/pull/124) ([wduncanfraser](https://github.com/wduncanfraser))
+- Update to 0.62.1 and launcher 8380 [#129](https://github.com/chef-cookbooks/habitat/pull/129) ([jonlives](https://github.com/jonlives))
+- Added auth token support to package resource [#125](https://github.com/chef-cookbooks/habitat/pull/125) ([wduncanfraser](https://github.com/wduncanfraser))
+- Updated Supervisor Resource for 0.56 and to Support Auth Token [#123](https://github.com/chef-cookbooks/habitat/pull/123) ([wduncanfraser](https://github.com/wduncanfraser))
+- Added user-toml resource [#121](https://github.com/chef-cookbooks/habitat/pull/121) ([wduncanfraser](https://github.com/wduncanfraser))
+- Change expeditor notification channel [#128](https://github.com/chef-cookbooks/habitat/pull/128) ([mivok](https://github.com/mivok))
+- adding supervisor and service multiple peering support [#101](https://github.com/chef-cookbooks/habitat/pull/101) ([jkerry](https://github.com/jkerry))
+- Basic support for windows platform [#89](https://github.com/chef-cookbooks/habitat/pull/89) ([skylerto](https://github.com/skylerto))
+- Allow any channel in a service [#120](https://github.com/chef-cookbooks/habitat/pull/120) ([jsirex](https://github.com/jsirex))
+- fix hashbang in expeditor update script [#118](https://github.com/chef-cookbooks/habitat/pull/118) ([joshbrand](https://github.com/joshbrand))
+
+## Unreleased
 
 ## 0.59.0 (2018-07-17)
 

@@ -60,11 +60,22 @@ end
 hab_package 'core/memcached'
 hab_service 'core/memcached'
 
-# Test binds
+# Test Binds
+
+# Single string bind
 hab_package 'core/ruby-rails-sample'
 hab_service 'core/ruby-rails-sample' do
+  bind 'database:postgresql.default'
+end
+
+# Multiple  binds
+hab_package 'core/rabbitmq'
+hab_service 'core/rabbitmq'
+
+hab_package 'core/sensu'
+hab_service 'core/sensu' do
   bind [
-    'database:postgresql.default',
-    'fakething:otherthing.default',
+    'rabbitmq:rabbitmq.default',
+    'redis:redis.default',
   ]
 end

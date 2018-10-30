@@ -19,7 +19,7 @@ This cookbook provides resources for working with [Habitat](https://habitat.sh).
 
 ### Habitat
 
-- Habitat version: 0.59.0
+- Habitat version: 0.63.0
 
 This cookbook is developed lockstep with the latest release of Habitat to ensure compatibility, going forward from 0.33.0 of the cookbook and 0.33.2 of Habitat itself. When new versions of Habitat are released, the version should be updated in these files:
 
@@ -76,7 +76,7 @@ end
 
 ### hab_package
 
-Install the specified Habitat package. Requires that Habitat is installed
+Install the specified Habitat package from builder. Requires that Habitat is installed
 
 #### actions
 
@@ -89,6 +89,7 @@ Install the specified Habitat package. Requires that Habitat is installed
 - `version`: A Habitat version which contains the version and optionally a release separated by `/`, for example, `3.2.3` or `3.2.3/20160920131015`
 - `bldr_url`: The habitat builder url where packages will be downloaded from (defaults to public habitat builder)
 - `channel`: The release channel to install from (defaults to `stable`)
+- `auth_token`: Auth token for installing a package from a private organization on builder
 
 While it is valid to pass the version and release with a Habitat package as a fully qualified package identifier when using the `hab` CLI, they must be specified using the `version` property when using this resource. See the examples below.
 
@@ -117,30 +118,29 @@ _Note:_ Applications may run as a specific user. Often with Habitat, the default
 
 - `:load`: (default action) runs `hab service load` to load and start the specified application service
 - `:unload`: runs `hab service unload` to unload and stop the specified application service
+- `:reload`: runs the `:unload` and then `:load` actions
 - `:start`: runs `hab service start` to start the specified application service
 - `:stop`: runs `hab service stop` to stop the specified application service
+- `:restart`: runs the `:stop` and then `:start` actions
 
 #### Properties
 
-Some properties are only valid for `start` or `load` actions. See the description of each option for indication which action(s) the property is used. This is because the underlying `hab sup` commands have different options available in their context.
+The remote_sup property is valid for all actions.
+
+- `remote_sup`: **Advanced Use** Address for remote supervisor. This replaces `--override-name` now that hab purely communicates over TCP. This may specify an alternate local port or a remote supervisor
+
+The follow properties are valid for the `load` action.
 
 - `service_name`: name property, the name of the service, must be in the form of `origin/name`
 - `loaded`: state property indicating whether the service is loaded in the supervisor
 - `running`: state property indicating whether the service is running in the supervisor
-- `permanent_peer`: Only valid for `:start` action, passes `--permanent-peer` to the hab command
-- `listen_gossip`: Only valid for `:start` action, passes `--listen-gossip` with the specified address and port, e.g., `0.0.0.0:9638`, to the hab command
-- `listen_http`: Only valid for `:start` action, passes `--listen-http` with the specified address and port, e.g., `0.0.0.0:9631`, to the hab command
-- `org`: Only valid for `:start` action, passes `--org` with the specified org name to the hab command
-- `peer`: Only valid for `:start` action, passes `--peer` with the specified initial peer to the hab command
-- `ring`: Only valid for `:start` action, passes `--ring` with the specified ring key name to the hab command
-- `strategy`: Only valid for `:start` or `:load` actions, passes `--strategy` with the specified update strategy to the hab command
-- `topology`: Only valid for `:start` or `:load` actions, passes `--topology` with the specified service topology to the hab command
-- `bldr_url`: Only valid for `:start` or `:load` actions, passes `--url` with the specified Builder URL to the hab command. For local repos, use 'local'.
-- `bind`: Only valid for `:start` or `:load` actions, passes `--bind` with the specified services to bind to the hab command
-- `service_group`: Only valid for `:start` or `:load` actions, passes `--group` with the specified service group to the hab command
-- `config_from`: Only valid for `:start` action, passes `--config-from` with the specified directory to the hab command
-- `override_name`: **Advanced Use** Valid for all actions, passes `--override-name` with the specified name to the hab command; used for running services in multiple supervisors
-- `channel`: Only valid for `:start` or `:load` actions, passes `--channel` with the specified channel to the hab command
+- `strategy`: Passes `--strategy` with the specified update strategy to the hab command
+- `topology`: Passes `--topology` with the specified service topology to the hab command
+- `bldr_url`: Passes `--url` with the specified Builder URL to the hab command.
+- `channel`: Passes `--channel` with the specified channel to the hab command
+- `bind`: Passes `--bind` with the specified services to bind to the hab command. If an array of multiple service binds are specified then a `--bind` flag is added for each.
+- `binding_mode`: Passes `--binding-mode` with the specified binding mode. Defaults to `:strict`. Options are `:strict` or `:relaxed`
+- `service_group`: Passes `--group` with the specified service group to the hab command
 
 #### Examples
 
@@ -179,7 +179,7 @@ hab_service 'acme/apps'
 
 Runs a Habitat Supervisor for one or more Habitat Services. It is used in conjunction with `hab_service` which will manage the services loaded and started within the supervisor.
 
-The `run` action handles installing Habitat using the `hab_install` resource, ensures that the `core/hab-sup` package is installed using `hab_package`, and then drops off the appropriate init system definitions and manages the service.
+The `run` action handles installing Habitat using the `hab_install` resource, ensures that the appropriate versions of the `core/hab-sup` and `core/hab-launcher` packages are installed using `hab_package`, and then drops off the appropriate init system definitions and manages the service.
 
 #### Actions
 
@@ -188,14 +188,16 @@ The `run` action handles installing Habitat using the `hab_install` resource, en
 #### Properties
 
 - `bldr_url`: The Builder URL for the `hab_package` resource, if needed
-- `permanent_peer`: Only valid for `:start` action, passes `--permanent-peer` to the hab command
-- `listen_gossip`: Only valid for `:start` action, passes `--listen-gossip` with the specified address and port, e.g., `0.0.0.0:9638`, to the hab command
-- `listen_http`: Only valid for `:start` action, passes `--listen-http` with the specified address and port, e.g., `0.0.0.0:9631`, to the hab command
-- `org`: Only valid for `:start` action, passes `--org` with the specified org name to the hab command
-- `peer`: Only valid for `:start` action, passes `--peer` with the specified initial peer to the hab command
-- `ring`: Only valid for `:start` action, passes `--ring` with the specified ring key name to the hab command
+- `permanent_peer`: Only valid for `:run` action, passes `--permanent-peer` to the hab command
+- `listen_ctl`: Only valid for `:run` action, passes `--listen-ctl` with the specified address and port, e.g., `0.0.0.0:9632`, to the hab command
+- `listen_gossip`: Only valid for `:run` action, passes `--listen-gossip` with the specified address and port, e.g., `0.0.0.0:9638`, to the hab command
+- `listen_http`: Only valid for `:run` action, passes `--listen-http` with the specified address and port, e.g., `0.0.0.0:9631`, to the hab command
+- `org`: Only valid for `:run` action, passes `--org` with the specified org name to the hab command
+- `peer`: Only valid for `:run` action, passes `--peer` with the specified initial peer to the hab command
+- `ring`: Only valid for `:run` action, passes `--ring` with the specified ring key name to the hab command
 - `hab_channel`: The channel to install Habitat from. Defaults to stable
 - `override_name`: **Advanced Use** Valid for all actions, passes `--override-name` with the specified name to the hab command; used for running services in multiple supervisors
+- `auth_token`: Auth token for accessing a private organization on bldr. This value is templated into the appropriate service file.
 
 #### Examples
 
@@ -232,11 +234,8 @@ Applies a given configuration to a habitat service using `hab config apply`.
 
 - `service_group`: The service group to apply the configuration to, for example, `nginx.default`
 - `config`: The configuration to apply as a ruby hash, for example, `{ worker_count: 2, http: { keepalive_timeout: 120 } }`
-- `org`: (optional) passes the `--org` option with the specified org name to the hab config command.
-- `peer`: (optional) passes the `--peer` option with the specified peer to the hab config command.
-- `ring`: (optional) passes the `--ring` option with the specified ring key name to the hab config command.
-- `api_host`: Hostname for the habitat api in order to look up the existing configuration. Defaults to `127.0.0.1`.
-- `api_port`: Port number for the habitat api. Defaults to `9631`.
+- `remote_sup`: **Advanced Use** Address for remote supervisor. This replaces `--override-name` now that hab purely communicates over TCP. This may specify an alternate local port or a remote supervisor
+- `user`: Name of user key to use for encryption. Passes `--user` to `hab config apply`
 
 #### Notes
 
@@ -255,11 +254,37 @@ hab_config 'nginx.default' do
 end
 ```
 
+### hab_user_toml
+
+Templates a user.toml for the specified service. This is written to `/hab/user/<service_name>/config/user.toml`. User.toml can be used to set configuration overriding the default.toml for a given package as an alternative to applying service group level configuration.
+
+#### Actions
+
+- `create`: (default action) Create the user.toml from the specified config.
+- `delete`: Delete the user.toml
+
+#### Properties
+
+- `service_name`: The service group to apply the configuration to, for example, `nginx.default`
+- `config`: Only valid for `:create` action. The configuration to apply as a ruby hash, for example, `{ worker_count: 2, http: { keepalive_timeout: 120 } }`
+
+#### Examples
+
+```ruby
+hab_user_toml 'nginx' do
+  config({
+    worker_count: 2,
+    http: {
+      keepalive_timeout: 120
+    }
+  })
+end
+```
+
 ## Maintainers
 
-This cookbook is maintained by Chef's Community Cookbook Engineering team along with the following maintainers:
+This cookbook is maintained by the following maintainers:
 
-- Joshua Timberman [joshua@chef.io](mailto:joshua@chef.io)
 - Jon Cowie [jcowie@chef.io](mailto:jcowie@chef.io)
 
 The goal of the Community Cookbook Engineering team is to improve cookbook quality and to aid the community in contributing to cookbooks. To learn more about our team, process, and design goals see our [team documentation](https://github.com/chef-cookbooks/community_cookbook_documentation/blob/master/COOKBOOK_TEAM.MD). To learn more about contributing to cookbooks like this see our [contributing documentation](https://github.com/chef-cookbooks/community_cookbook_documentation/blob/master/CONTRIBUTING.MD), or if you have general questions about this cookbook come chat with us in #cookbok-engineering on the [Chef Community Slack](http://community-slack.chef.io/)

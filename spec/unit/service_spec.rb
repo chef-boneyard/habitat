@@ -32,5 +32,22 @@ describe 'test::service' do
         channel: :stable
       )
     end
+
+    it 'loads a service with a single bind' do
+      expect(chef_run).to load_hab_service('core/ruby-rails-sample').with(
+        bind: [
+          'database:postgresql.default',
+        ]
+      )
+    end
+
+    it 'loads a service with multiple binds' do
+      expect(chef_run).to load_hab_service('core/sensu').with(
+        bind: [
+          'rabbitmq:rabbitmq.default',
+          'redis:redis.default',
+        ]
+      )
+    end
   end
 end
