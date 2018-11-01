@@ -94,7 +94,7 @@ class Chef
 
         def hab(*command)
           if Gem::Requirement.new('>= 14.3.20').satisfied_by?(Gem::Version.new(Chef::VERSION))
-            shell_out!('hab', *command)
+            shell_out!(['hab', *command].join(' '))
           else
             shell_out_with_timeout!(clean_array('hab', *command).join(' '))
           end
@@ -155,7 +155,7 @@ class Chef
         end
 
         def installed_version(ident)
-          hab('pkg', 'path', ident).stdout.chomp.split('/')[-2..-1].join('/')
+          hab('pkg', 'path', ident).stdout.chomp.split(platform_family?('windows') ? '\\' : '/')[-2..-1].join('/')
         rescue Mixlib::ShellOut::ShellCommandFailed
           nil
         end
