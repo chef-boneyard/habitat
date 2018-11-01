@@ -72,7 +72,7 @@ describe 'test::sup' do
               Description: 'The Habitat Supervisor',
             },
             Service: {
-              ExecStart: '/bin/hab sup run ',
+              ExecStart: 'bin/hab sup run --listen-gossip 0.0.0.0:7998 --listen-http 0.0.0.0:7999 --peer 127.0.0.2 --peer 127.0.0.3',
               Restart: 'on-failure',
             },
             Install: {
@@ -119,16 +119,16 @@ describe 'test::sup' do
           group: 'root',
           mode: '0644',
           variables: {
-            exec_start_options: '',
+            exec_start_options: '--listen-gossip 0.0.0.0:7998 --listen-http 0.0.0.0:7999 --peer 127.0.0.2 --peer 127.0.0.3',
             auth_token: nil,
           }
         )
       end
 
-      it 'starts the hab-sup-default service' do
+      it 'starts the hab-sup service' do
         expect(chef_run).to start_service('hab-sup')
           .with(provider: Chef::Provider::Service::Upstart)
-        expect(chef_run.service('hab-sup-default'))
+        expect(chef_run.service('hab-sup'))
           .to subscribe_to('template[/etc/init/hab-sup.conf]')
           .on(:restart).delayed
         expect(chef_run.service('hab-sup'))
@@ -164,7 +164,7 @@ describe 'test::sup' do
           mode: '0755',
           variables: {
             name: 'hab-sup',
-            exec_start_options: '',
+            exec_start_options: '--listen-gossip 0.0.0.0:7998 --listen-http 0.0.0.0:7999 --peer 127.0.0.2 --peer 127.0.0.3',
             auth_token: nil,
           }
         )
