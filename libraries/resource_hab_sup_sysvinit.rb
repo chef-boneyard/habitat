@@ -29,23 +29,29 @@ class Chef
       action :run do
         super()
 
-        template "/etc/init.d/hab-sup-#{new_resource.override_name}" do
+        template '/etc/init.d/hab-sup' do
           source "sysvinit/hab-sup-#{node['platform_family']}.erb"
           cookbook 'habitat'
           owner 'root'
           group 'root'
           mode '0755'
-          variables(name: "hab-sup-#{new_resource.override_name}",
+          variables(name: 'hab-sup',
                     exec_start_options: exec_start_options,
                     auth_token: new_resource.auth_token)
           action :create
         end
 
-        service "hab-sup-#{new_resource.override_name}" do
-          subscribes :restart, "template[/etc/init.d/hab-sup-#{new_resource.override_name}]"
+        service 'hab-sup' do
+          subscribes :restart, 'template[/etc/init.d/hab-sup]'
           subscribes :restart, 'hab_package[core/hab-sup]'
           subscribes :restart, 'hab_package[core/hab-launcher]'
           action [:enable, :start]
+        end
+      end
+
+      action :stop do
+        service 'hab-sup' do
+          action :stop
         end
       end
     end

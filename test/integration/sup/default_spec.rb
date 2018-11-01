@@ -10,58 +10,39 @@ svc_manager = if command('systemctl --help').exit_status == 0
                 'sysv'
               end
 
-%w(default chef-es auth-token).each do |sup|
-  describe file("/hab/sup/#{sup}/data/services.dat") do
-    it { should exist }
-    its(:content) { should match('[]') }
-  end
+describe send("#{svc_manager}_service", 'hab-sup') do
+  it { should be_running }
+end
 
-  describe send("#{svc_manager}_service", "hab-sup-#{sup}") do
-    it { should be_running }
-  end
+cmd = case svc_manager
+      when 'systemd'
+        'systemctl restart hab-sup'
+      when 'upstart'
+        'initctl restart hab-sup'
+      when 'sysv'
+        '/etc/init.d/hab-sup restart'
+      end
 
-  cmd = case svc_manager
-        when 'systemd'
-          "systemctl restart hab-sup-#{sup}"
-        when 'upstart'
-          "initctl restart hab-sup-#{sup}"
-        when 'sysv'
-          "/etc/init.d/hab-sup-#{sup} restart"
-        end
+describe command(cmd) do
+  its(:exit_status) { should eq(0) }
+end
 
-  describe command(cmd) do
-    its(:exit_status) { should eq(0) }
-  end
-
-  describe send("#{svc_manager}_service", "hab-sup-#{sup}") do
-    it { should be_running }
-  end
+describe send("#{svc_manager}_service", 'hab-sup') do
+  it { should be_running }
 end
 
 # Validate HAB_AUTH_TOKEN
 case svc_manager
 when 'systemd'
-  describe file('/etc/systemd/system/hab-sup-default.service') do
+  describe file('/etc/systemd/system/hab-sup.service') do
     its('content') { should_not match('Environment = HAB_AUTH_TOKEN=test') }
   end
-
-  describe file('/etc/systemd/system/hab-sup-auth-token.service') do
-    its('content') { should match('Environment = HAB_AUTH_TOKEN=test') }
-  end
 when 'upstart'
-  describe file('/etc/init/hab-sup-default.conf') do
+  describe file('/etc/init/hab-sup.conf') do
     its('content') { should_not match('env HAB_AUTH_TOKEN=test') }
   end
-
-  describe file('/etc/init/hab-sup-auth-token.conf') do
-    its('content') { should match('env HAB_AUTH_TOKEN=test') }
-  end
 when 'sysv'
-  describe file('/etc/init.d/hab-sup-default') do
+  describe file('/etc/init.d/hab-sup') do
     its('content') { should_not match('export HAB_AUTH_TOKEN=test') }
-  end
-
-  describe file('/etc/init.d/hab-sup-auth-token') do
-    its('content') { should match('export HAB_AUTH_TOKEN=test') }
   end
 end

@@ -29,7 +29,6 @@ class Chef
       property :listen_ctl, String
       property :listen_gossip, String
       property :listen_http, String
-      property :override_name, String, default: 'default'
       property :org, String, default: 'default'
       property :peer, [String, Array], coerce: proc { |b| b.is_a?(String) ? [b] : b }
       property :ring, String
@@ -54,7 +53,7 @@ class Chef
       end
 
       action_class do
-        HAB_VERSION = '0.63.0'.freeze
+        HAB_VERSION = '0.67.0'.freeze
         LINUX_LAUNCHER_VERSION = '8282'.freeze
 
         def hab_version
@@ -71,7 +70,6 @@ class Chef
           opts << "--listen-ctl #{new_resource.listen_ctl}" if new_resource.listen_ctl
           opts << "--listen-gossip #{new_resource.listen_gossip}" if new_resource.listen_gossip
           opts << "--listen-http #{new_resource.listen_http}" if new_resource.listen_http
-          opts << "--override-name #{new_resource.override_name}" unless new_resource.override_name == 'default'
           opts << "--org #{new_resource.org}" unless new_resource.org == 'default'
           opts.push(*new_resource.peer.map { |b| "--peer #{b}" }) if new_resource.peer
           opts << "--ring #{new_resource.ring}" if new_resource.ring

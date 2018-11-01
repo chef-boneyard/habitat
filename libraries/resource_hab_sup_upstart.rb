@@ -29,7 +29,7 @@ class Chef
       action :run do
         super()
 
-        template "/etc/init/hab-sup-#{new_resource.override_name}.conf" do
+        template '/etc/init/hab-sup.conf' do
           source 'upstart/hab-sup.conf.erb'
           cookbook 'habitat'
           owner 'root'
@@ -40,13 +40,19 @@ class Chef
           action :create
         end
 
-        service "hab-sup-#{new_resource.override_name}" do
+        service 'hab-sup' do
           # RHEL 6 includes Upstart but Chef won't use it unless we specify the provider.
           provider Chef::Provider::Service::Upstart
-          subscribes :restart, "template[/etc/init/hab-sup-#{new_resource.override_name}.conf]"
+          subscribes :restart, 'template[/etc/init/hab-sup.conf]'
           subscribes :restart, 'hab_package[core/hab-sup]'
           subscribes :restart, 'hab_package[core/hab-launcher]'
           action [:enable, :start]
+        end
+      end
+
+      action :stop do
+        service 'hab-sup' do
+          action :stop
         end
       end
     end
