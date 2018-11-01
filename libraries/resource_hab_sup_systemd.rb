@@ -28,7 +28,7 @@ class Chef
       action :run do
         super()
 
-        systemd_unit "hab-sup-#{new_resource.override_name}.service" do
+        systemd_unit 'hab-sup.service' do
           content(Unit: {
                     Description: 'The Habitat Supervisor',
                   },
@@ -43,11 +43,17 @@ class Chef
           action :create
         end
 
-        service "hab-sup-#{new_resource.override_name}" do
-          subscribes :restart, "systemd_unit[hab-sup-#{new_resource.override_name}.service]"
+        service 'hab-sup' do
+          subscribes :restart, 'systemd_unit[hab-sup.service]'
           subscribes :restart, 'hab_package[core/hab-sup]'
           subscribes :restart, 'hab_package[core/hab-launcher]'
           action [:enable, :start]
+        end
+      end
+
+      action :stop do
+        service 'hab-sup' do
+          action :stop
         end
       end
     end

@@ -10,7 +10,6 @@ describe 'test::sup' do
       it 'runs hab sup with a custom org' do
         expect(chef_run).to run_hab_sup('test-options')
           .with(
-            override_name: 'chef-es',
             listen_http: '0.0.0.0:9999',
             listen_gossip: '0.0.0.0:9998'
           )
@@ -19,7 +18,6 @@ describe 'test::sup' do
       it 'runs hab sup with a auth options' do
         expect(chef_run).to run_hab_sup('test-auth-token')
           .with(
-            override_name: 'auth-token',
             listen_http: '0.0.0.0:10001',
             listen_gossip: '0.0.0.0:10000',
             auth_token: 'test'
@@ -28,7 +26,6 @@ describe 'test::sup' do
 
       it 'run hab sup with a single peer' do
         expect(chef_run).to run_hab_sup('single_peer').with(
-          override_name: 'single_peer',
           peer: ['127.0.0.2']
         )
       end
@@ -36,7 +33,6 @@ describe 'test::sup' do
       it 'runs hab sup with multiple peers' do
         expect(chef_run).to run_hab_sup('multiple_peers')
           .with(
-            override_name: 'multiple_peers',
             peer: ['127.0.0.2', '127.0.0.3']
           )
       end
@@ -106,7 +102,7 @@ describe 'test::sup' do
               Description: 'The Habitat Supervisor',
             },
             Service: {
-              ExecStart: '/bin/hab sup run --listen-gossip 0.0.0.0:9998 --listen-http 0.0.0.0:9999 --override-name chef-es',
+              ExecStart: '/bin/hab sup run --listen-gossip 0.0.0.0:9998 --listen-http 0.0.0.0:9999',
               Restart: 'on-failure',
             },
             Install: {
@@ -137,7 +133,7 @@ describe 'test::sup' do
             },
             Service: {
               Environment: 'HAB_AUTH_TOKEN=test',
-              ExecStart: '/bin/hab sup run --listen-gossip 0.0.0.0:10000 --listen-http 0.0.0.0:10001 --override-name auth-token',
+              ExecStart: '/bin/hab sup run --listen-gossip 0.0.0.0:10000 --listen-http 0.0.0.0:10001',
               Restart: 'on-failure',
             },
             Install: {
@@ -212,7 +208,7 @@ describe 'test::sup' do
           group: 'root',
           mode: '0644',
           variables: {
-            exec_start_options: '--listen-gossip 0.0.0.0:9998 --listen-http 0.0.0.0:9999 --override-name chef-es',
+            exec_start_options: '--listen-gossip 0.0.0.0:9998 --listen-http 0.0.0.0:9999',
             auth_token: nil,
           }
         )
@@ -240,7 +236,7 @@ describe 'test::sup' do
           group: 'root',
           mode: '0644',
           variables: {
-            exec_start_options: '--listen-gossip 0.0.0.0:10000 --listen-http 0.0.0.0:10001 --override-name auth-token',
+            exec_start_options: '--listen-gossip 0.0.0.0:10000 --listen-http 0.0.0.0:10001',
             auth_token: 'test',
           }
         )
@@ -313,7 +309,7 @@ describe 'test::sup' do
           mode: '0755',
           variables: {
             name: 'hab-sup-chef-es',
-            exec_start_options: '--listen-gossip 0.0.0.0:9998 --listen-http 0.0.0.0:9999 --override-name chef-es',
+            exec_start_options: '--listen-gossip 0.0.0.0:9998 --listen-http 0.0.0.0:9999',
             auth_token: nil,
           }
         )
@@ -341,7 +337,7 @@ describe 'test::sup' do
           mode: '0755',
           variables: {
             name: 'hab-sup-auth-token',
-            exec_start_options: '--listen-gossip 0.0.0.0:10000 --listen-http 0.0.0.0:10001 --override-name auth-token',
+            exec_start_options: '--listen-gossip 0.0.0.0:10000 --listen-http 0.0.0.0:10001',
             auth_token: 'test',
           }
         )
