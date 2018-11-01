@@ -66,7 +66,7 @@ describe 'test::sup' do
       it_behaves_like 'any platform'
 
       it 'renders a systemd_unit file with default options' do
-        expect(chef_run).to create_systemd_unit('hab-sup-default.service').with(
+        expect(chef_run).to create_systemd_unit('hab-sup.service').with(
           content: {
             Unit: {
               Description: 'The Habitat Supervisor',
@@ -82,76 +82,15 @@ describe 'test::sup' do
         )
       end
 
-      it 'starts the hab-sup-default service' do
-        expect(chef_run).to start_service('hab-sup-default')
-        expect(chef_run.service('hab-sup-default'))
-          .to subscribe_to('systemd_unit[hab-sup-default.service]')
+      it 'starts the hab-sup service' do
+        expect(chef_run).to start_service('hab-sup')
+        expect(chef_run.service('hab-sup'))
+          .to subscribe_to('systemd_unit[hab-sup.service]')
           .on(:restart).delayed
-        expect(chef_run.service('hab-sup-default'))
+        expect(chef_run.service('hab-sup'))
           .to subscribe_to('hab_package[core/hab-sup]')
           .on(:restart).delayed
-        expect(chef_run.service('hab-sup-default'))
-          .to subscribe_to('hab_package[core/hab-launcher]')
-          .on(:restart).delayed
-      end
-
-      it 'renders a systemd_unit file with custom ExecStart' do
-        expect(chef_run).to create_systemd_unit('hab-sup-chef-es.service').with(
-          content: {
-            Unit: {
-              Description: 'The Habitat Supervisor',
-            },
-            Service: {
-              ExecStart: '/bin/hab sup run --listen-gossip 0.0.0.0:9998 --listen-http 0.0.0.0:9999',
-              Restart: 'on-failure',
-            },
-            Install: {
-              WantedBy: 'default.target',
-            },
-          }
-        )
-      end
-
-      it 'starts the hab-sup-chef-es service' do
-        expect(chef_run).to start_service('hab-sup-chef-es')
-        expect(chef_run.service('hab-sup-chef-es'))
-          .to subscribe_to('systemd_unit[hab-sup-chef-es.service]')
-          .on(:restart).delayed
-        expect(chef_run.service('hab-sup-chef-es'))
-          .to subscribe_to('hab_package[core/hab-sup]')
-          .on(:restart).delayed
-        expect(chef_run.service('hab-sup-chef-es'))
-          .to subscribe_to('hab_package[core/hab-launcher]')
-          .on(:restart).delayed
-      end
-
-      it 'renders a systemd_unit file with auth options' do
-        expect(chef_run).to create_systemd_unit('hab-sup-auth-token.service').with(
-          content: {
-            Unit: {
-              Description: 'The Habitat Supervisor',
-            },
-            Service: {
-              Environment: 'HAB_AUTH_TOKEN=test',
-              ExecStart: '/bin/hab sup run --listen-gossip 0.0.0.0:10000 --listen-http 0.0.0.0:10001',
-              Restart: 'on-failure',
-            },
-            Install: {
-              WantedBy: 'default.target',
-            },
-          }
-        )
-      end
-
-      it 'starts the hab-sup-auth-token service' do
-        expect(chef_run).to start_service('hab-sup-auth-token')
-        expect(chef_run.service('hab-sup-auth-token'))
-          .to subscribe_to('systemd_unit[hab-sup-auth-token.service]')
-          .on(:restart).delayed
-        expect(chef_run.service('hab-sup-auth-token'))
-          .to subscribe_to('hab_package[core/hab-sup]')
-          .on(:restart).delayed
-        expect(chef_run.service('hab-sup-auth-token'))
+        expect(chef_run.service('hab-sup'))
           .to subscribe_to('hab_package[core/hab-launcher]')
           .on(:restart).delayed
       end
@@ -173,7 +112,7 @@ describe 'test::sup' do
       it_behaves_like 'any platform'
 
       it 'renders a upstart config with default options' do
-        expect(chef_run).to create_template('/etc/init/hab-sup-default.conf').with(
+        expect(chef_run).to create_template('/etc/init/hab-sup.conf').with(
           source: 'upstart/hab-sup.conf.erb',
           cookbook: 'habitat',
           owner: 'root',
@@ -187,71 +126,15 @@ describe 'test::sup' do
       end
 
       it 'starts the hab-sup-default service' do
-        expect(chef_run).to start_service('hab-sup-default')
+        expect(chef_run).to start_service('hab-sup')
           .with(provider: Chef::Provider::Service::Upstart)
         expect(chef_run.service('hab-sup-default'))
-          .to subscribe_to('template[/etc/init/hab-sup-default.conf]')
+          .to subscribe_to('template[/etc/init/hab-sup.conf]')
           .on(:restart).delayed
-        expect(chef_run.service('hab-sup-default'))
+        expect(chef_run.service('hab-sup'))
           .to subscribe_to('hab_package[core/hab-sup]')
           .on(:restart).delayed
-        expect(chef_run.service('hab-sup-default'))
-          .to subscribe_to('hab_package[core/hab-launcher]')
-          .on(:restart).delayed
-      end
-
-      it 'renders a upstart config with custom options' do
-        expect(chef_run).to create_template('/etc/init/hab-sup-chef-es.conf').with(
-          source: 'upstart/hab-sup.conf.erb',
-          cookbook: 'habitat',
-          owner: 'root',
-          group: 'root',
-          mode: '0644',
-          variables: {
-            exec_start_options: '--listen-gossip 0.0.0.0:9998 --listen-http 0.0.0.0:9999',
-            auth_token: nil,
-          }
-        )
-      end
-
-      it 'starts the hab-sup-chef-es service' do
-        expect(chef_run).to start_service('hab-sup-chef-es')
-          .with(provider: Chef::Provider::Service::Upstart)
-        expect(chef_run.service('hab-sup-chef-es'))
-          .to subscribe_to('template[/etc/init/hab-sup-chef-es.conf]')
-          .on(:restart).delayed
-        expect(chef_run.service('hab-sup-chef-es'))
-          .to subscribe_to('hab_package[core/hab-sup]')
-          .on(:restart).delayed
-        expect(chef_run.service('hab-sup-chef-es'))
-          .to subscribe_to('hab_package[core/hab-launcher]')
-          .on(:restart).delayed
-      end
-
-      it 'renders a upstart config with auth options' do
-        expect(chef_run).to create_template('/etc/init/hab-sup-auth-token.conf').with(
-          source: 'upstart/hab-sup.conf.erb',
-          cookbook: 'habitat',
-          owner: 'root',
-          group: 'root',
-          mode: '0644',
-          variables: {
-            exec_start_options: '--listen-gossip 0.0.0.0:10000 --listen-http 0.0.0.0:10001',
-            auth_token: 'test',
-          }
-        )
-      end
-
-      it 'starts the hab-sup-auth-token service' do
-        expect(chef_run).to start_service('hab-sup-auth-token')
-          .with(provider: Chef::Provider::Service::Upstart)
-        expect(chef_run.service('hab-sup-auth-token'))
-          .to subscribe_to('template[/etc/init/hab-sup-auth-token.conf]')
-          .on(:restart).delayed
-        expect(chef_run.service('hab-sup-auth-token'))
-          .to subscribe_to('hab_package[core/hab-sup]')
-          .on(:restart).delayed
-        expect(chef_run.service('hab-sup-auth-token'))
+        expect(chef_run.service('hab-sup'))
           .to subscribe_to('hab_package[core/hab-launcher]')
           .on(:restart).delayed
       end
@@ -273,85 +156,29 @@ describe 'test::sup' do
       it_behaves_like 'any platform'
 
       it 'renders an init script with default options' do
-        expect(chef_run).to create_template('/etc/init.d/hab-sup-default').with(
+        expect(chef_run).to create_template('/etc/init.d/hab-sup').with(
           source: 'sysvinit/hab-sup-debian.erb',
           cookbook: 'habitat',
           owner: 'root',
           group: 'root',
           mode: '0755',
           variables: {
-            name: 'hab-sup-default',
+            name: 'hab-sup',
             exec_start_options: '',
             auth_token: nil,
           }
         )
       end
 
-      it 'starts the hab-sup-default service' do
-        expect(chef_run).to start_service('hab-sup-default')
-        expect(chef_run.service('hab-sup-default'))
-          .to subscribe_to('template[/etc/init.d/hab-sup-default]')
+      it 'starts the hab-sup service' do
+        expect(chef_run).to start_service('hab-sup')
+        expect(chef_run.service('hab-sup'))
+          .to subscribe_to('template[/etc/init.d/hab-sup]')
           .on(:restart).delayed
-        expect(chef_run.service('hab-sup-default'))
+        expect(chef_run.service('hab-sup'))
           .to subscribe_to('hab_package[core/hab-sup]')
           .on(:restart).delayed
-        expect(chef_run.service('hab-sup-default'))
-          .to subscribe_to('hab_package[core/hab-launcher]')
-          .on(:restart).delayed
-      end
-
-      it 'renders an init script with custom options' do
-        expect(chef_run).to create_template('/etc/init.d/hab-sup-chef-es').with(
-          source: 'sysvinit/hab-sup-debian.erb',
-          cookbook: 'habitat',
-          owner: 'root',
-          group: 'root',
-          mode: '0755',
-          variables: {
-            name: 'hab-sup-chef-es',
-            exec_start_options: '--listen-gossip 0.0.0.0:9998 --listen-http 0.0.0.0:9999',
-            auth_token: nil,
-          }
-        )
-      end
-
-      it 'starts the hab-sup-chef-es service' do
-        expect(chef_run).to start_service('hab-sup-chef-es')
-        expect(chef_run.service('hab-sup-chef-es'))
-          .to subscribe_to('template[/etc/init.d/hab-sup-chef-es]')
-          .on(:restart).delayed
-        expect(chef_run.service('hab-sup-chef-es'))
-          .to subscribe_to('hab_package[core/hab-sup]')
-          .on(:restart).delayed
-        expect(chef_run.service('hab-sup-chef-es'))
-          .to subscribe_to('hab_package[core/hab-launcher]')
-          .on(:restart).delayed
-      end
-
-      it 'renders an init script with auth options' do
-        expect(chef_run).to create_template('/etc/init.d/hab-sup-auth-token').with(
-          source: 'sysvinit/hab-sup-debian.erb',
-          cookbook: 'habitat',
-          owner: 'root',
-          group: 'root',
-          mode: '0755',
-          variables: {
-            name: 'hab-sup-auth-token',
-            exec_start_options: '--listen-gossip 0.0.0.0:10000 --listen-http 0.0.0.0:10001',
-            auth_token: 'test',
-          }
-        )
-      end
-
-      it 'starts the hab-sup-auth-token service' do
-        expect(chef_run).to start_service('hab-sup-auth-token')
-        expect(chef_run.service('hab-sup-auth-token'))
-          .to subscribe_to('template[/etc/init.d/hab-sup-auth-token]')
-          .on(:restart).delayed
-        expect(chef_run.service('hab-sup-auth-token'))
-          .to subscribe_to('hab_package[core/hab-sup]')
-          .on(:restart).delayed
-        expect(chef_run.service('hab-sup-auth-token'))
+        expect(chef_run.service('hab-sup'))
           .to subscribe_to('hab_package[core/hab-launcher]')
           .on(:restart).delayed
       end
