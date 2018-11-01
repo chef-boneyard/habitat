@@ -10,25 +10,24 @@ svc_manager = if command('systemctl --help').exit_status == 0
                 'sysv'
               end
 
-
-describe send("#{svc_manager}_service", "hab-sup") do
+describe send("#{svc_manager}_service", 'hab-sup') do
   it { should be_running }
 end
 
 cmd = case svc_manager
       when 'systemd'
-        "systemctl restart hab-sup"
+        'systemctl restart hab-sup'
       when 'upstart'
-        "initctl restart hab-sup"
+        'initctl restart hab-sup'
       when 'sysv'
-        "/etc/init.d/hab-sup restart"
+        '/etc/init.d/hab-sup restart'
       end
 
 describe command(cmd) do
   its(:exit_status) { should eq(0) }
 end
 
-describe send("#{svc_manager}_service", "hab-sup") do
+describe send("#{svc_manager}_service", 'hab-sup') do
   it { should be_running }
 end
 
