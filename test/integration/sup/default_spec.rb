@@ -35,27 +35,15 @@ end
 # Validate HAB_AUTH_TOKEN
 case svc_manager
 when 'systemd'
-  describe file('/etc/systemd/system/hab-sup-default.service') do
+  describe file('/etc/systemd/system/hab-sup.service') do
     its('content') { should_not match('Environment = HAB_AUTH_TOKEN=test') }
   end
-
-  describe file('/etc/systemd/system/hab-sup-auth-token.service') do
-    its('content') { should match('Environment = HAB_AUTH_TOKEN=test') }
-  end
 when 'upstart'
-  describe file('/etc/init/hab-sup-default.conf') do
+  describe file('/etc/init/hab-sup.conf') do
     its('content') { should_not match('env HAB_AUTH_TOKEN=test') }
   end
-
-  describe file('/etc/init/hab-sup-auth-token.conf') do
-    its('content') { should match('env HAB_AUTH_TOKEN=test') }
-  end
 when 'sysv'
-  describe file('/etc/init.d/hab-sup-default') do
+  describe file('/etc/init.d/hab-sup') do
     its('content') { should_not match('export HAB_AUTH_TOKEN=test') }
-  end
-
-  describe file('/etc/init.d/hab-sup-auth-token') do
-    its('content') { should match('export HAB_AUTH_TOKEN=test') }
   end
 end
