@@ -2,7 +2,7 @@ hab_sup 'default'
 
 ruby_block 'wait-for-sup-default-startup' do
   block do
-    raise unless File.exist?('C:\hab\sup\default\data\services.dat')
+    raise unless system('hab sup status')
   end
   retries 30
   retry_delay 1

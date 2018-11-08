@@ -8,7 +8,7 @@ end
 # Works fine if you run a converge and then a verify as two seperate commands
 # For now, hitting hab.exe directly to avoid test failure
 describe command('C:\habitat\hab.exe -V') do
-  its('stdout') { should match(%r{^hab 0.65.0/}) }
+  its('stdout') { should match(%r{^hab 0.67.0/}) }
   its('exit_status') { should eq 0 }
 end
 

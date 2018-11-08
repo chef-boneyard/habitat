@@ -2,11 +2,6 @@ describe command('C:\habitat\hab.exe sup -h') do
   its(:stdout) { should match(/The Habitat Supervisor/) }
 end
 
-describe file('C:\hab\sup\default\data\services.dat') do
-  it { should exist }
-  its(:content) { should match('\[\]') }
-end
-
 describe service('Habitat') do
   it { should be_enabled }
   it { should be_running }
