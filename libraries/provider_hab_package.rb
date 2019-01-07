@@ -114,6 +114,20 @@ class Chef
           n
         end
 
+        def platform_target
+          if platform_family?('windows')
+            return 'target=x86_64-windows'
+          elsif platform_family?('rhel') && node['platform_version'].to_f < 6.0
+            return 'target=x86_64-linux-kernel2'
+          elsif platform_family?('centos') && node['platform_version'].to_f < 6.0
+            return 'target=x86_64-linux-kernel2'
+          elsif platform_family?('suse') && node['platform_version'].to_f < 6.0
+            return 'target=x86_64-linux-kernel2'
+          else
+            return ''
+          end
+        end
+
         def depot_package(name, version = nil)
           @depot_package ||= {}
           @depot_package[name] ||=
@@ -121,6 +135,7 @@ class Chef
               origin, pkg_name = name.split('/')
               name_version = [pkg_name, version].compact.join('/').squeeze('/').chomp('/').sub(%r{^\/}, '')
               url = "#{new_resource.bldr_url.chomp('/')}/v1/depot/channels/#{origin}/#{new_resource.channel}/pkgs/#{name_version}"
+              url << "?#{platform_target}" unless platform_target.empty?
               url << '/latest' unless name_version.count('/') >= 2
 
               headers = {}
