@@ -2,15 +2,21 @@
 
 This file is used to list changes made in each version of the habitat cookbook.
 
+<!-- latest_release unreleased -->
+## Unreleased
+
 <!-- latest_release -->
+
+## 0.67.0 (2018-11-01)
+
+- Update README with accurate maintainer info
+- bug fixes for windows on newer chef versions and path seperators
+- Update to habitat 0.67.0 (#146)
 
 ## 0.63.0 (2018-09-18)
 
 *  Update to habitat 0.63.0
 
-<!-- latest_release -->
-
-## Unreleased
 
 ## 0.62.1 (2018-09-07)
 

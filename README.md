@@ -127,7 +127,7 @@ _Note:_ Applications may run as a specific user. Often with Habitat, the default
 
 The remote_sup property is valid for all actions.
 
-- `remote_sup`: **Advanced Use** Address for remote supervisor. This replaces `--override-name` now that hab purely communicates over TCP. This may specify an alternate local port or a remote supervisor
+- `remote_sup`: Address to a remote Supervisor's Control Gateway [default: 127.0.0.1:9632]
 
 The follow properties are valid for the `load` action.
 
@@ -196,7 +196,6 @@ The `run` action handles installing Habitat using the `hab_install` resource, en
 - `peer`: Only valid for `:run` action, passes `--peer` with the specified initial peer to the hab command
 - `ring`: Only valid for `:run` action, passes `--ring` with the specified ring key name to the hab command
 - `hab_channel`: The channel to install Habitat from. Defaults to stable
-- `override_name`: **Advanced Use** Valid for all actions, passes `--override-name` with the specified name to the hab command; used for running services in multiple supervisors
 - `auth_token`: Auth token for accessing a private organization on bldr. This value is templated into the appropriate service file.
 
 #### Examples
@@ -205,10 +204,7 @@ The `run` action handles installing Habitat using the `hab_install` resource, en
 # set up with just the defaults
 hab_sup 'default'
 
-# run with an override name, requires changing listen_http and
-# listen_gossip if a default supervisor is running
 hab_sup 'test-options' do
-  override_name 'myapps'
   listen_http '0.0.0.0:9999'
   listen_gossip '0.0.0.0:9998'
 end
@@ -234,7 +230,7 @@ Applies a given configuration to a habitat service using `hab config apply`.
 
 - `service_group`: The service group to apply the configuration to, for example, `nginx.default`
 - `config`: The configuration to apply as a ruby hash, for example, `{ worker_count: 2, http: { keepalive_timeout: 120 } }`
-- `remote_sup`: **Advanced Use** Address for remote supervisor. This replaces `--override-name` now that hab purely communicates over TCP. This may specify an alternate local port or a remote supervisor
+- `remote_sup`: Address to a remote Supervisor's Control Gateway [default: 127.0.0.1:9632]
 - `user`: Name of user key to use for encryption. Passes `--user` to `hab config apply`
 
 #### Notes
