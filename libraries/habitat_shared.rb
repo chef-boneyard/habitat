@@ -39,7 +39,11 @@ module Habitat
 
     def hab(*command)
       # Windows shell_out does not support arrays, so manually cleaning and joining
-      hab_cmd = (['hab'] + command).flatten.compact.join(' ')
+      hab_cmd = if platform_family?('windows')
+                  (['hab'] + command).flatten.compact.join(' ')
+                else
+                  (['hab'] + command)
+                end
 
       if Gem::Requirement.new('>= 14.3.20').satisfied_by?(Gem::Version.new(Chef::VERSION))
         shell_out!(hab_cmd)
