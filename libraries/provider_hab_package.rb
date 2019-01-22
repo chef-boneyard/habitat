@@ -116,15 +116,15 @@ class Chef
 
         def platform_target
           if platform_family?('windows')
-            return 'target=x86_64-windows'
+            'target=x86_64-windows'
           elsif platform_family?('rhel') && node['platform_version'].to_f < 6.0
-            return 'target=x86_64-linux-kernel2'
+            'target=x86_64-linux-kernel2'
           elsif platform_family?('centos') && node['platform_version'].to_f < 6.0
-            return 'target=x86_64-linux-kernel2'
+            'target=x86_64-linux-kernel2'
           elsif platform_family?('suse') && node['platform_version'].to_f < 6.0
-            return 'target=x86_64-linux-kernel2'
+            'target=x86_64-linux-kernel2'
           else
-            return ''
+            ''
           end
         end
 
