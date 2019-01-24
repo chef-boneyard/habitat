@@ -8,10 +8,7 @@ ruby_block 'wait-for-sup-default-startup' do
   retry_delay 1
 end
 
-hab_package 'skylerto/splunkforwarder'
-hab_service 'skylerto/splunkforwarder'
-
-hab_config 'splunkforwarder.default' do
+hab_user_toml 'splunkforwarder' do
   config(
     directories: {
       path: [
@@ -20,3 +17,6 @@ hab_config 'splunkforwarder.default' do
     }
   )
 end
+
+hab_package 'skylerto/splunkforwarder'
+hab_service 'skylerto/splunkforwarder'

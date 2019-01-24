@@ -28,7 +28,9 @@ property :channel, [Symbol, String]
 property :bind, [String, Array], coerce: proc { |b| b.is_a?(String) ? [b] : b }
 property :binding_mode, [Symbol, String], equal_to: [:strict, 'strict', :relaxed, 'relaxed'], default: :strict
 property :service_group, String
-property :remote_sup, String
+property :remote_sup, String, default: '127.0.0.1:9632', desired_state: false
+# Http port needed for querying/comparing current config value
+property :remote_sup_http, String, default: '127.0.0.1:9631', desired_state: false
 
 load_current_value do
   running service_up?(service_name)
@@ -55,7 +57,7 @@ end
 # NoMethodError.
 #
 def get_service_details(svc_name)
-  http_uri = remote_sup ? "http://#{remote_sup}" : 'http://localhost:9631'
+  http_uri = "http://#{remote_sup_http}"
 
   begin
     TCPSocket.new(URI(http_uri).host, URI(http_uri).port).close
