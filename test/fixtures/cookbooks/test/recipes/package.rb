@@ -28,6 +28,6 @@ end
 
 hab_package 'binlink_force' do
   package_name 'core/nginx'
-  version '1.15.3/20180914151940'
+  version '1.15.6/20181212185120'
   binlink :force
 end
