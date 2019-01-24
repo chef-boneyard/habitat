@@ -23,6 +23,11 @@ describe 'test::package' do
         .with(version: '1.13.3/20161011123917')
     end
 
+    it 'installs core/hab-sup with a specific depot url' do
+      expect(chef_run).to install_hab_package('core/hab-sup')
+        .with(bldr_url: 'https://bldr.habitat.sh')
+    end
+
     it 'installs core/htop with binlink option' do
       expect(chef_run).to install_hab_package('core/htop')
         .with(options: ['--binlink'])

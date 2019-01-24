@@ -18,7 +18,9 @@ hab_package 'core/htop' do
   options '--binlink'
 end
 
-hab_package 'core/hab-sup'
+hab_package 'core/hab-sup' do
+  bldr_url 'https://bldr.habitat.sh'
+end
 
 hab_package 'binlink' do
   package_name 'core/nginx'
