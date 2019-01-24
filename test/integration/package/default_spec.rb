@@ -48,5 +48,5 @@ end
 
 describe file('/bin/nginx') do
   it { should be_symlink }
-  its(:link_path) { should match(%r{/hab/pkgs/core/nginx/1.15.3/20180914151930}) }
+  its(:link_path) { should match(%r{/hab/pkgs/core/nginx/1.15.6/20181212185120}) }
 end
