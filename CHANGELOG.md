@@ -5,6 +5,8 @@ This file is used to list changes made in each version of the habitat cookbook.
 <!-- latest_release unreleased -->
 ## Unreleased
 
+#### Merged Pull Requests
+- Support targets for API query [#152](https://github.com/chef-cookbooks/habitat/pull/152) ([skylerto](https://github.com/skylerto))
 <!-- latest_release -->
 
 ## 0.67.0 (2018-11-01)
