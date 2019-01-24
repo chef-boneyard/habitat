@@ -81,7 +81,7 @@ Install the specified Habitat package from builder. Requires that Habitat is ins
 #### actions
 
 - `install`: installs the specified package
-- `upgrade`: aliased to install
+- `upgrade`: installs the specified package. If a newer version is available in the configured channel, upgrades to that version
 
 #### Properties
 
