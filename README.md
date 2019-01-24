@@ -20,7 +20,7 @@ This cookbook provides resources for working with [Habitat](https://habitat.sh).
 
 ### Habitat
 
-- Habitat version: 0.67.0
+- Habitat version: 0.69.0
 
 This cookbook is developed lockstep with the latest release of Habitat to ensure compatibility, going forward from 0.33.0 of the cookbook and 0.33.2 of Habitat itself. When new versions of Habitat are released, the version should be updated in these files:
 
@@ -81,7 +81,7 @@ Install the specified Habitat package from builder. Requires that Habitat is ins
 #### actions
 
 - `install`: installs the specified package
-- `upgrade`: aliased to install
+- `upgrade`: installs the specified package. If a newer version is available in the configured channel, upgrades to that version
 
 #### Properties
 
@@ -90,6 +90,8 @@ Install the specified Habitat package from builder. Requires that Habitat is ins
 - `bldr_url`: The habitat builder url where packages will be downloaded from (defaults to public habitat builder)
 - `channel`: The release channel to install from (defaults to `stable`)
 - `auth_token`: Auth token for installing a package from a private organization on builder
+- `binlink`: If habitat should attempt to binlink the package.  Acceptable values: `true`, `false`, `:force`.  Will faill on binlinking if set to `true` and binary or binlink exists.
+- `options`: Pass any additional parameters to the habitat install command.
 
 While it is valid to pass the version and release with a Habitat package as a fully qualified package identifier when using the `hab` CLI, they must be specified using the `version` property when using this resource. See the examples below.
 
@@ -105,6 +107,14 @@ end
 
 hab_package 'core/redis' do
   version '3.2.3/20160920131015'
+end
+
+hab_package 'core/nginx' do
+  binlink :force
+end
+
+hab_package 'core/nginx' do
+  options '--binlink'
 end
 ```
 

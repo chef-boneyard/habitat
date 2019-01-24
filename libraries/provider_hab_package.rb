@@ -72,6 +72,8 @@ class Chef
             opts = ['pkg', 'install', '--channel', new_resource.channel, '--url', new_resource.bldr_url]
             opts += ['--auth', new_resource.auth_token] if new_resource.auth_token
             opts += ["#{strip_version(n)}/#{v}", new_resource.options]
+            opts += ['--binlink'] if new_resource.binlink
+            opts += ['--force'] if new_resource.binlink.eql? :force
             hab(opts)
           end
         end
@@ -106,6 +108,20 @@ class Chef
           n
         end
 
+        def platform_target
+          if platform_family?('windows')
+            'target=x86_64-windows'
+          elsif platform_family?('rhel') && node['platform_version'].to_f < 6.0
+            'target=x86_64-linux-kernel2'
+          elsif platform_family?('centos') && node['platform_version'].to_f < 6.0
+            'target=x86_64-linux-kernel2'
+          elsif platform_family?('suse') && node['platform_version'].to_f < 6.0
+            'target=x86_64-linux-kernel2'
+          else
+            ''
+          end
+        end
+
         def depot_package(name, version = nil)
           @depot_package ||= {}
           @depot_package[name] ||=
@@ -115,6 +131,7 @@ class Chef
               url = "#{new_resource.bldr_url.chomp('/')}/v1/depot/channels/#{origin}/#{new_resource.channel}/pkgs/#{name_version}"
               url << '/latest' unless name_version.count('/') >= 2
               url << '?target=x86_64-windows' if platform_family?('windows')
+              url << "?#{platform_target}" unless platform_target.empty?
 
               headers = {}
               headers['Authorization'] = "Bearer #{new_resource.auth_token}" if new_resource.auth_token

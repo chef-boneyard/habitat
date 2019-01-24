@@ -27,6 +27,7 @@ class Chef
       property :bldr_url, String, regex: /.*/, default: 'https://bldr.habitat.sh'
       property :channel, String, default: 'stable'
       property :auth_token, String
+      property :binlink, equal_to: [true, false, :force], default: false
     end
   end
 end

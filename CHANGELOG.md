@@ -10,6 +10,10 @@ This file is used to list changes made in each version of the habitat cookbook.
 * Moved version pins and shared code into habitat_shared library to reduce duplication of code
 * Update Linux Launcher to 8659 to correspond to habitat >0.65.0
 
+- Add binlink property to hab_package resource.  Closes #138 [#139](https://github.com/chef-cookbooks/habitat/pull/139) ([qubitrenegade](https://github.com/qubitrenegade))
+- fix incorrect documentation for hab_package action [#142](https://github.com/chef-cookbooks/habitat/pull/142) ([st-h](https://github.com/st-h))
+- Support targets for API query [#152](https://github.com/chef-cookbooks/habitat/pull/152) ([skylerto](https://github.com/skylerto))
+
 <!-- latest_release -->
 
 ## 0.67.0 (2018-11-01)

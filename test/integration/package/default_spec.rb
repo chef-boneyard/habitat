@@ -10,7 +10,7 @@ end
 # This needs to be updated each time Habitat is released so we ensure we're getting the version
 # required by this cookbook.
 describe command('hab -V') do
-  its('stdout') { should match(%r{^hab 0.67.0/}) }
+  its('stdout') { should match(%r{^hab 0.69.0/}) }
   its('exit_status') { should eq 0 }
 end
 
@@ -44,4 +44,9 @@ end
 describe file('/bin/htop') do
   it { should be_symlink }
   its(:link_path) { should match(%r{/hab/pkgs/core/htop}) }
+end
+
+describe file('/bin/nginx') do
+  it { should be_symlink }
+  its(:link_path) { should match(%r{/hab/pkgs/core/nginx/1.15.3/20180914151930}) }
 end

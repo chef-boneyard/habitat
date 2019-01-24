@@ -146,6 +146,7 @@ action :upgrade do
 end
 
 action_class do
+
   include Habitat::Shared
 
   def hab_path
