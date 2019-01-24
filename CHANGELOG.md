@@ -5,6 +5,9 @@ This file is used to list changes made in each version of the habitat cookbook.
 <!-- latest_release unreleased -->
 ## Unreleased
 
+#### Merged Pull Requests
+- Full Windows Support For Cookbook [#143](https://github.com/chef-cookbooks/habitat/pull/143) ([wduncanfraser](https://github.com/wduncanfraser))
+
 * Added full windows support
 * Fixed bug introduced by transition to remote_sup cli option. Needed an additional property to specify the http port for the supervisor
 * Moved version pins and shared code into habitat_shared library to reduce duplication of code
@@ -13,7 +16,6 @@ This file is used to list changes made in each version of the habitat cookbook.
 - Add binlink property to hab_package resource.  Closes #138 [#139](https://github.com/chef-cookbooks/habitat/pull/139) ([qubitrenegade](https://github.com/qubitrenegade))
 - fix incorrect documentation for hab_package action [#142](https://github.com/chef-cookbooks/habitat/pull/142) ([st-h](https://github.com/st-h))
 - Support targets for API query [#152](https://github.com/chef-cookbooks/habitat/pull/152) ([skylerto](https://github.com/skylerto))
-
 <!-- latest_release -->
 
 ## 0.67.0 (2018-11-01)
