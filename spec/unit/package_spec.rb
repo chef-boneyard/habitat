@@ -28,9 +28,19 @@ describe 'test::package' do
         .with(bldr_url: 'https://bldr.acceptance.habitat.sh')
     end
 
-    it 'installs core/htop with binlink' do
+    it 'installs core/htop with binlink option' do
       expect(chef_run).to install_hab_package('core/htop')
         .with(options: ['--binlink'])
+    end
+
+    it 'installs core/foo with binlink parameters' do
+      expect(chef_run).to install_hab_package('binlink')
+        .with(binlink: true)
+    end
+
+    it 'installs core/foo by forcing binlink' do
+      expect(chef_run).to install_hab_package('binlink_force')
+        .with(binlink: :force)
     end
   end
 end

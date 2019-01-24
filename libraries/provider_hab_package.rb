@@ -69,6 +69,8 @@ class Chef
             opts = ['pkg', 'install', '--channel', new_resource.channel, '--url', new_resource.bldr_url]
             opts += ['--auth', new_resource.auth_token] if new_resource.auth_token
             opts += ["#{strip_version(n)}/#{v}", new_resource.options]
+            opts += ['--binlink'] if new_resource.binlink
+            opts += ['--force'] if new_resource.binlink.eql? :force
             hab(opts)
           end
         end

@@ -25,3 +25,15 @@ hab_package 'core/hab-sup' do
   # us from doing our tests, so ignore failures.
   ignore_failure true
 end
+
+hab_package 'binlink' do
+  package_name 'core/nginx'
+  version '1.15.2'
+  binlink true
+end
+
+hab_package 'binlink_force' do
+  package_name 'core/nginx'
+  version '1.15.3/20180914151930'
+  binlink :force
+end
