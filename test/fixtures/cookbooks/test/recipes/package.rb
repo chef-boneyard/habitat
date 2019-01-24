@@ -18,13 +18,7 @@ hab_package 'core/htop' do
   options '--binlink'
 end
 
-hab_package 'core/hab-sup' do
-  bldr_url 'https://bldr.acceptance.habitat.sh'
-  # The Habitat bldr for acceptance isn't monitored and can sometimes
-  # be down when we want to run tests in travis. This shouldn't stop
-  # us from doing our tests, so ignore failures.
-  ignore_failure true
-end
+hab_package 'core/hab-sup'
 
 hab_package 'binlink' do
   package_name 'core/nginx'
