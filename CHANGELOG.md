@@ -5,20 +5,23 @@ This file is used to list changes made in each version of the habitat cookbook.
 <!-- latest_release unreleased -->
 ## Unreleased
 
+<!-- latest_release -->
+
+## 0.73.0 (2019-01-25)
+
+* Update Hab to 0.73.0 and launcher to 9167
+* Add binlinking support to hab_package resource
+* Support target architectures correctly in API queries
+* Improved Windows support
+
+
 #### Merged Pull Requests
 - Update hab to 0.73.0 and launcher to 9167 [#154](https://github.com/chef-cookbooks/habitat/pull/154) ([jonlives](https://github.com/jonlives))
 - Install hab-sup from stable release [#153](https://github.com/chef-cookbooks/habitat/pull/153) ([jonlives](https://github.com/jonlives))
 - Full Windows Support For Cookbook [#143](https://github.com/chef-cookbooks/habitat/pull/143) ([wduncanfraser](https://github.com/wduncanfraser))
-
-* Added full windows support
-* Fixed bug introduced by transition to remote_sup cli option. Needed an additional property to specify the http port for the supervisor
-* Moved version pins and shared code into habitat_shared library to reduce duplication of code
-* Update Linux Launcher to 8659 to correspond to habitat >0.65.0
-
 - Add binlink property to hab_package resource.  Closes #138 [#139](https://github.com/chef-cookbooks/habitat/pull/139) ([qubitrenegade](https://github.com/qubitrenegade))
 - fix incorrect documentation for hab_package action [#142](https://github.com/chef-cookbooks/habitat/pull/142) ([st-h](https://github.com/st-h))
 - Support targets for API query [#152](https://github.com/chef-cookbooks/habitat/pull/152) ([skylerto](https://github.com/skylerto))
-<!-- latest_release -->
 
 ## 0.67.0 (2018-11-01)
 
