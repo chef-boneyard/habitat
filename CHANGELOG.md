@@ -1,13 +1,18 @@
 # habitat CHANGELOG
 
 This file is used to list changes made in each version of the habitat cookbook.
-
 <!-- latest_release unreleased -->
 ## Unreleased
 
+<!-- latest_release -->
+
+## 0.73.1 (2019-01-30)
+
+- remove duplicate windows query param
+
 #### Merged Pull Requests
 - remove duplicate windows query param [#156](https://github.com/chef-cookbooks/habitat/pull/156) ([skylerto](https://github.com/skylerto))
-<!-- latest_release -->
+
 
 ## 0.73.0 (2019-01-25)
 
