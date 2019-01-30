@@ -29,7 +29,7 @@ describe 'test::service' do
       expect(chef_run).to load_hab_service('core/redis').with(
         strategy: 'rolling',
         topology: 'standalone',
-        channel: :stable
+        channel: 'stable'
       )
     end
 
