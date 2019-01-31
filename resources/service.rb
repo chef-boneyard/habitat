@@ -132,35 +132,36 @@ def get_bldr_url(svc_status)
   svc_status['bldr_url']
 rescue
   Chef::Log.debug("#{service_name} bldr url not found on the Habitat supervisor")
-  ''
+  nil
 end
 
 def get_channel(svc_status)
   svc_status['channel']
 rescue
   Chef::Log.debug("#{service_name} channel not found on the Habitat supervisor")
-  ''
+  # Set to default, as must be of defined types
+  'stable'
 end
 
 def get_service_group(svc_status)
   svc_status['service_group'].partition('.').last
 rescue
   Chef::Log.debug("#{service_name} service group not found on the Habitat supervisor")
-  ''
+  nil
 end
 
 def get_strategy(svc_status)
   svc_status['update_strategy']
 rescue
   Chef::Log.debug("#{service_name} strategy not found on the Habitat supervisor")
-  ''
+  nil
 end
 
 def get_topology(svc_status)
   svc_status['topology']
 rescue
   Chef::Log.debug("#{service_name} topology not found on the Habitat supervisor")
-  ''
+  nil
 end
 
 action :load do
