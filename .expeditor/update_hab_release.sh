@@ -16,8 +16,7 @@ git checkout -b ${branch}
 sed -i "s/%r{^hab .*\/}/%r{^hab ${VERSION}\/}/" test/integration/config/default_spec.rb
 sed -i "s/%r{^hab .*\/}/%r{^hab ${VERSION}\/}/" test/integration/package/default_spec.rb
 sed -i "s/%r{^hab .*\/}/%r{^hab ${VERSION}\/}/" test/integration/user-toml/default_spec.rb
-sed -i "s/HAB_VERSION = '.*'.freeze/HAB_VERSION = '${VERSION}'.freeze/" resources/install.rb
-sed -i "s/HAB_VERSION = '.*'.freeze/HAB_VERSION = '${VERSION}'.freeze/" libraries/resource_hab_sup.rb
+sed -i "s/HAB_VERSION = '.*'.freeze/HAB_VERSION = '${VERSION}'.freeze/" libraries/habitat_shared.rb
 sed -i "s/^- Habitat version: .*/- Habitat version: ${VERSION}/" README.md
 sed -i "s/^version '.*'/version '${VERSION}'/" metadata.rb
 
