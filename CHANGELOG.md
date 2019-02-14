@@ -5,6 +5,10 @@ This file is used to list changes made in each version of the habitat cookbook.
 ## Unreleased
 
 <!-- latest_release -->
+## 0.74.0 (2019-02-14)
+
+- Update to habitat 0.74.0
+
 
 ## 0.73.1 (2019-01-30)
 
