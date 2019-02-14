@@ -4,6 +4,8 @@ This file is used to list changes made in each version of the habitat cookbook.
 <!-- latest_release unreleased -->
 ## Unreleased
 
+#### Merged Pull Requests
+- Fix expeditor automation and bump to 0.74.0 [#160](https://github.com/chef-cookbooks/habitat/pull/160) ([jonlives](https://github.com/jonlives))
 <!-- latest_release -->
 ## 0.74.0 (2019-02-14)
 
