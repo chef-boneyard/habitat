@@ -1,13 +1,19 @@
 # habitat CHANGELOG
 
 This file is used to list changes made in each version of the habitat cookbook.
-<!-- latest_release 0.75.0 -->
+
+<!-- latest_release unreleased -->
+## Unreleased
+
+<!-- latest_release -->
 ## [0.75.0](https://github.com/chef-cookbooks/habitat/tree/0.75.0) (2019-02-22)
+
+-Update to habitat 0.75.0
 
 #### Merged Pull Requests
 - Update to habitat 0.75.0 [#161](https://github.com/chef-cookbooks/habitat/pull/161) ([chef-ci](https://github.com/chef-ci))
 - Fix expeditor automation and bump to 0.74.0 [#160](https://github.com/chef-cookbooks/habitat/pull/160) ([jonlives](https://github.com/jonlives))
-<!-- latest_release -->
+
 ## 0.74.0 (2019-02-14)
 
 - Update to habitat 0.74.0
