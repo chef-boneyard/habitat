@@ -68,6 +68,10 @@ hab_service 'core/ruby-rails-sample' do
   bind 'database:postgresql.default'
 end
 
+# Test service name matching
+hab_package 'core/sensu-backend'
+hab_service 'core/sensu-backend'
+
 # Multiple  binds
 hab_package 'core/rabbitmq'
 hab_service 'core/rabbitmq'
