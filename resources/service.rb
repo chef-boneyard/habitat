@@ -74,7 +74,7 @@ def get_service_details(svc_name)
   end
 
   svcs.find do |s|
-    [s['spec_ident']['origin'], s['spec_ident']['name']].join('/') =~ /#{svc_name}/
+    [s['spec_ident']['origin'], s['spec_ident']['name']].join('/') =~ %r{/#{svc_name}/}
   end
 end
 
