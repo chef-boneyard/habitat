@@ -23,5 +23,14 @@ end
 
 describe file('/hab/sup/default/specs/ruby-rails-sample.spec') do
   it { should exist }
-  its(:content) { should match(/binds = \["database:postgresql.default"\]/) }
+end
+
+describe file('/hab/sup/default/specs/sensu.spec') do
+  it { should exist }
+  its(:content) { should match(/binds = \["rabbitmq:rabbitmq.default", "redis:redis.default"\]/) }
+end
+
+describe file('/hab/sup/default/specs/sensu-backend.spec') do
+  it { should exist }
+  its(:content) { should match(/^desired_state = "up"$/) }
 end
