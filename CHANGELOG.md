@@ -5,6 +5,8 @@ This file is used to list changes made in each version of the habitat cookbook.
 <!-- latest_release unreleased -->
 ## Unreleased
 
+#### Merged Pull Requests
+- Include version when matching service name [#164](https://github.com/chef-cookbooks/habitat/pull/164) ([gscho](https://github.com/gscho))
 <!-- latest_release -->
 ## [0.75.0](https://github.com/chef-cookbooks/habitat/tree/0.75.0) (2019-02-22)
 
