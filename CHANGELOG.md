@@ -2,13 +2,18 @@
 
 This file is used to list changes made in each version of the habitat cookbook.
 
-<!-- latest_release 0.78.0 -->
+<!-- latest_release unreleased -->
+
+<!-- latest_release -->
 ## [0.78.0](https://github.com/chef-cookbooks/habitat/tree/0.78.0) (2019-04-02)
+
+- Update to habitat 0.78.0
+- Improve service name matching to include version
 
 #### Merged Pull Requests
 - Update to habitat 0.78.0 [#165](https://github.com/chef-cookbooks/habitat/pull/165) ([chef-ci](https://github.com/chef-ci))
 - Include version when matching service name [#164](https://github.com/chef-cookbooks/habitat/pull/164) ([gscho](https://github.com/gscho))
-<!-- latest_release -->
+
 ## [0.75.0](https://github.com/chef-cookbooks/habitat/tree/0.75.0) (2019-02-22)
 
 -Update to habitat 0.75.0
