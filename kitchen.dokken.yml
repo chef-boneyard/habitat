@@ -9,7 +9,6 @@ transport:
 provisioner:
   name: dokken
   deprecations_as_errors: true
-  chef_license: <%= ENV['CHEF_LICENSE'] %>
   
 verifier:
   name: inspec
