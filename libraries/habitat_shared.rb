@@ -17,7 +17,7 @@
 module Habitat
   module Shared
     HAB_VERSION = '0.81.0'.freeze
-    LINUX_LAUNCHER_VERSION = '9167'.freeze
+    LINUX_LAUNCHER_VERSION = '11055'.freeze
     WINDOWS_LAUNCHER_VERSION = '8656'.freeze
     WINDOWS_SERVICE_VERSION = '0.3.1'.freeze
 
