@@ -9,6 +9,23 @@ This cookbook provides resources for working with [Habitat](https://habitat.sh).
 
 (this is a pre-1.0 version, after all)
 
+## License Note
+
+Habitat requires acceptance of a license before any habitat commands can be run. To accept the Habitat license using this cookbook, the `license` parameter can be set to `accept` for either the `hab_install` or `hab_sup` resources as shown in the below examples:
+
+```ruby
+hab_install 'install habitat' do
+  license 'accept
+end
+```
+
+```ruby
+hab_sup 'default' do
+  license 'accept
+end
+```
+
+PLEASE NOTE: Without performing one of the above license acceptance steps, all other resources in the habitat cookbook will fail with an error prompting that the license must be accepted.
 ## Requirements
 
 ### Platforms
@@ -57,6 +74,7 @@ Installs Habitat on the system using the [install script](https://raw.githubuser
 - `bldr_url`: Optional URL to an alternate Builder (defaults to the public Builder)
 - `create_user`: Creates the `hab` system user (defaults to `true`)
 - `tmp_dir`: Sets TMPDIR environment variable for location to place temp files.  (required if `/tmp` and `/var/tmp` are mounted `noexec`)
+- `license`: Specifies acceptance of habitat license when set to `accept` (defaults to empty string). 
 
 #### Examples
 
@@ -208,6 +226,7 @@ The `run` action handles installing Habitat using the `hab_install` resource, en
 - `ring`: Only valid for `:run` action, passes `--ring` with the specified ring key name to the hab command
 - `hab_channel`: The channel to install Habitat from. Defaults to stable
 - `auth_token`: Auth token for accessing a private organization on bldr. This value is templated into the appropriate service file.
+- `license`: Specifies acceptance of habitat license when set to `accept` (defaults to empty string). 
 
 #### Examples
 
