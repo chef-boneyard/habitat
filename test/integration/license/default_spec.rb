@@ -1,3 +1,3 @@
-  describe file('/hab/accepted-licenses/habitat') do
-    it { should exist }
-  end
+describe file('/hab/accepted-licenses/habitat') do
+  it { should exist }
+end

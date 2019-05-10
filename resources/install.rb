@@ -94,9 +94,7 @@ action :install do
       )
     end
 
-    if new_resource.license == "accept"
-        execute "hab license accept"
-    end    
+    execute 'hab license accept' if new_resource.license == 'accept'
   end
 end
 

@@ -2,7 +2,7 @@
 # not be used in the other recipes.
 hab_install 'install habitat' do
   license 'accept'
-end  
+end
 
 hab_install 'install habitat with depot url' do
   bldr_url 'https://localhost'
