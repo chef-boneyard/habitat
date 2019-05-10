@@ -1,6 +1,8 @@
 apt_update
 
-hab_install
+hab_install 'default' do
+  license 'accept'
+end 
 
 hab_package 'core/redis'
 

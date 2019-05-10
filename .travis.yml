@@ -36,6 +36,7 @@ env:
   - INSTANCE=user-toml-ubuntu-1804
   - INSTANCE=user-toml-centos-6
   - INSTANCE=user-toml-centos-7
+  - INSTANCE=license-centos-7
 
 before_script:
   - sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables -N DOCKER )

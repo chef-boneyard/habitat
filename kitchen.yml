@@ -45,6 +45,10 @@ suites:
     run_list: test::user_toml
     excludes:
       - windows-2016
+  - name: license
+    run_list: test::license
+    excludes:
+      - windows-2016      
   - name: win-package
     run_list: test::win_package
     includes:

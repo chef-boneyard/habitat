@@ -1,4 +1,6 @@
-hab_sup 'default'
+hab_sup 'default' do
+  license 'accept'
+end  
 
 ruby_block 'wait-for-sup-default-startup' do
   block do
