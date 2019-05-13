@@ -35,7 +35,7 @@ class Chef
       property :hab_channel, String
       property :auto_update, [true, false], default: false
       property :auth_token, String
-      property :license, String
+      property :license, String, equal_to: ['accept']
 
       action :run do
         hab_install new_resource.name do
