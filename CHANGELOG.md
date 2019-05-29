@@ -1,13 +1,22 @@
 # habitat CHANGELOG
 
 This file is used to list changes made in each version of the habitat cookbook.
-<!-- latest_release 0.81.0 -->
+<!-- latest_release unreleased -->
+
+<!-- latest_release -->
+
+## 0.81.0 (2019-05-29)
+
+- Update to hab 0.81.0
+- Implement new habitat license agreement requirements for ```hab_install``` and ```hab_sup``` resources
+
+#### Merged Pull Requests
+- WIP: Update to hab 0.81.0 (#171)
+
 ## [0.81.0](https://github.com/chef-cookbooks/habitat/tree/0.81.0) (2019-05-29)
 
 #### Merged Pull Requests
 - WIP: Update to hab 0.81.0 [#171](https://github.com/chef-cookbooks/habitat/pull/171) ([jonlives](https://github.com/jonlives))
-<!-- latest_release -->
-
 
 ## 0.79.1 (2019-04-26)
 
