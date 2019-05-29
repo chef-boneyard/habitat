@@ -28,6 +28,7 @@ property :install_url, String, default: 'https://raw.githubusercontent.com/habit
 property :bldr_url, String
 property :create_user, [true, false], default: true
 property :tmp_dir, String
+property :license, String, equal_to: ['accept']
 
 action :install do
   if ::File.exist?(hab_path)
@@ -92,6 +93,8 @@ action :install do
         end
       )
     end
+
+    execute 'hab license accept' if new_resource.license == 'accept'
   end
 end
 

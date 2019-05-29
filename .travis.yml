@@ -1,10 +1,7 @@
-sudo: required
-dist: trusty
-
 addons:
   apt:
     sources:
-      - chef-current-trusty
+      - chef-current-xenial
     packages:
       - chefdk
 
@@ -19,26 +16,27 @@ services: docker
 
 env:
   matrix:
-  - INSTANCE=package-ubuntu-1404
   - INSTANCE=package-ubuntu-1604
+  - INSTANCE=package-ubuntu-1804
   - INSTANCE=package-centos-6
   - INSTANCE=package-centos-7
-  - INSTANCE=service-ubuntu-1404
   - INSTANCE=service-ubuntu-1604
+  - INSTANCE=service-ubuntu-1804
   - INSTANCE=service-centos-6
   - INSTANCE=service-centos-7
-  - INSTANCE=sup-ubuntu-1404
   - INSTANCE=sup-ubuntu-1604
+  - INSTANCE=sup-ubuntu-1804
   - INSTANCE=sup-centos-6
   - INSTANCE=sup-centos-7
-  - INSTANCE=config-ubuntu-1404
   - INSTANCE=config-ubuntu-1604
+  - INSTANCE=config-ubuntu-1804
   - INSTANCE=config-centos-6
   - INSTANCE=config-centos-7
-  - INSTANCE=user-toml-ubuntu-1404
   - INSTANCE=user-toml-ubuntu-1604
+  - INSTANCE=user-toml-ubuntu-1804
   - INSTANCE=user-toml-centos-6
   - INSTANCE=user-toml-centos-7
+  - INSTANCE=license-centos-7
 
 before_script:
   - sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables -N DOCKER )
@@ -48,7 +46,7 @@ before_script:
   - cookstyle --version
   - foodcritic --version
 
-script: KITCHEN_LOCAL_YAML=kitchen.dokken.yml kitchen verify ${INSTANCE}
+script: CHEF_LICENSE=accept-no-persist KITCHEN_LOCAL_YAML=kitchen.dokken.yml CHEF_VERSION=${CHEF_VERSION} kitchen verify ${INSTANCE}
 
 matrix:
   include:

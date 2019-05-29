@@ -35,9 +35,12 @@ class Chef
       property :hab_channel, String
       property :auto_update, [true, false], default: false
       property :auth_token, String
+      property :license, String, equal_to: ['accept']
 
       action :run do
-        hab_install new_resource.name
+        hab_install new_resource.name do
+          license new_resource.license
+        end
 
         hab_package 'core/hab-sup' do
           bldr_url new_resource.bldr_url if new_resource.bldr_url

@@ -1,5 +1,6 @@
 hab_sup 'default' do
   hab_channel 'stable'
+  license 'accept'
 end
 
 ruby_block 'wait-for-sup-default-startup' do
