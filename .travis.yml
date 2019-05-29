@@ -51,5 +51,5 @@ script: CHEF_LICENSE=accept-no-persist KITCHEN_LOCAL_YAML=kitchen.dokken.yml CHE
 matrix:
   include:
     - script:
-      - chef exec delivery local all
+      - CHEF_LICENSE=accept-no-persist chef exec delivery local all
       env: UNIT_AND_LINT=1
