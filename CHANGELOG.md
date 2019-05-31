@@ -2,8 +2,13 @@
 
 This file is used to list changes made in each version of the habitat cookbook.
 <!-- latest_release unreleased -->
+## Unreleased
 
+#### Merged Pull Requests
+- Add missing end quotes in the README example [#172](https://github.com/chef-cookbooks/habitat/pull/172) ([teknofire](https://github.com/teknofire))
 <!-- latest_release -->
+
+
 
 ## 0.81.0 (2019-05-29)
 
