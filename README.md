@@ -15,13 +15,13 @@ Habitat requires acceptance of a license before any habitat commands can be run.
 
 ```ruby
 hab_install 'install habitat' do
-  license 'accept
+  license 'accept'
 end
 ```
 
 ```ruby
 hab_sup 'default' do
-  license 'accept
+  license 'accept'
 end
 ```
 
