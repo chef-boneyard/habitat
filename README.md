@@ -74,7 +74,7 @@ Installs Habitat on the system using the [install script](https://raw.githubuser
 - `bldr_url`: Optional URL to an alternate Builder (defaults to the public Builder)
 - `create_user`: Creates the `hab` system user (defaults to `true`)
 - `tmp_dir`: Sets TMPDIR environment variable for location to place temp files.  (required if `/tmp` and `/var/tmp` are mounted `noexec`)
-- `license`: Specifies acceptance of habitat license when set to `accept` (defaults to empty string). 
+- `license`: Specifies acceptance of habitat license when set to `accept` (defaults to empty string).
 
 #### Examples
 
@@ -226,7 +226,8 @@ The `run` action handles installing Habitat using the `hab_install` resource, en
 - `ring`: Only valid for `:run` action, passes `--ring` with the specified ring key name to the hab command
 - `hab_channel`: The channel to install Habitat from. Defaults to stable
 - `auth_token`: Auth token for accessing a private organization on bldr. This value is templated into the appropriate service file.
-- `license`: Specifies acceptance of habitat license when set to `accept` (defaults to empty string). 
+- `license`: Specifies acceptance of habitat license when set to `accept` (defaults to empty string).
+- `health_check_interval`: The interval (seconds) on which to run health checks (defaults to 30).
 
 #### Examples
 
