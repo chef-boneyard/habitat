@@ -5,6 +5,7 @@ This file is used to list changes made in each version of the habitat cookbook.
 ## Unreleased
 
 #### Merged Pull Requests
+- Add health check interval option to hab_sup resource [#176](https://github.com/chef-cookbooks/habitat/pull/176) ([gscho](https://github.com/gscho))
 - Support config apply for chef 13 [#175](https://github.com/chef-cookbooks/habitat/pull/175) ([gscho](https://github.com/gscho))
 - Fix license accept for windows [#174](https://github.com/chef-cookbooks/habitat/pull/174) ([gscho](https://github.com/gscho))
 - Add missing end quotes in the README example [#172](https://github.com/chef-cookbooks/habitat/pull/172) ([teknofire](https://github.com/teknofire))
