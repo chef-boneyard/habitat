@@ -36,6 +36,7 @@ class Chef
       property :auto_update, [true, false], default: false
       property :auth_token, String
       property :license, String, equal_to: ['accept']
+      property :health_check_interval, coerce: proc { |h| h.is_a?(String) ? h : h.to_s }
 
       action :run do
         hab_install new_resource.name do
@@ -66,6 +67,7 @@ class Chef
           opts.push(*new_resource.peer.map { |b| "--peer #{b}" }) if new_resource.peer
           opts << "--ring #{new_resource.ring}" if new_resource.ring
           opts << '--auto-update' if new_resource.auto_update
+          opts << "--health-check-interval #{new_resource.health_check_interval}" if new_resource.health_check_interval
           opts.join(' ')
         end
       end
