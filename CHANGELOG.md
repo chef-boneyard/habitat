@@ -1,8 +1,16 @@
 # habitat CHANGELOG
 
 This file is used to list changes made in each version of the habitat cookbook.
-<!-- latest_release 0.83.0 -->
+<!-- latest_release unreleased -->
+## Unreleased
+
+<!-- latest_release -->
 ## [0.83.0](https://github.com/chef-cookbooks/habitat/tree/0.83.0) (2019-07-30)
+
+- Update to hab 0.83.0
+- Support hab_config resource under Chef 13
+- Fix license acceptance behaviour under Windows
+- Support added for health check interval parameter
 
 #### Merged Pull Requests
 - Update to habitat 0.83.0 [#177](https://github.com/chef-cookbooks/habitat/pull/177) ([chef-ci](https://github.com/chef-ci))
@@ -10,9 +18,6 @@ This file is used to list changes made in each version of the habitat cookbook.
 - Support config apply for chef 13 [#175](https://github.com/chef-cookbooks/habitat/pull/175) ([gscho](https://github.com/gscho))
 - Fix license accept for windows [#174](https://github.com/chef-cookbooks/habitat/pull/174) ([gscho](https://github.com/gscho))
 - Add missing end quotes in the README example [#172](https://github.com/chef-cookbooks/habitat/pull/172) ([teknofire](https://github.com/teknofire))
-<!-- latest_release -->
-
-
 
 ## 0.81.0 (2019-05-29)
 
