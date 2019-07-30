@@ -49,6 +49,13 @@ suites:
     run_list: test::license
     excludes:
       - windows-2016
+  - name: config-chef-13
+    run_list: test::config
+    excludes:
+      - windows-2016
+    provisioner:
+      product_name: chef
+      product_version: 13.6.4
   - name: win-package
     run_list: test::win_package
     includes:
