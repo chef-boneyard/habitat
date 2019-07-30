@@ -93,9 +93,8 @@ action :install do
         end
       )
     end
-
-    execute 'hab license accept' if new_resource.license == 'accept'
   end
+  execute 'hab license accept' if new_resource.license == 'accept'
 end
 
 # TODO: What is the point of the upgrade action? We are version locking and the install action safely handles upgrades.

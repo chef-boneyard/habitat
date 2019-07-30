@@ -76,3 +76,7 @@ suites:
     run_list: test::win_user_toml
     includes:
       - windows-2016
+  - name: win-license
+    run_list: test::win_license
+    includes:
+      - windows-2016
