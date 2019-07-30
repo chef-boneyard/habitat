@@ -5,6 +5,7 @@ This file is used to list changes made in each version of the habitat cookbook.
 ## Unreleased
 
 #### Merged Pull Requests
+- Fix license accept for windows [#174](https://github.com/chef-cookbooks/habitat/pull/174) ([gscho](https://github.com/gscho))
 - Add missing end quotes in the README example [#172](https://github.com/chef-cookbooks/habitat/pull/172) ([teknofire](https://github.com/teknofire))
 <!-- latest_release -->
 
