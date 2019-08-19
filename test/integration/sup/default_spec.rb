@@ -36,7 +36,7 @@ case svc_manager
 when 'systemd'
   describe file('/etc/systemd/system/hab-sup.service') do
     its('content') { should_not match('Environment = HAB_AUTH_TOKEN=test') }
-    its('content') { should match('LimitNOFILE = 65536') }
+    its('content') { should_not match('LimitNOFILE = 65536') }
   end
 when 'upstart'
   describe file('/etc/init/hab-sup.conf') do

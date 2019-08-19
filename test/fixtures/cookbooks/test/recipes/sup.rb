@@ -85,10 +85,24 @@ ruby_block 'wait-for-sup-health_check_interval-startup' do
   retry_delay 1
 end
 
+hab_sup 'set_file_limit' do
+  license 'accept'
+  limit_no_files '65536'
+  notifies :stop, 'hab_sup[single_peer]', :before
+  notifies :delete, 'directory[/hab/sup]', :before
+end
+
+ruby_block 'wait-for-sup-set_file_limit-startup' do
+  block do
+    raise unless system('hab sup status')
+  end
+  retries 30
+  retry_delay 1
+end
+
 hab_sup 'multiple_peers' do
   license 'accept'
   peer ['127.0.0.2', '127.0.0.3']
-  limit_no_files '65536'
   listen_http '0.0.0.0:7999'
   listen_gossip '0.0.0.0:7998'
   notifies :stop, 'hab_sup[single_peer]', :before

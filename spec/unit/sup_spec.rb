@@ -65,6 +65,13 @@ describe 'test::sup' do
 
       it_behaves_like 'any platform'
 
+      it 'runs hab sup with a set file limit' do
+        expect(chef_run).to run_hab_sup('set_file_limit')
+          .with(
+            limit_no_files: '65536'
+          )
+      end
+
       it 'renders a systemd_unit file with default options' do
         expect(chef_run).to create_systemd_unit('hab-sup.service').with(
           content: {
@@ -72,7 +79,6 @@ describe 'test::sup' do
               Description: 'The Habitat Supervisor',
             },
             Service: {
-              LimitNOFILE: '65536',
               ExecStart: '/bin/hab sup run --listen-gossip 0.0.0.0:7998 --listen-http 0.0.0.0:7999 --peer 127.0.0.2 --peer 127.0.0.3',
               Restart: 'on-failure',
             },
