@@ -88,6 +88,7 @@ end
 hab_sup 'multiple_peers' do
   license 'accept'
   peer ['127.0.0.2', '127.0.0.3']
+  limit_no_files '65536'
   listen_http '0.0.0.0:7999'
   listen_gossip '0.0.0.0:7998'
   notifies :stop, 'hab_sup[single_peer]', :before

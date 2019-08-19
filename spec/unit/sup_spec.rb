@@ -72,6 +72,7 @@ describe 'test::sup' do
               Description: 'The Habitat Supervisor',
             },
             Service: {
+              LimitNOFILE: '65536',
               ExecStart: '/bin/hab sup run --listen-gossip 0.0.0.0:7998 --listen-http 0.0.0.0:7999 --peer 127.0.0.2 --peer 127.0.0.3',
               Restart: 'on-failure',
             },
