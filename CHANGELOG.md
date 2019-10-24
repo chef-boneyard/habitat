@@ -5,6 +5,7 @@ This file is used to list changes made in each version of the habitat cookbook.
 ## Unreleased
 
 #### Merged Pull Requests
+- allow setting open file limit on the hab sup systemd unit file [#181](https://github.com/chef-cookbooks/habitat/pull/181) ([devoptimist](https://github.com/devoptimist))
 - updating the hab-launcher version to match the dependencies of window… [#179](https://github.com/chef-cookbooks/habitat/pull/179) ([devoptimist](https://github.com/devoptimist))
 <!-- latest_release -->
 ## [0.83.0](https://github.com/chef-cookbooks/habitat/tree/0.83.0) (2019-07-30)
