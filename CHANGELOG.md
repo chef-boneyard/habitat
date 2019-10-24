@@ -1,14 +1,20 @@
 # habitat CHANGELOG
 
 This file is used to list changes made in each version of the habitat cookbook.
-<!-- latest_release 0.88.0 -->
+<!-- latest_release unreleased -->
+
+<!-- latest_release -->
 ## [0.88.0](https://github.com/chef-cookbooks/habitat/tree/0.88.0) (2019-10-24)
+
+- Update to hab 0.88.0
+- Enable setting of open file limits for hab sup systemd unit file
+- Update windows hab-launcher version
 
 #### Merged Pull Requests
 - Update to habitat 0.88.0 [#182](https://github.com/chef-cookbooks/habitat/pull/182) ([chef-expeditor[bot]](https://github.com/chef-expeditor[bot]))
 - allow setting open file limit on the hab sup systemd unit file [#181](https://github.com/chef-cookbooks/habitat/pull/181) ([devoptimist](https://github.com/devoptimist))
 - updating the hab-launcher version to match the dependencies of window… [#179](https://github.com/chef-cookbooks/habitat/pull/179) ([devoptimist](https://github.com/devoptimist))
-<!-- latest_release -->
+
 ## [0.83.0](https://github.com/chef-cookbooks/habitat/tree/0.83.0) (2019-07-30)
 
 - Update to hab 0.83.0
