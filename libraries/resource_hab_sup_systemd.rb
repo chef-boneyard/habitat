@@ -33,6 +33,7 @@ class Chef
                     Description: 'The Habitat Supervisor',
                   },
                   Service: {
+                    LimitNOFILE: (new_resource.limit_no_files if new_resource.limit_no_files),
                     Environment: ("HAB_AUTH_TOKEN=#{new_resource.auth_token}" if new_resource.auth_token),
                     ExecStart: "/bin/hab sup run #{exec_start_options}",
                     Restart: 'on-failure',

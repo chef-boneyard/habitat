@@ -35,6 +35,7 @@ class Chef
       property :hab_channel, String
       property :auto_update, [true, false], default: false
       property :auth_token, String
+      property :limit_no_files, String
       property :license, String, equal_to: ['accept']
       property :health_check_interval, coerce: proc { |h| h.is_a?(String) ? h : h.to_s }
 
