@@ -69,8 +69,10 @@ hab_service 'core/grafana/6.4.3/20191105024430'
 
 ruby_block 'wait-for-grafana-startup' do
   block do
-    sleep 10
+    raise "grafana still loaded" unless system "hab svc status core/grafana/6.4.3/20191105024430"
   end
+  retries 5
+  retry_delay 1
   action :nothing
   subscribes :run, 'hab_service[core/grafana/6.4.3/20191105024430]', :immediately
 end
@@ -83,6 +85,16 @@ end
 hab_service 'core/grafana/6.4.3/20191105024430 unload' do
   service_name 'core/grafana/6.4.3/20191105024430'
   action :unload
+end
+
+ruby_block 'wait-for-grafana-unload' do
+  block do
+    raise "grafana still loaded" if system "hab svc status core/grafana/6.4.3/20191105024430"
+  end
+  retries 5
+  retry_delay 1
+  action :nothing
+  subscribes :run, 'hab_service[core/grafana/6.4.3/20191105024430 unload]', :immediately
 end
 
 # grafana, version only
