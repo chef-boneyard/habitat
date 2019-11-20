@@ -104,11 +104,6 @@ hab_service 'core/grafana/4.6.3 part II' do
   action :load
 end
 
-hab_service 'core/grafana/4.6.3 unload' do
-  service_name 'core/grafana/4.6.3'
-  action :unload
-end
-
 # Test Binds
 
 # Single string bind
