@@ -72,7 +72,7 @@ ruby_block 'wait-for-grafana-startup' do
     sleep 10
   end
   action :nothing
-  subscribes :run, 'hab_service[core/nginx]', :immediately
+  subscribes :run, 'hab_service[core/grafana/6.4.3/20191105024430]', :immediately
 end
 
 hab_service 'core/grafana/6.4.3/20191105024430 part II' do
@@ -82,6 +82,30 @@ end
 
 hab_service 'core/grafana/6.4.3/20191105024430 unload' do
   service_name 'core/grafana/6.4.3/20191105024430'
+  action :unload
+end
+
+# grafana, version only
+hab_package 'core/grafana' do
+  version '4.6.3'
+end
+hab_service 'core/grafana/4.6.3'
+
+ruby_block 'wait-for-grafana-startup' do
+  block do
+    sleep 10
+  end
+  action :nothing
+  subscribes :run, 'hab_service[core/grafana/4.6.3]', :immediately
+end
+
+hab_service 'core/grafana/4.6.3 part II' do
+  service_name 'core/grafana/4.6.3'
+  action :load
+end
+
+hab_service 'core/grafana/4.6.3 unload' do
+  service_name 'core/grafana/4.6.3'
   action :unload
 end
 
