@@ -48,8 +48,8 @@ action :install do
     # as a .sha265sum like for the linux .tar.gz
     download = "#{uri}/content/habitat/stable/windows/x86_64/#{package_name}.zip?bt_package=hab-x86_64-windows"
 
-    windows_zipfile Chef::Config[:file_cache_path] do
-      source download
+    archive_file Chef::Config[:file_cache_path] do
+      path download
       action :unzip
     end
 
@@ -110,8 +110,8 @@ action :upgrade do
     # as a .sha265sum like for the linux .tar.gz
     download = "#{uri}/content/habitat/stable/windows/x86_64/#{package_name}.zip?bt_package=hab-x86_64-windows"
 
-    windows_zipfile Chef::Config[:file_cache_path] do
-      source download
+    archive_file Chef::Config[:file_cache_path] do
+      path download
       action :unzip
     end
 
