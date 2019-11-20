@@ -10,6 +10,18 @@ describe file('/hab/sup/default/specs/haproxy.spec') do
   it { should_not exist }
 end
 
+describe directory('/hab/pkgs/core/grafana/6.4.3/20191105024430') do
+  it { should exist }
+end
+
+describe directory('/hab/pkgs/core/grafana/4.6.3') do
+  it { should exist }
+end
+
+describe file('/hab/sup/default/specs/grafana.spec') do
+  it { should_not exist }
+end
+
 describe file('/hab/sup/default/specs/redis.spec') do
   it { should exist }
   its(:content) { should match(/desired_state = "down"/) }
