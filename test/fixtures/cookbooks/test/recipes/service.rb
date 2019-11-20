@@ -69,7 +69,7 @@ hab_service 'core/grafana/6.4.3/20191105024430'
 
 ruby_block 'wait-for-grafana-startup' do
   block do
-    raise "grafana still loaded" unless system "hab svc status core/grafana/6.4.3/20191105024430"
+    raise 'grafana still loaded' unless system 'hab svc status core/grafana/6.4.3/20191105024430'
   end
   retries 5
   retry_delay 1
@@ -89,7 +89,7 @@ end
 
 ruby_block 'wait-for-grafana-unload' do
   block do
-    raise "grafana still loaded" if system "hab svc status core/grafana/6.4.3/20191105024430"
+    raise 'grafana still loaded' if system 'hab svc status core/grafana/6.4.3/20191105024430'
   end
   retries 5
   retry_delay 1

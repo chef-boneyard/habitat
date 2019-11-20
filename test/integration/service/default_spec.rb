@@ -12,7 +12,7 @@ end
 
 describe file('/hab/sup/default/specs/grafana.spec') do
   it { should exist }
-  its(:content) { should match(/ident = "core\/grafana\/4.6.3"/) }
+  its(:content) { should match(%r{ident = "core/grafana/4.6.3"}) }
 end
 
 describe directory('/hab/pkgs/core/grafana/4.6.3') do
