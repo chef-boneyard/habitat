@@ -61,6 +61,30 @@ end
 hab_package 'core/memcached'
 hab_service 'core/memcached'
 
+# grafana
+hab_package 'core/grafana' do
+  version '6.4.3/20191105024430'
+end
+hab_service 'core/grafana/6.4.3/20191105024430'
+
+ruby_block 'wait-for-grafana-startup' do
+  block do
+    sleep 10
+  end
+  action :nothing
+  subscribes :run, 'hab_service[core/nginx]', :immediately
+end
+
+hab_service 'core/grafana/6.4.3/20191105024430 part II' do
+  service_name 'core/grafana/6.4.3/20191105024430'
+  action :load
+end
+
+hab_service 'core/grafana/6.4.3/20191105024430 unload' do
+  service_name 'core/grafana/6.4.3/20191105024430'
+  action :unload
+end
+
 # Test Binds
 
 # Single string bind
