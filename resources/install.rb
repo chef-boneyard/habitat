@@ -50,7 +50,7 @@ action :install do
 
     archive_file Chef::Config[:file_cache_path] do
       path download
-      action :unzip
+      action :extract
     end
 
     extracted_path = ::File.join(Chef::Config[:file_cache_path], package_name)
@@ -112,7 +112,7 @@ action :upgrade do
 
     archive_file Chef::Config[:file_cache_path] do
       path download
-      action :unzip
+      action :extract
     end
 
     extracted_path = ::File.join(Chef::Config[:file_cache_path], package_name)
