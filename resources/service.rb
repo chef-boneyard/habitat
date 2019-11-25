@@ -204,25 +204,25 @@ def get_health_check_interval(service_details)
 end
 
 action :load do
-  reload = false
-
-  converge_if_changed :strategy do reload = true end
-  converge_if_changed :topology do reload = true end
-  converge_if_changed :bldr_url do reload = true end
-  converge_if_changed :channel do reload = true end
-  converge_if_changed :bind do reload = true end
-  converge_if_changed :binding_mode do reload = true end
-  converge_if_changed :service_group do reload = true end
-  converge_if_changed :shutdown_timeout do reload = true end
-  converge_if_changed :health_check_interval do reload = true end
+  modified = false
+  converge_if_changed :service_name do modified = true end
+  converge_if_changed :strategy do modified = true end
+  converge_if_changed :topology do modified = true end
+  converge_if_changed :bldr_url do modified = true end
+  converge_if_changed :channel do modified = true end
+  converge_if_changed :bind do modified = true end
+  converge_if_changed :binding_mode do modified = true end
+  converge_if_changed :service_group do modified = true end
+  converge_if_changed :shutdown_timeout do modified = true end
+  converge_if_changed :health_check_interval do modified = true end
 
   options = svc_options
-  if reload
+  if current_resource.loaded && modified
     Chef::Log.debug("Reloading #{current_resource.service_name} using --force due to parameter change")
     options << "--force"
   end
 
-  execute "hab svc load #{new_resource.service_name} #{options.join(' ')}" unless current_resource.loaded && !reload
+  execute "hab svc load #{new_resource.service_name} #{options.join(' ')}" unless current_resource.loaded && !modified
 end
 
 action :unload do
