@@ -21,12 +21,12 @@ property :loaded, [true, false], default: false, desired_state: true
 property :running, [true, false], default: false, desired_state: true
 
 # hab svc options which get included based on the action of the resource
-property :strategy, [Symbol, String], equal_to: [:none, 'none', :'at-once', 'at-once', :rolling, 'rolling'], default: :none
-property :topology, [Symbol, String], equal_to: [:standalone, 'standalone', :leader, 'leader'], default: :standalone
+property :strategy, [Symbol, String], equal_to: [:none, 'none', :'at-once', 'at-once', :rolling, 'rolling'], default: :none, coerce: proc { |s| s.is_a?(String) ? s.to_sym : s }
+property :topology, [Symbol, String], equal_to: [:standalone, 'standalone', :leader, 'leader'], default: :standalone, coerce: proc { |s| s.is_a?(String) ? s.to_sym : s }
 property :bldr_url, String, default: 'https://bldr.habitat.sh'
-property :channel, [Symbol, String], default: :stable
+property :channel, [Symbol, String], default: :stable, coerce: proc { |s| s.is_a?(String) ? s.to_sym : s }
 property :bind, [String, Array], coerce: proc { |b| b.is_a?(String) ? [b] : b }, default: []
-property :binding_mode, [Symbol, String], equal_to: [:strict, 'strict', :relaxed, 'relaxed'], default: :strict
+property :binding_mode, [Symbol, String], equal_to: [:strict, 'strict', :relaxed, 'relaxed'], default: :strict, coerce: proc { |s| s.is_a?(String) ? s.to_sym : s }
 property :service_group, String, default: 'default'
 property :shutdown_timeout, Integer, default: 8
 property :health_check_interval, Integer, default: 30
@@ -124,7 +124,7 @@ end
 
 def get_update_strategy(service_details)
   begin
-    service_details['update_strategy']
+    service_details['update_strategy'].to_sym
   rescue
     Chef::Log.debug("Update Strategy for #{service_name} not found on Supervisor API")
     'none'
@@ -133,7 +133,7 @@ end
 
 def get_topology(service_details)
   begin
-    service_details['topology']
+    service_details['topology'].to_sym
   rescue
     Chef::Log.debug("Topology for #{service_name} not found on Supervisor API")
     'standalone'
@@ -151,7 +151,7 @@ end
 
 def get_channel(service_details)
   begin
-    service_details['channel']
+    service_details['channel'].to_sym
   rescue
     Chef::Log.debug("Channel for #{service_name} not found on Supervisor API")
     'stable'
@@ -169,7 +169,7 @@ end
 
 def get_binding_mode(service_details)
   begin
-    service_details['binding_mode']
+    service_details['binding_mode'].to_sym
   rescue
     Chef::Log.debug("Binding mode for #{service_name} not found on Supervisor API")
     'strict'

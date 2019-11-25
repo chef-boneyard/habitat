@@ -32,8 +32,8 @@ end
 # redis: options, and then stop
 hab_package 'core/redis'
 hab_service 'core/redis' do
-  strategy 'rolling'
-  topology 'standalone'
+  strategy :rolling
+  topology :standalone
   channel :stable
 end
 
