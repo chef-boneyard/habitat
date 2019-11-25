@@ -5,6 +5,7 @@ This file is used to list changes made in each version of the habitat cookbook.
 ## Unreleased
 
 #### Merged Pull Requests
+- Feature/service full ident fix [#185](https://github.com/chef-cookbooks/habitat/pull/185) ([sirajrauff](https://github.com/sirajrauff))
 - Cookstyle 5.10 fixes [#183](https://github.com/chef-cookbooks/habitat/pull/183) ([tas50](https://github.com/tas50))
 <!-- latest_release -->
 
