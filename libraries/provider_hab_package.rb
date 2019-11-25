@@ -26,6 +26,9 @@ class Chef
   class Provider
     class Package
       class Hart < Chef::Provider::Package
+
+        # ~FC113
+
         use_multipackage_api
 
         provides :hab_package

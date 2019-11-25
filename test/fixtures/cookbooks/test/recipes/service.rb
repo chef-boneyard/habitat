@@ -61,6 +61,63 @@ end
 hab_package 'core/memcached'
 hab_service 'core/memcached'
 
+# grafana
+hab_package 'core/grafana' do
+  version '6.4.3/20191105024430'
+end
+hab_service 'core/grafana/6.4.3/20191105024430'
+
+ruby_block 'wait-for-grafana-startup' do
+  block do
+    raise 'grafana not loaded' unless system 'hab svc status core/grafana/6.4.3/20191105024430'
+  end
+  retries 5
+  retry_delay 1
+  action :nothing
+  subscribes :run, 'hab_service[core/grafana/6.4.3/20191105024430]', :immediately
+end
+
+hab_service 'core/grafana/6.4.3/20191105024430 part II' do
+  service_name 'core/grafana/6.4.3/20191105024430'
+  action :load
+end
+
+hab_service 'core/grafana/6.4.3/20191105024430 unload' do
+  service_name 'core/grafana/6.4.3/20191105024430'
+  action :unload
+end
+
+ruby_block 'wait-for-grafana-unload' do
+  block do
+    raise 'grafana still loaded' if system 'hab svc status core/grafana/6.4.3/20191105024430'
+  end
+  retries 5
+  retry_delay 1
+  action :nothing
+  subscribes :run, 'hab_service[core/grafana/6.4.3/20191105024430 unload]', :immediately
+end
+
+# grafana, version only
+hab_package 'core/grafana' do
+  version '4.6.3'
+end
+hab_service 'core/grafana/4.6.3'
+
+ruby_block 'wait-for-grafana-startup' do
+  block do
+    raise 'grafana not loaded' unless system 'hab svc status core/grafana/4.6.3'
+  end
+  retries 5
+  retry_delay 1
+  action :nothing
+  subscribes :run, 'hab_service[core/grafana/4.6.3]', :immediately
+end
+
+hab_service 'core/grafana/4.6.3 part II' do
+  service_name 'core/grafana/4.6.3'
+  action :load
+end
+
 # Test Binds
 
 # Single string bind
