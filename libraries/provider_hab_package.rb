@@ -26,7 +26,6 @@ class Chef
   class Provider
     class Package
       class Hart < Chef::Provider::Package
-        use_inline_resources # ~FC113
         use_multipackage_api
 
         provides :hab_package
@@ -82,7 +81,7 @@ class Chef
 
         def remove_package(_name, _version)
           raise 'It is too dangerous to :remove packages with the hab_package resource right now. This functionality should be deferred to the hab cli.'
-          names.zip(versions).map do |n, v| # rubocop:disable UnreachableCode
+          names.zip(versions).map do |n, v| # rubocop:disable Lint/UnreachableCode
             # FIXME: `hab pkg uninstall` would be a lot safer here
             path = hab('pkg', 'path', "#{n}/#{v}").stdout
             Chef::Log.warn 'semantics of :remove will almost certainly change in the future'
