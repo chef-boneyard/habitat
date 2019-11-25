@@ -2,8 +2,13 @@
 
 This file is used to list changes made in each version of the habitat cookbook.
 <!-- latest_release unreleased -->
+## Unreleased
 
+#### Merged Pull Requests
+- Cookstyle 5.10 fixes [#183](https://github.com/chef-cookbooks/habitat/pull/183) ([tas50](https://github.com/tas50))
 <!-- latest_release -->
+
+
 ## [0.88.0](https://github.com/chef-cookbooks/habitat/tree/0.88.0) (2019-10-24)
 
 - Update to hab 0.88.0
