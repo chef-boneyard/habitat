@@ -4,11 +4,17 @@ This file is used to list changes made in each version of the habitat cookbook.
 <!-- latest_release unreleased -->
 ## Unreleased
 
+<!-- latest_release -->
+
+## 0.88.1 (2019-11-25)
+
+- Cookstyle 5.10 fixes
+- Fixes to properly support loading of services using full ident
+
+
 #### Merged Pull Requests
 - Feature/service full ident fix [#185](https://github.com/chef-cookbooks/habitat/pull/185) ([sirajrauff](https://github.com/sirajrauff))
 - Cookstyle 5.10 fixes [#183](https://github.com/chef-cookbooks/habitat/pull/183) ([tas50](https://github.com/tas50))
-<!-- latest_release -->
-
 
 ## [0.88.0](https://github.com/chef-cookbooks/habitat/tree/0.88.0) (2019-10-24)
 
