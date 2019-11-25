@@ -30,24 +30,22 @@ hab_service 'core/nginx unload' do
 end
 
 # redis: options, and then stop
-hab_package 'core/redis' do
-  action :upgrade
-end
-
+hab_package 'core/redis'
 hab_service 'core/redis' do
   strategy 'rolling'
   topology 'standalone'
   channel :stable
-  action [:load, :start]
 end
 
-# we need this sleep to let redis stop and for the hab supervisor to
+# We need this sleep to let redis start and for the hab supervisor to
 # recognize this and write the state file out otherwise our functional
 # tests fail.
-ruby_block 'wait-for-redis-stop' do
+ruby_block 'wait-for-redis-load' do
   block do
-    sleep 3
+    raise 'redis not loaded' unless system 'hab svc status core/redis'
   end
+  retries 5
+  retry_delay 1
   action :nothing
   subscribes :run, 'hab_service[core/redis]', :immediately
 end
@@ -97,11 +95,19 @@ ruby_block 'wait-for-grafana-unload' do
   subscribes :run, 'hab_service[core/grafana/6.4.3/20191105024430 unload]', :immediately
 end
 
-# grafana, version only
+# Grafana, version only
 hab_package 'core/grafana' do
   version '4.6.3'
 end
-hab_service 'core/grafana/4.6.3'
+hab_service 'core/grafana/4.6.3 part II' do
+  action :load
+  service_name 'core/grafana/4.6.3'
+  service_group 'test-1'
+  bldr_url 'https://bldr-test-1.habitat.sh'
+  strategy 'rolling'
+  shutdown_timeout 9
+  health_check_interval 31
+end
 
 ruby_block 'wait-for-grafana-startup' do
   block do
@@ -113,24 +119,43 @@ ruby_block 'wait-for-grafana-startup' do
   subscribes :run, 'hab_service[core/grafana/4.6.3]', :immediately
 end
 
-hab_service 'core/grafana/4.6.3 part II' do
-  service_name 'core/grafana/4.6.3'
-  action :load
-end
-
-# Test Binds
-
-# Single string bind
-hab_package 'core/ruby-rails-sample'
-hab_service 'core/ruby-rails-sample' do
-  bind 'database:postgresql.default'
-end
-
-# Test service name matching
+# Test Service name matching
 hab_package 'core/sensu-backend'
 hab_service 'core/sensu-backend'
 
-# Multiple  binds
+
+# Test Binds
+
+# Single string bind + Reload Test
+hab_package 'core/prometheus'
+hab_service 'core/prometheus'
+
+ruby_block 'wait-for-prometheus-startup' do
+  block do
+    raise 'prometheus not loaded' unless system 'hab svc status core/prometheus'
+  end
+  retries 5
+  retry_delay 1
+  action :nothing
+  subscribes :run, 'hab_service[core/prometheus]', :immediately
+end
+
+# This should reload the service
+hab_service 'core/grafana/4.6.3 part III' do
+  action :load
+  service_name 'core/grafana/4.6.3'
+  service_group 'test'
+  bldr_url 'https://bldr-test.habitat.sh'
+  channel 'bldr-1321420393699319808'
+  topology :standalone
+  strategy :'at-once'
+  bind 'prom:prometheus.default'
+  binding_mode :relaxed
+  shutdown_timeout 10
+  health_check_interval 32
+end
+
+# Multiple binds
 hab_package 'core/rabbitmq'
 hab_service 'core/rabbitmq'
 
