@@ -25,18 +25,35 @@ describe 'test::service' do
       expect(chef_run).to unload_hab_service('core/nginx unload')
     end
 
+    it 'loads a service with version' do
+      expect(chef_run).to load_hab_service('core/vault version change').with(
+        service_name: 'core/vault/1.1.5'
+      )
+    end
+
+    it 'loads a service with version and release' do
+      expect(chef_run).to load_hab_service('core/grafana full identifier').with(
+        service_name: 'core/grafana/6.4.3/20191105024430'
+      )
+    end
+
     it 'loads a service with options' do
-      expect(chef_run).to load_hab_service('core/redis').with(
-        strategy: 'rolling',
-        topology: 'standalone',
-        channel: :stable
+      expect(chef_run).to load_hab_service('core/grafana property change from custom values').with(
+        service_group: 'test',
+        bldr_url: 'https://bldr-test.habitat.sh',
+        channel: :'bldr-1321420393699319808',
+        topology: :standalone,
+        strategy: :'at-once',
+        binding_mode: :relaxed,
+        shutdown_timeout: 10,
+        health_check_interval: 32
       )
     end
 
     it 'loads a service with a single bind' do
-      expect(chef_run).to load_hab_service('core/ruby-rails-sample').with(
+      expect(chef_run).to load_hab_service('core/grafana binding').with(
         bind: [
-          'database:postgresql.default',
+          'prom:prometheus.default',
         ]
       )
     end
@@ -48,6 +65,14 @@ describe 'test::service' do
           'redis:redis.default',
         ]
       )
+    end
+
+    it 'reloads a service' do
+      expect(chef_run).to reload_hab_service('core/consul reload')
+    end
+
+    it 'restarts a service' do
+      expect(chef_run).to restart_hab_service('core/consul restart')
     end
   end
 end

@@ -249,7 +249,7 @@ ruby_block 'wait-for-consul-up-for-30s' do
   subscribes :run, 'ruby_block[wait-for-consul-startup]', :immediately
 end
 
-hab_service 'core/consul restart' do
+hab_service 'core/consul reload' do
   service_name 'core/consul'
   action :reload
 end
