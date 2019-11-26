@@ -41,6 +41,7 @@ load_current_value do
   loaded service_loaded?(service_details)
 
   if loaded
+    service_name get_spec_identifier(service_details)
     strategy get_update_strategy(service_details)
     topology get_topology(service_details)
     bldr_url get_builder_url(service_details)
@@ -52,6 +53,7 @@ load_current_value do
     health_check_interval get_health_check_interval(service_details)
   end
 
+  Chef::Log.debug("service #{service_name} service name: #{service_name}")
   Chef::Log.debug("service #{service_name} running state: #{running}")
   Chef::Log.debug("service #{service_name} loaded state: #{loaded}")
   Chef::Log.debug("service #{service_name} strategy: #{strategy}")
@@ -118,6 +120,15 @@ def service_loaded?(service_details)
     true
   else
     false
+  end
+end
+
+def get_spec_identifier(service_details)
+  begin
+    service_details['spec_ident']['spec_identifier']
+  rescue
+    Chef::Log.debug("#{service_name} not found on the Habitat supervisor")
+    nil
   end
 end
 

@@ -11,17 +11,32 @@ ruby_block 'wait-for-sup-default-startup' do
   retry_delay 1
 end
 
+# Test 1: Load Package (memcached)
+hab_package 'core/memcached'
+hab_service 'core/memcached'
+
+# Test 2: Load, then Unload Package (nginx)
 hab_package 'core/nginx'
 hab_service 'core/nginx'
 
-# we need to sleep to let the nginx service have enough time to
-# startup properly before we can unload it.
-ruby_block 'wait-for-nginx-startup' do
+# Wait for load before attempting unload
+ruby_block 'wait-for-nginx-load' do
   block do
-    sleep 3
+    raise 'nginx not loaded' unless system 'hab svc status core/nginx'
   end
+  retries 5
+  retry_delay 1
   action :nothing
   subscribes :run, 'hab_service[core/nginx]', :immediately
+end
+ruby_block 'wait-for-nginx-up' do
+  block do
+    raise 'nginx not loaded' unless `hab svc status core/nginx`.match(/standalone\s+up\s+up/)
+  end
+  retries 5
+  retry_delay 1
+  action :nothing
+  subscribes :run, 'ruby_block[wait-for-nginx-load]', :immediately
 end
 
 hab_service 'core/nginx unload' do
@@ -29,7 +44,7 @@ hab_service 'core/nginx unload' do
   action :unload
 end
 
-# redis: options, and then stop
+# Test 3: Load, then stop package (redis)
 hab_package 'core/redis'
 hab_service 'core/redis' do
   strategy :rolling
@@ -49,59 +64,66 @@ ruby_block 'wait-for-redis-load' do
   action :nothing
   subscribes :run, 'hab_service[core/redis]', :immediately
 end
+ruby_block 'wait-for-redis-up' do
+  block do
+    raise 'redis not loaded' unless `hab svc status core/redis`.match(/standalone\s+up\s+up/)
+  end
+  retries 5
+  retry_delay 1
+  action :nothing
+  subscribes :run, 'ruby_block[wait-for-redis-load]', :immediately
+end
 
 hab_service 'core/redis stop' do
   service_name 'core/redis'
   action :stop
 end
 
-# memcached
-hab_package 'core/memcached'
-hab_service 'core/memcached'
-
-# grafana
-hab_package 'core/grafana' do
+# Test 4: Full Identifier Test (grafana/6.4.3)
+hab_package 'core/grafana full identifier' do
+  package_name 'core/grafana'
   version '6.4.3/20191105024430'
 end
-hab_service 'core/grafana/6.4.3/20191105024430'
+hab_service 'core/grafana full identifier' do
+  service_name 'core/grafana/6.4.3/20191105024430'
+end
 
 ruby_block 'wait-for-grafana-startup' do
   block do
-    raise 'grafana not loaded' unless system 'hab svc status core/grafana/6.4.3/20191105024430'
+    raise 'grafana not loaded' unless system 'hab svc status core/grafana'
   end
   retries 5
   retry_delay 1
   action :nothing
-  subscribes :run, 'hab_service[core/grafana/6.4.3/20191105024430]', :immediately
+  subscribes :run, 'hab_service[core/grafana full identifier]', :immediately
 end
 
-hab_service 'core/grafana/6.4.3/20191105024430 part II' do
+hab_service 'core/grafana full identifier idempotence' do
   service_name 'core/grafana/6.4.3/20191105024430'
-  action :load
 end
 
-hab_service 'core/grafana/6.4.3/20191105024430 unload' do
-  service_name 'core/grafana/6.4.3/20191105024430'
-  action :unload
-end
+# Test 5: Change version (core/vault)
+hab_package 'core/vault'
+hab_service 'core/vault'
 
-ruby_block 'wait-for-grafana-unload' do
+ruby_block 'wait-for-vault-load' do
   block do
-    raise 'grafana still loaded' if system 'hab svc status core/grafana/6.4.3/20191105024430'
+    raise 'vault not loaded' unless system 'hab svc status core/vault'
   end
   retries 5
   retry_delay 1
   action :nothing
-  subscribes :run, 'hab_service[core/grafana/6.4.3/20191105024430 unload]', :immediately
+  subscribes :run, 'hab_service[core/vault]', :immediately
 end
 
-# Grafana, version only
-hab_package 'core/grafana' do
-  version '4.6.3'
+hab_service 'core/vault version change' do
+  service_name 'core/vault/1.1.5'
 end
-hab_service 'core/grafana/4.6.3 part II' do
+
+# Test 6: Property Changes
+hab_service 'core/grafana property change from defaults' do
   action :load
-  service_name 'core/grafana/4.6.3'
+  service_name 'core/grafana/6.4.3/20191105024430'
   service_group 'test-1'
   bldr_url 'https://bldr-test-1.habitat.sh'
   strategy 'rolling'
@@ -109,24 +131,20 @@ hab_service 'core/grafana/4.6.3 part II' do
   health_check_interval 31
 end
 
-ruby_block 'wait-for-grafana-startup' do
-  block do
-    raise 'grafana not loaded' unless system 'hab svc status core/grafana/4.6.3'
-  end
-  retries 5
-  retry_delay 1
-  action :nothing
-  subscribes :run, 'hab_service[core/grafana/4.6.3]', :immediately
+hab_service 'core/grafana property change from custom values' do
+  action :load
+  service_name 'core/grafana/6.4.3/20191105024430'
+  service_group 'test'
+  bldr_url 'https://bldr-test.habitat.sh'
+  channel 'bldr-1321420393699319808'
+  topology :standalone
+  strategy :'at-once'
+  binding_mode :relaxed
+  shutdown_timeout 10
+  health_check_interval 32
 end
 
-# Test Service name matching
-hab_package 'core/sensu-backend'
-hab_service 'core/sensu-backend'
-
-
-# Test Binds
-
-# Single string bind + Reload Test
+# Test 7: Single Bind
 hab_package 'core/prometheus'
 hab_service 'core/prometheus'
 
@@ -140,10 +158,9 @@ ruby_block 'wait-for-prometheus-startup' do
   subscribes :run, 'hab_service[core/prometheus]', :immediately
 end
 
-# This should reload the service
-hab_service 'core/grafana/4.6.3 part III' do
+hab_service 'core/grafana binding' do
   action :load
-  service_name 'core/grafana/4.6.3'
+  service_name 'core/grafana/6.4.3/20191105024430'
   service_group 'test'
   bldr_url 'https://bldr-test.habitat.sh'
   channel 'bldr-1321420393699319808'
@@ -155,9 +172,12 @@ hab_service 'core/grafana/4.6.3 part III' do
   health_check_interval 32
 end
 
-# Multiple binds
+# Test 8: Test Service Name Matching & Multiple Binds (sensu-backend & sensu + rabbitmq)
 hab_package 'core/rabbitmq'
 hab_service 'core/rabbitmq'
+
+hab_package 'core/sensu-backend'
+hab_service 'core/sensu-backend'
 
 hab_package 'core/sensu'
 hab_service 'core/sensu' do
