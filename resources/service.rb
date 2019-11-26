@@ -107,12 +107,10 @@ def get_service_details(svc_name)
 end
 
 def service_up?(service_details)
-  begin
-    service_details['process']['state'] == 'up'
-  rescue
-    Chef::Log.debug("#{service_name} not found on the Habitat supervisor")
-    false
-  end
+  service_details['process']['state'] == 'up'
+rescue
+  Chef::Log.debug("#{service_name} not found on the Habitat supervisor")
+  false
 end
 
 def service_loaded?(service_details)
@@ -124,112 +122,112 @@ def service_loaded?(service_details)
 end
 
 def get_spec_identifier(service_details)
-  begin
-    service_details['spec_ident']['spec_identifier']
-  rescue
-    Chef::Log.debug("#{service_name} not found on the Habitat supervisor")
-    nil
-  end
+  service_details['spec_ident']['spec_identifier']
+rescue
+  Chef::Log.debug("#{service_name} not found on the Habitat supervisor")
+  nil
 end
 
 def get_update_strategy(service_details)
-  begin
-    service_details['update_strategy'].to_sym
-  rescue
-    Chef::Log.debug("Update Strategy for #{service_name} not found on Supervisor API")
-    'none'
-  end
+  service_details['update_strategy'].to_sym
+rescue
+  Chef::Log.debug("Update Strategy for #{service_name} not found on Supervisor API")
+  'none'
 end
 
 def get_topology(service_details)
-  begin
-    service_details['topology'].to_sym
-  rescue
-    Chef::Log.debug("Topology for #{service_name} not found on Supervisor API")
-    'standalone'
-  end
+  service_details['topology'].to_sym
+rescue
+  Chef::Log.debug("Topology for #{service_name} not found on Supervisor API")
+  'standalone'
 end
 
 def get_builder_url(service_details)
-  begin
-    service_details['bldr_url']
-  rescue
-    Chef::Log.debug("Builder URL for #{service_name} not found on Supervisor API")
-    'https://bldr.habitat.sh'
-  end
+  service_details['bldr_url']
+rescue
+  Chef::Log.debug("Builder URL for #{service_name} not found on Supervisor API")
+  'https://bldr.habitat.sh'
 end
 
 def get_channel(service_details)
-  begin
-    service_details['channel'].to_sym
-  rescue
-    Chef::Log.debug("Channel for #{service_name} not found on Supervisor API")
-    'stable'
-  end
+  service_details['channel'].to_sym
+rescue
+  Chef::Log.debug("Channel for #{service_name} not found on Supervisor API")
+  'stable'
 end
 
 def get_binds(service_details)
-  begin
-    service_details['binds']
-  rescue
-    Chef::Log.debug("Update Strategy for #{service_name} not found on Supervisor API")
-    []
-  end
+  service_details['binds']
+rescue
+  Chef::Log.debug("Update Strategy for #{service_name} not found on Supervisor API")
+  []
 end
 
 def get_binding_mode(service_details)
-  begin
-    service_details['binding_mode'].to_sym
-  rescue
-    Chef::Log.debug("Binding mode for #{service_name} not found on Supervisor API")
-    'strict'
-  end
+  service_details['binding_mode'].to_sym
+rescue
+  Chef::Log.debug("Binding mode for #{service_name} not found on Supervisor API")
+  'strict'
 end
 
 def get_service_group(service_details)
-  begin
-    service_details['service_group'].split('.').last
-  rescue
-    Chef::Log.debug("Service Group for #{service_name} not found on Supervisor API")
-    'default'
-  end
+  service_details['service_group'].split('.').last
+rescue
+  Chef::Log.debug("Service Group for #{service_name} not found on Supervisor API")
+  'default'
 end
 
 def get_shutdown_timeout(service_details)
-  begin
-    service_details['pkg']['shutdown_timeout']
-  rescue
-    Chef::Log.debug("Shutdown Timeout for #{service_name} not found on Supervisor API")
-    8
-  end
+  service_details['pkg']['shutdown_timeout']
+rescue
+  Chef::Log.debug("Shutdown Timeout for #{service_name} not found on Supervisor API")
+  8
 end
 
 def get_health_check_interval(service_details)
-  begin
-    service_details['health_check_interval']['secs']
-  rescue
-    Chef::Log.debug("Health Check Interval for #{service_name} not found on Supervisor API")
-    30
-  end
+  service_details['health_check_interval']['secs']
+rescue
+  Chef::Log.debug("Health Check Interval for #{service_name} not found on Supervisor API")
+  30
 end
 
 action :load do
   modified = false
-  converge_if_changed :service_name do modified = true end
-  converge_if_changed :strategy do modified = true end
-  converge_if_changed :topology do modified = true end
-  converge_if_changed :bldr_url do modified = true end
-  converge_if_changed :channel do modified = true end
-  converge_if_changed :bind do modified = true end
-  converge_if_changed :binding_mode do modified = true end
-  converge_if_changed :service_group do modified = true end
-  converge_if_changed :shutdown_timeout do modified = true end
-  converge_if_changed :health_check_interval do modified = true end
+  converge_if_changed :service_name do
+    modified = true
+  end
+  converge_if_changed :strategy do
+    modified = true
+  end
+  converge_if_changed :topology do
+    modified = true
+  end
+  converge_if_changed :bldr_url do
+    modified = true
+  end
+  converge_if_changed :channel do
+    modified = true
+  end
+  converge_if_changed :bind do
+    modified = true
+  end
+  converge_if_changed :binding_mode do
+    modified = true
+  end
+  converge_if_changed :service_group do
+    modified = true
+  end
+  converge_if_changed :shutdown_timeout do
+    modified = true
+  end
+  converge_if_changed :health_check_interval do
+    modified = true
+  end
 
   options = svc_options
   if current_resource.loaded && modified
     Chef::Log.debug("Reloading #{current_resource.service_name} using --force due to parameter change")
-    options << "--force"
+    options << '--force'
   end
 
   execute "hab svc load #{new_resource.service_name} #{options.join(' ')}" unless current_resource.loaded && !modified
