@@ -99,9 +99,8 @@ def get_service_details(svc_name)
   end
 
   origin, name, _version, _release = svc_name.split('/')
-  sanitized_name = [origin, name].join('/')
   svcs.find do |s|
-    [s['pkg']['origin'], s['pkg']['name']].join('/') == sanitized_name
+    s['pkg']['origin'] == origin && s['pkg']['name'] == name
   end
 end
 
