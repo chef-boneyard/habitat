@@ -37,7 +37,8 @@ class Chef
           mode '0755'
           variables(name: 'hab-sup',
                     exec_start_options: exec_start_options,
-                    auth_token: new_resource.auth_token)
+                    auth_token: new_resource.auth_token,
+                    gateway_auth_token: new_resource.gateway_auth_token)
           action :create
         end
 

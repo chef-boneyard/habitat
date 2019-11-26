@@ -36,7 +36,8 @@ class Chef
           group 'root'
           mode '0644'
           variables(exec_start_options: exec_start_options,
-                    auth_token: new_resource.auth_token)
+                    auth_token: new_resource.auth_token,
+                    gateway_auth_token: new_resource.gateway_auth_token)
           action :create
         end
 

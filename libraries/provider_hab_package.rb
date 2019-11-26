@@ -114,8 +114,6 @@ class Chef
             'target=x86_64-windows'
           elsif platform_family?('rhel') && node['platform_version'].to_f < 6.0
             'target=x86_64-linux-kernel2'
-          elsif platform_family?('centos') && node['platform_version'].to_f < 6.0
-            'target=x86_64-linux-kernel2'
           elsif platform_family?('suse') && node['platform_version'].to_f < 6.0
             'target=x86_64-linux-kernel2'
           else

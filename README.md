@@ -157,6 +157,7 @@ The remote_sup property is valid for all actions.
 
 - `remote_sup`: Address to a remote Supervisor's Control Gateway [default: 127.0.0.1:9632]
 - `remote_sup_http`: Address for remote supervisor http port. Used to pull existing configuration data. If this is invalid, config will be applied on every Chef run.
+- `gateway_auth_token`: Auth token for accessing the remote supervisor's http port.
 
 The follow properties are valid for the `load` action.
 
@@ -226,6 +227,7 @@ The `run` action handles installing Habitat using the `hab_install` resource, en
 - `ring`: Only valid for `:run` action, passes `--ring` with the specified ring key name to the hab command
 - `hab_channel`: The channel to install Habitat from. Defaults to stable
 - `auth_token`: Auth token for accessing a private organization on bldr. This value is templated into the appropriate service file.
+- `gateway_auth_token`: Auth token for accessing the supervisor's HTTP gateway. This value is templated into the appropriate service file.
 - `license`: Specifies acceptance of habitat license when set to `accept` (defaults to empty string).
 - `health_check_interval`: The interval (seconds) on which to run health checks (defaults to 30).
 
@@ -263,6 +265,7 @@ Applies a given configuration to a habitat service using `hab config apply`.
 - `config`: The configuration to apply as a ruby hash, for example, `{ worker_count: 2, http: { keepalive_timeout: 120 } }`
 - `remote_sup`: Address to a remote Supervisor's Control Gateway [default: 127.0.0.1:9632]
 - `remote_sup_http`: Address for remote supervisor http port. Used to pull existing configuration data. If this is invalid, config will be applied on every Chef run.
+- `gateway_auth_token`: Auth token for accessing the remote supervisor's http port.
 - `user`: Name of user key to use for encryption. Passes `--user` to `hab config apply`
 
 #### Notes

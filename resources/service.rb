@@ -17,8 +17,8 @@
 resource_name :hab_service
 
 property :service_name, String, name_property: true
-property :loaded, [true, false], default: false, desired_state: true
-property :running, [true, false], default: false, desired_state: true
+property :loaded, [true, false], default: false
+property :running, [true, false], default: false
 
 # hab svc options which get included based on the action of the resource
 property :strategy, String
@@ -31,6 +31,7 @@ property :service_group, String
 property :remote_sup, String, default: '127.0.0.1:9632', desired_state: false
 # Http port needed for querying/comparing current config value
 property :remote_sup_http, String, default: '127.0.0.1:9631', desired_state: false
+property :gateway_auth_token, String, desired_state: false
 
 load_current_value do
   running service_up?(service_name)
@@ -67,7 +68,9 @@ def get_service_details(svc_name)
   end
 
   begin
-    svcs = Chef::HTTP::SimpleJSON.new(http_uri).get('/services')
+    headers = {}
+    headers['Authorization'] = "Bearer #{gateway_auth_token}" if property_is_set?(:gateway_auth_token)
+    svcs = Chef::HTTP::SimpleJSON.new(http_uri).get('/services', headers)
   rescue
     Chef::Log.debug("Could not connect to #{http_uri}/services to retrieve status for #{service_name}")
     return false

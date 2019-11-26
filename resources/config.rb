@@ -26,12 +26,16 @@ property :service_group, String, name_property: true, desired_state: false
 property :remote_sup, String, default: '127.0.0.1:9632', desired_state: false
 # Http port needed for querying/comparing current config value
 property :remote_sup_http, String, default: '127.0.0.1:9631', desired_state: false
+property :gateway_auth_token, String, desired_state: false
 property :user, String, desired_state: false
 
 load_current_value do
-  uri = URI("http://#{remote_sup_http}/census")
+  http_uri = "http://#{remote_sup_http}"
+
   begin
-    census = Mash.new(JSON.parse(Net::HTTP.get(uri)))
+    headers = {}
+    headers['Authorization'] = "Bearer #{gateway_auth_token}" if property_is_set?(:gateway_auth_token)
+    census = Mash.new(Chef::HTTP::SimpleJSON.new(http_uri).get('/census', headers))
     sc = census['census_groups'][service_group]['service_config']['value']
   rescue
     # Default to a blank config if anything (http error, json parsing, finding

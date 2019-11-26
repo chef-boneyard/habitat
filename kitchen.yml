@@ -33,12 +33,20 @@ suites:
     run_list: test::service
     excludes:
       - windows-2016
+  - name: service-auth
+    run_list: test::service_auth
+    excludes:
+      - windows-2016
   - name: sup
     run_list: test::sup
     excludes:
       - windows-2016
   - name: config
     run_list: test::config
+    excludes:
+      - windows-2016
+  - name: config-auth
+    run_list: test::config_auth
     excludes:
       - windows-2016
   - name: user-toml
@@ -51,6 +59,13 @@ suites:
       - windows-2016
   - name: config-chef-13
     run_list: test::config
+    excludes:
+      - windows-2016
+    provisioner:
+      product_name: chef
+      product_version: 13.6.4
+  - name: config-chef-13-auth
+    run_list: test::config_auth
     excludes:
       - windows-2016
     provisioner:
@@ -70,6 +85,10 @@ suites:
       - windows-2016
   - name: win-config
     run_list: test::win_config
+    includes:
+      - windows-2016
+  - name: win-config-auth
+    run_list: test::win_config_auth
     includes:
       - windows-2016
   - name: win-user-toml
