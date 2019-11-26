@@ -236,7 +236,10 @@ action :load do
 end
 
 action :unload do
-  execute "hab svc unload #{new_resource.service_name} #{svc_options.join(' ')}" if current_resource.loaded
+  if current_resource.loaded
+    execute "hab svc unload #{new_resource.service_name} #{svc_options.join(' ')}"
+    wait_for_service_unloaded
+  end
 end
 
 action :start do
@@ -254,36 +257,19 @@ action :stop do
     raise "No service named #{new_resource.service_name} is loaded on the Habitat supervisor"
   end
 
-  execute "hab svc stop #{new_resource.service_name} #{svc_options.join(' ')}" if current_resource.running
+  if current_resource.running
+    execute "hab svc stop #{new_resource.service_name} #{svc_options.join(' ')}"
+    wait_for_service_stopped
+  end
 end
 
 action :restart do
-  action_unload
-  ruby_block do
-    block do
-      service_details = get_service_details(new_resource.service_name)
-      raise "#{new_resource.service_name} still started" if service_up?(service_details)
-    end
-    retries get_shutdown_timeout(new_resource.service_name) + 1
-    retry_delay 1
-    action :nothing
-    subscribes :run, 'action_unload[stop as part of reload]', :immediately
-  end
-  action_load
+  action_stop
+  action_start
 end
 
 action :reload do
   action_unload
-  ruby_block do
-    block do
-      service_details = get_service_details(new_resource.service_name)
-      raise "#{new_resource.service_name} still loaded" if service_loaded?(service_details)
-    end
-    retries get_shutdown_timeout(new_resource.service_name) + 1
-    retry_delay 1
-    action :nothing
-    subscribes :run, 'action_unload[unload as part of reload]', :immediately
-  end
   action_load
 end
 
@@ -310,5 +296,41 @@ action_class do
     opts << "--remote-sup #{new_resource.remote_sup}" if new_resource.remote_sup
 
     opts.map(&:split).flatten.compact
+  end
+
+  def wait_for_service_unloaded
+    ruby_block 'wait-for-service-unloaded' do
+      block do
+        raise "#{new_resource.service_name} still loaded" if service_loaded?(get_service_details(new_resource.service_name))
+      end
+      retries get_shutdown_timeout(new_resource.service_name) + 1
+      retry_delay 1
+    end
+
+    ruby_block 'update current_resource' do
+      block do
+        current_resource.loaded = service_loaded?(get_service_details(new_resource.service_name))
+      end
+      action :nothing
+      subscribes :run, 'ruby_block[wait-for-service-unloaded]', :immediately
+    end
+  end
+
+  def wait_for_service_stopped
+    ruby_block 'wait-for-service-stopped' do
+      block do
+        raise "#{new_resource.service_name} still running" if service_up?(get_service_details(new_resource.service_name))
+      end
+      retries get_shutdown_timeout(new_resource.service_name) + 1
+      retry_delay 1
+
+      ruby_block 'update current_resource' do
+        block do
+          current_resource.running = service_up?(get_service_details(new_resource.service_name))
+        end
+        action :nothing
+        subscribes :run, 'ruby_block[wait-for-service-stopped]', :immediately
+      end
+    end
   end
 end

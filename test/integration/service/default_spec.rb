@@ -41,6 +41,11 @@ describe file('/hab/sup/default/specs/vault.spec') do
   its(:content) { should match(%r{ident = "core/vault/1.1.5"}) }
 end
 
+describe file('/hab/sup/default/specs/consul.spec') do
+  it { should exist }
+  its(:content) { should match(%r{ident = "core/consul"}) }
+end
+
 describe file('/hab/sup/default/specs/redis.spec') do
   it { should exist }
   its(:content) { should match(/desired_state = "down"/) }

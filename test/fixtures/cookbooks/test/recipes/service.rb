@@ -64,9 +64,9 @@ ruby_block 'wait-for-redis-load' do
   action :nothing
   subscribes :run, 'hab_service[core/redis]', :immediately
 end
-ruby_block 'wait-for-redis-up' do
+ruby_block 'wait-for-redis-started' do
   block do
-    raise 'redis not loaded' unless `hab svc status core/redis`.match(/standalone\s+up\s+up/)
+    raise 'redis not started' unless `hab svc status core/redis`.match(/standalone\s+up\s+up/)
   end
   retries 5
   retry_delay 1
@@ -185,4 +185,82 @@ hab_service 'core/sensu' do
     'rabbitmq:rabbitmq.default',
     'redis:redis.default',
   ]
+end
+
+# Test 9: Restart the package
+hab_package 'core/consul'
+hab_service 'core/consul'
+
+ruby_block 'wait-for-consul-load' do
+  block do
+    raise 'consul not loaded' unless system 'hab svc status core/consul'
+  end
+  retries 5
+  retry_delay 1
+  action :nothing
+  subscribes :run, 'hab_service[core/consul]', :immediately
+end
+ruby_block 'wait-for-consul-startup' do
+  block do
+    raise 'consul not started' unless `hab svc status core/consul`.match(/standalone\s+up\s+up/)
+  end
+  retries 5
+  retry_delay 1
+  action :nothing
+  subscribes :run, 'ruby_block[wait-for-consul-load]', :immediately
+end
+
+ruby_block 'wait-for-consul-up-for-30s' do
+  block do
+    uptime = `hab svc status core/consul`.match(/standalone\s+up\s+up\s+([0-9]+)/)
+    raise 'consul not started for 30s' unless uptime.size == 2 && Integer(uptime[1]) > 30
+  end
+  retries 30
+  retry_delay 1
+  action :nothing
+  subscribes :run, 'ruby_block[wait-for-consul-startup]', :immediately
+end
+
+hab_service 'core/consul restart' do
+  service_name 'core/consul'
+  action :restart
+end
+
+ruby_block 'wait-for-consul-restart' do
+  block do
+    uptime = `hab svc status core/consul`.match(/standalone\s+up\s+up\s+([0-9]+)/)
+    raise 'consul not restarted' unless !uptime.nil? && uptime.size == 2 && Integer(uptime[1]) < 30
+  end
+  retries 60
+  retry_delay 1
+  action :nothing
+  subscribes :run, 'hab_service[core/consul restart]', :immediately
+end
+
+# Test 10: Reload the package
+ruby_block 'wait-for-consul-up-for-30s' do
+  block do
+    uptime = `hab svc status core/consul`.match(/standalone\s+up\s+up\s+([0-9]+)/)
+    raise 'consul not started for 30s' unless uptime.size == 2 && Integer(uptime[1]) > 30
+  end
+  retries 30
+  retry_delay 1
+  action :nothing
+  subscribes :run, 'ruby_block[wait-for-consul-startup]', :immediately
+end
+
+hab_service 'core/consul restart' do
+  service_name 'core/consul'
+  action :reload
+end
+
+ruby_block 'wait-for-consul-restart' do
+  block do
+    uptime = `hab svc status core/consul`.match(/standalone\s+up\s+up\s+([0-9]+)/)
+    raise 'consul not restarted' unless !uptime.nil? && uptime.size == 2 && Integer(uptime[1]) < 30
+  end
+  retries 5
+  retry_delay 1
+  action :nothing
+  subscribes :run, 'hab_service[core/consul restart]', :immediately
 end
