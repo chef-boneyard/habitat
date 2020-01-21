@@ -2,6 +2,7 @@ driver:
   name: dokken
   privileged: true # because Docker and SystemD/Upstart
   chef_version: <%= ENV['CHEF_VERSION'] || 'current' %>
+  chef_license: accept-no-persist
 
 transport:
   name: dokken
@@ -46,6 +47,26 @@ platforms:
 - name: centos-7
   driver:
     image: dokken/centos-7
+    pid_one_command: /usr/lib/systemd/systemd
+
+- name: centos-8
+  driver:
+    image: dokken/centos-8
+    pid_one_command: /usr/lib/systemd/systemd
+
+- name: oraclelinux-6
+  driver:
+    image: dokken/oraclelinux-6
+    pid_one_command: /sbin/init
+
+- name: oraclelinux-7
+  driver:
+    image: dokken/oraclelinux-7
+    pid_one_command: /usr/lib/systemd/systemd
+
+- name: oraclelinux-8
+  driver:
+    image: dokken/oraclelinux-8
     pid_one_command: /usr/lib/systemd/systemd
 
 - name: fedora-latest
