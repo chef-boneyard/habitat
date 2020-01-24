@@ -9,6 +9,9 @@ respawn limit 5 30
 <% if @auth_token %>
 env HAB_AUTH_TOKEN=<%= @auth_token %>
 <% end %>
+<% if @gateway_auth_token %>
+env HAB_SUP_GATEWAY_AUTH_TOKEN=<%= @gateway_auth_token %>
+<% end %>
 
 script
     exec /bin/hab sup run <%= @exec_start_options %>

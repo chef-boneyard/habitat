@@ -24,6 +24,10 @@ env:
   - INSTANCE=service-ubuntu-1804
   - INSTANCE=service-centos-6
   - INSTANCE=service-centos-7
+  - INSTANCE=service-auth-ubuntu-1604
+  - INSTANCE=service-auth-ubuntu-1804
+  - INSTANCE=service-auth-centos-6
+  - INSTANCE=service-auth-centos-7
   - INSTANCE=sup-ubuntu-1604
   - INSTANCE=sup-ubuntu-1804
   - INSTANCE=sup-centos-6
@@ -32,6 +36,10 @@ env:
   - INSTANCE=config-ubuntu-1804
   - INSTANCE=config-centos-6
   - INSTANCE=config-centos-7
+  - INSTANCE=config-auth-ubuntu-1604
+  - INSTANCE=config-auth-ubuntu-1804
+  - INSTANCE=config-auth-centos-6
+  - INSTANCE=config-auth-centos-7
   - INSTANCE=user-toml-ubuntu-1604
   - INSTANCE=user-toml-ubuntu-1804
   - INSTANCE=user-toml-centos-6

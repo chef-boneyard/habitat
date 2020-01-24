@@ -28,13 +28,16 @@ class Chef
       action :run do
         super()
 
+        service_environment = []
+        service_environment.push("HAB_AUTH_TOKEN=#{new_resource.auth_token}") if new_resource.auth_token
+        service_environment.push("HAB_SUP_GATEWAY_AUTH_TOKEN=#{new_resource.gateway_auth_token}") if new_resource.gateway_auth_token
         systemd_unit 'hab-sup.service' do
           content(Unit: {
                     Description: 'The Habitat Supervisor',
                   },
                   Service: {
                     LimitNOFILE: (new_resource.limit_no_files if new_resource.limit_no_files),
-                    Environment: ("HAB_AUTH_TOKEN=#{new_resource.auth_token}" if new_resource.auth_token),
+                    Environment: service_environment,
                     ExecStart: "/bin/hab sup run #{exec_start_options}",
                     Restart: 'on-failure',
                   }.compact,

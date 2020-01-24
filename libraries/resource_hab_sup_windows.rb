@@ -37,6 +37,12 @@ class Chef
           action auth_action
         end
 
+        gateway_auth_action = new_resource.gateway_auth_token ? :create : :delete
+        windows_env 'HAB_SUP_GATEWAY_AUTH_TOKEN' do
+          value new_resource.gateway_auth_token if new_resource.gateway_auth_token
+          action gateway_auth_action
+        end
+
         hab_package 'core/windows-service' do
           bldr_url new_resource.bldr_url if new_resource.bldr_url
           version hab_windows_service_version
@@ -55,6 +61,7 @@ class Chef
 
         service 'Habitat' do
           subscribes :restart, 'windows_env[HAB_AUTH_TOKEN]'
+          subscribes :restart, 'windows_env[HAB_SUP_GATEWAY_AUTH_TOKEN]'
           subscribes :restart, 'template[C:/hab/svc/windows-service/HabService.exe.config]'
           subscribes :restart, 'hab_package[core/hab-sup]'
           subscribes :restart, 'hab_package[core/hab-launcher]'

@@ -24,6 +24,15 @@ describe 'test::sup' do
           )
       end
 
+      it 'runs hab sup with a gateway auth token' do
+        expect(chef_run).to run_hab_sup('test-gateway-auth-token')
+          .with(
+            listen_http: '0.0.0.0:10001',
+            listen_gossip: '0.0.0.0:10000',
+            gateway_auth_token: 'secret'
+          )
+      end
+
       it 'run hab sup with a single peer' do
         expect(chef_run).to run_hab_sup('single_peer').with(
           peer: ['127.0.0.2']
@@ -79,6 +88,7 @@ describe 'test::sup' do
               Description: 'The Habitat Supervisor',
             },
             Service: {
+              Environment: [],
               ExecStart: '/bin/hab sup run --listen-gossip 0.0.0.0:7998 --listen-http 0.0.0.0:7999 --peer 127.0.0.2 --peer 127.0.0.3',
               Restart: 'on-failure',
             },
@@ -128,6 +138,7 @@ describe 'test::sup' do
           variables: {
             exec_start_options: '--listen-gossip 0.0.0.0:7998 --listen-http 0.0.0.0:7999 --peer 127.0.0.2 --peer 127.0.0.3',
             auth_token: nil,
+            gateway_auth_token: nil,
           }
         )
       end
@@ -173,6 +184,7 @@ describe 'test::sup' do
             name: 'hab-sup',
             exec_start_options: '--listen-gossip 0.0.0.0:7998 --listen-http 0.0.0.0:7999 --peer 127.0.0.2 --peer 127.0.0.3',
             auth_token: nil,
+            gateway_auth_token: nil,
           }
         )
       end

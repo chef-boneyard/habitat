@@ -56,6 +56,11 @@ case "$1" in
     export HAB_AUTH_TOKEN=<%= @auth_token %>
     <% end %>
 
+    <% if @gateway_auth_token %>
+    log_daemon_msg "Setting HAB_SUP_GATEWAY_AUTH_TOKEN for $DESC" "$NAME"
+    export HAB_SUP_GATEWAY_AUTH_TOKEN=<%= @gateway_auth_token %>
+    <% end %>
+
     log_daemon_msg "Starting $DESC" "$NAME"
     if running; then
       log_progress_msg "already running ($(pid))"
