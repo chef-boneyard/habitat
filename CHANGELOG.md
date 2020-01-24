@@ -5,6 +5,7 @@ This file is used to list changes made in each version of the habitat cookbook.
 ## Unreleased
 
 #### Merged Pull Requests
+- Service Properties, Reload/Restart Fixes, Idempotence Improvements [#187](https://github.com/chef-cookbooks/habitat/pull/187) ([sirajrauff](https://github.com/sirajrauff))
 - Add option for Supervisor HTTP gateway authentication token [#186](https://github.com/chef-cookbooks/habitat/pull/186) ([rarenerd](https://github.com/rarenerd))
 <!-- latest_release -->
 
