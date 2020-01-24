@@ -4,6 +4,8 @@ This file is used to list changes made in each version of the habitat cookbook.
 <!-- latest_release unreleased -->
 ## Unreleased
 
+#### Merged Pull Requests
+- Add option for Supervisor HTTP gateway authentication token [#186](https://github.com/chef-cookbooks/habitat/pull/186) ([rarenerd](https://github.com/rarenerd))
 <!-- latest_release -->
 
 ## 0.88.1 (2019-11-25)
