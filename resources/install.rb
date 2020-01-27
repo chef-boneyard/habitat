@@ -48,8 +48,13 @@ action :install do
     # as a .sha265sum like for the linux .tar.gz
     download = "#{uri}/content/habitat/stable/windows/x86_64/#{package_name}.zip?bt_package=hab-x86_64-windows"
 
-    archive_file Chef::Config[:file_cache_path] do
-      path download
+    remote_file "#{Chef::Config[:file_cache_path]}/#{package_name}.zip" do
+      source download
+    end
+
+    archive_file "#{package_name}.zip" do
+      path "#{Chef::Config[:file_cache_path]}/#{package_name}.zip"
+      destination "#{Chef::Config[:file_cache_path]}/habitat"
       action :extract
     end
 
@@ -57,7 +62,7 @@ action :install do
 
     powershell_script 'installing from archive' do
       code <<-EOH
-      Move-Item -Path #{extracted_path} -Destination C:/habitat -Force
+      Move-Item -Path #{Chef::Config[:file_cache_path]}/habitat/#{package_name} -Destination C:/habitat -Force
       EOH
     end
 
