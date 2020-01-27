@@ -19,7 +19,7 @@ module Habitat
     HAB_VERSION = '0.88.0'.freeze
     LINUX_LAUNCHER_VERSION = '11055'.freeze
     WINDOWS_LAUNCHER_VERSION = '9106'.freeze
-    WINDOWS_SERVICE_VERSION = '0.3.1'.freeze
+    WINDOWS_SERVICE_VERSION = '0.5.0'.freeze
 
     def hab_version
       HAB_VERSION
