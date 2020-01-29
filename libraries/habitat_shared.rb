@@ -16,10 +16,10 @@
 
 module Habitat
   module Shared
-    HAB_VERSION = '0.88.0'.freeze
-    LINUX_LAUNCHER_VERSION = '11055'.freeze
-    WINDOWS_LAUNCHER_VERSION = '9106'.freeze
-    WINDOWS_SERVICE_VERSION = '0.3.1'.freeze
+    HAB_VERSION = '1.5.0'.freeze
+    LINUX_LAUNCHER_VERSION = '13045'.freeze
+    WINDOWS_LAUNCHER_VERSION = '13045'.freeze
+    WINDOWS_SERVICE_VERSION = '0.6.0'.freeze
 
     def hab_version
       HAB_VERSION
