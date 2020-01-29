@@ -14,6 +14,6 @@ issues_url 'https://github.com/chef-cookbooks/habitat/issues'
 
 chef_version '>= 12.20.3'
 
-gem 'toml'
+gem 'toml-rb'
 
 depends 'windows'
