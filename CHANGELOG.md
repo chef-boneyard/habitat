@@ -4,6 +4,8 @@ This file is used to list changes made in each version of the habitat cookbook.
 <!-- latest_release unreleased -->
 ## Unreleased
 
+#### Merged Pull Requests
+- Fix Habitat install on windows [#194](https://github.com/chef-cookbooks/habitat/pull/194) ([emachnic](https://github.com/emachnic))
 <!-- latest_release -->
 ## 0.88.2 (2020-01-24)
 
