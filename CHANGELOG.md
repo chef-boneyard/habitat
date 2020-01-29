@@ -1,10 +1,11 @@
 # habitat CHANGELOG
 
 This file is used to list changes made in each version of the habitat cookbook.
-<!-- latest_release unreleased -->
-## Unreleased
+<!-- latest_release 1.5.0 -->
+## [1.5.0](https://github.com/chef-cookbooks/habitat/tree/1.5.0) (2020-01-29)
 
 #### Merged Pull Requests
+- WIP: Update to hab 1.5 and update launchers and windows-service pins [#195](https://github.com/chef-cookbooks/habitat/pull/195) ([jonlives](https://github.com/jonlives))
 - Fix Habitat install on windows [#194](https://github.com/chef-cookbooks/habitat/pull/194) ([emachnic](https://github.com/emachnic))
 <!-- latest_release -->
 ## 0.88.2 (2020-01-24)
