@@ -43,21 +43,25 @@ action :install do
     result = Chef::HTTP::SimpleJSON.new(uri).get('/packages/habitat/stable/hab-x86_64-windows')
     build_version = result['versions'].grep(/^#{hab_version}/).first
     package_name = "hab-#{build_version}-x86_64-windows"
+    zipfile = "#{Chef::Config[:file_cache_path]}/#{package_name}.zip"
 
     # TODO: Figure out how to properly validate the shasum for windows. Doesn't seem it's published
     # as a .sha265sum like for the linux .tar.gz
     download = "#{uri}/content/habitat/stable/windows/x86_64/#{package_name}.zip?bt_package=hab-x86_64-windows"
 
-    archive_file Chef::Config[:file_cache_path] do
-      path download
+    remote_file zipfile do
+      source download
+    end
+
+    archive_file "#{package_name}.zip" do
+      path zipfile
+      destination "#{Chef::Config[:file_cache_path]}/habitat"
       action :extract
     end
 
-    extracted_path = ::File.join(Chef::Config[:file_cache_path], package_name)
-
     powershell_script 'installing from archive' do
       code <<-EOH
-      Move-Item -Path #{extracted_path} -Destination C:/habitat -Force
+      Move-Item -Path #{Chef::Config[:file_cache_path]}/habitat/#{package_name} -Destination C:/habitat -Force
       EOH
     end
 
@@ -105,21 +109,26 @@ action :upgrade do
     result = Chef::HTTP::SimpleJSON.new(uri).get('/packages/habitat/stable/hab-x86_64-windows')
     build_version = result['versions'].grep(/^#{hab_version}/).first
     package_name = "hab-#{build_version}-x86_64-windows"
+    zipfile = "#{Chef::Config[:file_cache_path]}/#{package_name}.zip"
 
     # TODO: Figure out how to properly validate the shasum for windows. Doesn't seem it's published
     # as a .sha265sum like for the linux .tar.gz
     download = "#{uri}/content/habitat/stable/windows/x86_64/#{package_name}.zip?bt_package=hab-x86_64-windows"
 
-    archive_file Chef::Config[:file_cache_path] do
-      path download
+    remote_file zipfile do
+      source download
+    end
+
+    archive_file "#{package_name}.zip" do
+      path zipfile
+      destination "#{Chef::Config[:file_cache_path]}/habitat"
+      overwrite true
       action :extract
     end
 
-    extracted_path = ::File.join(Chef::Config[:file_cache_path], package_name)
-
     powershell_script 'installing from archive' do
       code <<-EOH
-      Move-Item -Path #{extracted_path} -Destination C:/habitat -Force
+      Move-Item -Path #{Chef::Config[:file_cache_path]}/habitat/#{package_name} -Destination C:/habitat -Force
       EOH
     end
 
