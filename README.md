@@ -7,8 +7,6 @@ This cookbook provides resources for working with [Habitat](https://habitat.sh).
 - APIs are subject to change
 - Habitat is a rapidly changing product, and this cookbook may change rapidly as well
 
-(this is a pre-1.0 version, after all)
-
 ## License Note
 
 Habitat requires acceptance of a license before any habitat commands can be run. To accept the Habitat license using this cookbook, the `license` parameter can be set to `accept` for either the `hab_install` or `hab_sup` resources as shown in the below examples:
