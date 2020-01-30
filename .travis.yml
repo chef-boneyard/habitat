@@ -49,7 +49,7 @@ env:
 before_script:
   - sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables -N DOCKER )
   - eval "$(chef shell-init bash)"
-  - CHEF_LICENSE=accept-no-persist chef gem install toml
+  - CHEF_LICENSE=accept-no-persist chef gem install toml-rb
   - CHEF_LICENSE=accept-no-persist chef --version
   - cookstyle --version
   - foodcritic --version
