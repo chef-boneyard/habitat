@@ -4,10 +4,13 @@ This file is used to list changes made in each version of the habitat cookbook.
 <!-- latest_release unreleased -->
 ## Unreleased
 
+<!-- latest_release -->
+## 1.5.1 (2020-01-31)
+
+- Fix windows package download URL to use packages.chef.io
+
 #### Merged Pull Requests
 - Fix windows package download URL [#198](https://github.com/chef-cookbooks/habitat/pull/198) ([jonlives](https://github.com/jonlives))
-<!-- latest_release -->
-
 
 ## [1.5.0](https://github.com/chef-cookbooks/habitat/tree/1.5.0) (2020-01-29)
 
