@@ -39,15 +39,13 @@ action :install do
 
   if platform_family?('windows')
     # Retrieve version information
-    uri = 'https://api.bintray.com'
-    result = Chef::HTTP::SimpleJSON.new(uri).get('/packages/habitat/stable/hab-x86_64-windows')
-    build_version = result['versions'].grep(/^#{hab_version}/).first
-    package_name = "hab-#{build_version}-x86_64-windows"
+    uri = 'https://packages.chef.io/files'
+    package_name = 'hab-latest-x86_64-windows'
     zipfile = "#{Chef::Config[:file_cache_path]}/#{package_name}.zip"
 
     # TODO: Figure out how to properly validate the shasum for windows. Doesn't seem it's published
     # as a .sha265sum like for the linux .tar.gz
-    download = "#{uri}/content/habitat/stable/windows/x86_64/#{package_name}.zip?bt_package=hab-x86_64-windows"
+    download = "#{uri}/stable/habitat/latest/hab-x86_64-windows.zip"
 
     remote_file zipfile do
       source download
