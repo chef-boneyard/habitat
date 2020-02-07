@@ -17,7 +17,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
 require 'chef/http/simple'
 
 resource_name :hab_install
@@ -40,7 +39,7 @@ action :install do
   if platform_family?('windows')
     # Retrieve version information
     uri = 'https://packages.chef.io/files'
-    package_name = 'hab-latest-x86_64-windows'
+    package_name = 'hab-x86_64-windows'
     zipfile = "#{Chef::Config[:file_cache_path]}/#{package_name}.zip"
 
     # TODO: Figure out how to properly validate the shasum for windows. Doesn't seem it's published
@@ -57,10 +56,20 @@ action :install do
       action :extract
     end
 
+    # Precreate 'c:\habitat to correct powershell errors'
+    # The powershell_script was just creating a file called habitat in 'c:/'
+    directory 'c:\habitat'
+
     powershell_script 'installing from archive' do
       code <<-EOH
-      Move-Item -Path #{Chef::Config[:file_cache_path]}/habitat/#{package_name} -Destination C:/habitat -Force
+      Move-Item -Path #{Chef::Config[:file_cache_path]}/habitat/hab-*/* -Destination C:/habitat -Force
       EOH
+    end
+
+    # Cleanup for future upgrade purposes
+    directory '#{Chef::Config[:file_cache_path]}/habitat' do
+      action :delete
+      recursive true
     end
 
     # TODO: This won't self heal if missing until the next upgrade
