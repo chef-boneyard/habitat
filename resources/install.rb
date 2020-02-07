@@ -56,12 +56,20 @@ action :install do
       action :extract
     end
 
+    # Precreate 'c:\habitat to correct powershell errors'
+    # The powershell_script was just creating a file called habitat in 'c:/'
     directory 'c:\habitat'
 
     powershell_script 'installing from archive' do
       code <<-EOH
       Move-Item -Path #{Chef::Config[:file_cache_path]}/habitat/hab-*/* -Destination C:/habitat -Force
       EOH
+    end
+
+    # Cleanup for future upgrade purposes
+    directory '#{Chef::Config[:file_cache_path]}/habitat' do
+      action :delete
+      recursive true
     end
 
     # TODO: This won't self heal if missing until the next upgrade
@@ -114,13 +122,6 @@ action :upgrade do
 
     remote_file zipfile do
       source download
-    end
-
-    # TODO: Make sure "#{Chef::Config[:file_cache_path]}/habitat" doesn't already containt a previously unzipped version.
-    # My suggestion would be to delete the forlder to be safe
-    directory "#{Chef::Config[:file_cache_path]}/habitat" do
-      recursive true
-      action :delete
     end
 
     archive_file "#{package_name}.zip" do
