@@ -67,7 +67,7 @@ action :install do
     end
 
     # Cleanup for future upgrade purposes
-    directory '#{Chef::Config[:file_cache_path]}/habitat' do
+    directory "#{Chef::Config[:file_cache_path]}/habitat" do
       action :delete
       recursive true
     end
