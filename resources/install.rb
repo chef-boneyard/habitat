@@ -17,7 +17,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
 require 'chef/http/simple'
 
 resource_name :hab_install
@@ -40,7 +39,7 @@ action :install do
   if platform_family?('windows')
     # Retrieve version information
     uri = 'https://packages.chef.io/files'
-    package_name = 'hab-latest-x86_64-windows'
+    package_name = 'hab-x86_64-windows'
     zipfile = "#{Chef::Config[:file_cache_path]}/#{package_name}.zip"
 
     # TODO: Figure out how to properly validate the shasum for windows. Doesn't seem it's published
@@ -57,9 +56,11 @@ action :install do
       action :extract
     end
 
+    directory 'c:\habitat'
+
     powershell_script 'installing from archive' do
       code <<-EOH
-      Move-Item -Path #{Chef::Config[:file_cache_path]}/habitat/#{package_name} -Destination C:/habitat -Force
+      Move-Item -Path #{Chef::Config[:file_cache_path]}/habitat/hab-*/* -Destination C:/habitat -Force
       EOH
     end
 
@@ -113,6 +114,13 @@ action :upgrade do
 
     remote_file zipfile do
       source download
+    end
+
+    # TODO: Make sure "#{Chef::Config[:file_cache_path]}/habitat" doesn't already containt a previously unzipped version.
+    # My suggestion would be to delete the forlder to be safe
+    directory "#{Chef::Config[:file_cache_path]}/habitat" do
+      recursive true
+      action :delete
     end
 
     archive_file "#{package_name}.zip" do
