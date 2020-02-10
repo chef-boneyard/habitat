@@ -1,9 +1,11 @@
+---
 driver:
   name: vagrant
 
 provisioner:
   name: chef_zero
   deprecations_as_errors: true
+  chef_license: accept-no-persist
 
 verifier:
   name: inspec
@@ -12,55 +14,69 @@ platforms:
   - name: amazonlinux
     driver_config:
       box: mvbcoding/awslinux
+  - name: amazonlinux-2
   - name: centos-6
   - name: centos-7
-  - name: debian-8
+  - name: centos-8
   - name: debian-9
-  - name: fedora-28
-  #- name: opensuse-leap-42
-  - name: ubuntu-14.04
+  - name: debian-10
+  - name: fedora-latest
+  - name: opensuse-leap-15
   - name: ubuntu-16.04
+  - name: ubuntu-18.04
   - name: windows-2016
     driver:
-      box: chef/windows-server-2016-standard # private box
+      box: tas50/windows_2016-standard
+  - name: windows-2019
+    driver:
+      box: tas50/windows_2019-standard
 
 suites:
   - name: package
     run_list: test::package
     excludes:
       - windows-2016
+      - windows-2019
   - name: service
     run_list: test::service
     excludes:
       - windows-2016
+      - windows-2019
   - name: service-auth
     run_list: test::service_auth
     excludes:
       - windows-2016
+      - windows-2019
   - name: sup
     run_list: test::sup
     excludes:
       - windows-2016
+      - windows-2019
   - name: config
     run_list: test::config
     excludes:
       - windows-2016
+      - windows-2019
   - name: config-auth
     run_list: test::config_auth
     excludes:
       - windows-2016
+      - windows-2019
   - name: user-toml
     run_list: test::user_toml
     excludes:
       - windows-2016
+      - windows-2019
   - name: license
     run_list: test::license
     excludes:
       - windows-2016
+      - windows-2019
   - name: config-chef-13
     run_list: test::config
     excludes:
       - windows-2016
+      - windows-2019
     provisioner:
       product_name: chef
       product_version: 13.6.4
@@ -68,6 +84,7 @@ suites:
     run_list: test::config_auth
     excludes:
       - windows-2016
+      - windows-2019
     provisioner:
       product_name: chef
       product_version: 13.6.4
@@ -75,27 +92,34 @@ suites:
     run_list: test::win_package
     includes:
       - windows-2016
+      - windows-2019
   - name: win-service
     run_list: test::win_service
     includes:
       - windows-2016
+      - windows-2019
   - name: win-sup
     run_list: test::win_sup
     includes:
       - windows-2016
+      - windows-2019
   - name: win-config
     run_list: test::win_config
     includes:
       - windows-2016
+      - windows-2019
   - name: win-config-auth
     run_list: test::win_config_auth
     includes:
       - windows-2016
+      - windows-2019
   - name: win-user-toml
     run_list: test::win_user_toml
     includes:
       - windows-2016
+      - windows-2019
   - name: win-license
     run_list: test::win_license
     includes:
       - windows-2016
+      - windows-2019

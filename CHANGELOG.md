@@ -4,6 +4,8 @@ This file is used to list changes made in each version of the habitat cookbook.
 <!-- latest_release unreleased -->
 ## Unreleased
 
+#### Merged Pull Requests
+- Additional cookstyle fixes [#189](https://github.com/chef-cookbooks/habitat/pull/189) ([tas50](https://github.com/tas50))
 <!-- latest_release -->
 ## 1.5.1 (2020-01-31)
 

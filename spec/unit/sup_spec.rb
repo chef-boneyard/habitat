@@ -115,6 +115,7 @@ describe 'test::sup' do
 
     context 'an Upstart platform' do
       cached(:chef_run) do
+        # cookstyle: disable ChefDeprecations/DeprecatedChefSpecPlatform
         ChefSpec::ServerRunner.new(
           step_into: ['hab_sup'],
           platform: 'ubuntu',
@@ -163,7 +164,7 @@ describe 'test::sup' do
         ChefSpec::ServerRunner.new(
           step_into: ['hab_sup'],
           platform: 'debian',
-          version: '7.11'
+          version: '7'
         ).converge(described_recipe)
       end
 

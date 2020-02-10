@@ -3,8 +3,7 @@ require 'spec_helper'
 describe 'test::install_for_chefspec' do
   cached(:chef_run) do
     ChefSpec::ServerRunner.new(
-      platform: 'ubuntu',
-      version: '16.04'
+      platform: 'ubuntu'
     ).converge(described_recipe)
   end
 
