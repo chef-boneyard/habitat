@@ -3,10 +3,12 @@ addons:
     sources:
       - chef-current-xenial
     packages:
-      - chefdk
+      - chef-workstation
 
-# Don't `bundle install` which takes about 1.5 mins
 install: echo "skip bundle install"
+
+env:
+  - CHEF_LICENSE=accept
 
 branches:
   only:
@@ -49,15 +51,15 @@ env:
 before_script:
   - sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables -N DOCKER )
   - eval "$(chef shell-init bash)"
-  - CHEF_LICENSE=accept-no-persist chef gem install toml
-  - CHEF_LICENSE=accept-no-persist chef --version
-  - cookstyle --version
-  - foodcritic --version
+  - CHEF_LICENSE=accept chef gem install toml
+  - chef --version
 
-script: CHEF_LICENSE=accept-no-persist KITCHEN_LOCAL_YAML=kitchen.dokken.yml CHEF_VERSION=${CHEF_VERSION} kitchen verify ${INSTANCE}
+script: KITCHEN_LOCAL_YAML=kitchen.dokken.yml CHEF_VERSION=${CHEF_VERSION} kitchen verify ${INSTANCE}
 
 matrix:
   include:
     - script:
-      - CHEF_LICENSE=accept-no-persist chef exec delivery local all
-      env: UNIT_AND_LINT=1
+      - delivery local all
+      env:
+        - UNIT_AND_LINT=1
+        - CHEF_LICENSE=accept

@@ -22,7 +22,7 @@ require 'chef/http/simple'
 
 resource_name :hab_install
 
-property :name, String, default: '' # ~FC108 This allows for bare names like hab_install
+property :name, String, default: ''
 # The following are only used on *nix
 property :install_url, String, default: 'https://raw.githubusercontent.com/habitat-sh/habitat/master/components/hab/install.sh'
 property :bldr_url, String

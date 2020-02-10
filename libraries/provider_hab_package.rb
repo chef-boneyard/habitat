@@ -26,8 +26,6 @@ class Chef
   class Provider
     class Package
       class Hart < Chef::Provider::Package
-        # ~FC113
-
         use_multipackage_api
 
         provides :hab_package
@@ -112,9 +110,9 @@ class Chef
         def platform_target
           if platform_family?('windows')
             'target=x86_64-windows'
-          elsif platform_family?('rhel') && node['platform_version'].to_f < 6.0
+          elsif platform_family?('rhel') && node['platform_version'].to_i < 6
             'target=x86_64-linux-kernel2'
-          elsif platform_family?('suse') && node['platform_version'].to_f < 6.0
+          elsif platform_family?('suse') && node['platform_version'].to_i < 6
             'target=x86_64-linux-kernel2'
           else
             ''
