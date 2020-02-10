@@ -1,3 +1,4 @@
+---
 driver:
   name: dokken
   privileged: true # because Docker and SystemD/Upstart
@@ -24,6 +25,13 @@ platforms:
   driver:
     image: dokken/amazonlinux-2
     pid_one_command: /usr/lib/systemd/systemd
+
+- name: debian-8
+  driver:
+    image: dokken/debian-8
+    pid_one_command: /bin/systemd
+    intermediate_instructions:
+      - RUN /usr/bin/apt-get update
 
 - name: debian-9
   driver:
