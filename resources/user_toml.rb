@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-require 'toml'
+require 'toml-rb'
 
 resource_name :hab_user_toml
 
@@ -34,7 +34,7 @@ action :create do
     mode '0600'
     owner root_owner
     group node['root_group']
-    content TOML::Generator.new(new_resource.config).body
+    content TomlRB.dump(new_resource.config)
     sensitive true
   end
 end
