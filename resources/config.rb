@@ -57,7 +57,7 @@ action :apply do
 
     tempfile = Tempfile.new(['hab_config', '.toml'])
     begin
-      tempfile.write(TOML::Generator.new(new_resource.config).body)
+      tempfile.write(TomlRB.dump(new_resource.config))
       tempfile.close
 
       hab('config', 'apply', opts, new_resource.service_group, incarnation, tempfile.path)
