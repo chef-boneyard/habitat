@@ -16,7 +16,6 @@ end
 
 nginx_content = <<-EOF
 worker_processes = 2
-
 [http]
 keepalive_timeout = 120
 EOF
