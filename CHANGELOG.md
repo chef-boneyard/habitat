@@ -4,9 +4,16 @@ This file is used to list changes made in each version of the habitat cookbook.
 <!-- latest_release unreleased -->
 ## Unreleased
 
-#### Merged Pull Requests
-- Additional cookstyle fixes [#189](https://github.com/chef-cookbooks/habitat/pull/189) ([tas50](https://github.com/tas50))
 <!-- latest_release -->
+
+## 1.5.2 (2020-02-20)
+
+- Fix windows habitat install
+
+#### Merged Pull Requests
+- [BUG FIX] Windows install to correct issue #199 [#202](https://github.com/chef-cookbooks/habitat/pull/202) ([sam1el](https://github.com/sam1el))
+- Additional cookstyle fixes [#189](https://github.com/chef-cookbooks/habitat/pull/189) ([tas50](https://github.com/tas50))
+
 ## 1.5.1 (2020-01-31)
 
 - Fix windows package download URL to use packages.chef.io
