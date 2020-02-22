@@ -90,7 +90,10 @@ describe 'test::sup' do
             Service: {
               Environment: [],
               ExecStart: '/bin/hab sup run --listen-gossip 0.0.0.0:7998 --listen-http 0.0.0.0:7999 --peer 127.0.0.2 --peer 127.0.0.3',
+              ExecStop: '/bin/hab sup term',
               Restart: 'on-failure',
+              RestartSec: '10',
+              KillMode: 'process',
             },
             Install: {
               WantedBy: 'default.target',
