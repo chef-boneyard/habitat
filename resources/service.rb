@@ -233,7 +233,7 @@ action :load do
     options << '--force'
   end
 
-  execute "hab svc start #{new_resource.service_name} #{svc_options.join(' ')}" unless current_resource.running
+  execute "hab svc load #{new_resource.service_name} #{options.join(' ')}" unless current_resource.loaded && !modified
 end
 
 action :unload do
