@@ -39,7 +39,10 @@ class Chef
                     LimitNOFILE: (new_resource.limit_no_files if new_resource.limit_no_files),
                     Environment: service_environment,
                     ExecStart: "/bin/hab sup run #{exec_start_options}",
+                    ExecStop: '/bin/hab sup term',
                     Restart: 'on-failure',
+                    RestartSec: '10',
+                    KillMode: 'process',
                   }.compact,
                   Install: {
                     WantedBy: 'default.target',
