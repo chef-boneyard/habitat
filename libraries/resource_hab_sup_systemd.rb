@@ -41,8 +41,6 @@ class Chef
                     ExecStart: "/bin/hab sup run #{exec_start_options}",
                     ExecStop: '/bin/hab sup term',
                     Restart: 'on-failure',
-                    RestartSec: '10',
-                    KillMode: 'process',
                   }.compact,
                   Install: {
                     WantedBy: 'default.target',
