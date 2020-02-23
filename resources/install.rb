@@ -175,7 +175,7 @@ action_class do
   end
 
   def hab_command
-    cmd = if node['kernel']['release'].to_f < 3.0
+    cmd = if node['kernel']['release'].to_i < 3.0
             ["bash #{Chef::Config[:file_cache_path]}/hab-install.sh", "-v #{hab_version} -t x86_64-linux-kernel2"]
           else
             ["bash #{Chef::Config[:file_cache_path]}/hab-install.sh", "-v #{hab_version}"]
