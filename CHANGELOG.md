@@ -4,9 +4,14 @@ This file is used to list changes made in each version of the habitat cookbook.
 <!-- latest_release unreleased -->
 ## Unreleased
 
+<!-- latest_release -->
+
+## 1.5.3 (2020-02-24)
+
+- Fix linux installer issues
+
 #### Merged Pull Requests
 - [BUG FIX] Linux installers [#203](https://github.com/chef-cookbooks/habitat/pull/203) ([sam1el](https://github.com/sam1el))
-<!-- latest_release -->
 
 ## 1.5.2 (2020-02-20)
 
