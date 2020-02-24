@@ -110,7 +110,7 @@ class Chef
         def platform_target
           if platform_family?('windows')
             'target=x86_64-windows'
-          elsif node['kernel']['release'].to_i < 3.0
+          elsif node['kernel']['release'].to_i < 3
             'target=x86_64-linux-kernel2'
           else
             ''
