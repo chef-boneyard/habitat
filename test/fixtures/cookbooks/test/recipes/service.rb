@@ -25,7 +25,7 @@ ruby_block 'wait-for-nginx-load' do
     raise 'nginx not loaded' unless system 'hab svc status core/nginx'
   end
   retries 5
-  retry_delay 1
+  retry_delay 10
   action :nothing
   subscribes :run, 'hab_service[core/nginx]', :immediately
 end
@@ -34,7 +34,7 @@ ruby_block 'wait-for-nginx-up' do
     raise 'nginx not loaded' unless `hab svc status core/nginx`.match(/standalone\s+up\s+up/)
   end
   retries 5
-  retry_delay 1
+  retry_delay 10
   action :nothing
   subscribes :run, 'ruby_block[wait-for-nginx-load]', :immediately
 end
@@ -60,7 +60,7 @@ ruby_block 'wait-for-redis-load' do
     raise 'redis not loaded' unless system 'hab svc status core/redis'
   end
   retries 5
-  retry_delay 1
+  retry_delay 10
   action :nothing
   subscribes :run, 'hab_service[core/redis]', :immediately
 end
@@ -69,7 +69,7 @@ ruby_block 'wait-for-redis-started' do
     raise 'redis not started' unless `hab svc status core/redis`.match(/standalone\s+up\s+up/)
   end
   retries 5
-  retry_delay 1
+  retry_delay 10
   action :nothing
   subscribes :run, 'ruby_block[wait-for-redis-load]', :immediately
 end
@@ -93,7 +93,7 @@ ruby_block 'wait-for-grafana-startup' do
     raise 'grafana not loaded' unless system 'hab svc status core/grafana'
   end
   retries 5
-  retry_delay 1
+  retry_delay 10
   action :nothing
   subscribes :run, 'hab_service[core/grafana full identifier]', :immediately
 end
@@ -111,7 +111,7 @@ ruby_block 'wait-for-vault-load' do
     raise 'vault not loaded' unless system 'hab svc status core/vault'
   end
   retries 5
-  retry_delay 1
+  retry_delay 10
   action :nothing
   subscribes :run, 'hab_service[core/vault]', :immediately
 end
@@ -153,7 +153,7 @@ ruby_block 'wait-for-prometheus-startup' do
     raise 'prometheus not loaded' unless system 'hab svc status core/prometheus'
   end
   retries 5
-  retry_delay 1
+  retry_delay 10
   action :nothing
   subscribes :run, 'hab_service[core/prometheus]', :immediately
 end
@@ -196,7 +196,7 @@ ruby_block 'wait-for-consul-load' do
     raise 'consul not loaded' unless system 'hab svc status core/consul'
   end
   retries 5
-  retry_delay 1
+  retry_delay 10
   action :nothing
   subscribes :run, 'hab_service[core/consul]', :immediately
 end
@@ -205,7 +205,7 @@ ruby_block 'wait-for-consul-startup' do
     raise 'consul not started' unless `hab svc status core/consul`.match(/standalone\s+up\s+up/)
   end
   retries 5
-  retry_delay 1
+  retry_delay 10
   action :nothing
   subscribes :run, 'ruby_block[wait-for-consul-load]', :immediately
 end
@@ -216,7 +216,7 @@ ruby_block 'wait-for-consul-up-for-30s' do
     raise 'consul not started for 30s' unless uptime.size == 2 && Integer(uptime[1]) > 30
   end
   retries 30
-  retry_delay 1
+  retry_delay 2
   action :nothing
   subscribes :run, 'ruby_block[wait-for-consul-startup]', :immediately
 end
@@ -260,7 +260,7 @@ ruby_block 'wait-for-consul-restart' do
     raise 'consul not restarted' unless !uptime.nil? && uptime.size == 2 && Integer(uptime[1]) < 30
   end
   retries 5
-  retry_delay 1
+  retry_delay 10
   action :nothing
   subscribes :run, 'hab_service[core/consul restart]', :immediately
 end
