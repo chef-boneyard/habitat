@@ -1,6 +1,44 @@
 # habitat CHANGELOG
 
 This file is used to list changes made in each version of the habitat cookbook.
+
+## 1.5.4 (2020-02-25)
+
+- correct package name for the windows zip file being used. also added a step to create c:\habitat directory since powershell was failing on that step. placeholder for upgrade enhancement - [@sam1el](https://github.com/sam1el)
+- [BUG_FIX] Issue #199 fixeed install on Windows - [@sam1el](https://github.com/sam1el)
+- removing unwanted tests - [@sam1el](https://github.com/sam1el)
+- fixed bad syntax in install resource - [@sam1el](https://github.com/sam1el)
+- Remove a bogus platform_family? check - [@tas50](https://github.com/tas50)
+- Remove old Foodcritic comments - [@tas50](https://github.com/tas50)
+- Add testing with Github Actions - [@tas50](https://github.com/tas50)
+- Update systems we test on in Test Kitchen - [@tas50](https://github.com/tas50)
+- Allow versions in the specs to float a bit - [@tas50](https://github.com/tas50)
+- Remove the .foodcritic file - [@tas50](https://github.com/tas50)
+- Update the boxes in Kitchen and the Travis config - [@tas50](https://github.com/tas50)
+- Remove github actions for now - [@tas50](https://github.com/tas50)
+- Use public windows boxes and fix travis failures - [@tas50](https://github.com/tas50)
+- Run delivery in Github Actions - [@tas50](https://github.com/tas50)
+- Disable cookstyle for old spec - [@tas50](https://github.com/tas50)
+- Update CHANGELOG.md with details from pull request #189
+- removed bad unit test - [@sam1el](https://github.com/sam1el)
+- fixing delivery errors (#6) - [@sam1el](https://github.com/sam1el)
+- [BUG FIX] Windows install to correct issue #199 (#202) - [@sam1el](https://github.com/sam1el)
+- Update CHANGELOG.md with details from pull request #202
+- Release 1.15.2 - [@jonlives](https://github.com/jonlives)
+- Merge branch 'master' of github.com:chef-cookbooks/habitat - [@sam1el](https://github.com/sam1el)
+- correction to systemd template - [@sam1el](https://github.com/sam1el)
+- corrected the broken unit test for sup_spec.rb to match the new systemd template - [@sam1el](https://github.com/sam1el)
+- fixed broken syntax in resourece/service.rb line 236-237 - [@sam1el](https://github.com/sam1el)
+- extended the delay on a few service tests to allow more time to load - [@sam1el](https://github.com/sam1el)
+- bumped hab version to newest stable - [@sam1el](https://github.com/sam1el)
+- reverted back to 1.5.0 and removed 2 settings from systemd - [@sam1el](https://github.com/sam1el)
+- removed unwanted systemd test - [@sam1el](https://github.com/sam1el)
+- changing kernel detection syntax to to_i rather then to_f - [@sam1el](https://github.com/sam1el)
+- corrected integers in the install and hab_packaged provider resources for the kernel version check - [@sam1el](https://github.com/sam1el)
+- Update CHANGELOG.md with details from pull request #203
+- Releasing 1.5.3 - [@jonlives](https://github.com/jonlives)
+- adding delay loop to the load function in the service resouce - [@sam1el](https://github.com/sam1el)
+- Update CHANGELOG.md with details from pull request #204
 <!-- latest_release unreleased -->
 ## Unreleased
 
