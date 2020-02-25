@@ -233,7 +233,13 @@ action :load do
     options << '--force'
   end
 
-  execute "hab svc load #{new_resource.service_name} #{options.join(' ')}" unless current_resource.loaded && !modified
+  unless current_resource.loaded && !modified
+    execute 'test' do
+      command "hab svc load #{new_resource.service_name} #{options.join(' ')}"
+      retry_delay 10
+      retries 5
+    end
+  end
 end
 
 action :unload do
