@@ -5,11 +5,12 @@ This file is used to list changes made in each version of the habitat cookbook.
 <!-- latest_release unreleased -->
 ## Unreleased
 
-## 1.5.4 (2020-02-25)
+## Unreleased
 
 - adding delay loop to the load function in the service resouce - [@sam1el](https://github.com/sam1el)
 
 #### Merged Pull Requests
+- Extending Windows chef-client compatibility  [#205](https://github.com/chef-cookbooks/habitat/pull/205) ([sam1el](https://github.com/sam1el))
 - adding delay loop to the load function in the service resouce [#204](https://github.com/chef-cookbooks/habitat/pull/204) ([sam1el](https://github.com/sam1el))
 <!-- latest_release -->
 
