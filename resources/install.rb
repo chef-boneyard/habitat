@@ -21,7 +21,7 @@ require 'chef/http/simple'
 
 resource_name :hab_install
 
-property :name, String, default: '' # ~FC108 This allows for bare names like hab_install
+property :name, String, default: ''
 # The following are only used on *nix
 property :install_url, String, default: 'https://raw.githubusercontent.com/habitat-sh/habitat/master/components/hab/install.sh'
 property :bldr_url, String
@@ -62,14 +62,14 @@ action :install do
           end
         end
         action :run
-        not_if { Dir.exist?('c:\habitat') }
+        not_if { ::Dir.exist?('c:\habitat') }
       end
     else
       archive_file "#{package_name}.zip" do
         path zipfile
         destination "#{Chef::Config[:file_cache_path]}/habitat"
         action :extract
-        not_if { Dir.exist?('c:\habitat') }
+        not_if { ::Dir.exist?('c:\habitat') }
       end
     end
 
@@ -137,7 +137,7 @@ action :upgrade do
     end
 
     if Chef::VERSION < 15
-      ruby_block 'name' do
+      ruby_block "#{package_name}.zip" do
         block do
           require 'zip'
           Zip::File.open(zipfile) do |zip_file|
@@ -201,7 +201,7 @@ action_class do
   end
 
   def hab_command
-    cmd = if node['kernel']['release'].to_f < 3.0
+    cmd = if node['kernel']['release'].to_i < 3
             ["bash #{Chef::Config[:file_cache_path]}/hab-install.sh", "-v #{hab_version} -t x86_64-linux-kernel2"]
           else
             ["bash #{Chef::Config[:file_cache_path]}/hab-install.sh", "-v #{hab_version}"]
