@@ -21,7 +21,7 @@ require 'chef/http/simple'
 
 resource_name :hab_install
 
-property :name, String, default: ''
+property :name, String, default: '' # ~FC108 This allows for bare names like hab_install
 # The following are only used on *nix
 property :install_url, String, default: 'https://raw.githubusercontent.com/habitat-sh/habitat/master/components/hab/install.sh'
 property :bldr_url, String
@@ -50,26 +50,38 @@ action :install do
       source download
     end
 
-    archive_file "#{package_name}.zip" do
-      path zipfile
-      destination "#{Chef::Config[:file_cache_path]}/habitat"
-      action :extract
+    if Chef::VERSION < 15
+      ruby_block "#{package_name}.zip" do
+        block do
+          require 'zip'
+          Zip::File.open(zipfile) do |zip_file|
+            zip_file.each do |f|
+              fpath = "#{Chef::Config[:file_cache_path]}/habitat/" + f.name
+              zip_file.extract(f, fpath) # unless ::File.exist?(fpath)
+            end
+          end
+        end
+        action :run
+        not_if { Dir.exist?('c:\habitat') }
+      end
+    else
+      archive_file "#{package_name}.zip" do
+        path zipfile
+        destination "#{Chef::Config[:file_cache_path]}/habitat"
+        action :extract
+        not_if { Dir.exist?('c:\habitat') }
+      end
     end
 
-    # Precreate 'c:\habitat to correct powershell errors'
-    # The powershell_script was just creating a file called habitat in 'c:/'
-    directory 'c:\habitat'
+    directory 'c:\habitat' do
+      notifies :run, 'powershell_script[installing from archive]', :immediately
+    end
 
     powershell_script 'installing from archive' do
       code <<-EOH
       Move-Item -Path #{Chef::Config[:file_cache_path]}/habitat/hab-*/* -Destination C:/habitat -Force
       EOH
-    end
-
-    # Cleanup for future upgrade purposes
-    directory "#{Chef::Config[:file_cache_path]}/habitat" do
-      action :delete
-      recursive true
+      action :nothing
     end
 
     # TODO: This won't self heal if missing until the next upgrade
@@ -124,11 +136,25 @@ action :upgrade do
       source download
     end
 
-    archive_file "#{package_name}.zip" do
-      path zipfile
-      destination "#{Chef::Config[:file_cache_path]}/habitat"
-      overwrite true
-      action :extract
+    if Chef::VERSION < 15
+      ruby_block 'name' do
+        block do
+          require 'zip'
+          Zip::File.open(zipfile) do |zip_file|
+            zip_file.each do |f|
+              fpath = "#{Chef::Config[:file_cache_path]}/habitat/" + f.name
+              zip_file.extract(f, fpath) # unless ::File.exist?(fpath)
+            end
+          end
+        end
+        action :run
+      end
+    else
+      archive_file "#{package_name}.zip" do
+        path zipfile
+        destination "#{Chef::Config[:file_cache_path]}/habitat"
+        action :extract
+      end
     end
 
     powershell_script 'installing from archive' do
@@ -175,7 +201,7 @@ action_class do
   end
 
   def hab_command
-    cmd = if node['kernel']['release'].to_i < 3
+    cmd = if node['kernel']['release'].to_f < 3.0
             ["bash #{Chef::Config[:file_cache_path]}/hab-install.sh", "-v #{hab_version} -t x86_64-linux-kernel2"]
           else
             ["bash #{Chef::Config[:file_cache_path]}/hab-install.sh", "-v #{hab_version}"]
