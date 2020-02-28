@@ -7,6 +7,7 @@ This file is used to list changes made in each version of the habitat cookbook.
 ## Unreleased
 
 #### Merged Pull Requests
+- Use Github actions badge in the readme [#208](https://github.com/chef-cookbooks/habitat/pull/208) ([Xorima](https://github.com/Xorima))
 - Migrate testing to Github Actions and add support for installing on SUSE [#207](https://github.com/chef-cookbooks/habitat/pull/207) ([Xorima](https://github.com/Xorima))
 <!-- latest_release -->
 
