@@ -12,8 +12,6 @@ version           '1.5.5'
   supports os
 end
 
-
-
 gem 'toml-rb'
 
 depends 'windows'
