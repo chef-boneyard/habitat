@@ -89,7 +89,7 @@ action :install do
       action :add
     end
   else
-    package %w(curl tar)
+    package %w(curl tar gzip)
 
     if new_resource.create_user
       group 'hab'

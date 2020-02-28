@@ -32,6 +32,7 @@ platforms:
       box: tas50/windows_2019-standard
 
 suites:
+# Testing Linux stuff here:
   - name: package
     run_list: test::package
     excludes:
@@ -88,6 +89,8 @@ suites:
     provisioner:
       product_name: chef
       product_version: 13.6.4
+
+# Testing windows stuff here:
   - name: win-package
     run_list: test::win_package
     includes:

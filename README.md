@@ -1,6 +1,10 @@
 # Habitat Cookbook
 
-[![Build Status](https://travis-ci.org/chef-cookbooks/habitat.svg?branch=master)](https://travis-ci.org/chef-cookbooks/habitat) [![Cookbook Version](https://img.shields.io/cookbook/v/habitat.svg)](https://supermarket.chef.io/cookbooks/habitat)
+[![Cookbook Version](https://img.shields.io/cookbook/v/habitat.svg?style=flat)](https://supermarket.chef.io/cookbooks/habitat)
+[![CI State](https://github.com/sous-chefs/grafana/habitat/delivery/badge.svg)](https://github.com/sous-chefs/habitat/actions?query=workflow%3Adelivery)
+[![License](https://img.shields.io/badge/License-Apache%202.0-green.svg)](https://opensource.org/licenses/Apache-2.0)
+
+## Description
 
 This cookbook provides resources for working with [Habitat](https://habitat.sh). It is intended that these resources will be included in core Chef at some point in the future, so it is important to note:
 
@@ -24,14 +28,15 @@ end
 ```
 
 PLEASE NOTE: Without performing one of the above license acceptance steps, all other resources in the habitat cookbook will fail with an error prompting that the license must be accepted.
+
 ## Requirements
 
 ### Platforms
 
 - RHEL 6+
-- Ubuntu 14.04+
-- Debian 7+
-- Windows 2016
+- Ubuntu 16.04+
+- Debian 9+
+- Windows 2016+
 
 ### Habitat
 
