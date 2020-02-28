@@ -1,6 +1,10 @@
 # Habitat Cookbook
 
-[![Build Status](https://travis-ci.org/chef-cookbooks/habitat.svg?branch=master)](https://travis-ci.org/chef-cookbooks/habitat) [![Cookbook Version](https://img.shields.io/cookbook/v/habitat.svg)](https://supermarket.chef.io/cookbooks/habitat)
+[![Cookbook Version](https://img.shields.io/cookbook/v/habitat.svg?style=flat)](https://supermarket.chef.io/cookbooks/habitat)
+[![CI State](https://github.com/sous-chefs/grafana/habitat/delivery/badge.svg)](https://github.com/sous-chefs/habitat/actions?query=workflow%3Adelivery)
+[![License](https://img.shields.io/badge/License-Apache%202.0-green.svg)](https://opensource.org/licenses/Apache-2.0)
+
+## Description
 
 This cookbook provides resources for working with [Habitat](https://habitat.sh). It is intended that these resources will be included in core Chef at some point in the future, so it is important to note:
 
