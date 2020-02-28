@@ -28,14 +28,15 @@ end
 ```
 
 PLEASE NOTE: Without performing one of the above license acceptance steps, all other resources in the habitat cookbook will fail with an error prompting that the license must be accepted.
+
 ## Requirements
 
 ### Platforms
 
 - RHEL 6+
-- Ubuntu 14.04+
-- Debian 7+
-- Windows 2016
+- Ubuntu 16.04+
+- Debian 9+
+- Windows 2016+
 
 ### Habitat
 
