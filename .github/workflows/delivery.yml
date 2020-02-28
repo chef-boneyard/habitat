@@ -36,8 +36,8 @@
             - 'oraclelinux-7'
             - 'oraclelinux-8'
             - 'fedora-latest'
-            - 'ubuntu-16.04'
-            - 'ubuntu-18.04'
+            - 'ubuntu-1604'
+            - 'ubuntu-1804'
             - 'opensuse-leap-15'
 
           suite:
