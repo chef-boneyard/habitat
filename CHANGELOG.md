@@ -4,12 +4,16 @@ This file is used to list changes made in each version of the habitat cookbook.
 
 ## Unreleased
 <!-- latest_release unreleased -->
+## Unreleased
+
+#### Merged Pull Requests
+- Migrate testing to Github Actions and add support for installing on SUSE [#207](https://github.com/chef-cookbooks/habitat/pull/207) ([Xorima](https://github.com/Xorima))
+<!-- latest_release -->
 
 ## 1.5.5 (2020-02-26)
 
 #### Merged Pull Requests
 - Extending Windows chef-client compatibility  [#205](https://github.com/chef-cookbooks/habitat/pull/205) ([sam1el](https://github.com/sam1el))
-<!-- latest_release -->
 
 ## 1.5.4 (2020-02-25)
 
