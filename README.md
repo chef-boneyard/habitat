@@ -1,7 +1,7 @@
 # Habitat Cookbook
 
 [![Cookbook Version](https://img.shields.io/cookbook/v/habitat.svg?style=flat)](https://supermarket.chef.io/cookbooks/habitat)
-[![CI State](https://github.com/sous-chefs/grafana/habitat/delivery/badge.svg)](https://github.com/sous-chefs/habitat/actions?query=workflow%3Adelivery)
+[![CI State](https://github.com/chef-cookbooks/habitat/workflows/delivery/badge.svg)](https://github.com/chef-cookbooks/habitat/actions?query=workflow%3Adelivery)
 [![License](https://img.shields.io/badge/License-Apache%202.0-green.svg)](https://opensource.org/licenses/Apache-2.0)
 
 ## Description
