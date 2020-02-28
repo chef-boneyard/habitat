@@ -1,16 +1,68 @@
-name: delivery
+---
+  name: ci
 
-on: [push, pull_request]
+  on:
+    pull_request:
+    push:
+      branches:
+        - master
 
-jobs:
-  delivery:
+  jobs:
+    delivery:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Check out code
+          uses: actions/checkout@master
+        - name: Run Chef Delivery
+          uses: actionshub/chef-delivery@master
+          env:
+            CHEF_LICENSE: accept-no-persist
 
-    runs-on: ubuntu-latest
+    dokken:
+      needs: [mdl, yamllint, delivery]
+      runs-on: ubuntu-latest
+      strategy:
+        matrix:
+          os:
+            - 'amazonlinux'
+            - 'amazonlinux-2'
+            # - 'debian-8'
+            - 'debian-9'
+            - 'debian-10'
+            - 'centos-6'
+            - 'centos-7'
+            - 'centos-8'
+            - 'oraclelinux-6'
+            - 'oraclelinux-7'
+            - 'oraclelinux-8'
+            - 'fedora-latest'
+            - 'ubuntu-16.04'
+            - 'ubuntu-18.04'
+            - 'opensuse-leap-15'
 
-    steps:
-    - name: Check out code
-      uses: actions/checkout@master
-    - name: Run Chef Delivery
-      uses: actionshub/chef-delivery@master
-      env:
-        CHEF_LICENSE: accept-no-persist
+          suite:
+            - 'package'
+            - 'service'
+            - 'service-auth'
+            - 'sup'
+            - 'config'
+            - 'config-auth'
+            - 'user-toml'
+            - 'license'
+            - 'config-chef-13'
+            - 'config-chef-13-auth'
+        fail-fast: false
+
+      steps:
+        - name: Check out code
+          uses: actions/checkout@master
+        - name: Install Chef
+          uses: actionshub/chef-install@master
+        - name: Dokken
+          uses: actionshub/kitchen-dokken@master
+          env:
+            CHEF_LICENSE: accept-no-persist
+            KITCHEN_LOCAL_YAML: kitchen.dokken.yml
+          with:
+            suite: ${{ matrix.suite }}
+            os: ${{ matrix.os }}
