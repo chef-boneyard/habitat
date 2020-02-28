@@ -209,6 +209,8 @@ Runs a Habitat Supervisor for one or more Habitat Services. It is used in conjun
 
 The `run` action handles installing Habitat using the `hab_install` resource, ensures that the appropriate versions of the `core/hab-sup` and `core/hab-launcher` packages are installed using `hab_package`, and then drops off the appropriate init system definitions and manages the service.
 
+All `event_stream_*` properties are optional, and allow the Habitat Supervisor to display details about it's status and running services via the [Chef Automate Applications Dashboard](https://automate.chef.io/docs/applications-dashboard/).
+
 #### Actions
 
 - `run`: starts the `hab-sup` service
@@ -228,6 +230,11 @@ The `run` action handles installing Habitat using the `hab_install` resource, en
 - `gateway_auth_token`: Auth token for accessing the supervisor's HTTP gateway. This value is templated into the appropriate service file.
 - `license`: Specifies acceptance of habitat license when set to `accept` (defaults to empty string).
 - `health_check_interval`: The interval (seconds) on which to run health checks (defaults to 30).
+- `event_stream_application`: The name of your application that will be displayed in the Chef Automate Applications Dashboard
+- `event_stream_environment`: The application environment for the supervisor, this is for grouping in the Applications Dashboard
+- `event_stream_site`: Application Dashboard label for the "site" of the application - can be filtered in the dashboard
+- `event_stream_url`: `AUTOMATE_HOSTNAME:4222` - the Chef Automate URL with port 4222 specified (can be changed if needed)
+- `event_stream_token`: Chef Automate token for sending application event stream data
 
 #### Examples
 
