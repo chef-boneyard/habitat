@@ -4,10 +4,15 @@ This file is used to list changes made in each version of the habitat cookbook.
 
 ## Unreleased
 <!-- latest_release unreleased -->
-## Unreleased
+
+## 1.5.6 (2020-03-02)
+
+- Cookstyle fixes - [@Xorima](https://github.com/Xorima)
+- opensuse requires gzip to be installer for hab install script - [@Xorima](https://github.com/Xorima)
+- fix readme - [@Xorima](https://github.com/Xorima)
+- updated hab sup resource to include new Application Dashboard options (#206) - [@danielcbright](https://github.com/danielcbright)
 
 #### Merged Pull Requests
-- updated hab sup resource to include new Application Dashboard options [#206](https://github.com/chef-cookbooks/habitat/pull/206) ([danielcbright](https://github.com/danielcbright))
 - Delete Merged Branches [#209](https://github.com/chef-cookbooks/habitat/pull/209) ([Xorima](https://github.com/Xorima))
 - Use Github actions badge in the readme [#208](https://github.com/chef-cookbooks/habitat/pull/208) ([Xorima](https://github.com/Xorima))
 - Migrate testing to Github Actions and add support for installing on SUSE [#207](https://github.com/chef-cookbooks/habitat/pull/207) ([Xorima](https://github.com/Xorima))
