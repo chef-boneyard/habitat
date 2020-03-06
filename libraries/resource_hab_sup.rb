@@ -39,6 +39,11 @@ class Chef
       property :limit_no_files, String
       property :license, String, equal_to: ['accept']
       property :health_check_interval, coerce: proc { |h| h.is_a?(String) ? h : h.to_s }
+      property :event_stream_application, String
+      property :event_stream_environment, String
+      property :event_stream_site, String
+      property :event_stream_url, String
+      property :event_stream_token, String
 
       action :run do
         hab_install new_resource.name do
@@ -70,6 +75,11 @@ class Chef
           opts << "--ring #{new_resource.ring}" if new_resource.ring
           opts << '--auto-update' if new_resource.auto_update
           opts << "--health-check-interval #{new_resource.health_check_interval}" if new_resource.health_check_interval
+          opts << "--event-stream-application #{new_resource.event_stream_application}" if new_resource.event_stream_application
+          opts << "--event-stream-environment #{new_resource.event_stream_environment}" if new_resource.event_stream_environment
+          opts << "--event-stream-site #{new_resource.event_stream_site}" if new_resource.event_stream_site
+          opts << "--event-stream-url #{new_resource.event_stream_url}" if new_resource.event_stream_url
+          opts << "--event-stream-token #{new_resource.event_stream_token}" if new_resource.event_stream_token
           opts.join(' ')
         end
       end
