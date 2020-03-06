@@ -4,6 +4,11 @@ This file is used to list changes made in each version of the habitat cookbook.
 
 ## Unreleased
 <!-- latest_release unreleased -->
+## Unreleased
+
+#### Merged Pull Requests
+- Hab version [#210](https://github.com/chef-cookbooks/habitat/pull/210) ([sam1el](https://github.com/sam1el))
+<!-- latest_release -->
 
 ## 1.5.6 (2020-03-02)
 
@@ -16,7 +21,6 @@ This file is used to list changes made in each version of the habitat cookbook.
 - Delete Merged Branches [#209](https://github.com/chef-cookbooks/habitat/pull/209) ([Xorima](https://github.com/Xorima))
 - Use Github actions badge in the readme [#208](https://github.com/chef-cookbooks/habitat/pull/208) ([Xorima](https://github.com/Xorima))
 - Migrate testing to Github Actions and add support for installing on SUSE [#207](https://github.com/chef-cookbooks/habitat/pull/207) ([Xorima](https://github.com/Xorima))
-<!-- latest_release -->
 
 ## 1.5.5 (2020-02-26)
 
