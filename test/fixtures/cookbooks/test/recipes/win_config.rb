@@ -10,7 +10,6 @@ ruby_block 'wait-for-sup-default-startup' do
   retry_delay 1
 end
 
-hab_package 'skylerto/splunkforwarder'
 hab_service 'skylerto/splunkforwarder'
 
 hab_config 'splunkforwarder.default' do
