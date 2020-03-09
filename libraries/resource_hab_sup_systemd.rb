@@ -63,4 +63,4 @@ class Chef
       end
     end
   end
-end unless system('hab sup status')
+end
