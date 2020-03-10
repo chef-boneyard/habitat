@@ -34,7 +34,7 @@
             - 'centos-8'
             - 'oraclelinux-6'
             - 'oraclelinux-7'
-            - 'oraclelinux-8'
+            # - 'oraclelinux-8'
             - 'fedora-latest'
             - 'ubuntu-1604'
             - 'ubuntu-1804'
@@ -92,4 +92,3 @@
     #       with:
     #         suite: ${{ matrix.suite }}
     #         os: ${{ matrix.os }}
-
