@@ -3,8 +3,8 @@
 This file is used to list changes made in each version of the habitat cookbook.
 
 ## Unreleased
-<!-- latest_release unreleased -->
-## Unreleased
+
+## 1.5.8 (2020-03-09)
 
 #### Merged Pull Requests
 - fixing idempotence on hab_sup_systemd. [#211](https://github.com/chef-cookbooks/habitat/pull/211) ([sam1el](https://github.com/sam1el))
