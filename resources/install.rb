@@ -50,7 +50,11 @@ action :install do
       source download
     end
 
-    if Chef::VERSION < 15
+    if Chef::VERSION.to_i < 15
+      chef_gem 'rubyzip' do
+        compile_time false
+        version '< 2.0.0'
+      end
       ruby_block "#{package_name}.zip" do
         block do
           require 'zip'
@@ -85,8 +89,16 @@ action :install do
     end
 
     # TODO: This won't self heal if missing until the next upgrade
-    windows_path 'C:\habitat' do
-      action :add
+    if Chef::VERSION.to_i < 14
+      env 'PATH_c-habitat' do
+        key_name 'PATH'
+        value 'C:\habitat'
+        action :modify
+      end
+    else
+      windows_path 'C:\habitat' do
+        action :add
+      end
     end
   else
     package %w(curl tar gzip)
@@ -136,7 +148,7 @@ action :upgrade do
       source download
     end
 
-    if Chef::VERSION < 15
+    if Chef::VERSION.to_i < 15
       ruby_block "#{package_name}.zip" do
         block do
           require 'zip'
@@ -164,8 +176,16 @@ action :upgrade do
     end
 
     # TODO: This won't self heal if missing until the next upgrade
-    windows_path 'C:\habitat' do
-      action :add
+    if Chef::VERSION.to_i < 14
+      env 'PATH_c-habitat' do
+        key_name 'PATH'
+        value 'C:\habitat'
+        action :modify
+      end
+    else
+      windows_path 'C:\habitat' do
+        action :add
+      end
     end
   else
     remote_file ::File.join(Chef::Config[:file_cache_path], 'hab-install.sh') do

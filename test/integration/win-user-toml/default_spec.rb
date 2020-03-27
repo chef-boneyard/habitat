@@ -3,7 +3,6 @@ describe file('C:\habitat\hab.exe') do
 end
 
 splunkforwarder_content = <<-EOF
-
 [directories]
 path = ["C:/hab/pkgs/.../*.log"]
 EOF
