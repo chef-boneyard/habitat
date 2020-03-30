@@ -4,7 +4,8 @@ This file is used to list changes made in each version of the habitat cookbook.
 
 ## Unreleased
 <!-- latest_release unreleased -->
-## Unreleased
+
+## 1.5.9 (2020-03-30)
 
 #### Merged Pull Requests
 - updates to be backwards compatible with 12.20.3+ [#214](https://github.com/chef-cookbooks/habitat/pull/214) ([collinmcneese](https://github.com/collinmcneese))
