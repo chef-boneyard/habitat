@@ -3,6 +3,7 @@
 This file is used to list changes made in each version of the habitat cookbook.
 
 ## Unreleased
+<!-- latest_release unreleased -->
 
 ## 1.5.8 (2020-03-09)
 
