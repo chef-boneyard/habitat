@@ -13,5 +13,3 @@ version           '1.5.8'
 end
 
 gem 'toml-rb'
-
-depends 'windows'

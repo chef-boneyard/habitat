@@ -32,13 +32,13 @@ class Chef
         # TODO: There has to be a better way to handle auth token on windows
         # than the system wide environment variable
         auth_action = new_resource.auth_token ? :create : :delete
-        windows_env 'HAB_AUTH_TOKEN' do
+        env 'HAB_AUTH_TOKEN' do
           value new_resource.auth_token if new_resource.auth_token
           action auth_action
         end
 
         gateway_auth_action = new_resource.gateway_auth_token ? :create : :delete
-        windows_env 'HAB_SUP_GATEWAY_AUTH_TOKEN' do
+        env 'HAB_SUP_GATEWAY_AUTH_TOKEN' do
           value new_resource.gateway_auth_token if new_resource.gateway_auth_token
           action gateway_auth_action
         end
@@ -60,8 +60,8 @@ class Chef
         end
 
         service 'Habitat' do
-          subscribes :restart, 'windows_env[HAB_AUTH_TOKEN]'
-          subscribes :restart, 'windows_env[HAB_SUP_GATEWAY_AUTH_TOKEN]'
+          subscribes :restart, 'env[HAB_AUTH_TOKEN]'
+          subscribes :restart, 'env[HAB_SUP_GATEWAY_AUTH_TOKEN]'
           subscribes :restart, 'template[C:/hab/svc/windows-service/HabService.exe.config]'
           subscribes :restart, 'hab_package[core/hab-sup]'
           subscribes :restart, 'hab_package[core/hab-launcher]'
