@@ -40,7 +40,7 @@
             - 'ubuntu-1804'
             - 'opensuse-leap-15'
 
-          suite:
+          suites:
             - 'package'
             - 'service'
             - 'service-auth'
