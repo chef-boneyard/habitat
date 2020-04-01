@@ -36,6 +36,7 @@ class Chef
       property :auto_update, [true, false], default: false
       property :auth_token, String
       property :gateway_auth_token, String
+      property :update_condition, String, default: 'latest'
       property :limit_no_files, String
       property :license, String, equal_to: ['accept']
       property :health_check_interval, coerce: proc { |h| h.is_a?(String) ? h : h.to_s }
@@ -74,6 +75,7 @@ class Chef
           opts.push(*new_resource.peer.map { |b| "--peer #{b}" }) if new_resource.peer
           opts << "--ring #{new_resource.ring}" if new_resource.ring
           opts << '--auto-update' if new_resource.auto_update
+          opts << "--update-condition #{new_resource.update_condition}" if new_resource.update_condition
           opts << "--health-check-interval #{new_resource.health_check_interval}" if new_resource.health_check_interval
           opts << "--event-stream-application #{new_resource.event_stream_application}" if new_resource.event_stream_application
           opts << "--event-stream-environment #{new_resource.event_stream_environment}" if new_resource.event_stream_environment

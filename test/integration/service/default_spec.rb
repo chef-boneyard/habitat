@@ -22,6 +22,7 @@ describe file('/hab/sup/default/specs/grafana.spec') do
   its(:content) { should match(/channel = "bldr-1321420393699319808"/) }
   its(:content) { should match(/topology = "standalone"/) }
   its(:content) { should match(/update_strategy = "at-once"/) }
+  its(:content) { should match(/update_condition = "latest"/) }
   its(:content) { should match(/binds = \["prom:prometheus.default"\]/) }
   its(:content) { should match(/binding_mode = "relaxed"/) }
   its(:content) { should match(/shutdown_timeout = 10/) }

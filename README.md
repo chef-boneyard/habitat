@@ -168,6 +168,7 @@ The follow properties are valid for the `load` action.
 - `loaded`: state property indicating whether the service is loaded in the supervisor
 - `running`: state property indicating whether the service is running in the supervisor
 - `strategy`: Passes `--strategy` with the specified update strategy to the hab command
+- `update_condition`: Passes `--update-condition` with the specified roll-back strategy. Defaults to `latest`. Options are `latest` or `track-channel`
 - `topology`: Passes `--topology` with the specified service topology to the hab command
 - `bldr_url`: Passes `--url` with the specified Builder URL to the hab command.
 - `channel`: Passes `--channel` with the specified channel to the hab command
@@ -190,6 +191,12 @@ end
 # pass the strategy and topology options to hab service commands (load by default)
 hab_service 'core/redis' do
   strategy 'rolling'
+  topology 'standalone'
+end
+
+hab_service 'core/redis' do
+  strategy 'rolling'
+  update_condition 'track-channel'
   topology 'standalone'
 end
 ```
@@ -230,6 +237,8 @@ All `event_stream_*` properties are optional, and allow the Habitat Supervisor t
 - `org`: Only valid for `:run` action, passes `--org` with the specified org name to the hab command
 - `peer`: Only valid for `:run` action, passes `--peer` with the specified initial peer to the hab command
 - `ring`: Only valid for `:run` action, passes `--ring` with the specified ring key name to the hab command
+- `auto_update`: Passes `--auto-update`. This will set the Habitat supervisor to automatically update itself any time a stable version has been released
+- `update_condition`: Passes `--update-condition` with the specified roll-back strategy. Defaults to `latest`. Options are `latest` or `track-channel`
 - `hab_channel`: The channel to install Habitat from. Defaults to stable
 - `auth_token`: Auth token for accessing a private organization on bldr. This value is templated into the appropriate service file.
 - `gateway_auth_token`: Auth token for accessing the supervisor's HTTP gateway. This value is templated into the appropriate service file.
