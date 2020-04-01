@@ -2,9 +2,14 @@
 
 This file is used to list changes made in each version of the habitat cookbook.
 
+## 1.5.10 (2020-04-01)
+
+- Now using the latest version of Habitat 1.5.71 - [@sam1el](https://github.com/sam1el)
+
 ## Unreleased
 <!-- latest_release unreleased -->
-## Unreleased
+
+## 1.5.10 (2020-04-01)
 
 #### Merged Pull Requests
 - Versioning [#215](https://github.com/chef-cookbooks/habitat/pull/215) ([sam1el](https://github.com/sam1el))
