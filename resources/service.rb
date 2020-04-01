@@ -142,7 +142,7 @@ rescue
 end
 
 def get_update_condition(service_details)
-  service_details['health_check_interval']['secs']
+  service_details['update_condition']['secs']
 rescue
   Chef::Log.debug("Update condition #{service_name} not found on Supervisor API")
   'latest'
