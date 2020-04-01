@@ -18,7 +18,7 @@ This file is used to list changes made in each version of the habitat cookbook.
 
 ## 1.5.7 (2020-03-06)
 
-- Hab version bumped to 1.5.71
+- Hab version bumped to 1.5.50
 
 #### Merged Pull Requests
 - Hab version [#210](https://github.com/chef-cookbooks/habitat/pull/210) ([sam1el](https://github.com/sam1el))
