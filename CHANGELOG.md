@@ -12,7 +12,13 @@ This file is used to list changes made in each version of the habitat cookbook.
 <!-- latest_release unreleased -->
 ## Unreleased
 
-## 1.6.0 (2020-04-02)
+#### Merged Pull Requests
+- correcting a breaking issue in install resource [#219](https://github.com/chef-cookbooks/habitat/pull/219) ([sam1el](https://github.com/sam1el))
+
+## Unreleased
+
+#### Merged Pull Requests
+- correcting a breaking issue in install resource [#219](https://github.com/chef-cookbooks/habitat/pull/219) ([sam1el](https://github.com/sam1el))
 
 #### Merged Pull Requests	- complete overhaul of the windows-service config to refplect current best practice
 - adding --update-condition funtionality that was added in habitat 1.5.71 [#217](https://github.com/chef-cookbooks/habitat/pull/217) ([sam1el](https://github.com/sam1el))
@@ -470,5 +476,3 @@ This cookbook was updated to be compatible with the changes made in Habitat 0.26
 ## v0.0.3 (2016-07-14)
 
 - Initial release, includes `hab_package` and `hab_install` resources
-
-
