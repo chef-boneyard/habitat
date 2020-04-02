@@ -8,12 +8,16 @@ This file is used to list changes made in each version of the habitat cookbook.
 
 ## Unreleased
 <!-- latest_release unreleased -->
+## Unreleased
+
+#### Merged Pull Requests
+- adding --update-condition funtionality that was added in habitat 1.5.71 [#217](https://github.com/chef-cookbooks/habitat/pull/217) ([sam1el](https://github.com/sam1el))
+<!-- latest_release -->
 
 ## 1.5.10 (2020-04-01)
 
 #### Merged Pull Requests
 - Versioning [#215](https://github.com/chef-cookbooks/habitat/pull/215) ([sam1el](https://github.com/sam1el))
-<!-- latest_release -->
 
 ## 1.5.9 (2020-03-30)
 
