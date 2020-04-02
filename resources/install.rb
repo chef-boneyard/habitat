@@ -92,6 +92,7 @@ action :install do
     if Chef::VERSION.to_i < 14
       env 'PATH_c-habitat' do
         key_name 'PATH'
+        delim ';'
         value 'C:\habitat'
         action :modify
       end
@@ -179,6 +180,7 @@ action :upgrade do
     if Chef::VERSION.to_i < 14
       env 'PATH_c-habitat' do
         key_name 'PATH'
+        delim ';'
         value 'C:\habitat'
         action :modify
       end
