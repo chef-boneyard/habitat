@@ -2,32 +2,27 @@
 
 This file is used to list changes made in each version of the habitat cookbook.
 
-## 1.6.0 (2020-04-02)
+## 1.6.1 (2020-04-02)
 
-- added --update-condition funtionality that was added in habitat 1.5.71. See README.MD for info on usage
-
-- complete overhaul of the windows-service config to refplect current best practice
+- Found an issue with 1.6.0 where windows install with chef-client 12.22.5 would delete the PATH this has been emergency patched.
 
 ## Unreleased
 <!-- latest_release unreleased -->
 ## Unreleased
 
-#### Merged Pull Requests
-- correcting a breaking issue in install resource [#219](https://github.com/chef-cookbooks/habitat/pull/219) ([sam1el](https://github.com/sam1el))
-
-## Unreleased
+## 1.6.1 (2020-04-02)
 
 #### Merged Pull Requests
 - correcting a breaking issue in install resource [#219](https://github.com/chef-cookbooks/habitat/pull/219) ([sam1el](https://github.com/sam1el))
+<!-- latest_release -->
+
+## 1.6.0 (2020-04-02)
 
 #### Merged Pull Requests	- complete overhaul of the windows-service config to refplect current best practice
 - adding --update-condition funtionality that was added in habitat 1.5.71 [#217](https://github.com/chef-cookbooks/habitat/pull/217) ([sam1el](https://github.com/sam1el))
-
-
 - added --update-condition funtionality that was added in habitat 1.5.71. See README.MD for info on usage
-
 - complete overhaul of the windows-service config to refplect current best practice
-<!-- latest_release -->
+
 
 ## 1.5.10 (2020-04-01)
 
