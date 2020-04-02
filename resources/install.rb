@@ -21,7 +21,7 @@ require 'chef/http/simple'
 
 resource_name :hab_install
 
-property :name, String, default: '' # ~FC108ß
+property :name, String, default: '' # ~FC108
 # The following are only used on *nix
 property :install_url, String, default: 'https://raw.githubusercontent.com/habitat-sh/habitat/master/components/hab/install.sh'
 property :bldr_url, String
@@ -132,7 +132,7 @@ action :install do
   execute 'hab license accept' if new_resource.license == 'accept'
 end
 
-# TODO: What is the point of the upgrade action? We are version locking and the install action safely handles upgrades.
+# TODO: Work out how to unfreeze the versions safely
 action :upgrade do
   if platform_family?('windows')
     # Retrieve version information

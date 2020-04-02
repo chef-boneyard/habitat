@@ -43,6 +43,7 @@ describe 'test::service' do
         channel: :'bldr-1321420393699319808',
         topology: :standalone,
         strategy: :'at-once',
+        update_condition: 'latest',
         binding_mode: :relaxed,
         shutdown_timeout: 10,
         health_check_interval: 32

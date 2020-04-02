@@ -34,6 +34,7 @@ property :remote_sup, String, default: '127.0.0.1:9632', desired_state: false
 # Http port needed for querying/comparing current config value
 property :remote_sup_http, String, default: '127.0.0.1:9631', desired_state: false
 property :gateway_auth_token, String, desired_state: false
+property :update_condition, String, default: 'latest'
 
 load_current_value do
   service_details = get_service_details(service_name)
@@ -44,6 +45,7 @@ load_current_value do
   if loaded
     service_name get_spec_identifier(service_details)
     strategy get_update_strategy(service_details)
+    update_condition get_update_condition(service_details)
     topology get_topology(service_details)
     bldr_url get_builder_url(service_details)
     channel get_channel(service_details)
@@ -58,6 +60,7 @@ load_current_value do
   Chef::Log.debug("service #{service_name} running state: #{running}")
   Chef::Log.debug("service #{service_name} loaded state: #{loaded}")
   Chef::Log.debug("service #{service_name} strategy: #{strategy}")
+  Chef::Log.debug("service #{service_name} update condition: #{update_condition}")
   Chef::Log.debug("service #{service_name} topology: #{topology}")
   Chef::Log.debug("service #{service_name} builder url: #{bldr_url}")
   Chef::Log.debug("service #{service_name} channel: #{channel}")
@@ -138,6 +141,13 @@ rescue
   'none'
 end
 
+def get_update_condition(service_details)
+  service_details['update_condition']['secs']
+rescue
+  Chef::Log.debug("Update condition #{service_name} not found on Supervisor API")
+  'latest'
+end
+
 def get_topology(service_details)
   service_details['topology'].to_sym
 rescue
@@ -200,6 +210,9 @@ action :load do
     modified = true
   end
   converge_if_changed :strategy do
+    modified = true
+  end
+  converge_if_changed :update_condition do
     modified = true
   end
   converge_if_changed :topology do
@@ -293,6 +306,7 @@ action_class do
       opts << "--channel #{new_resource.channel}" if new_resource.channel
       opts << "--group #{new_resource.service_group}" if new_resource.service_group
       opts << "--strategy #{new_resource.strategy}" if new_resource.strategy
+      opts << "--update-condition #{new_resource.update_condition}" if new_resource.update_condition
       opts << "--topology #{new_resource.topology}" if new_resource.topology
       opts << "--health-check-interval #{new_resource.health_check_interval}" if new_resource.health_check_interval
       opts << "--shutdown-timeout #{new_resource.shutdown_timeout}" if new_resource.shutdown_timeout
