@@ -55,7 +55,9 @@ class Chef
         template 'C:/hab/svc/windows-service/HabService.exe.config' do
           source 'windows/HabService.exe.config.erb'
           cookbook 'habitat'
-          variables(exec_start_options: exec_start_options)
+          variables exec_start_options: exec_start_options,
+                    bldr_url: new_resource.bldr_url,
+                    auth_token: new_resource.auth_token
           action :create
         end
 
