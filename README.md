@@ -168,7 +168,7 @@ The follow properties are valid for the `load` action.
 - `loaded`: state property indicating whether the service is loaded in the supervisor
 - `running`: state property indicating whether the service is running in the supervisor
 - `strategy`: Passes `--strategy` with the specified update strategy to the hab command
-- `update_condition`: Passes `--update-condition` dictating when this service should updated. Defaults to `latest`. Options are `latest` or `track-channel`
+- `update_condition`: Passes `--update-condition` dictating when this service should updated. Defaults to `latest`. Options are `latest` or `track-channel` ***Note: This requires a minimum habitat version of 1.5.71***
   - `latest`: Runs the latest package that can be found in the configured channel and local packages.
   - `track-channel`: Always run what is at the head of a given channel. This enables service rollback where demoting a package from a channel will cause the package to rollback to an older version of the package. A ramification of enabling this condition is packages newer than the package at the head of the channel will be automatically uninstalled during a service rollback.
 - `topology`: Passes `--topology` with the specified service topology to the hab command
@@ -224,6 +224,7 @@ Runs a Habitat Supervisor for one or more Habitat Services. It is used in conjun
 The `run` action handles installing Habitat using the `hab_install` resource, ensures that the appropriate versions of the `core/hab-sup` and `core/hab-launcher` packages are installed using `hab_package`, and then drops off the appropriate init system definitions and manages the service.
 
 All `event_stream_*` properties are optional, and allow the Habitat Supervisor to display details about it's status and running services via the [Chef Automate Applications Dashboard](https://automate.chef.io/docs/applications-dashboard/).
+***Note: Automate has TLS on by default. You will need to follow these instructions to make sure habitat has the proper certificates for `event_stram_*` [Share the TLS Certificate with Chef Habitat](https://automate.chef.io/docs/applications-setup/#share-the-tls-certificate-with-chef-habitat)***
 
 #### Actions
 
@@ -240,7 +241,7 @@ All `event_stream_*` properties are optional, and allow the Habitat Supervisor t
 - `peer`: Only valid for `:run` action, passes `--peer` with the specified initial peer to the hab command
 - `ring`: Only valid for `:run` action, passes `--ring` with the specified ring key name to the hab command
 - `auto_update`: Passes `--auto-update`. This will set the Habitat supervisor to automatically update itself any time a stable version has been released
-- `update_condition`: Passes `--update-condition` dictating when this service should updated. Defaults to `latest`. Options are `latest` or `track-channel`
+- `update_condition`: Passes `--update-condition` dictating when this service should updated. Defaults to `latest`. Options are `latest` or `track-channel`  ***Note: This requires a minimum habitat version of 1.5.71***
   - `latest`: Runs the latest package that can be found in the configured channel and local packages.
   - `track-channel`: Always run what is at the head of a given channel. This enables service rollback where demoting a package from a channel will cause the package to rollback to an older version of the package. A ramification of enabling this condition is packages newer than the package at the head of the channel will be automatically uninstalled during a service rollback.
 - `hab_channel`: The channel to install Habitat from. Defaults to stable
@@ -253,6 +254,7 @@ All `event_stream_*` properties are optional, and allow the Habitat Supervisor t
 - `event_stream_site`: Application Dashboard label for the "site" of the application - can be filtered in the dashboard
 - `event_stream_url`: `AUTOMATE_HOSTNAME:4222` - the Chef Automate URL with port 4222 specified (can be changed if needed)
 - `event_stream_token`: Chef Automate token for sending application event stream data
+- `event_stream__certificate` [] ***This will be added in the next release*** - JB 04/07/20
 
 #### Examples
 
