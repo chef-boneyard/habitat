@@ -71,6 +71,7 @@ class Chef
         service 'Habitat' do
           subscribes :restart, 'env[HAB_AUTH_TOKEN]'
           subscribes :restart, 'env[HAB_SUP_GATEWAY_AUTH_TOKEN]'
+          subscribes :restart, 'env[HAB_BLDR_URL]'
           subscribes :restart, 'template[C:/hab/svc/windows-service/HabService.exe.config]'
           subscribes :restart, 'hab_package[core/hab-sup]'
           subscribes :restart, 'hab_package[core/hab-launcher]'
