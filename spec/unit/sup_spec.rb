@@ -19,7 +19,7 @@ describe 'test::sup' do
         expect(chef_run).to run_hab_sup('test-auth-token')
           .with(
             listen_http: '0.0.0.0:10001',
-            listen_gossip: '0.0.0.0:10000'
+            listen_gossip: '0.0.0.0:10000',
             auth_token: 'test'
           )
       end
