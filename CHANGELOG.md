@@ -2,6 +2,12 @@
 
 This file is used to list changes made in each version of the habitat cookbook.
 
+## 1.6.2 (2020-04-07)
+
+- Removing update-condition defaults and tests
+- Corrected README on `update-condition` usage
+- Added notes on for `event_stream_*` usage
+
 ## 1.6.1 (2020-04-02)
 
 - Found an issue with 1.6.0 where windows install with chef-client 12.22.5 would delete the PATH this has been emergency patched.
@@ -12,9 +18,10 @@ This file is used to list changes made in each version of the habitat cookbook.
 
 ## Unreleased
 
+## 1.6.2 (2020-04-07)
+
 #### Merged Pull Requests
 - removing update-confition defaults and tests [#221](https://github.com/chef-cookbooks/habitat/pull/221) ([sam1el](https://github.com/sam1el))
-- correcting a breaking issue in install resource [#219](https://github.com/chef-cookbooks/habitat/pull/219) ([sam1el](https://github.com/sam1el))
 <!-- latest_release -->
 
 ## 1.6.0 (2020-04-02)
