@@ -34,7 +34,7 @@ property :remote_sup, String, default: '127.0.0.1:9632', desired_state: false
 # Http port needed for querying/comparing current config value
 property :remote_sup_http, String, default: '127.0.0.1:9631', desired_state: false
 property :gateway_auth_token, String, desired_state: false
-property :update_condition, String, default: 'latest'
+property :update_condition, String
 
 load_current_value do
   service_details = get_service_details(service_name)
