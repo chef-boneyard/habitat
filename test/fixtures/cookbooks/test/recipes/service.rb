@@ -49,7 +49,6 @@ hab_package 'core/redis'
 hab_service 'core/redis' do
   strategy :rolling
   topology :standalone
-  update_condition 'latest'
   channel :stable
 end
 
@@ -128,7 +127,6 @@ hab_service 'core/grafana property change from defaults' do
   service_group 'test-1'
   bldr_url 'https://bldr-test-1.habitat.sh'
   strategy 'rolling'
-  update_condition 'latest'
   shutdown_timeout 9
   health_check_interval 31
 end
@@ -141,7 +139,6 @@ hab_service 'core/grafana property change from custom values' do
   channel 'bldr-1321420393699319808'
   topology :standalone
   strategy :'at-once'
-  update_condition 'latest'
   binding_mode :relaxed
   shutdown_timeout 10
   health_check_interval 32
@@ -169,7 +166,6 @@ hab_service 'core/grafana binding' do
   channel 'bldr-1321420393699319808'
   topology :standalone
   strategy :'at-once'
-  update_condition 'latest'
   bind 'prom:prometheus.default'
   binding_mode :relaxed
   shutdown_timeout 10

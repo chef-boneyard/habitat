@@ -22,7 +22,6 @@ hab_sup 'test-options' do
   license 'accept'
   listen_http '0.0.0.0:9999'
   listen_gossip '0.0.0.0:9998'
-  update_condition 'latest'
   notifies :stop, 'hab_sup[tester]', :before
   notifies :delete, 'directory[/hab/sup]', :before
 end
@@ -39,7 +38,6 @@ hab_sup 'test-auth-token' do
   license 'accept'
   auth_token 'test'
   listen_http '0.0.0.0:10001'
-  update_condition 'latest'
   notifies :stop, 'hab_sup[test-options]', :before
   notifies :delete, 'directory[/hab/sup]', :before
 end
@@ -57,7 +55,6 @@ hab_sup 'test-gateway-auth-token' do
   gateway_auth_token 'secret'
   listen_http '0.0.0.0:10001'
   listen_gossip '0.0.0.0:10000'
-  update_condition 'latest'
   notifies :stop, 'hab_sup[test-auth-token]', :before
   notifies :delete, 'directory[/hab/sup]', :before
 end
