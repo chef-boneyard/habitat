@@ -30,6 +30,7 @@ end
 
 hab_service 'ncr_devops_platform/sensu-agent-win' do
   strategy 'rolling'
+  update_condition 'latest'
   channel :stable
   action :load
 end
