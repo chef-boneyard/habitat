@@ -10,9 +10,10 @@ This file is used to list changes made in each version of the habitat cookbook.
 <!-- latest_release unreleased -->
 ## Unreleased
 
-## 1.6.1 (2020-04-02)
+## Unreleased
 
 #### Merged Pull Requests
+- removing update-confition defaults and tests [#221](https://github.com/chef-cookbooks/habitat/pull/221) ([sam1el](https://github.com/sam1el))
 - correcting a breaking issue in install resource [#219](https://github.com/chef-cookbooks/habitat/pull/219) ([sam1el](https://github.com/sam1el))
 <!-- latest_release -->
 
