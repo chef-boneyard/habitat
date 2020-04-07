@@ -43,6 +43,12 @@ class Chef
           action gateway_auth_action
         end
 
+        bldr_action = new_resource.bldr_url ? :create : :delete
+        env 'HAB_BLDR_URL' do
+          value new_resource.bldr_url if new_resource.bldr_url
+          action bldr_action
+        end
+
         hab_package 'core/windows-service' do
           bldr_url new_resource.bldr_url if new_resource.bldr_url
           version hab_windows_service_version
