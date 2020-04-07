@@ -36,7 +36,7 @@ class Chef
       property :auto_update, [true, false], default: false
       property :auth_token, String
       property :gateway_auth_token, String
-      property :update_condition, String, default: 'latest'
+      property :update_condition, String
       property :limit_no_files, String
       property :license, String, equal_to: ['accept']
       property :health_check_interval, coerce: proc { |h| h.is_a?(String) ? h : h.to_s }
