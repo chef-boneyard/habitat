@@ -2,7 +2,16 @@
 <configuration>
   <appSettings>
     <add key="debug" value="false" />
-    <add key="HAB_FEAT_IGNORE_SIGNALS" value="true" />
+    <add key="maximumFilesize" value="2kb" />
+    <% if @auth_token %>
+    <add key="ENV_HAB_AUTH_TOKEN" value="<%= @auth_token %>" />
+    <% end %>
+    <% if @gateway_auth_token %>
+    <add key="ENV_HAB_SUP_GATEWAY_AUTH_TOKEN" value="<%= @gateway_auth_token %>" />
+    <% end %>
+    <% if @bldr_url %>
+    <add key="ENV_HAB_BLDR_URL" value="<%= @bldr_url %>" />
+    <% end %>
     <add key="launcherArgs" value="--no-color <%= @exec_start_options %>" />
   </appSettings>
 </configuration>

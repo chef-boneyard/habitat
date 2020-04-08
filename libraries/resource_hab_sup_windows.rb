@@ -43,6 +43,12 @@ class Chef
           action gateway_auth_action
         end
 
+        bldr_action = new_resource.bldr_url ? :create : :delete
+        env 'HAB_BLDR_URL' do
+          value new_resource.bldr_url if new_resource.bldr_url
+          action bldr_action
+        end
+
         hab_package 'core/windows-service' do
           bldr_url new_resource.bldr_url if new_resource.bldr_url
           version hab_windows_service_version
@@ -55,13 +61,17 @@ class Chef
         template 'C:/hab/svc/windows-service/HabService.exe.config' do
           source 'windows/HabService.exe.config.erb'
           cookbook 'habitat'
-          variables(exec_start_options: exec_start_options)
+          variables exec_start_options: exec_start_options,
+                    bldr_url: new_resource.bldr_url,
+                    auth_token: new_resource.auth_token,
+                    gateway_auth_token: new_resource.gateway_auth_token
           action :create
         end
 
         service 'Habitat' do
           subscribes :restart, 'env[HAB_AUTH_TOKEN]'
           subscribes :restart, 'env[HAB_SUP_GATEWAY_AUTH_TOKEN]'
+          subscribes :restart, 'env[HAB_BLDR_URL]'
           subscribes :restart, 'template[C:/hab/svc/windows-service/HabService.exe.config]'
           subscribes :restart, 'hab_package[core/hab-sup]'
           subscribes :restart, 'hab_package[core/hab-launcher]'
