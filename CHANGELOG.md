@@ -18,9 +18,10 @@ This file is used to list changes made in each version of the habitat cookbook.
 
 ## Unreleased
 
-## 1.6.2 (2020-04-07)
+## Unreleased
 
 #### Merged Pull Requests
+- changing the windows service cofig to better reflect newer functional… [#223](https://github.com/chef-cookbooks/habitat/pull/223) ([sam1el](https://github.com/sam1el))
 - removing update-confition defaults and tests [#221](https://github.com/chef-cookbooks/habitat/pull/221) ([sam1el](https://github.com/sam1el))
 <!-- latest_release -->
 
