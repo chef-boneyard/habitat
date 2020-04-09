@@ -45,6 +45,7 @@ class Chef
       property :event_stream_site, String
       property :event_stream_url, String
       property :event_stream_token, String
+      property :event_stream_cert, String
 
       action :run do
         hab_install new_resource.name do
@@ -82,6 +83,7 @@ class Chef
           opts << "--event-stream-site #{new_resource.event_stream_site}" if new_resource.event_stream_site
           opts << "--event-stream-url #{new_resource.event_stream_url}" if new_resource.event_stream_url
           opts << "--event-stream-token #{new_resource.event_stream_token}" if new_resource.event_stream_token
+          opts << "--event-stream-server-certificate #{new_resource.event_stream_cert}" if new_resource.event_stream_cert
           opts.join(' ')
         end
       end

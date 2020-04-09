@@ -1,21 +1,21 @@
-# habitat CHANGELOG
+# Habitat Cookbook CHANGELOG
 
 This file is used to list changes made in each version of the habitat cookbook.
- <!-- latest_release 1.7.0 -->
+
 ## 1.7.0 (2020-04-08)
+
 - Added optional settings for Windows service to recongize local or provided envoringment variables including
   - HAB_AUTH_TOKEN
   - HAB_GATEWAY_AUTH_TOKEN
   - HAB_BLDR_URL
 
-<!-- latest_release unreleased -->
-## Unreleased
-
-## 1.7.0 (2020-04-08)
 #### Merged Pull Requests
 - changing the windows service cofig to better reflect newer functional… [#223](https://github.com/chef-cookbooks/habitat/pull/223) ([sam1el](https://github.com/sam1el))
 - removing update-confition defaults and tests [#221](https://github.com/chef-cookbooks/habitat/pull/221) ([sam1el](https://github.com/sam1el))
-<!-- latest_release -->
+- Added optional settings for Windows service to recongize local or provided envoringment variables including
+  - HAB_AUTH_TOKEN
+  - HAB_GATEWAY_AUTH_TOKEN
+  - HAB_BLDR_URL
 
 ## 1.6.2 (2020-04-07)
 
