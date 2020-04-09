@@ -7,7 +7,7 @@ splunkforwarder_content = <<-EOF
 path = ["C:/hab/pkgs/.../*.log"]
 EOF
 
-describe file('/hab/user/splunkforwarder/config/user.toml') do
+describe file('C:\hab\user\splunkforwarder\config\user.toml') do
   it { should exist }
-  its('content') { should match(splunkforwarder_content.gsub!(/\n/, "\r\n")) }
+  its('content') { should match(splunkforwarder_content) }
 end

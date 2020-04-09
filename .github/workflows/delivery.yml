@@ -26,7 +26,6 @@
           os:
             - 'amazonlinux'
             - 'amazonlinux-2'
-            # - 'debian-8'
             - 'debian-9'
             - 'debian-10'
             - 'centos-6'
@@ -67,28 +66,38 @@
             suite: ${{ matrix.suite }}
             os: ${{ matrix.os }}
 
-    # windows:
-    #   needs: [delivery]
-    #   runs-on: windows-2019
-    #   strategy:
-    #     matrix:
-    #       os:
-    #         - 'windows-2019'
-    #       suite:
-    #         - 'example'
-    #     fail-fast: false
-
-    #   steps:
-    #     - name: Check out code
-    #       uses: actions/checkout@master
-    #       This does not currently support windows and will need support added
-    #     - name: Install Chef
-    #       uses: actionshub/chef-install@master
-    #     - name: Kitchen
-    #       uses: actionshub/kitchen-dokken@master
-    #       env:
-    #         CHEF_LICENSE: accept-no-persist
-    #         KITCHEN_LOCAL_YAML: kitchen.windows.yml
-    #       with:
-    #         suite: ${{ matrix.suite }}
-    #         os: ${{ matrix.os }}
+    windows:
+      needs: [delivery]
+      runs-on: windows-2019
+      strategy:
+        matrix:
+          os:
+            - 'windows-2019'
+          suite:
+            - 'win_config_auth'
+            - 'win_config'
+            - 'win_license'
+            - 'win_package'
+            - 'win_service'
+            - 'win_sup'
+            - 'win_user_toml'
+        fail-fast: false
+      steps:
+        - name: Check out code
+          uses: actions/checkout@master
+        - name: Install Chef Workstation
+          run: . { iwr -useb https://omnitruck.chef.io/install.ps1 } | iex; install -channel stable -project chef-workstation
+          shell: powershell
+        - name: Add Chef Workstation to PATH
+          run: echo "##[add-path]C:\opscode\chef-workstation\bin\;"
+          shell: powershell
+        - name: Chef Infra Client Run
+          run: chef-solo -c test/solo.rb -o "test::${{ matrix.suite }}"
+          shell: powershell
+          env:
+            CHEF_LICENSE: accept-no-persist
+        - name: Integration Testing
+          run: inspec exec test\integration\${{ matrix.suite }}\default_spec.rb
+          shell: powershell
+          env:
+            CHEF_LICENSE: accept-no-persist
