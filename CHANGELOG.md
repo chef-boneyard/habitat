@@ -1,6 +1,7 @@
 # Habitat Cookbook CHANGELOG
 
 This file is used to list changes made in each version of the habitat cookbook.
+<<<<<<< HEAD
  <!-- latest_release unreleased -->
 ## Unreleased
 
@@ -8,6 +9,8 @@ This file is used to list changes made in each version of the habitat cookbook.
 - resolved cookstyle error: libraries/provider_hab_package.rb:176:13 convention: `Style/RedundantReturn`
 
 ## Unreleased
+=======
+>>>>>>> bc15fc632a1c811f3babfeee546a6ba4d4e20f37
 
 ## 1.7.0 (2020-04-08)
 
@@ -17,8 +20,11 @@ This file is used to list changes made in each version of the habitat cookbook.
   - HAB_BLDR_URL
 <!-- latest_release -->
 
+<<<<<<< HEAD
 ## 1.7.0 (2020-04-08)
 
+=======
+>>>>>>> bc15fc632a1c811f3babfeee546a6ba4d4e20f37
 #### Merged Pull Requests
 - Automated PR: Cookstyle Changes [#225](https://github.com/chef-cookbooks/habitat/pull/225) ([xorimabot](https://github.com/xorimabot))
 - adds windows Github Actions testing for issue #193 [#224](https://github.com/chef-cookbooks/habitat/pull/224) ([collinmcneese](https://github.com/collinmcneese))
