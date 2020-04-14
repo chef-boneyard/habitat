@@ -1,11 +1,6 @@
 slack:
   notify_channel: ops-notify
 
-merge_actions:
-  - built_in:update_changelog:
-      ignore_labels:
-        - "Expeditor: Skip All"
-
 subscriptions:
   - workload: artifact_published:stable:habitat:*
     actions:
