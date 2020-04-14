@@ -2,6 +2,11 @@
 
 This file is used to list changes made in each version of the habitat cookbook.
  <!-- latest_release unreleased -->
+## Unreleased ## Unreleased ## Unreleased
+
+- resolved cookstyle error: libraries/provider_hab_package.rb:174:13 convention: `Style/RedundantReturn`
+- resolved cookstyle error: libraries/provider_hab_package.rb:176:13 convention: `Style/RedundantReturn`
+
 ## Unreleased
 - Added optional settings for Windows service to recongize local or provided envoringment variables including
   - HAB_AUTH_TOKEN
