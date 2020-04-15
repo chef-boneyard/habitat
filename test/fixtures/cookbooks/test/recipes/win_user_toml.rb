@@ -20,5 +20,4 @@ hab_user_toml 'splunkforwarder' do
   )
 end
 
-hab_package 'skylerto/splunkforwarder'
 hab_service 'skylerto/splunkforwarder'

@@ -79,114 +79,119 @@ class Chef
 
         alias_method :upgrade_package, :install_package
 
-        def remove_package(_name, _version)
-          raise 'It is too dangerous to :remove packages with the hab_package resource right now. This functionality should be deferred to the hab cli.'
-          names.zip(versions).map do |n, v| # rubocop:disable Lint/UnreachableCode
+        def remove_package(names, versions)
+          # raise 'It is too dangerous to :remove packages with the hab_package resource right now. This functionality should be deferred to the hab cli.'
+          names.zip(versions).map do |n, v|
+            opts = %w(pkg uninstall)
+            opts += ['--keep-latest', new_resource.keep_latest ] if new_resource.keep_latest
+            opts += ["#{strip_version(n).chomp('/')}#{v}", new_resource.options]
+            opts += ['--exclude'] if new_resource.exclude
+            opts += ['--no-deps'] if new_resource.no_deps
             # FIXME: `hab pkg uninstall` would be a lot safer here
-            path = hab('pkg', 'path', "#{n}/#{v}").stdout
-            Chef::Log.warn 'semantics of :remove will almost certainly change in the future'
-            declare_resource(:directory, path) do
-              recursive true
-              action :remove
-            end
+            # path = hab('pkg', 'path', "#{n}/#{v}").stdout
+            # Chef::Log.warn 'semantics of :remove will almost certainly change in the future'
+            # declare_resource(:directory, path) do
+            #   recursive true
+            hab(opts)
+            # action :remove
           end
         end
+      end
 
-        alias_method :purge_package, :remove_package
+      alias_method :purge_package, :remove_package
 
-        private
+      private
 
-        def validate_name!(name)
-          raise ArgumentError, "package name must be specified as 'origin/name', use the 'version' property to specify a version" unless name.squeeze('/').count('/') < 2
+      def validate_name!(name)
+        raise ArgumentError, "package name must be specified as 'origin/name', use the 'version' property to specify a version" unless name.squeeze('/').count('/') < 2
+      end
+
+      def strip_version(name)
+        validate_name!(name)
+        n = name.squeeze('/').chomp('/').sub(%r{^\/}, '')
+        n = n[0..(n.rindex('/') - 1)] while n.count('/') >= 2
+        n
+      end
+
+      def platform_target
+        if platform_family?('windows')
+          'target=x86_64-windows'
+        elsif node['kernel']['release'].to_i < 3
+          'target=x86_64-linux-kernel2'
+        else
+          ''
         end
+      end
 
-        def strip_version(name)
-          validate_name!(name)
-          n = name.squeeze('/').chomp('/').sub(%r{^\/}, '')
-          n = n[0..(n.rindex('/') - 1)] while n.count('/') >= 2
-          n
-        end
+      def depot_package(name, version = nil)
+        @depot_package ||= {}
+        @depot_package[name] ||=
+          begin
+            origin, pkg_name = name.split('/')
+            name_version = [pkg_name, version].compact.join('/').squeeze('/').chomp('/').sub(%r{^\/}, '')
+            url = "#{new_resource.bldr_url.chomp('/')}/v1/depot/channels/#{origin}/#{new_resource.channel}/pkgs/#{name_version}"
+            url << '/latest' unless name_version.count('/') >= 2
+            url << "?#{platform_target}" unless platform_target.empty?
 
-        def platform_target
-          if platform_family?('windows')
-            'target=x86_64-windows'
-          elsif node['kernel']['release'].to_i < 3
-            'target=x86_64-linux-kernel2'
-          else
-            ''
+            headers = {}
+            headers['Authorization'] = "Bearer #{new_resource.auth_token}" if new_resource.auth_token
+
+            Chef::JSONCompat.parse(http.get(url, headers))
+          rescue Net::HTTPServerException
+            nil
           end
+      end
+
+      def package_version(name, version = nil)
+        p = depot_package(name, version)
+        "#{p['ident']['version']}/#{p['ident']['release']}" unless p.nil?
+      end
+
+      def http
+        # FIXME: use SimpleJSON when the depot mime-type is fixed
+        @http ||= Chef::HTTP::Simple.new('https://bldr.habitat.sh/')
+      end
+
+      def candidate_versions
+        package_name_array.zip(new_version_array).map do |n, v|
+          package_version(n, v)
         end
+      end
 
-        def depot_package(name, version = nil)
-          @depot_package ||= {}
-          @depot_package[name] ||=
-            begin
-              origin, pkg_name = name.split('/')
-              name_version = [pkg_name, version].compact.join('/').squeeze('/').chomp('/').sub(%r{^\/}, '')
-              url = "#{new_resource.bldr_url.chomp('/')}/v1/depot/channels/#{origin}/#{new_resource.channel}/pkgs/#{name_version}"
-              url << '/latest' unless name_version.count('/') >= 2
-              url << "?#{platform_target}" unless platform_target.empty?
-
-              headers = {}
-              headers['Authorization'] = "Bearer #{new_resource.auth_token}" if new_resource.auth_token
-
-              Chef::JSONCompat.parse(http.get(url, headers))
-            rescue Net::HTTPServerException
-              nil
-            end
+      def current_versions
+        package_name_array.map do |n|
+          installed_version(n)
         end
+      end
 
-        def package_version(name, version = nil)
-          p = depot_package(name, version)
-          "#{p['ident']['version']}/#{p['ident']['release']}" unless p.nil?
+      def installed_version(ident)
+        hab('pkg', 'path', ident).stdout.chomp.split(platform_family?('windows') ? '\\' : '/')[-2..-1].join('/')
+      rescue Mixlib::ShellOut::ShellCommandFailed
+        nil
+      end
+
+      # This is used by the superclass Chef::Provider::Package
+      def version_requirement_satisfied?(current_version, new_version)
+        return false if new_version.nil? || current_version.nil?
+
+        nv_parts = new_version.squeeze('/').split('/')
+
+        if nv_parts.count < 2
+          current_version.squeeze('/').split('/')[0] == new_version.squeeze('/')
+        else
+          current_version.squeeze('/') == new_resource.version.squeeze('/')
         end
+      end
 
-        def http
-          # FIXME: use SimpleJSON when the depot mime-type is fixed
-          @http ||= Chef::HTTP::Simple.new('https://bldr.habitat.sh/')
-        end
+      # This is used by the superclass Chef::Provider::Package
+      def version_compare(v1, v2)
+        return unless Chef::Provider::Package.methods.include?(:version_compare)
 
-        def candidate_versions
-          package_name_array.zip(new_version_array).map do |n, v|
-            package_version(n, v)
-          end
-        end
+        # Convert the package version (X.Y.Z/DATE) into a version that Mixlib::Versioning understands (X.Y.Z+DATE)
+        hab_v1 = Mixlib::Versioning.parse(v1.tr('/', '+'))
+        hab_v2 = Mixlib::Versioning.parse(v2.tr('/', '+'))
 
-        def current_versions
-          package_name_array.map do |n|
-            installed_version(n)
-          end
-        end
-
-        def installed_version(ident)
-          hab('pkg', 'path', ident).stdout.chomp.split(platform_family?('windows') ? '\\' : '/')[-2..-1].join('/')
-        rescue Mixlib::ShellOut::ShellCommandFailed
-          nil
-        end
-
-        # This is used by the superclass Chef::Provider::Package
-        def version_requirement_satisfied?(current_version, new_version)
-          return false if new_version.nil? || current_version.nil?
-
-          nv_parts = new_version.squeeze('/').split('/')
-
-          if nv_parts.count < 2
-            current_version.squeeze('/').split('/')[0] == new_version.squeeze('/')
-          else
-            current_version.squeeze('/') == new_resource.version.squeeze('/')
-          end
-        end
-
-        # This is used by the superclass Chef::Provider::Package
-        def version_compare(v1, v2)
-          return unless Chef::Provider::Package.methods.include?(:version_compare)
-
-          # Convert the package version (X.Y.Z/DATE) into a version that Mixlib::Versioning understands (X.Y.Z+DATE)
-          hab_v1 = Mixlib::Versioning.parse(v1.tr('/', '+'))
-          hab_v2 = Mixlib::Versioning.parse(v2.tr('/', '+'))
-
-          hab_v1 <=> hab_v2
-        end
+        hab_v1 <=> hab_v2
       end
     end
   end

@@ -28,12 +28,13 @@ property :bldr_url, String
 property :create_user, [true, false], default: true
 property :tmp_dir, String
 property :license, String, equal_to: ['accept']
+property :hab_version, String
 
 action :install do
   if ::File.exist?(hab_path)
     cmd = shell_out!([hab_path, '--version'].flatten.compact.join(' '))
     version = %r{hab (\d*\.\d*\.\d[^\/]*)}.match(cmd.stdout)[1]
-    return if version == hab_version
+    return if version == new_resource.hab_version
   end
 
   if platform_family?('windows')
@@ -205,6 +206,7 @@ action :upgrade do
           env[var] = new_resource.send(property.to_sym) if new_resource.send(property.to_sym)
         end
       )
+      not_if { ::File.exist?('/bin/hab') }
     end
   end
 end
@@ -223,11 +225,20 @@ action_class do
   end
 
   def hab_command
-    cmd = if node['kernel']['release'].to_i < 3
-            ["bash #{Chef::Config[:file_cache_path]}/hab-install.sh", "-v #{hab_version} -t x86_64-linux-kernel2"]
-          else
-            ["bash #{Chef::Config[:file_cache_path]}/hab-install.sh", "-v #{hab_version}"]
-          end
+    if new_resource.hab_version
+      cmd = if node['kernel']['release'].to_i < 3
+              ["bash #{Chef::Config[:file_cache_path]}/hab-install.sh", "-v #{new_resource.hab_version} -t x86_64-linux-kernel2"]
+            else
+              ["bash #{Chef::Config[:file_cache_path]}/hab-install.sh", "-v #{new_resource.hab_version}"]
+            end
+    end
+    unless new_resource.hab_version
+      cmd = if node['kernel']['release'].to_i < 3
+              ["bash #{Chef::Config[:file_cache_path]}/hab-install.sh", '-t x86_64-linux-kernel2']
+            else
+              ["bash #{Chef::Config[:file_cache_path]}/hab-install.sh"]
+            end
+    end
     cmd.join(' ')
   end
 end
