@@ -18,6 +18,7 @@ This file is used to list changes made in each version of the habitat cookbook.
 
 ## Unreleased
 #### Merged Pull Requests
+- Automated PR: Standardising Files [#226](https://github.com/chef-cookbooks/habitat/pull/226) ([xorimabot](https://github.com/xorimabot))
 - Automated PR: Cookstyle Changes [#225](https://github.com/chef-cookbooks/habitat/pull/225) ([xorimabot](https://github.com/xorimabot))
 - adds windows Github Actions testing for issue #193 [#224](https://github.com/chef-cookbooks/habitat/pull/224) ([collinmcneese](https://github.com/collinmcneese))
 - changing the windows service cofig to better reflect newer functional… [#223](https://github.com/chef-cookbooks/habitat/pull/223) ([sam1el](https://github.com/sam1el))
