@@ -1,6 +1,7 @@
 # Habitat Cookbook CHANGELOG
 
 This file is used to list changes made in each version of the habitat cookbook.
+<<<<<<< HEAD
  <!-- latest_release unreleased -->
 ## Unreleased
 
@@ -16,6 +17,8 @@ This file is used to list changes made in each version of the habitat cookbook.
 
 =======
 ## Unreleased
+=======
+>>>>>>> Issue/eventstream (#7)
 
 ## 1.7.0 (2020-04-08)
 
@@ -23,9 +26,12 @@ This file is used to list changes made in each version of the habitat cookbook.
   - HAB_AUTH_TOKEN
   - HAB_GATEWAY_AUTH_TOKEN
   - HAB_BLDR_URL
+<<<<<<< HEAD
 <!-- latest_release -->
 
 ## 1.7.0 (2020-04-08)
+=======
+>>>>>>> Issue/eventstream (#7)
 
 #### Merged Pull Requests
 - Automated PR: Standardising Files [#226](https://github.com/chef-cookbooks/habitat/pull/226) ([xorimabot](https://github.com/xorimabot))
