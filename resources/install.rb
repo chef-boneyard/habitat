@@ -231,31 +231,3 @@ action_class do
     cmd
   end
 end
-#     cmd.join(' ')
-#   end
-# end
-
-#   def hab_command
-#     if new_resource.hab_version
-#       cmd = if node['kernel']['release'].to_i < 3
-#               ["bash #{Chef::Config[:file_cache_path]}/hab-install.sh", "-v #{new_resource.hab_version} -t x86_64-linux-kernel2"]
-#             else
-#               ["bash #{Chef::Config[:file_cache_path]}/hab-install.sh", "-v #{new_resource.hab_version}"]
-#             end
-#     end
-#     unless new_resource.hab_version
-#       cmd = if node['kernel']['release'].to_i < 3
-#               ["bash #{Chef::Config[:file_cache_path]}/hab-install.sh", '-t x86_64-linux-kernel2']
-#             else
-#               ["bash #{Chef::Config[:file_cache_path]}/hab-install.sh"]
-#             end
-#     end
-#     cmd.join(' ')
-#   end
-# end
-
-# cmd_tmp = "bash #{Chef::Config[:file_cache_path]}/hab-install.sh"
-# cmd_tmp << " -v #{new_resource.hab_version} " if new_resource.hab_version
-# cmd_tmp << " -t x86_64-linux-kernel2" if node['kernel']['release'].to_i < 3
-
-# cmd = [cmd_tmp]
