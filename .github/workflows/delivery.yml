@@ -40,6 +40,8 @@
             - 'opensuse-leap-15'
 
           suite:
+            - 'install_for_chefspec'
+            - 'install_no_user'
             - 'package'
             - 'service'
             - 'sup'
