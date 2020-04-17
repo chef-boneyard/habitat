@@ -201,7 +201,7 @@ The follow properties are valid for the `load` action.
 - `service_name`: name property, the name of the service, must be in the form of `origin/name`
 - `loaded`: state property indicating whether the service is loaded in the supervisor
 - `running`: state property indicating whether the service is running in the supervisor
-- `strategy`: Passes `--strategy` with the specified update strategy to the hab command. Defaults to `:none`. Other options are `:at_once` and `:rolling`
+- `strategy`: Passes `--strategy` with the specified update strategy to the hab command. Defaults to `:none`. Other options are `:'at-once'` and `:rolling`
 - `update_condition`: Passes `--update-condition` dictating when this service should updated. Defaults to `latest`. Options are `latest` or `track-channel` ***Note: This requires a minimum habitat version of 1.5.71***
   - `latest`: Runs the latest package that can be found in the configured channel and local packages.
   - `track-channel`: Always run what is at the head of a given channel. This enables service rollback where demoting a package from a channel will cause the package to rollback to an older version of the package. A ramification of enabling this condition is packages newer than the package at the head of the channel will be automatically uninstalled during a service rollback.

@@ -16,7 +16,7 @@ hab_package 'core/jq-static' do
   binlink true
 end
 
-# Test 1: Load Servoce (memcached)
+# Test 1: Load Service (memcached)
 hab_service 'core/memcached' do
   gateway_auth_token 'secret'
 end
