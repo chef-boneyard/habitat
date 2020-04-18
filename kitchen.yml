@@ -37,7 +37,7 @@ platforms:
       box: tas50/windows_2019
 
 suites:
-  Testing Linux stuff here:
+  # Testing Linux stuff here:
   - name: package
     run_list: test::package
     excludes:
