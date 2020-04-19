@@ -74,7 +74,7 @@
           os:
             - 'windows-2019'
           suite:
-            - 'win_config_auth'
+            - 'win-config-auth'
             # - 'win_config'
             # - 'win_license'
             # - 'win_package'
