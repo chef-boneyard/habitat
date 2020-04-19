@@ -1,22 +1,40 @@
 ---
 driver:
-  name: docker
-  privileged: true # because Docker and SystemD/Upstart
-  chef_license: accept-no-persist
+  name: exec
+  host: localhost
 
-transport:
-  name: docker
-
-# provisioner:
-#   name: docker
-#   deprecations_as_errors: true
+provisioner:
+  require_chef_omnibus: false
+  name: chef_zero
+  install_strategy: skip
+  chef_client_path: "C:\\opscode\\chef-workstation\\bin\\chef-client"
+  deprecations_as_errors: false
 
 verifier:
   name: inspec
 
 platforms:
 - name: windows-2019
-  driver_config:
-    image: microsoft/windowsservercore
-    platform: windows
 
+suites:
+  - name: win_config_auth
+    run_list:
+      - recipe[test::win_config_auth]
+  - name: win_config
+    run_list:
+      - recipe[test::win_config]
+  - name: win_license
+    run_list:
+      - recipe[test::win_license]
+  - name: win_package
+    run_list:
+      - recipe[test::win_package]
+  - name: win_service
+    run_list:
+      - recipe[test::win_service]
+  - name: win_sup
+    run_list:
+      - recipe[test::win_sup]
+  - name: win_user_toml
+    run_list:
+      - recipe[test::win_user_toml]
