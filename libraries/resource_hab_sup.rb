@@ -48,7 +48,7 @@ class Chef
       property :event_stream_cert, String
       property :sup_version, String
       property :launcher_version, String
-      property :service_version, String
+      property :service_version, String # Windows only
       property :keep_latest, String
 
       action :run do

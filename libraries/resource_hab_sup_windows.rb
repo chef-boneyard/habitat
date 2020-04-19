@@ -26,6 +26,9 @@ class Chef
         node['platform_family'] == 'windows'
       end
 
+      service_file = 'windows/HabService.dll.config.erb'
+      win_service_config = 'C:/hab/svc/windows-service/HabService.dll.config'
+
       action :run do
         super()
 
@@ -58,8 +61,8 @@ class Chef
           not_if { ::Win32::Service.exists?('Habitat') }
         end
 
-        template 'C:/hab/svc/windows-service/HabService.dll.config' do
-          source 'windows/HabService.dll.config.erb'
+        template "#{win_service_config}" do
+          source "#{service_file}"
           cookbook 'habitat'
           variables exec_start_options: exec_start_options,
                     bldr_url: new_resource.bldr_url,
@@ -72,7 +75,7 @@ class Chef
           subscribes :restart, 'env[HAB_AUTH_TOKEN]'
           subscribes :restart, 'env[HAB_SUP_GATEWAY_AUTH_TOKEN]'
           subscribes :restart, 'env[HAB_BLDR_URL]'
-          subscribes :restart, 'template[C:/hab/svc/windows-service/HabService.dll.config]'
+          subscribes :restart, "template[#{win_service_config}]"
           subscribes :restart, 'hab_package[core/hab-sup]'
           subscribes :restart, 'hab_package[core/hab-launcher]'
           action [:enable, :start]
