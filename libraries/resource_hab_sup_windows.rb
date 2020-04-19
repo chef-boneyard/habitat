@@ -61,8 +61,8 @@ class Chef
           not_if { ::Win32::Service.exists?('Habitat') }
         end
 
-        template "#{win_service_config}" do
-          source "#{service_file}"
+        template win_service_config.to_s do
+          source service_file.to_s
           cookbook 'habitat'
           variables exec_start_options: exec_start_options,
                     bldr_url: new_resource.bldr_url,
