@@ -1,6 +1,6 @@
 ---
 driver:
-  name: exec
+  name: proxy
   host: localhost
 
 provisioner:
