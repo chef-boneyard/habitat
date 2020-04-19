@@ -87,9 +87,9 @@
           uses: actions/checkout@master
         - name: Install Chef
           uses: actionshub/chef-install@add-to-path
-        - name: Testing stuff
-          run: gci $ENV:TEMP
-          shell: powershell
+        # - name: Testing stuff
+        #   run: gci $ENV:TEMP
+        #   shell: powershell
         - name: Testing stuff
           run:  New-Item "$env:temp\kitchen" -ItemType directory
           shell: powershell
@@ -101,6 +101,18 @@
           with:
             suite: ${{ matrix.suite }}
             os: ${{ matrix.os }}
+        - name: Catting the log file
+          run:  Get-Content ".kitchen/logs/kitchen.log" | out-String | Write-Output
+          shell: powershell
+        - name: Test Kitchen
+          uses: actionshub/test-kitchen@master
+          env:
+            CHEF_LICENSE: accept-no-persist
+            KITCHEN_LOCAL_YAML: kitchen.windows.yml
+          with:
+            suite: ${{ matrix.suite }}
+            os: ${{ matrix.os }}
+            action: diagnose
         # - name: Add Chef Workstation to PATH
         #   run: echo "##[add-path]C:\opscode\chef-workstation\bin\;"
         #   shell: powershell
