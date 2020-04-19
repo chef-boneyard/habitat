@@ -87,6 +87,12 @@
           uses: actions/checkout@master
         - name: Install Chef
           uses: actionshub/chef-install@add-to-path
+        - name: Testing stuff
+          run: gci $ENV:TEMP
+          shell: powershell
+        - name: Testing stuff
+          run:  New-Item "$env:path\kitchen" -ItemType directory
+          shell: powershell
         - name: Test Kitchen
           uses: actionshub/test-kitchen@master
           env:
