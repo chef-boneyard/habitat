@@ -86,8 +86,8 @@
         - name: Check out code
           uses: actions/checkout@master
         - name: Install Chef
-          uses: actionshub/chef-install@master
-        - name: Dokken
+          uses: actionshub/chef-install@add-to-path
+        - name: Test Kitchen
           uses: actionshub/test-kitchen@master
           env:
             CHEF_LICENSE: accept-no-persist
