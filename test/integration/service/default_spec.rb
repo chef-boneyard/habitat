@@ -14,19 +14,18 @@ describe file('/hab/sup/default/specs/prometheus.spec') do
   it { should exist }
 end
 
-describe file('/hab/sup/default/specs/grafana.spec') do
-  it { should exist }
-  its(:content) { should match(%r{ident = "core/grafana/6.4.3/20191105024430"}) }
-  its(:content) { should match(/group = "test"/) }
-  its(:content) { should match(%r{bldr_url = "https://bldr-test.habitat.sh"}) }
-  its(:content) { should match(/channel = "bldr-1321420393699319808"/) }
-  its(:content) { should match(/topology = "standalone"/) }
-  its(:content) { should match(/update_strategy = "at-once"/) }
-  its(:content) { should match(/update_condition = "latest"/) }
-  its(:content) { should match(/binds = \["prom:prometheus.default"\]/) }
-  its(:content) { should match(/binding_mode = "relaxed"/) }
-  its(:content) { should match(/shutdown_timeout = 10/) }
-  its(:content) { should match(/\[health_check_interval\]\nsecs = 32/) }
+grafanaserviceapi = 'curl -v -H "Authorization: Bearer secret" http://localhost:9631/services/grafana/test | jq'
+describe json(command: grafanaserviceapi) do
+  its(['binding_mode']) { should eq 'relaxed' }
+  its(['binds']) { should eq ['prom:prometheus.default'] }
+  its(['bldr_url']) { should eq 'https://bldr-test.habitat.sh' }
+  its(['channel']) { should eq 'bldr-1321420393699319808' }
+  its(%w(health_check_interval secs)) { should eq 32 }
+  its(%w(pkg ident)) { should eq 'core/grafana/6.4.3/20191105024430' }
+  its(['service_group']) { should eq 'grafana.test' }
+  its(['topology']) { should eq 'standalone' }
+  its(['update_condition']) { should eq 'latest' }
+  its(['update_strategy']) { should eq 'at-once' }
 end
 
 describe directory('/hab/pkgs/core/grafana/6.4.3/20191105024430') do
@@ -49,7 +48,7 @@ end
 
 describe file('/hab/sup/default/specs/redis.spec') do
   it { should exist }
-  its(:content) { should match(/desired_state = "down"/) }
+  its(:content) { should match(/desired_state = "up"/) }
   its(:content) { should match(/channel = "stable"/) }
 end
 

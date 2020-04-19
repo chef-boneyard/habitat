@@ -28,6 +28,9 @@ class Chef
       property :channel, String, default: 'stable'
       property :auth_token, String
       property :binlink, equal_to: [true, false, :force], default: false
+      property :keep_latest, String
+      property :exclude, String
+      property :no_deps, equal_to: [true, false], default: false
     end
   end
 end

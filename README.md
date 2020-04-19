@@ -11,6 +11,10 @@ This cookbook provides resources for working with [Habitat](https://habitat.sh).
 - APIs are subject to change
 - Habitat is a rapidly changing product, and this cookbook may change rapidly as well
 
+## TODOS
+
+- [ ] Remove reliance on `toml-rb` gem.
+
 ## License Note
 
 Habitat requires acceptance of a license before any habitat commands can be run. To accept the Habitat license using this cookbook, the `license` parameter can be set to `accept` for either the `hab_install` or `hab_sup` resources as shown in the below examples:
@@ -40,7 +44,7 @@ PLEASE NOTE: Without performing one of the above license acceptance steps, all o
 
 ### Habitat
 
-- Habitat version: 1.5.71
+- Habitat version: 1.5.86
 
 This cookbook is developed lockstep with the latest release of Habitat to ensure compatibility, going forward from 0.33.0 of the cookbook and 0.33.2 of Habitat itself. When new versions of Habitat are released, the version should be updated in these files:
 
@@ -78,21 +82,26 @@ Installs Habitat on the system using the [install script](https://raw.githubuser
 - `create_user`: Creates the `hab` system user (defaults to `true`)
 - `tmp_dir`: Sets TMPDIR environment variable for location to place temp files.  (required if `/tmp` and `/var/tmp` are mounted `noexec`)
 - `license`: Specifies acceptance of habitat license when set to `accept` (defaults to empty string).
+- `hab_version`: Specify the version of `Habitat` you would like to install (defaults to latest)
 
 #### Examples
 
-Nameless installation
-
 ```ruby
+
+# Nameless Installation
 hab_install
-```
 
-Instalaltion specifying a bldr URL
-
-```ruby
+# Instalaltion specifying a bldr URL
 hab_install 'install habitat' do
   bldr_url 'http://localhost'
 end
+
+# Installtation specifying version and bldr URL
+hab_install 'install habitat' do
+  bldr_url 'http://localhost'
+  hab_version '1.5.50'
+end
+
 ```
 
 ### hab_package
@@ -103,6 +112,7 @@ Install the specified Habitat package from builder. Requires that Habitat is ins
 
 - `install`: installs the specified package
 - `upgrade`: installs the specified package. If a newer version is available in the configured channel, upgrades to that version
+- `remove`: Will remove packages no longer wanted.
 
 #### Properties
 
@@ -113,6 +123,8 @@ Install the specified Habitat package from builder. Requires that Habitat is ins
 - `auth_token`: Auth token for installing a package from a private organization on builder
 - `binlink`: If habitat should attempt to binlink the package.  Acceptable values: `true`, `false`, `:force`.  Will faill on binlinking if set to `true` and binary or binlink exists.
 - `options`: Pass any additional parameters to the habitat install command.
+- `keep_latest`: Ability to uninstall while retaining a specified version (Default is not set. `This feature only works in Habitat 1.5.86+`)
+- `no_deps`: Remove package but retain dependencies (Default is `false`)
 
 While it is valid to pass the version and release with a Habitat package as a fully qualified package identifier when using the `hab` CLI, they must be specified using the `version` property when using this resource. See the examples below.
 
@@ -136,6 +148,28 @@ end
 
 hab_package 'core/nginx' do
   options '--binlink'
+end
+
+# Remove all
+hab_package 'core/nginx'
+  action :remove
+end
+
+# Remove specified
+hab_package 'core/nginx/3.2.3'
+  action :remove
+end
+
+# Remove but retain some versions (only available as of Habitat 1.5.86)
+hab_package 'core/nginx'
+  keep_latest '2'
+  action :remove
+end
+
+# Renove but keep dependencies
+hab_package 'core/nginx'
+  no_deps false
+  action :remove
 end
 ```
 
@@ -167,7 +201,7 @@ The follow properties are valid for the `load` action.
 - `service_name`: name property, the name of the service, must be in the form of `origin/name`
 - `loaded`: state property indicating whether the service is loaded in the supervisor
 - `running`: state property indicating whether the service is running in the supervisor
-- `strategy`: Passes `--strategy` with the specified update strategy to the hab command
+- `strategy`: Passes `--strategy` with the specified update strategy to the hab command. Defaults to `:none`. Other options are `:'at-once'` and `:rolling`
 - `update_condition`: Passes `--update-condition` dictating when this service should updated. Defaults to `latest`. Options are `latest` or `track-channel` ***Note: This requires a minimum habitat version of 1.5.71***
   - `latest`: Runs the latest package that can be found in the configured channel and local packages.
   - `track-channel`: Always run what is at the head of a given channel. This enables service rollback where demoting a package from a channel will cause the package to rollback to an older version of the package. A ramification of enabling this condition is packages newer than the package at the head of the channel will be automatically uninstalled during a service rollback.
@@ -196,6 +230,7 @@ hab_service 'core/redis' do
   topology 'standalone'
 end
 
+# Using update_condition
 hab_service 'core/redis' do
   strategy 'rolling'
   update_condition 'track-channel'
@@ -254,7 +289,11 @@ All `event_stream_*` properties are optional, and allow the Habitat Supervisor t
 - `event_stream_site`: Application Dashboard label for the "site" of the application - can be filtered in the dashboard
 - `event_stream_url`: `AUTOMATE_HOSTNAME:4222` - the Chef Automate URL with port 4222 specified (can be changed if needed)
 - `event_stream_token`: Chef Automate token for sending application event stream data
-- `event_stream__certificate` [] ***This will be added in the next release*** - JB 04/07/20
+- `event_stream_certificate`: With `Intermediary Certificates` or, Automate 2 being set to use TLS with a valid cert, you will need to provide `Habitat` with your certificate for communication with Automate to work. [Follow these steps!](https://automate.chef.io/docs/applications-setup/#share-the-tls-certificate-with-chef-habitat)
+- `sup_verstion`: Allows you to choose which version of supervisor you would like to install. Defaults to `latest`. (If a version is provided, it will also install that version of habitat if not previously installed)
+- `launcher_version`: Allows you to choose which version of launcher to install. Defaults to `latest`
+- `service_version`: Allows you to choose which version of the ***Windows Service*** to install. Defaults to `latest`
+- `keep_latest`: Automatically cleans up old packages. If this flag is enabled, service startup will initiate an uninstall of all previous versions of the associated package. This also applies when a service is restarted due to an update. If a number is passed to this argument, that number of latest versions will be kept. The same logic applies to the Supervisor packag `env:HAB_KEEP_LATEST_PACKAGES=1` (This requires Habitat version `1.5.86+`)
 
 #### Examples
 
@@ -266,13 +305,46 @@ hab_sup 'test-options' do
   listen_http '0.0.0.0:9999'
   listen_gossip '0.0.0.0:9998'
 end
-```
 
-```ruby
 # Use with an on-prem Builder
 # Access to public builder may not be available
 hab_sup 'default' do
   bldr_url 'https://bldr.private.net'
+end
+
+# Using update_condition
+hab_sup 'default' do
+  bldr_url 'https://bldr.private.net'
+  hab_channel 'dev'
+  update_condition 'track-channel'
+end
+
+# Provide event_stream_* information
+hab_sup 'default' do
+  license 'accept'
+  event_stream_application 'myapp'
+  event_stream_environment 'production'
+  event_stream_site 'MySite'
+  event_stream_url 'automate.private.net:4222'
+  event_stream_token 'myawesomea2clitoken='
+  event_stream_certificate '/hab/cache/ssl/mycert.crt'
+end
+
+# Provide specific versions
+hab_sup 'default' do
+  bldr_url 'https://bldr.private.net'
+  sup_version '1.5.50'
+  launcher_version '13458'
+  service_version '0.6.0' # WINDOWS ONLY
+end
+
+# Set latest version of packages to retain
+hab_sup 'default' do
+  bldr_url 'https://bldr.private.net'
+  sup_version '1.5.86'
+  launcher_version '13458'
+  service_version '0.6.0' # WINDOWS ONLY
+  keep_latest '2'
 end
 ```
 
@@ -336,13 +408,13 @@ hab_user_toml 'nginx' do
   })
 end
 ```
-
 ## Maintainers
 
 This cookbook is maintained by the following maintainers:
 
 - Jon Cowie [jcowie@chef.io](mailto:jcowie@chef.io)
 - Jeff Brimager [jbrimager@chef.io](mailto:jbrimager@chef.io)
+- Collin Mcneese [cmcneese@chef.io](mailto:cmcneese@chef.io)
 
 The goal of the Community Cookbook Engineering team is to improve cookbook quality and to aid the community in contributing to cookbooks. To learn more about our team, process, and design goals see our [team documentation](https://github.com/chef-cookbooks/community_cookbook_documentation/blob/master/COOKBOOK_TEAM.MD). To learn more about contributing to cookbooks like this see our [contributing documentation](https://github.com/chef-cookbooks/community_cookbook_documentation/blob/master/CONTRIBUTING.MD), or if you have general questions about this cookbook come chat with us in #cookbok-engineering on the [Chef Community Slack](http://community-slack.chef.io/)
 

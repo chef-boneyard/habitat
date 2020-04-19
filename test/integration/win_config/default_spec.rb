@@ -12,6 +12,11 @@ describe command('C:\habitat\hab.exe -V') do
   its('exit_status') { should eq 0 }
 end
 
+splunkserviceapi = '(Invoke-RestMethod http://localhost:9631/services/splunkforwarder/default).cfg | ConvertTo-Json'
+describe json(command: splunkserviceapi) do
+  its(%w(directories path)) { should eq ['C:/hab/pkgs/.../*.log'] }
+end
+
 # This test needs to be re-written to hit the supervisor API
 # describe json('C:\hab\sup\default\data\census.dat') do
 #   scpath = ['census_groups', 'splunkforwarder.default', 'service_config']

@@ -16,27 +16,6 @@
 
 module Habitat
   module Shared
-    HAB_VERSION = '1.5.71'.freeze
-    LINUX_LAUNCHER_VERSION = '13458'.freeze
-    WINDOWS_LAUNCHER_VERSION = '13458'.freeze
-    WINDOWS_SERVICE_VERSION = '0.6.0'.freeze
-
-    def hab_version
-      HAB_VERSION
-    end
-
-    def hab_launcher_version
-      if platform_family?('windows')
-        WINDOWS_LAUNCHER_VERSION
-      else
-        LINUX_LAUNCHER_VERSION
-      end
-    end
-
-    def hab_windows_service_version
-      WINDOWS_SERVICE_VERSION
-    end
-
     def hab(*command)
       # Windows shell_out does not support arrays, so manually cleaning and joining
       hab_cmd = if platform_family?('windows')

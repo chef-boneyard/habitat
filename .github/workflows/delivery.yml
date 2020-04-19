@@ -40,16 +40,14 @@
             - 'opensuse-leap-15'
 
           suite:
+            - 'install-for-chefspec'
+            - 'install-no-user'
             - 'package'
             - 'service'
-            - 'service-auth'
             - 'sup'
             - 'config'
-            - 'config-auth'
             - 'user-toml'
-            - 'license'
             - 'config-chef-13'
-            - 'config-chef-13-auth'
         fail-fast: false
 
       steps:
@@ -74,9 +72,7 @@
           os:
             - 'windows-2019'
           suite:
-            - 'win_config_auth'
             - 'win_config'
-            - 'win_license'
             - 'win_package'
             - 'win_service'
             - 'win_sup'

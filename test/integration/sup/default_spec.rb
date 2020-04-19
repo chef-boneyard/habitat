@@ -50,3 +50,11 @@ when 'sysv'
     its('content') { should_not match('export HAB_SUP_GATEWAY_AUTH_TOKEN=secret') }
   end
 end
+
+describe port(7999) do
+  it { should be_listening }
+end
+
+describe port(7998) do
+  it { should be_listening }
+end
