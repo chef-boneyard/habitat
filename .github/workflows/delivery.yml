@@ -104,6 +104,7 @@
         - name: Catting the log file
           run:  Get-Content ".kitchen/logs/kitchen.log" | out-String | Write-Output
           shell: powershell
+          if: always()
         - name: Test Kitchen
           uses: actionshub/test-kitchen@master
           env:
@@ -113,6 +114,7 @@
             suite: ${{ matrix.suite }}
             os: ${{ matrix.os }}
             action: diagnose
+          if: always()
         # - name: Add Chef Workstation to PATH
         #   run: echo "##[add-path]C:\opscode\chef-workstation\bin\;"
         #   shell: powershell
