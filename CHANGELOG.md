@@ -2,6 +2,119 @@
 
 This file is used to list changes made in each version of the habitat cookbook.
 
+## 2.0.1 (2020-04-21)
+
+- correct package name for the windows zip file being used. also added a step to create c:\habitat directory since powershell was failing on that step. placeholder for upgrade enhancement - [@sam1el](https://github.com/sam1el)
+- [BUG_FIX] Issue #199 fixeed install on Windows - [@sam1el](https://github.com/sam1el)
+- removing unwanted tests - [@sam1el](https://github.com/sam1el)
+- fixed bad syntax in install resource - [@sam1el](https://github.com/sam1el)
+- Remove a bogus platform_family? check - [@tas50](https://github.com/tas50)
+- Remove old Foodcritic comments - [@tas50](https://github.com/tas50)
+- Add testing with Github Actions - [@tas50](https://github.com/tas50)
+- Update systems we test on in Test Kitchen - [@tas50](https://github.com/tas50)
+- Allow versions in the specs to float a bit - [@tas50](https://github.com/tas50)
+- Remove the .foodcritic file - [@tas50](https://github.com/tas50)
+- Update the boxes in Kitchen and the Travis config - [@tas50](https://github.com/tas50)
+- Remove github actions for now - [@tas50](https://github.com/tas50)
+- Use public windows boxes and fix travis failures - [@tas50](https://github.com/tas50)
+- Run delivery in Github Actions - [@tas50](https://github.com/tas50)
+- Disable cookstyle for old spec - [@tas50](https://github.com/tas50)
+- Update CHANGELOG.md with details from pull request #189
+- removed bad unit test - [@sam1el](https://github.com/sam1el)
+- fixing delivery errors (#6) - [@sam1el](https://github.com/sam1el)
+- [BUG FIX] Windows install to correct issue #199 (#202) - [@sam1el](https://github.com/sam1el)
+- Update CHANGELOG.md with details from pull request #202
+- Release 1.15.2 - [@jonlives](https://github.com/jonlives)
+- Merge branch 'master' of github.com:chef-cookbooks/habitat - [@sam1el](https://github.com/sam1el)
+- correction to systemd template - [@sam1el](https://github.com/sam1el)
+- corrected the broken unit test for sup_spec.rb to match the new systemd template - [@sam1el](https://github.com/sam1el)
+- fixed broken syntax in resourece/service.rb line 236-237 - [@sam1el](https://github.com/sam1el)
+- extended the delay on a few service tests to allow more time to load - [@sam1el](https://github.com/sam1el)
+- bumped hab version to newest stable - [@sam1el](https://github.com/sam1el)
+- reverted back to 1.5.0 and removed 2 settings from systemd - [@sam1el](https://github.com/sam1el)
+- removed unwanted systemd test - [@sam1el](https://github.com/sam1el)
+- changing kernel detection syntax to to_i rather then to_f - [@sam1el](https://github.com/sam1el)
+- corrected integers in the install and hab_packaged provider resources for the kernel version check - [@sam1el](https://github.com/sam1el)
+- Update CHANGELOG.md with details from pull request #203
+- Releasing 1.5.3 - [@jonlives](https://github.com/jonlives)
+- adding delay loop to the load function in the service resouce - [@sam1el](https://github.com/sam1el)
+- Update CHANGELOG.md with details from pull request #204
+- release 1.5.4 - [@sam1el](https://github.com/sam1el)
+- Extending Windows chef-client compatibility  (#205) - [@sam1el](https://github.com/sam1el)
+- Update CHANGELOG.md with details from pull request #205
+- release 1.5.5 - [@sam1el](https://github.com/sam1el)
+- corrections to changelog.md - [@sam1el](https://github.com/sam1el)
+- Update README.md - [@jonlives](https://github.com/jonlives)
+- Move Dokken testing to github actions - [@Xorima](https://github.com/Xorima)
+- Example Windows github actions - [@Xorima](https://github.com/Xorima)
+- ubuntu is 1604 not 16.04 - [@Xorima](https://github.com/Xorima)
+- Bye bye Travis - [@Xorima](https://github.com/Xorima)
+- Minor readme fixes - [@Xorima](https://github.com/Xorima)
+- Cookstyle fixes - [@Xorima](https://github.com/Xorima)
+- opensuse requires gzip to be installer for hab install script - [@Xorima](https://github.com/Xorima)
+- Update CHANGELOG.md with details from pull request #207
+- fix readme - [@Xorima](https://github.com/Xorima)
+- Delete Merged Branches - [@Xorima](https://github.com/Xorima)
+- Update CHANGELOG.md with details from pull request #208
+- Update CHANGELOG.md with details from pull request #209
+- updated hab sup resource to include new Application Dashboard options (#206) - [@danielcbright](https://github.com/danielcbright)
+- Update CHANGELOG.md with details from pull request #206
+- release 1.5.6 - [@sam1el](https://github.com/sam1el)
+- changing version in the VERSION file - [@sam1el](https://github.com/sam1el)
+- Hab version (#210) - [@sam1el](https://github.com/sam1el)
+- Update CHANGELOG.md with details from pull request #210
+- release 1.5.7 - [@sam1el](https://github.com/sam1el)
+- fixing idempotence on hab_sup_systemd. (#211) - [@sam1el](https://github.com/sam1el)
+- Update CHANGELOG.md with details from pull request #211
+- release 1.5.8 - [@sam1el](https://github.com/sam1el)
+- updates to be backwards compatible with 12.20.3+ (#214) - [@collinmcneese](https://github.com/collinmcneese)
+- Update CHANGELOG.md with details from pull request #214
+- release 1.5.9 - [@sam1el](https://github.com/sam1el)
+- Versioning (#215) - [@sam1el](https://github.com/sam1el)
+- Update CHANGELOG.md with details from pull request #215
+- release v1.5.10 - [@sam1el](https://github.com/sam1el)
+- adding --update-condition funtionality that was added in habitat 1.5.71 (#217) - [@sam1el](https://github.com/sam1el)
+- Update CHANGELOG.md with details from pull request #217
+- release vl.6.0 - [@sam1el](https://github.com/sam1el)
+- correcting a breaking issue in install resource (#219) - [@sam1el](https://github.com/sam1el)
+- Update CHANGELOG.md with details from pull request #219
+- release v1.6.1 - [@sam1el](https://github.com/sam1el)
+- removing update-confition defaults and tests (#221) - [@sam1el](https://github.com/sam1el)
+- Update CHANGELOG.md with details from pull request #221
+- release v1.6.2 - [@sam1el](https://github.com/sam1el)
+- changing the windows service cofig to better reflect newer functional… (#223) - [@sam1el](https://github.com/sam1el)
+- Update CHANGELOG.md with details from pull request #223
+- release v1.7.0 - [@sam1el](https://github.com/sam1el)
+- Issue/eventstream (#7) - [@sam1el](https://github.com/sam1el)
+- adds windows Github Actions testing for issue #193 (#224) - [@collinmcneese](https://github.com/collinmcneese)
+- Update CHANGELOG.md with details from pull request #224
+- master merge - [@sam1el](https://github.com/sam1el)
+- Cookstyle 6.2.9 Fixes - [@xorimabot](https://github.com/xorimabot)
+- Update CHANGELOG.md with details from pull request #225
+- merging cookstyle changes - [@sam1el](https://github.com/sam1el)
+- correcting issues - [@sam1el](https://github.com/sam1el)
+- Standardise files with files in chef-cookbooks/repo-management - [@xorimabot](https://github.com/xorimabot)
+- Standardise files with files in chef-cookbooks/repo-management - [@xorimabot](https://github.com/xorimabot)
+- Update CHANGELOG.md with details from pull request #226
+- merging cookstyle changes - [@sam1el](https://github.com/sam1el)
+- merge with master again to get all of bot changes - [@sam1el](https://github.com/sam1el)
+- merge with master again to correct local branch - [@sam1el](https://github.com/sam1el)
+- Update/overhaul (#10) - [@sam1el](https://github.com/sam1el)
+- Standardise files with files in chef-cookbooks/repo-management (#229) - [@xorimabot](https://github.com/xorimabot)
+- Update CHANGELOG.md with details from pull request #229
+- Update/overhaul (#11) - [@sam1el](https://github.com/sam1el)
+- Merge branch 'master' into master - [@sam1el](https://github.com/sam1el)
+- requested PR corrections - [@sam1el](https://github.com/sam1el)
+- needed to uncomment pipeline files - [@sam1el](https://github.com/sam1el)
+- removing old code from install resource - [@sam1el](https://github.com/sam1el)
+- adding instal tests back to pipeline - [@sam1el](https://github.com/sam1el)
+- fixes comment line in kitchen.yml throwing errors - [@collinmcneese](https://github.com/collinmcneese)
+- fixes suite names for newly added suites with dokken - [@collinmcneese](https://github.com/collinmcneese)
+- fixed bad syntax in kitchen.yml - [@sam1el](https://github.com/sam1el)
+- Merge branch 'master' of github.com:sam1el/habitat - [@sam1el](https://github.com/sam1el)
+- made changes to the hab_sup_windows resource to ensure it functions as expected - [@sam1el](https://github.com/sam1el)
+- correcting cookstyle issue - [@sam1el](https://github.com/sam1el)
+
 ## 2.0.0 (2020-04-21)
 
 - correct package name for the windows zip file being used. also added a step to create c:\habitat directory since powershell was failing on that step. placeholder for upgrade enhancement - [@sam1el](https://github.com/sam1el)
