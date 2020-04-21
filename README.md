@@ -290,6 +290,7 @@ All `event_stream_*` properties are optional, and allow the Habitat Supervisor t
 - `event_stream_url`: `AUTOMATE_HOSTNAME:4222` - the Chef Automate URL with port 4222 specified (can be changed if needed)
 - `event_stream_token`: Chef Automate token for sending application event stream data
 <<<<<<< HEAD
+<<<<<<< HEAD
 - `event_stream_certificate`: With `Intermediary Certificates` or, Automate 2 being set to use TLS with a valid cert, you will need to provide `Habitat` with your certificate for communication with Automate to work. [Follow these steps!](https://automate.chef.io/docs/applications-setup/#share-the-tls-certificate-with-chef-habitat)
 - `sup_verstion`: Allows you to choose which version of supervisor you would like to install. Defaults to `latest`. (If a version is provided, it will also install that version of habitat if not previously installed)
 - `launcher_version`: Allows you to choose which version of launcher to install. Defaults to `latest`
@@ -298,6 +299,9 @@ All `event_stream_*` properties are optional, and allow the Habitat Supervisor t
 =======
 - `event_stream__certificate`: With `Intermediary Certificates` or, Automate 2 being set to use TLS with a valid cert, you will need to provide `Habitat` with your certificate for communication with Automate to work. [Follow these steps!](https://automate.chef.io/docs/applications-setup/#share-the-tls-certificate-with-chef-habitat)
 >>>>>>> merging cookstyle changes
+=======
+- `event_stream__certificate`: With `Intermediary Certificates` or, Automate 2 being set to use TLS with a valid cert, you will need to provide `Habitat` with your certificate for communication with Automate to work. [Follow these steps!](https://automate.chef.io/docs/applications-setup/#share-the-tls-certificate-with-chef-habitat)
+>>>>>>> Issue/eventstream (#7)
 
 #### Examples
 
@@ -332,6 +336,7 @@ hab_sup 'default' do
   event_stream_url 'automate.private.net:4222'
   event_stream_token 'myawesomea2clitoken='
 <<<<<<< HEAD
+<<<<<<< HEAD
   event_stream_certificate '/hab/cache/ssl/mycert.crt'
 end
 
@@ -355,6 +360,10 @@ end
 end
 
 >>>>>>> merging cookstyle changes
+=======
+end
+
+>>>>>>> Issue/eventstream (#7)
 ```
 
 ### hab_config
