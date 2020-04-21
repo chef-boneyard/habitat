@@ -46,7 +46,8 @@ describe 'test::service' do
         update_condition: 'latest',
         binding_mode: :relaxed,
         shutdown_timeout: 10,
-        health_check_interval: 32
+        health_check_interval: 32,
+        gateway_auth_token: 'secret'
       )
     end
 
