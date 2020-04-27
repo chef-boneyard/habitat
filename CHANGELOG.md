@@ -1,31 +1,32 @@
 # Habitat Cookbook CHANGELOG
 
 This file is used to list changes made in each version of the habitat cookbook.
-<<<<<<< HEAD
  <!-- latest_release unreleased -->
-## Unreleased
+
+
+<!-- latest_release -->
+## 2.0.2 (2020-04-08)
+
+- Able to unintall packages using the `hab_package` resource. This includes the `--no-deps` and the `--keep-latest`. Keep latest is only available on habitat 1.5.86+
+- Able to select the version of habitat installed as wells as, supervisor, launcher and, windows-servcie
+- All current `--event-stream` functions are now available to habitat versions 1.5.86 and up for the `hab_sup` resource
+- `windows-service` Can now be configured properly with `--event-stream` as well has your `HAB_AUTH_TOKEN` `HAB_BLDR_URL` and, `HAB_AUTH_GATEWAY_TOKEN`
+
+***See README.MD for usage of all new functions**
+
+
+#### Merged Pull Requests
 
 - Automated PR: Standardising Files [#229](https://github.com/chef-cookbooks/habitat/pull/229) ([xorimabot](https://github.com/xorimabot))
+- Overhaul to testing and cookbook resources [#228](https://github.com/chef-cookbooks/habitat/pull/228)
 - Automated PR: Standardising Files [#226](https://github.com/chef-cookbooks/habitat/pull/226) ([xorimabot](https://github.com/xorimabot))
 - Automated PR: Cookstyle Changes [#225](https://github.com/chef-cookbooks/habitat/pull/225) ([xorimabot](https://github.com/xorimabot))
 - resolved cookstyle error: libraries/provider_hab_package.rb:174:13 convention: `Style/RedundantReturn`
 - resolved cookstyle error: libraries/provider_hab_package.rb:176:13 convention: `Style/RedundantReturn`
 
-<!-- latest_release -->
 ## 1.7.0 (2020-04-08)
 
 - adds windows Github Actions testing for issue #193 [#224](https://github.com/chef-cookbooks/habitat/pull/224) ([collinmcneese](https://github.com/collinmcneese))
-=======
-
-## 1.7.0 (2020-04-08)
-
-- Added optional settings for Windows service to recongize local or provided envoringment variables including
-  - HAB_AUTH_TOKEN
-  - HAB_GATEWAY_AUTH_TOKEN
-  - HAB_BLDR_URL
-
-#### Merged Pull Requests
->>>>>>> Issue/eventstream (#7)
 - changing the windows service cofig to better reflect newer functional… [#223](https://github.com/chef-cookbooks/habitat/pull/223) ([sam1el](https://github.com/sam1el))
 - removing update-confition defaults and tests [#221](https://github.com/chef-cookbooks/habitat/pull/221) ([sam1el](https://github.com/sam1el))
 - Added optional settings for Windows service to recongize local or provided envoringment variables including
