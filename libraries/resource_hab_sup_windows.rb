@@ -61,14 +61,26 @@ class Chef
           not_if { ::Win32::Service.exists?('Habitat') }
         end
 
-        template win_service_config.to_s do
-          source service_file.to_s
-          cookbook 'habitat'
-          variables exec_start_options: exec_start_options,
-                    bldr_url: new_resource.bldr_url,
-                    auth_token: new_resource.auth_token,
-                    gateway_auth_token: new_resource.gateway_auth_token
-          action :create
+        if ::File.exist?('C:/habitat/hab.exe')
+          win_version = `hab pkg list core/hab-launcher`.split().last
+
+          # ruby_block 'name' do
+          #   block do
+          #     win_version = `hab pkg list core/hab-launcher`.split().last
+          #     node.run_state['version'] = win_version
+          #   end
+          # end
+
+          template win_service_config.to_s do
+            source service_file.to_s
+            cookbook 'habitat'
+            variables exec_start_options: exec_start_options,
+                      bldr_url: new_resource.bldr_url,
+                      auth_token: new_resource.auth_token,
+                      gateway_auth_token: new_resource.gateway_auth_token,
+                      win_launcher: win_version
+            action :create
+          end
         end
 
         service 'Habitat' do

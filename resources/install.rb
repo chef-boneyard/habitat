@@ -139,7 +139,7 @@ action :upgrade do
   if platform_family?('windows')
     # Retrieve version information
     uri = 'https://packages.chef.io/files'
-    package_name = 'hab-latest-x86_64-windows'
+    package_name = 'hab-x86_64-windows'
     zipfile = "#{Chef::Config[:file_cache_path]}/#{package_name}.zip"
 
     # TODO: Figure out how to properly validate the shasum for windows. Doesn't seem it's published
@@ -173,7 +173,7 @@ action :upgrade do
 
     powershell_script 'installing from archive' do
       code <<-EOH
-      Move-Item -Path #{Chef::Config[:file_cache_path]}/habitat/#{package_name} -Destination C:/habitat -Force
+      Move-Item -Path #{Chef::Config[:file_cache_path]}/habitat/hab-*/* -Destination C:/habitat -Force
       EOH
     end
 
