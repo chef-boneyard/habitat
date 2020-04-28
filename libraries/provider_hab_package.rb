@@ -87,11 +87,6 @@ class Chef
             opts += ["#{strip_version(n).chomp('/')}#{v}", new_resource.options]
             opts += ['--exclude'] if new_resource.exclude
             opts += ['--no-deps'] if new_resource.no_deps
-            # FIXME: `hab pkg uninstall` would be a lot safer here
-            # path = hab('pkg', 'path', "#{n}/#{v}").stdout
-            # Chef::Log.warn 'semantics of :remove will almost certainly change in the future'
-            # declare_resource(:directory, path) do
-            #   recursive true
             hab(opts)
             # action :remove
           end
