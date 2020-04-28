@@ -3,8 +3,15 @@
 This file is used to list changes made in each version of the habitat cookbook.
  <!-- latest_release unreleased -->
 
-
 <!-- latest_release -->
+## 2.0.3 (2020-04-28)
+
+- correcting launcher path issue which caused the windows service to no longer start.
+
+#### Merged Pull Requests
+
+- correcting launcher path issue (#13) - [@sam1el](https://github.com/sam1el)
+
 ## 2.0.2 (2020-04-08)
 
 - Able to unintall packages using the `hab_package` resource. This includes the `--no-deps` and the `--keep-latest`. Keep latest is only available on habitat 1.5.86+
@@ -13,7 +20,6 @@ This file is used to list changes made in each version of the habitat cookbook.
 - `windows-service` Can now be configured properly with `--event-stream` as well has your `HAB_AUTH_TOKEN` `HAB_BLDR_URL` and, `HAB_AUTH_GATEWAY_TOKEN`
 
 ***See README.MD for usage of all new functions**
-
 
 #### Merged Pull Requests
 

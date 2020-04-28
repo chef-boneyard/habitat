@@ -28,6 +28,8 @@ class Chef
 
       service_file = 'windows/HabService.dll.config.erb'
       win_service_config = 'C:/hab/svc/windows-service/HabService.dll.config'
+      win_launcher = `hab pkg list core/hablauncher`.split().last
+
 
       action :run do
         super()
@@ -68,6 +70,7 @@ class Chef
                     bldr_url: new_resource.bldr_url,
                     auth_token: new_resource.auth_token,
                     gateway_auth_token: new_resource.gateway_auth_token
+
           action :create
         end
 
