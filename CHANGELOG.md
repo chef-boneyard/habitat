@@ -1,12 +1,16 @@
 # Habitat Cookbook CHANGELOG
 
 This file is used to list changes made in each version of the habitat cookbook.
- <!-- latest_release unreleased -->
+<!-- latest_release unreleased -->
 
 <!-- latest_release -->
+## 2.0.4 (2020-04-29)
+
+- Correcting merge conflict issues which broke the cookbook at compile time
+
 ## 2.0.3 (2020-04-28)
 
-- correcting launcher path issue which caused the windows service to no longer start.
+- correcting windows launcher path issue which caused the windows service to no longer start.
 
 #### Merged Pull Requests
 
