@@ -15,10 +15,10 @@ describe powershell(restart_script) do
 end
 
 # Removing these two tests temporarily, this needs to be validated and rewritten with the fixture then tested
-describe port(9631) do
+describe port(9998) do
   it { should be_listening }
 end
 
-describe port(9632) do
+describe port(9999) do
   it { should be_listening }
 end
