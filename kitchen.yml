@@ -9,27 +9,27 @@ provisioner:
   name: chef_zero
   always_update_cookbooks: true
   deprecations_as_errors: true
-  chef_license: accept-no-persist
+  chef_license: accept
 
 verifier:
   name: inspec
 
 platforms:
-  # - name: amazonlinux
-  #   driver_config:
-  #     box: mvbcoding/awslinux
-  # - name: amazonlinux-2
-  # - name: centos-6
+  - name: amazonlinux
+    driver_config:
+      box: mvbcoding/awslinux
+  - name: amazonlinux-2
+  - name: centos-6
   - name: centos-7
     driver:
       box: bento/centos-7
-  # - name: centos-8
-  # - name: debian-9
-  # - name: debian-10
-  # - name: fedora-latest
-  # - name: opensuse-leap-15
-  # - name: ubuntu-16.04
-  # - name: ubuntu-18.04
+  - name: centos-8
+  - name: debian-9
+  - name: debian-10
+  - name: fedora-latest
+  - name: opensuse-leap-15
+  - name: ubuntu-16.04
+  - name: ubuntu-18.04
   - name: windows-2016
     driver:
       box: tas50/windows_2016
@@ -39,16 +39,16 @@ platforms:
 
 suites:
   # Testing Linux stuff here:
-  # - name: package
-  #   named_run_list: pipeline::package
-  #   excludes:
-  #     - windows-2016
-  #     - windows-2019
-  # - name: service
-  #   named_run_list: pipeline::service
-  #   excludes:
-  #     - windows-2016
-  #     - windows-2019
+  - name: package
+    named_run_list: package
+    excludes:
+      - windows-2016
+      - windows-2019
+  - name: service
+    named_run_list: service
+    excludes:
+      - windows-2016
+      - windows-2019
   - name: sup
     named_run_list: sup
     verifier:
@@ -57,55 +57,55 @@ suites:
     excludes:
       - windows-2016
       - windows-2019
-  # - name: install_no_user
-  #   named_run_list: pipeline::install_no_user
-  #   verifier:
-  #     inspec_tests:
-  #       - test/integration/install_no_user
-  #   excludes:
-  #     - windows-2016
-  #     - windows-2019
-  # - name: install_for_chefspec
-  #   named_run_list: pipeline::install_for_chefspec
-  #   verifier:
-  #     inspec_tests:
-  #       - test/integration/install_for_chefspec
-  #   excludes:
-  #     - windows-2016
-  #     - windows-2019
-  # - name: config
-  #   named_run_list: pipeline::config
-  #   verifier:
-  #     inspec_tests:
-  #       - test/integration/config
-  #   excludes:
-  #     - windows-2016
-  #     - windows-2019
-  # - name: user-toml
-  #   named_run_list: pipeline::user_toml
-  #   excludes:
-  #     - windows-2016
-  #     - windows-2019
-  # - name: config-chef-13
-  #   named_run_list: pipeline::config
-  #   excludes:
-  #     - windows-2016
-  #     - windows-2019
-  #   provisioner:
-  #     product_name: chef
-  #     product_version: 13.6.4
+  - name: install_no_user
+    named_run_list: install_no_user
+    verifier:
+      inspec_tests:
+        - test/integration/install_no_user
+    excludes:
+      - windows-2016
+      - windows-2019
+  - name: install_for_chefspec
+    named_run_list: install_for_chefspec
+    verifier:
+      inspec_tests:
+        - test/integration/install_for_chefspec
+    excludes:
+      - windows-2016
+      - windows-2019
+  - name: config
+    named_run_list: config
+    verifier:
+      inspec_tests:
+        - test/integration/config
+    excludes:
+      - windows-2016
+      - windows-2019
+  - name: user-toml
+    named_run_list: user_toml
+    excludes:
+      - windows-2016
+      - windows-2019
+  - name: config-chef-13
+    named_run_list: config
+    excludes:
+      - windows-2016
+      - windows-2019
+    provisioner:
+      product_name: chef
+      product_version: 13.6.4
 
   # Testing windows stuff here:
-  # - name: win-package
-  #   named_run_list: pipeline::win_package
-  #   includes:
-  #     - windows-2016
-  #     - windows-2019
-  # - name: win-service
-  #   named_run_list: pipeline::win_service
-  #   includes:
-  #     - windows-2016
-  #     - windows-2019
+  - name: win-package
+    named_run_list: win_package
+    includes:
+      - windows-2016
+      - windows-2019
+  - name: win-service
+    named_run_list: win_service
+    includes:
+      - windows-2016
+      - windows-2019
   - name: win-sup
     named_run_list: win_sup
     verifier:
@@ -113,14 +113,14 @@ suites:
         - test/integration/win_sup
     includes:
       - windows-2016
-  #     - windows-2019
-  # - name: win-config
-  #   named_run_list: pipeline::win_config
-  #   includes:
-  #     - windows-2016
-  #     - windows-2019
-  # - name: win-user-toml
-  #   named_run_list: pipeline::win_user_toml
-  #   includes:
-  #     - windows-2016
-  #     - windows-2019
+      - windows-2019
+  - name: win-config
+    named_run_list: win_config
+    includes:
+      - windows-2016
+      - windows-2019
+  - name: win-user-toml
+    named_run_list: win_user_toml
+    includes:
+      - windows-2016
+      - windows-2019

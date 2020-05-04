@@ -15,5 +15,8 @@ cookbook 'test', path: './test/fixtures/cookbooks/test'
 
 run_list 'habitat'
 
-named_run_list :sup, 'test::sup'
-named_run_list :win_sup, 'test::win_sup'
+tests = (Dir.entries('./test/fixtures/cookbooks/test/recipes').select { |f| !File.directory? f })
+tests.each do |test|
+  test = test.gsub('.rb', '')
+  named_run_list :"#{test.to_sym}", "test::#{test}"
+end
