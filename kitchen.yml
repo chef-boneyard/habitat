@@ -40,12 +40,12 @@ platforms:
 suites:
   # Testing Linux stuff here:
   - name: package
-    named_run_list: pipeline::package
+    named_run_list: package
     excludes:
       - windows-2016
       - windows-2019
   - name: service
-    named_run_list: pipeline::service
+    named_run_list: service
     excludes:
       - windows-2016
       - windows-2019
@@ -58,7 +58,7 @@ suites:
       - windows-2016
       - windows-2019
   - name: install_no_user
-    named_run_list: pipeline::install_no_user
+    named_run_list: install_no_user
     verifier:
       inspec_tests:
         - test/integration/install_no_user
@@ -66,7 +66,7 @@ suites:
       - windows-2016
       - windows-2019
   - name: install_for_chefspec
-    named_run_list: pipeline::install_for_chefspec
+    named_run_list: install_for_chefspec
     verifier:
       inspec_tests:
         - test/integration/install_for_chefspec
@@ -74,7 +74,7 @@ suites:
       - windows-2016
       - windows-2019
   - name: config
-    named_run_list: pipeline::config
+    named_run_list: config
     verifier:
       inspec_tests:
         - test/integration/config
@@ -82,12 +82,12 @@ suites:
       - windows-2016
       - windows-2019
   - name: user-toml
-    named_run_list: pipeline::user_toml
+    named_run_list: user_toml
     excludes:
       - windows-2016
       - windows-2019
   - name: config-chef-13
-    named_run_list: pipeline::config
+    named_run_list: config
     excludes:
       - windows-2016
       - windows-2019
@@ -97,12 +97,12 @@ suites:
 
   # Testing windows stuff here:
   - name: win-package
-    named_run_list: pipeline::win_package
+    named_run_list: win_package
     includes:
       - windows-2016
       - windows-2019
   - name: win-service
-    named_run_list: pipeline::win_service
+    named_run_list: win_service
     includes:
       - windows-2016
       - windows-2019
@@ -115,12 +115,12 @@ suites:
       - windows-2016
       - windows-2019
   - name: win-config
-    named_run_list: pipeline::win_config
+    named_run_list: win_config
     includes:
       - windows-2016
       - windows-2019
   - name: win-user-toml
-    named_run_list: pipeline::win_user_toml
+    named_run_list: win_user_toml
     includes:
       - windows-2016
       - windows-2019
