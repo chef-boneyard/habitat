@@ -1,9 +1,14 @@
 # Habitat Cookbook CHANGELOG
 
 This file is used to list changes made in each version of the habitat cookbook.
-<!-- latest_release unreleased -->
+<!-- latest_release 2.0.5 -->
+## [2.0.5](https://github.com/chef-cookbooks/habitat/tree/2.0.5) (2020-05-04)
 
+#### Merged Pull Requests
+- adding effortless compatibility [#235](https://github.com/chef-cookbooks/habitat/pull/235) ([sam1el](https://github.com/sam1el))
 <!-- latest_release -->
+
+
 ## 2.0.5 (2020-04-30)
 
 - There was an issue where the windows service was not correctly setting the launcher version in the service condig. This cause a broken install and/or update when unpinning your version. We have corrected this issue and all version changes are now populating as expected.
