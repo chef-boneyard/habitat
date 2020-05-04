@@ -13,9 +13,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-require 'toml-rb'
 require 'net/http'
 require 'json'
+include Toml
 
 resource_name :hab_config
 
@@ -57,7 +57,7 @@ action :apply do
 
     tempfile = Tempfile.new(['hab_config', '.toml'])
     begin
-      tempfile.write(TomlRB.dump(new_resource.config))
+      tempfile.write(Toml.dump(new_resource.config))
       tempfile.close
 
       hab('config', 'apply', opts, new_resource.service_group, incarnation, tempfile.path)

@@ -9,4 +9,4 @@ source 'https://rubygems.org'
 gem 'community_cookbook_releaser'
 
 # local development and testing requires this gem is installed.
-gem 'toml-rb'
+# gem 'toml-rb'
