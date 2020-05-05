@@ -12,6 +12,10 @@ ruby_block 'wait-for-sup-default-startup' do
   retry_delay 1
 end
 
+hab_package 'core/jq-static' do
+  binlink true
+end
+
 hab_user_toml 'nginx' do
   config(
     worker_processes: 2,

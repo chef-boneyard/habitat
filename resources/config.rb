@@ -15,7 +15,6 @@
 #
 require 'net/http'
 require 'json'
-include Toml
 
 resource_name :hab_config
 
@@ -57,7 +56,7 @@ action :apply do
 
     tempfile = Tempfile.new(['hab_config', '.toml'])
     begin
-      tempfile.write(Toml.dump(new_resource.config))
+      tempfile.write(toml_dump(new_resource.config))
       tempfile.close
 
       hab('config', 'apply', opts, new_resource.service_group, incarnation, tempfile.path)
@@ -70,4 +69,5 @@ end
 
 action_class do
   include Habitat::Shared
+  include Habitat::Toml
 end
