@@ -79,11 +79,11 @@ module Habitat
         end
       end
 
-      def print_prefix(prefix, extra_brackets = false)
+      def print_prefix(prefix, array = false)
         new_prefix = prefix.join('.')
-        new_prefix = '[' + new_prefix + ']' if extra_brackets
+        new_prefix = "[#{new_prefix}]" if array
 
-        @toml_str += '[' + new_prefix + "]\n"
+        @toml_str += "[#{new_prefix}]\n"
       end
 
       def to_toml(obj)
