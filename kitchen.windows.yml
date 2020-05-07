@@ -16,24 +16,38 @@ platforms:
 - name: windows-2019
 
 suites:
-  - name: win-config-auth
-    run_list:
-      - recipe[test::win_config_auth]
-  - name: win-config
-    run_list:
-      - recipe[test::win_config]
-  - name: win-license
-    run_list:
-      - recipe[test::win_license]
   - name: win-package
-    run_list:
-      - recipe[test::win_package]
+    named_run_list: win_package
+    verifier:
+      inspec_tests:
+        - test/integration/win_package
+    includes:
+      - windows-2019
   - name: win-service
-    run_list:
-      - recipe[test::win_service]
+    named_run_list: win_service
+    verifier:
+      inspec_tests:
+        - test/integration/win_service
+    includes:
+      - windows-2019
   - name: win-sup
-    run_list:
-      - recipe[test::win_sup]
+    named_run_list: win_sup
+    verifier:
+      inspec_tests:
+        - test/integration/win_sup
+    includes:
+      - windows-2019
+  - name: win-config
+    named_run_list: win_config
+    verifier:
+      inspec_tests:
+        - test/integration/win_config
+    includes:
+      - windows-2019
   - name: win-user-toml
-    run_list:
-      - recipe[test::win_user_toml]
+    named_run_list: win_user_toml
+    verifier:
+      inspec_tests:
+        - test/integration/win_user_toml
+    includes:
+      - windows-2019
