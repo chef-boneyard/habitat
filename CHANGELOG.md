@@ -1,16 +1,18 @@
 # Habitat Cookbook CHANGELOG
 
 This file is used to list changes made in each version of the habitat cookbook.
-<!-- latest_release unreleased -->
+
 ## Unreleased
+<!-- latest_release unreleased -->
 
-#### Merged Pull Requests
-- Feature/toml [#236](https://github.com/chef-cookbooks/habitat/pull/236) ([sam1el](https://github.com/sam1el))
 <!-- latest_release -->
+## 2.1.0 (2020-05-07)
 
-## [2.0.5](https://github.com/chef-cookbooks/habitat/tree/2.0.5) (2020-05-04)
+- Integrated Toml functions as a helper library to remove external gem dependencies. This will also make airgap usage easier
 
 #### Merged Pull Requests
+
+- Feature/toml [#236](https://github.com/chef-cookbooks/habitat/pull/236) ([sam1el](https://github.com/sam1el))
 - adding effortless compatibility [#235](https://github.com/chef-cookbooks/habitat/pull/235) ([sam1el](https://github.com/sam1el))
 
 
