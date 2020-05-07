@@ -4,7 +4,6 @@ driver:
   host: localhost
 
 provisioner:
-  require_chef_omnibus: false
   name: chef_zero
   install_strategy: skip
   # chef_client_path: "C:\\opscode\\chef-workstation\\bin\\chef-client"
