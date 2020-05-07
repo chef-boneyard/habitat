@@ -45,7 +45,6 @@ suites:
       inspec_tests:
         - test/integration/package
     excludes:
-      - windows-2016
       - windows-2019
   - name: service
     named_run_list: service
@@ -53,7 +52,6 @@ suites:
       inspec_tests:
         - test/integration/service
     excludes:
-      - windows-2016
       - windows-2019
   - name: sup
     named_run_list: sup
@@ -61,7 +59,6 @@ suites:
       inspec_tests:
         - test/integration/sup
     excludes:
-      - windows-2016
       - windows-2019
   - name: install_no_user
     named_run_list: install_no_user
@@ -69,7 +66,6 @@ suites:
       inspec_tests:
         - test/integration/install_no_user
     excludes:
-      - windows-2016
       - windows-2019
   - name: install_for_chefspec
     named_run_list: install_for_chefspec
@@ -77,7 +73,6 @@ suites:
       inspec_tests:
         - test/integration/install_for_chefspec
     excludes:
-      - windows-2016
       - windows-2019
   - name: config
     named_run_list: config
@@ -85,7 +80,6 @@ suites:
       inspec_tests:
         - test/integration/config
     excludes:
-      - windows-2016
       - windows-2019
   - name: user-toml
     named_run_list: user_toml
@@ -93,7 +87,6 @@ suites:
       inspec_tests:
         - test/integration/user_toml
     excludes:
-      - windows-2016
       - windows-2019
   - name: config-chef-13
     named_run_list: config
@@ -101,7 +94,6 @@ suites:
       inspec_tests:
         - test/integration/config
     excludes:
-      - windows-2016
       - windows-2019
     provisioner:
       product_name: chef
@@ -114,7 +106,6 @@ suites:
       inspec_tests:
         - test/integration/win_package
     includes:
-      - windows-2016
       - windows-2019
   - name: win-service
     named_run_list: win_service
@@ -122,7 +113,6 @@ suites:
       inspec_tests:
         - test/integration/win_service
     includes:
-      - windows-2016
       - windows-2019
   - name: win-sup
     named_run_list: win_sup
@@ -130,7 +120,6 @@ suites:
       inspec_tests:
         - test/integration/win_sup
     includes:
-      - windows-2016
       - windows-2019
   - name: win-config
     named_run_list: win_config
@@ -138,7 +127,6 @@ suites:
       inspec_tests:
         - test/integration/win_config
     includes:
-      - windows-2016
       - windows-2019
   - name: win-user-toml
     named_run_list: win_user_toml
@@ -146,5 +134,4 @@ suites:
       inspec_tests:
         - test/integration/win_user_toml
     includes:
-      - windows-2016
       - windows-2019

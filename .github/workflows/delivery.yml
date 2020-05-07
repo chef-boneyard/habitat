@@ -75,13 +75,12 @@
           os:
             - 'windows-2019'
           suite:
-            - 'win-config-auth'
-            # - 'win_config'
-            # - 'win_license'
-            # - 'win_package'
-            # - 'win_service'
-            # - 'win_sup'
-            # - 'win_user_toml'
+            - 'win-config'
+            # - 'win-license'
+            # - 'win-package'
+            # - 'win-service'
+            # - 'win-sup'
+            # - 'win-user-toml'
         fail-fast: false
       steps:
         - name: Check out code

@@ -12,7 +12,15 @@ describe command('C:\habitat\hab.exe -V') do
   its('exit_status') { should eq 0 }
 end
 
-splunkserviceapi = '(Invoke-RestMethod http://localhost:9631/services/splunkforwarder/default).cfg | ConvertTo-Json'
+splunkserviceapi = <<-EOH
+$headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
+$headers.Add("Content-Type", "application/json")
+$headers.Add("Authorization", "Bearer secret")
+$uri = "http://localhost:9631/services/splunkforwarder/default"
+$reply = (Invoke-RestMethod -Headers $headers -uri $uri).cfg | Convertto-Json
+$reply
+EOH
+
 describe json(command: splunkserviceapi) do
   its(%w(directories path)) { should eq ['C:/hab/pkgs/.../*.log'] }
 end

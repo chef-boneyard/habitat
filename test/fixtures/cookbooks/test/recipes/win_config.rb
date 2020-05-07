@@ -1,5 +1,6 @@
 hab_sup 'default' do
   license 'accept'
+  gateway_auth_token 'secret'
 end
 
 ruby_block 'wait-for-sup-default-startup' do
@@ -20,4 +21,5 @@ hab_config 'splunkforwarder.default' do
       ],
     }
   )
+  gateway_auth_token 'secret'
 end
