@@ -28,12 +28,13 @@ property :bldr_url, String
 property :create_user, [true, false], default: true
 property :tmp_dir, String
 property :license, String, equal_to: ['accept']
+property :hab_version, String
 
 action :install do
   if ::File.exist?(hab_path)
     cmd = shell_out!([hab_path, '--version'].flatten.compact.join(' '))
     version = %r{hab (\d*\.\d*\.\d[^\/]*)}.match(cmd.stdout)[1]
-    return if version == hab_version
+    return if version == new_resource.hab_version
   end
 
   if platform_family?('windows')
@@ -138,7 +139,7 @@ action :upgrade do
   if platform_family?('windows')
     # Retrieve version information
     uri = 'https://packages.chef.io/files'
-    package_name = 'hab-latest-x86_64-windows'
+    package_name = 'hab-x86_64-windows'
     zipfile = "#{Chef::Config[:file_cache_path]}/#{package_name}.zip"
 
     # TODO: Figure out how to properly validate the shasum for windows. Doesn't seem it's published
@@ -172,7 +173,7 @@ action :upgrade do
 
     powershell_script 'installing from archive' do
       code <<-EOH
-      Move-Item -Path #{Chef::Config[:file_cache_path]}/habitat/#{package_name} -Destination C:/habitat -Force
+      Move-Item -Path #{Chef::Config[:file_cache_path]}/habitat/hab-*/* -Destination C:/habitat -Force
       EOH
     end
 
@@ -205,6 +206,7 @@ action :upgrade do
           env[var] = new_resource.send(property.to_sym) if new_resource.send(property.to_sym)
         end
       )
+      not_if { ::File.exist?('/bin/hab') }
     end
   end
 end
@@ -223,11 +225,9 @@ action_class do
   end
 
   def hab_command
-    cmd = if node['kernel']['release'].to_i < 3
-            ["bash #{Chef::Config[:file_cache_path]}/hab-install.sh", "-v #{hab_version} -t x86_64-linux-kernel2"]
-          else
-            ["bash #{Chef::Config[:file_cache_path]}/hab-install.sh", "-v #{hab_version}"]
-          end
-    cmd.join(' ')
+    cmd = "bash #{Chef::Config[:file_cache_path]}/hab-install.sh"
+    cmd << " -v #{new_resource.hab_version} " if new_resource.hab_version
+    cmd << ' -t x86_64-linux-kernel2' if node['kernel']['release'].to_i < 3
+    cmd
   end
 end

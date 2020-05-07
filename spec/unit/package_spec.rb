@@ -41,5 +41,9 @@ describe 'test::package' do
       expect(chef_run).to install_hab_package('binlink_force')
         .with(binlink: :force)
     end
+
+    it 'removes core/nginx with remove action' do
+      expect(chef_run).to remove_hab_package('core/nginx')
+    end
   end
 end

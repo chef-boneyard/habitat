@@ -1,34 +1,73 @@
-# habitat CHANGELOG
+# Habitat Cookbook CHANGELOG
 
 This file is used to list changes made in each version of the habitat cookbook.
- <!-- latest_release unreleased -->
-## Unreleased
 
+## Unreleased
+<!-- latest_release unreleased -->
+
+<!-- latest_release -->
+## 2.1.0 (2020-05-07)
+
+- Integrated Toml functions as a helper library to remove external gem dependencies. This will also make airgap usage easier
+
+#### Merged Pull Requests
+
+- Feature/toml [#236](https://github.com/chef-cookbooks/habitat/pull/236) ([sam1el](https://github.com/sam1el))
+- adding effortless compatibility [#235](https://github.com/chef-cookbooks/habitat/pull/235) ([sam1el](https://github.com/sam1el))
+
+
+## 2.0.5 (2020-04-30)
+
+- There was an issue where the windows service was not correctly setting the launcher version in the service condig. This cause a broken install and/or update when unpinning your version. We have corrected this issue and all version changes are now populating as expected.
+
+#### Merged Pull Requests
+
+- Fix for windows-launcher config (#234)
+
+## 2.0.4 (2020-04-29)
+
+- Correcting merge conflict issues which broke the cookbook at compile time
+
+## 2.0.3 (2020-04-28)
+
+- correcting windows launcher path issue which caused the windows service to no longer start.
+
+#### Merged Pull Requests
+
+- correcting launcher path issue (#13) - [@sam1el](https://github.com/sam1el)
+
+## 2.0.2 (2020-04-08)
+
+- Able to unintall packages using the `hab_package` resource. This includes the `--no-deps` and the `--keep-latest`. Keep latest is only available on habitat 1.5.86+
+- Able to select the version of habitat installed as wells as, supervisor, launcher and, windows-servcie
+- All current `--event-stream` functions are now available to habitat versions 1.5.86 and up for the `hab_sup` resource
+- `windows-service` Can now be configured properly with `--event-stream` as well has your `HAB_AUTH_TOKEN` `HAB_BLDR_URL` and, `HAB_AUTH_GATEWAY_TOKEN`
+
+***See README.MD for usage of all new functions**
+
+#### Merged Pull Requests
+
+- Automated PR: Standardising Files [#229](https://github.com/chef-cookbooks/habitat/pull/229) ([xorimabot](https://github.com/xorimabot))
+- Overhaul to testing and cookbook resources [#228](https://github.com/chef-cookbooks/habitat/pull/228)
+- Automated PR: Standardising Files [#226](https://github.com/chef-cookbooks/habitat/pull/226) ([xorimabot](https://github.com/xorimabot))
+- Automated PR: Cookstyle Changes [#225](https://github.com/chef-cookbooks/habitat/pull/225) ([xorimabot](https://github.com/xorimabot))
 - resolved cookstyle error: libraries/provider_hab_package.rb:174:13 convention: `Style/RedundantReturn`
 - resolved cookstyle error: libraries/provider_hab_package.rb:176:13 convention: `Style/RedundantReturn`
 
-## Unreleased
+## 1.7.0 (2020-04-08)
+
+- adds windows Github Actions testing for issue #193 [#224](https://github.com/chef-cookbooks/habitat/pull/224) ([collinmcneese](https://github.com/collinmcneese))
+- changing the windows service cofig to better reflect newer functional… [#223](https://github.com/chef-cookbooks/habitat/pull/223) ([sam1el](https://github.com/sam1el))
+- removing update-confition defaults and tests [#221](https://github.com/chef-cookbooks/habitat/pull/221) ([sam1el](https://github.com/sam1el))
 - Added optional settings for Windows service to recongize local or provided envoringment variables including
   - HAB_AUTH_TOKEN
   - HAB_GATEWAY_AUTH_TOKEN
   - HAB_BLDR_URL
 
-<!-- latest_release unreleased -->
-## Unreleased
-
-## Unreleased
-#### Merged Pull Requests
-- Automated PR: Standardising Files [#229](https://github.com/chef-cookbooks/habitat/pull/229) ([xorimabot](https://github.com/xorimabot))
-- Automated PR: Standardising Files [#226](https://github.com/chef-cookbooks/habitat/pull/226) ([xorimabot](https://github.com/xorimabot))
-- Automated PR: Cookstyle Changes [#225](https://github.com/chef-cookbooks/habitat/pull/225) ([xorimabot](https://github.com/xorimabot))
-- adds windows Github Actions testing for issue #193 [#224](https://github.com/chef-cookbooks/habitat/pull/224) ([collinmcneese](https://github.com/collinmcneese))
-- changing the windows service cofig to better reflect newer functional… [#223](https://github.com/chef-cookbooks/habitat/pull/223) ([sam1el](https://github.com/sam1el))
-- removing update-confition defaults and tests [#221](https://github.com/chef-cookbooks/habitat/pull/221) ([sam1el](https://github.com/sam1el))
-<!-- latest_release -->
-
 ## 1.6.2 (2020-04-07)
 
 #### Merged Pull Requests
+
 - changing the windows service cofig to better reflect newer functional… [#223](https://github.com/chef-cookbooks/habitat/pull/223) ([sam1el](https://github.com/sam1el))
 - removing update-confition defaults and tests [#221](https://github.com/chef-cookbooks/habitat/pull/221) ([sam1el](https://github.com/sam1el))
 
@@ -36,6 +75,7 @@ This file is used to list changes made in each version of the habitat cookbook.
 ## 1.6.0 (2020-04-02)
 
 #### Merged Pull Requests	- complete overhaul of the windows-service config to refplect current best practice
+
 - adding --update-condition funtionality that was added in habitat 1.5.71 [#217](https://github.com/chef-cookbooks/habitat/pull/217) ([sam1el](https://github.com/sam1el))
 - added --update-condition funtionality that was added in habitat 1.5.71. See README.MD for info on usage
 - complete overhaul of the windows-service config to refplect current best practice
@@ -44,16 +84,19 @@ This file is used to list changes made in each version of the habitat cookbook.
 ## 1.5.10 (2020-04-01)
 
 #### Merged Pull Requests
+
 - Versioning [#215](https://github.com/chef-cookbooks/habitat/pull/215) ([sam1el](https://github.com/sam1el))
 
 ## 1.5.9 (2020-03-30)
 
 #### Merged Pull Requests
+
 - updates to be backwards compatible with 12.20.3+ [#214](https://github.com/chef-cookbooks/habitat/pull/214) ([collinmcneese](https://github.com/collinmcneese))
 
 ## 1.5.8 (2020-03-09)
 
 #### Merged Pull Requests
+
 - fixing idempotence on hab_sup_systemd. [#211](https://github.com/chef-cookbooks/habitat/pull/211) ([sam1el](https://github.com/sam1el))
 
 ## 1.5.7 (2020-03-06)
@@ -61,6 +104,7 @@ This file is used to list changes made in each version of the habitat cookbook.
 - Hab version bumped to 1.5.50
 
 #### Merged Pull Requests
+
 - Hab version [#210](https://github.com/chef-cookbooks/habitat/pull/210) ([sam1el](https://github.com/sam1el))
 
 ## 1.5.6 (2020-03-02)
@@ -71,6 +115,7 @@ This file is used to list changes made in each version of the habitat cookbook.
 - updated hab sup resource to include new Application Dashboard options (#206) - [@danielcbright](https://github.com/danielcbright)
 
 #### Merged Pull Requests
+
 - Delete Merged Branches [#209](https://github.com/chef-cookbooks/habitat/pull/209) ([Xorima](https://github.com/Xorima))
 - Use Github actions badge in the readme [#208](https://github.com/chef-cookbooks/habitat/pull/208) ([Xorima](https://github.com/Xorima))
 - Migrate testing to Github Actions and add support for installing on SUSE [#207](https://github.com/chef-cookbooks/habitat/pull/207) ([Xorima](https://github.com/Xorima))
@@ -78,11 +123,13 @@ This file is used to list changes made in each version of the habitat cookbook.
 ## 1.5.5 (2020-02-26)
 
 #### Merged Pull Requests
+
 - Extending Windows chef-client compatibility  [#205](https://github.com/chef-cookbooks/habitat/pull/205) ([sam1el](https://github.com/sam1el))
 
 ## 1.5.4 (2020-02-25)
 
 #### Merged Pull Requests
+
 - adding delay loop to the load function in the service resouce [#204](https://github.com/chef-cookbooks/habitat/pull/204) ([sam1el](https://github.com/sam1el))
 
 ## 1.5.3 (2020-02-24)
@@ -90,6 +137,7 @@ This file is used to list changes made in each version of the habitat cookbook.
 - Fix linux installer issues
 
 #### Merged Pull Requests
+
 - [BUG FIX] Linux installers [#203](https://github.com/chef-cookbooks/habitat/pull/203) ([sam1el](https://github.com/sam1el))
 
 ## 1.5.2 (2020-02-20)
@@ -97,6 +145,7 @@ This file is used to list changes made in each version of the habitat cookbook.
 - Fix windows habitat install
 
 #### Merged Pull Requests
+
 - [BUG FIX] Windows install to correct issue #199 [#202](https://github.com/chef-cookbooks/habitat/pull/202) ([sam1el](https://github.com/sam1el))
 - Additional cookstyle fixes [#189](https://github.com/chef-cookbooks/habitat/pull/189) ([tas50](https://github.com/tas50))
 
@@ -105,6 +154,7 @@ This file is used to list changes made in each version of the habitat cookbook.
 - Fix windows package download URL to use packages.chef.io
 
 #### Merged Pull Requests
+
 - Fix windows package download URL [#198](https://github.com/chef-cookbooks/habitat/pull/198) ([jonlives](https://github.com/jonlives))
 
 ## [1.5.0](https://github.com/chef-cookbooks/habitat/tree/1.5.0) (2020-01-29)
@@ -113,6 +163,7 @@ This file is used to list changes made in each version of the habitat cookbook.
 - Fix habitat installs on Windows when using installation archives
 
 #### Merged Pull Requests
+
 - WIP: Update to hab 1.5 and update launchers and windows-service pins [#195](https://github.com/chef-cookbooks/habitat/pull/195) ([jonlives](https://github.com/jonlives))
 - Fix Habitat install on windows [#194](https://github.com/chef-cookbooks/habitat/pull/194) ([emachnic](https://github.com/emachnic))
 
@@ -122,6 +173,7 @@ This file is used to list changes made in each version of the habitat cookbook.
 - Service Properties, Reload/Restart Fixes, Idempotence Improvements
 
 #### Merged Pull Requests
+
 - Service Properties, Reload/Restart Fixes, Idempotence Improvements [#187](https://github.com/chef-cookbooks/habitat/pull/187) ([sirajrauff](https://github.com/sirajrauff))
 - Add option for Supervisor HTTP gateway authentication token [#186](https://github.com/chef-cookbooks/habitat/pull/186) ([rarenerd](https://github.com/rarenerd))
 
@@ -132,6 +184,7 @@ This file is used to list changes made in each version of the habitat cookbook.
 
 
 #### Merged Pull Requests
+
 - Feature/service full ident fix [#185](https://github.com/chef-cookbooks/habitat/pull/185) ([sirajrauff](https://github.com/sirajrauff))
 - Cookstyle 5.10 fixes [#183](https://github.com/chef-cookbooks/habitat/pull/183) ([tas50](https://github.com/tas50))
 
@@ -142,6 +195,7 @@ This file is used to list changes made in each version of the habitat cookbook.
 - Update windows hab-launcher version
 
 #### Merged Pull Requests
+
 - Update to habitat 0.88.0 [#182](https://github.com/chef-cookbooks/habitat/pull/182) ([chef-expeditor[bot]](https://github.com/chef-expeditor[bot]))
 - allow setting open file limit on the hab sup systemd unit file [#181](https://github.com/chef-cookbooks/habitat/pull/181) ([devoptimist](https://github.com/devoptimist))
 - updating the hab-launcher version to match the dependencies of window… [#179](https://github.com/chef-cookbooks/habitat/pull/179) ([devoptimist](https://github.com/devoptimist))
@@ -154,6 +208,7 @@ This file is used to list changes made in each version of the habitat cookbook.
 - Support added for health check interval parameter
 
 #### Merged Pull Requests
+
 - Update to habitat 0.83.0 [#177](https://github.com/chef-cookbooks/habitat/pull/177) ([chef-ci](https://github.com/chef-ci))
 - Add health check interval option to hab_sup resource [#176](https://github.com/chef-cookbooks/habitat/pull/176) ([gscho](https://github.com/gscho))
 - Support config apply for chef 13 [#175](https://github.com/chef-cookbooks/habitat/pull/175) ([gscho](https://github.com/gscho))
@@ -166,11 +221,13 @@ This file is used to list changes made in each version of the habitat cookbook.
 - Implement new habitat license agreement requirements for ```hab_install``` and ```hab_sup``` resources
 
 #### Merged Pull Requests
+
 - WIP: Update to hab 0.81.0 (#171)
 
 ## [0.81.0](https://github.com/chef-cookbooks/habitat/tree/0.81.0) (2019-05-29)
 
 #### Merged Pull Requests
+
 - WIP: Update to hab 0.81.0 [#171](https://github.com/chef-cookbooks/habitat/pull/171) ([jonlives](https://github.com/jonlives))
 
 ## 0.79.1 (2019-04-26)
@@ -178,6 +235,7 @@ This file is used to list changes made in each version of the habitat cookbook.
 - Update to habitat 0.79.1
 
 #### Merged Pull Requests
+
 - Update to habitat 0.79.1 [#169](https://github.com/chef-cookbooks/habitat/pull/169) ([chef-ci](https://github.com/chef-ci))
 
 
@@ -187,6 +245,7 @@ This file is used to list changes made in each version of the habitat cookbook.
 - Improve service name matching to include version
 
 #### Merged Pull Requests
+
 - Update to habitat 0.78.0 [#165](https://github.com/chef-cookbooks/habitat/pull/165) ([chef-ci](https://github.com/chef-ci))
 - Include version when matching service name [#164](https://github.com/chef-cookbooks/habitat/pull/164) ([gscho](https://github.com/gscho))
 
@@ -195,6 +254,7 @@ This file is used to list changes made in each version of the habitat cookbook.
 -Update to habitat 0.75.0
 
 #### Merged Pull Requests
+
 - Update to habitat 0.75.0 [#161](https://github.com/chef-cookbooks/habitat/pull/161) ([chef-ci](https://github.com/chef-ci))
 - Fix expeditor automation and bump to 0.74.0 [#160](https://github.com/chef-cookbooks/habitat/pull/160) ([jonlives](https://github.com/jonlives))
 
@@ -208,6 +268,7 @@ This file is used to list changes made in each version of the habitat cookbook.
 - remove duplicate windows query param
 
 #### Merged Pull Requests
+
 - remove duplicate windows query param [#156](https://github.com/chef-cookbooks/habitat/pull/156) ([skylerto](https://github.com/skylerto))
 
 
@@ -220,6 +281,7 @@ This file is used to list changes made in each version of the habitat cookbook.
 
 
 #### Merged Pull Requests
+
 - Update hab to 0.73.0 and launcher to 9167 [#154](https://github.com/chef-cookbooks/habitat/pull/154) ([jonlives](https://github.com/jonlives))
 - Install hab-sup from stable release [#153](https://github.com/chef-cookbooks/habitat/pull/153) ([jonlives](https://github.com/jonlives))
 - Full Windows Support For Cookbook [#143](https://github.com/chef-cookbooks/habitat/pull/143) ([wduncanfraser](https://github.com/wduncanfraser))
@@ -236,7 +298,6 @@ This file is used to list changes made in each version of the habitat cookbook.
 ## 0.63.0 (2018-09-18)
 
 *  Update to habitat 0.63.0
-
 
 ## 0.62.1 (2018-09-07)
 
@@ -271,6 +332,7 @@ This file is used to list changes made in each version of the habitat cookbook.
 - Cookstyle fixes
 
 #### Merged Pull Requests
+
 - address chef 14.3.x shell_out deprecations [#111](https://github.com/chef-cookbooks/habitat/pull/111) ([lamont-granquist](https://github.com/lamont-granquist))
 
 ## 0.57.0 (2018-06-19)
@@ -280,6 +342,7 @@ This file is used to list changes made in each version of the habitat cookbook.
 - Source helper functions script
 
 #### Merged Pull Requests
+
 - Source helper functions script [#105](https://github.com/chef-cookbooks/habitat/pull/105) ([jtimberman](https://github.com/jtimberman))
 - Fix #103 and remove options from svc start [#104](https://github.com/chef-cookbooks/habitat/pull/104) ([jonlives](https://github.com/jonlives))
 
@@ -441,13 +504,15 @@ This version is a compatibility change. All users of this cookbook must upgrade 
 ### Breaking Changes
 
 This cookbook was updated to be compatible with the changes made in Habitat 0.26. With these updates the cookbook now requires Habitat 0.26 or later. The version has been updated to match that of habitat. In the event of future breaking habitat changes the version of this cookbook will be updated to reflect the new minimum habitat release.
-  - The cookbook now correctly parses the process status returned by the hab sup services endpoint
-  - Packages now pull from the 'stable' channel by default. If you need to pull from another channel there is a new 'channel' property in the package resource that accepts a string.
+
+- The cookbook now correctly parses the process status returned by the hab sup services endpoint
+- Packages now pull from the 'stable' channel by default. If you need to pull from another channel there is a new 'channel' property in the package resource that accepts a string.
 
 ### Other Changes
-  - Resolves deprecation warnings introduced in Chef 13.2
-  - Removed references in the readme to Chefstyle and simplified some of the requirements information
-  - Added maintainer information to the readme and removed the maintainers file
+
+- Resolves deprecation warnings introduced in Chef 13.2
+- Removed references in the readme to Chefstyle and simplified some of the requirements information
+- Added maintainer information to the readme and removed the maintainers file
 
 ## v0.4.0 (2017-04-26)
 

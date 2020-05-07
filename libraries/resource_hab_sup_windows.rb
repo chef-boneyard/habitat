@@ -26,6 +26,9 @@ class Chef
         node['platform_family'] == 'windows'
       end
 
+      service_file = 'windows/HabService.dll.config.erb'
+      win_service_config = 'C:/hab/svc/windows-service/HabService.dll.config'
+
       action :run do
         super()
 
@@ -51,31 +54,35 @@ class Chef
 
         hab_package 'core/windows-service' do
           bldr_url new_resource.bldr_url if new_resource.bldr_url
-          version hab_windows_service_version
+          version new_resource.service_version if new_resource.service_version
         end
 
         execute 'hab pkg exec core/windows-service install' do
           not_if { ::Win32::Service.exists?('Habitat') }
         end
 
-        template 'C:/hab/svc/windows-service/HabService.exe.config' do
-          source 'windows/HabService.exe.config.erb'
+        # win_version = `dir /D /B C:\\hab\\pkgs\\core\\hab-launcher`.split().last
+
+        template win_service_config.to_s do
+          source service_file.to_s
           cookbook 'habitat'
           variables exec_start_options: exec_start_options,
                     bldr_url: new_resource.bldr_url,
                     auth_token: new_resource.auth_token,
                     gateway_auth_token: new_resource.gateway_auth_token
-          action :create
+          # win_launcher: win_version
+          action :touch
         end
 
         service 'Habitat' do
           subscribes :restart, 'env[HAB_AUTH_TOKEN]'
           subscribes :restart, 'env[HAB_SUP_GATEWAY_AUTH_TOKEN]'
           subscribes :restart, 'env[HAB_BLDR_URL]'
-          subscribes :restart, 'template[C:/hab/svc/windows-service/HabService.exe.config]'
+          subscribes :restart, "template[#{win_service_config}]"
           subscribes :restart, 'hab_package[core/hab-sup]'
           subscribes :restart, 'hab_package[core/hab-launcher]'
           action [:enable, :start]
+          not_if { node['chef_packages']['chef']['chef_root'].include?('/pkgs/chef/chef-infra-client') }
         end
       end
     end

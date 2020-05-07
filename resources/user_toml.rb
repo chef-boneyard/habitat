@@ -10,11 +10,7 @@
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-#
-require 'toml-rb'
-
+# See the License for the specific language governing
 resource_name :hab_user_toml
 
 property :config, Mash,
@@ -34,7 +30,7 @@ action :create do
     mode '0600'
     owner root_owner
     group node['root_group']
-    content TomlRB.dump(new_resource.config)
+    content toml_dump(new_resource.config)
     sensitive true
   end
 end
@@ -47,6 +43,8 @@ action :delete do
 end
 
 action_class do
+  include Habitat::Toml
+
   def config_directory
     platform_family?('windows') ? "C:/hab/user/#{new_resource.service_name}/config" : "/hab/user/#{new_resource.service_name}/config"
   end

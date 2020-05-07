@@ -1,6 +1,7 @@
 apt_update
 
 hab_sup 'default' do
+  gateway_auth_token 'secret'
   license 'accept'
 end
 
@@ -12,8 +13,9 @@ ruby_block 'wait-for-sup-default-startup' do
   retry_delay 1
 end
 
-hab_package 'core/nginx'
-hab_service 'core/nginx'
+hab_package 'core/jq-static' do
+  binlink true
+end
 
 # we need to sleep to let the nginx service have enough time to
 # startup properly before we can configure it.
@@ -21,7 +23,7 @@ hab_service 'core/nginx'
 # can be removed if that issue is fixed.
 ruby_block 'wait-for-nginx-startup' do
   block do
-    sleep 3
+    sleep 20
   end
   action :nothing
   subscribes :run, 'hab_service[core/nginx]', :immediately
@@ -34,6 +36,11 @@ hab_config 'nginx.default' do
       keepalive_timeout: 120,
     }
   )
+  gateway_auth_token 'secret'
+end
+
+hab_service 'core/nginx' do
+  gateway_auth_token 'secret'
 end
 
 # Allow some time for the config to apply before running tests

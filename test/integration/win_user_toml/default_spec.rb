@@ -2,12 +2,7 @@ describe file('C:\habitat\hab.exe') do
   it { should exist }
 end
 
-splunkforwarder_content = <<-EOF
-[directories]
-path = ["C:/hab/pkgs/.../*.log"]
-EOF
-
-describe file('C:\hab\user\splunkforwarder\config\user.toml') do
-  it { should exist }
-  its('content') { should match(splunkforwarder_content) }
+splunkserviceapi = '(Invoke-RestMethod http://localhost:9631/services/splunkforwarder/default).cfg | ConvertTo-Json'
+describe json(command: splunkserviceapi) do
+  its(%w(directories path)) { should eq ['C:/hab/pkgs/.../*.log'] }
 end
