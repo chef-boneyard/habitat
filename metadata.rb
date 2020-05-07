@@ -12,4 +12,4 @@ version           '2.0.5'
   supports os
 end
 
-gem 'toml-rb'
+# gem 'toml-rb'

@@ -24,3 +24,10 @@ describe file('/hab/user/nginx/config/user.toml') do
   it { should exist }
   its('content') { should match(nginx_content) }
 end
+
+nginxserviceapi = 'curl -v -H "Authorization: Bearer secret" http://localhost:9631/services/nginx/default | jq .cfg'
+describe json(command: nginxserviceapi) do
+  its(%w(http keepalive_timeout)) { should eq 120 }
+  its(%w(http listen port)) { should eq 80 }
+  its(['worker_processes']) { should eq 2 }
+end

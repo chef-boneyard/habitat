@@ -10,7 +10,7 @@ ruby_block 'wait-for-sup-default-startup' do
     raise unless system('hab sup status')
   end
   retries 30
-  retry_delay 4
+  retry_delay 1
 end
 
 hab_package 'core/jq-static' do
