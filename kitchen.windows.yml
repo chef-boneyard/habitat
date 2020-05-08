@@ -1,5 +1,6 @@
 ---
 driver:
+  log_level: debug
   name: exec
   host: localhost
 
