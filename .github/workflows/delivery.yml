@@ -68,7 +68,7 @@
     #         os: ${{ matrix.os }}
 
     windows:
-      # needs: [delivery]
+      needs: [delivery]
       runs-on: windows-2019
       strategy:
         matrix:
