@@ -34,8 +34,8 @@ platforms:
     driver:
       box: tas50/windows_2016
   - name: windows-2019
-    driver:
-      box: tas50/windows_2019
+    # driver:
+    #   box: tas50/windows_2019
 
 suites:
   # Testing Linux stuff here:
