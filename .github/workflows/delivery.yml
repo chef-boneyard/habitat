@@ -68,7 +68,7 @@
     #         os: ${{ matrix.os }}
 
     windows:
-      needs: [delivery]
+      # needs: [delivery]
       runs-on: windows-2019
       strategy:
         matrix:
@@ -76,17 +76,17 @@
             - 'windows-2019'
           suite:
             - 'win_config'
-            # - 'win-license'
-            # - 'win-package'
-            # - 'win-service'
-            # - 'win-sup'
-            # - 'win-user-toml'
+            # - 'win_license'
+            # - 'win_package'
+            # - 'win_service'
+            # - 'win_sup'
+            # - 'win_user_toml'
         fail-fast: false
       steps:
         - name: Check out code
           uses: actions/checkout@master
         - name: Install Chef
-          uses: sam1el/chef-install@add-to-path
+          uses: actionshub/chef-install@add-to-path
         # - name: Testing stuff
         #   run: gci $ENV:TEMP
         #   shell: powershell
