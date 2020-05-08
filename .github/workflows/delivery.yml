@@ -85,7 +85,7 @@
         - name: Check out code
           uses: actions/checkout@master
         - name: Install Chef
-          uses: actionshub/sam1el@add-to-path
+          uses: sam1el/chef-install@add-to-path
         # - name: Testing stuff
         #   run: gci $ENV:TEMP
         #   shell: powershell
