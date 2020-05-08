@@ -11,9 +11,6 @@ provisioner:
   deprecations_as_errors: true
   chef_license: accept-no-persist
 
-transport:
-  name: winrm
-
 verifier:
   name: inspec
 
