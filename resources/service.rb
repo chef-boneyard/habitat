@@ -338,7 +338,7 @@ action_class do
   end
 
   def wait_for_service_stopped
-    ruby_block 'wait-for-service-stopped' do # ~FC009
+    ruby_block 'wait-for-service-stopped' do
       block do
         raise "#{new_resource.service_name} still running" if service_up?(get_service_details(new_resource.service_name))
       end

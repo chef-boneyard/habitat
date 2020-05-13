@@ -4,6 +4,10 @@ This file is used to list changes made in each version of the habitat cookbook.
 
 ## Unreleased
 <!-- latest_release unreleased -->
+- resolved cookstyle error: resources/install.rb:24:36 convention: `Layout/TrailingWhitespace`
+- resolved cookstyle error: resources/install.rb:24:37 refactor: `ChefModernize/FoodcriticComments`
+- resolved cookstyle error: resources/service.rb:341:45 convention: `Layout/TrailingWhitespace`
+- resolved cookstyle error: resources/service.rb:341:46 refactor: `ChefModernize/FoodcriticComments`
 
 <!-- latest_release -->
 ## 2.1.0 (2020-05-07)
