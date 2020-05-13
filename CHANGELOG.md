@@ -4,12 +4,16 @@ This file is used to list changes made in each version of the habitat cookbook.
 
 ## Unreleased
 <!-- latest_release unreleased -->
+## Unreleased
+
+#### Merged Pull Requests
+- Automated PR: Cookstyle Changes [#237](https://github.com/chef-cookbooks/habitat/pull/237) ([xorimabot](https://github.com/xorimabot))
+<!-- latest_release -->
+
 - resolved cookstyle error: resources/install.rb:24:36 convention: `Layout/TrailingWhitespace`
 - resolved cookstyle error: resources/install.rb:24:37 refactor: `ChefModernize/FoodcriticComments`
 - resolved cookstyle error: resources/service.rb:341:45 convention: `Layout/TrailingWhitespace`
 - resolved cookstyle error: resources/service.rb:341:46 refactor: `ChefModernize/FoodcriticComments`
-
-<!-- latest_release -->
 ## 2.1.0 (2020-05-07)
 
 - Integrated Toml functions as a helper library to remove external gem dependencies. This will also make airgap usage easier
