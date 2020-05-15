@@ -160,49 +160,49 @@ describe 'test::sup' do
       end
     end
 
-    # context 'a Sysvinit platform' do
-    #   cached(:chef_run) do
-    #     ChefSpec::ServerRunner.new(
-    #       step_into: ['hab_sup'],
-    #       platform: 'debian',
-    #       version: '7'
-    #     ).converge(described_recipe)
-    #   end
+    context 'a Sysvinit platform' do
+      cached(:chef_run) do
+        ChefSpec::ServerRunner.new(
+          step_into: ['hab_sup'],
+          platform: 'redhat',
+          version: '6'
+        ).converge(described_recipe)
+      end
 
-    #   before(:each) do
-    #     allow(Chef::Platform::ServiceHelpers).to receive(:service_resource_providers).and_return([])
-    #   end
+      before(:each) do
+        allow(Chef::Platform::ServiceHelpers).to receive(:service_resource_providers).and_return([])
+      end
 
-    #   it_behaves_like 'any platform'
+      it_behaves_like 'any platform'
 
-    #   it 'renders an init script with default options' do
-    #     expect(chef_run).to create_template('/etc/init.d/hab-sup').with(
-    #       source: 'sysvinit/hab-sup-debian.erb',
-    #       cookbook: 'habitat',
-    #       owner: 'root',
-    #       group: 'root',
-    #       mode: '0755',
-    #       variables: {
-    #         name: 'hab-sup',
-    #         exec_start_options: '--listen-gossip 0.0.0.0:7998 --listen-http 0.0.0.0:7999 --peer 127.0.0.2 --peer 127.0.0.3',
-    #         auth_token: nil,
-    #         gateway_auth_token: nil,
-    #       }
-    #     )
-    #   end
+      it 'renders an init script with default options' do
+        expect(chef_run).to create_template('/etc/init.d/hab-sup').with(
+          source: 'sysvinit/hab-sup.erb',
+          cookbook: 'habitat',
+          owner: 'root',
+          group: 'root',
+          mode: '0755',
+          variables: {
+            name: 'hab-sup',
+            exec_start_options: '--listen-gossip 0.0.0.0:7998 --listen-http 0.0.0.0:7999 --peer 127.0.0.2 --peer 127.0.0.3',
+            auth_token: nil,
+            gateway_auth_token: nil,
+          }
+        )
+      end
 
-    #   it 'starts the hab-sup service' do
-    #     expect(chef_run).to start_service('hab-sup')
-    #     expect(chef_run.service('hab-sup'))
-    #       .to subscribe_to('template[/etc/init.d/hab-sup]')
-    #       .on(:restart).delayed
-    #     expect(chef_run.service('hab-sup'))
-    #       .to subscribe_to('hab_package[core/hab-sup]')
-    #       .on(:restart).delayed
-    #     expect(chef_run.service('hab-sup'))
-    #       .to subscribe_to('hab_package[core/hab-launcher]')
-    #       .on(:restart).delayed
-    #   end
-    # end
+      it 'starts the hab-sup service' do
+        expect(chef_run).to start_service('hab-sup')
+        expect(chef_run.service('hab-sup'))
+          .to subscribe_to('template[/etc/init.d/hab-sup]')
+          .on(:restart).delayed
+        expect(chef_run.service('hab-sup'))
+          .to subscribe_to('hab_package[core/hab-sup]')
+          .on(:restart).delayed
+        expect(chef_run.service('hab-sup'))
+          .to subscribe_to('hab_package[core/hab-launcher]')
+          .on(:restart).delayed
+      end
+    end
   end
 end

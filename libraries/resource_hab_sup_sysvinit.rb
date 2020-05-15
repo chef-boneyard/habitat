@@ -21,16 +21,13 @@ class Chef
   class Resource
     class HabSupSysvinit < HabSup
       provides :hab_sup_sysvinit
-      provides :hab_sup do |node|
-        provs = Chef::Platform::ServiceHelpers.service_resource_providers
-        node['platform_family'] == 'debian' && !provs.include?(:systemd) && !provs.include?(:upstart)
-      end
+      provides :hab_sup
 
       action :run do
         super()
 
         template '/etc/init.d/hab-sup' do
-          source "sysvinit/hab-sup-#{node['platform_family']}.erb"
+          source 'sysvinit/hab-sup.erb'
           cookbook 'habitat'
           owner 'root'
           group 'root'
