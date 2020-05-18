@@ -57,7 +57,7 @@ class Chef
           hab_version new_resource.sup_version if new_resource.sup_version
           not_if { ::File.exist?('/bin/hab') }
           not_if { ::File.exist?('/usr/bin/hab') }
-          not_if { ::File.exist?('c/habitat/hab.exe') }
+          not_if { ::File.exist?('c:/habitat/hab.exe') }
         end
 
         hab_package 'core/hab-sup' do
