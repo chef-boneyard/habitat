@@ -164,8 +164,8 @@ describe 'test::sup' do
       cached(:chef_run) do
         ChefSpec::ServerRunner.new(
           step_into: ['hab_sup'],
-          platform: 'debian',
-          version: '7'
+          platform: 'redhat',
+          version: '6'
         ).converge(described_recipe)
       end
 
@@ -177,7 +177,7 @@ describe 'test::sup' do
 
       it 'renders an init script with default options' do
         expect(chef_run).to create_template('/etc/init.d/hab-sup').with(
-          source: 'sysvinit/hab-sup-debian.erb',
+          source: 'sysvinit/hab-sup.erb',
           cookbook: 'habitat',
           owner: 'root',
           group: 'root',
