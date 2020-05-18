@@ -58,6 +58,7 @@ class Chef
           not_if { ::File.exist?('/bin/hab') }
           not_if { ::File.exist?('/usr/bin/hab') }
           not_if { ::File.exist?('c:/habitat/hab.exe') }
+          not_if { ::File.exist?('c:/ProgramData/Habitat/hab.exe') }
         end
 
         hab_package 'core/hab-sup' do
