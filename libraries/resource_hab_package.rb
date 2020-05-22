@@ -24,7 +24,7 @@ class Chef
       resource_name :hab_package
       provides :hab_package
 
-      property :bldr_url, String, default: 'https://bldr.habitat.sh'
+      property :bldr_url, String, default: 'https://bldr.habitat.sh/v1/'
       property :channel, String, default: 'stable'
       property :auth_token, String
       property :binlink, equal_to: [true, false, :force], default: false

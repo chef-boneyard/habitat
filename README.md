@@ -206,7 +206,10 @@ The follow properties are valid for the `load` action.
   - `latest`: Runs the latest package that can be found in the configured channel and local packages.
   - `track-channel`: Always run what is at the head of a given channel. This enables service rollback where demoting a package from a channel will cause the package to rollback to an older version of the package. A ramification of enabling this condition is packages newer than the package at the head of the channel will be automatically uninstalled during a service rollback.
 - `topology`: Passes `--topology` with the specified service topology to the hab command
-- `bldr_url`: Passes `--url` with the specified Builder URL to the hab command.
+- `bldr_url`: Passes `--url` with the specified Builder URL to the hab command. Depending on the type of Builder you are connecting to, this URL will look different, here are the **3** current types:
+  - Public Builder (default) - `https://bldr.habitat.sh/v1`
+  - On-Prem Builder installed using the [Repo Method](https://github.com/habitat-sh/on-prem-builder) - `https://your.bldr.url/v1`
+  - On-Prem Builder installed using the [Automate Installer](https://automate.chef.io/docs/on-prem-builder/) - `https://your.bldr.url/bldr/v1`
 - `channel`: Passes `--channel` with the specified channel to the hab command
 - `bind`: Passes `--bind` with the specified services to bind to the hab command. If an array of multiple service binds are specified then a `--bind` flag is added for each.
 - `binding_mode`: Passes `--binding-mode` with the specified binding mode. Defaults to `:strict`. Options are `:strict` or `:relaxed`
