@@ -7,6 +7,7 @@ This file is used to list changes made in each version of the habitat cookbook.
 ## Unreleased
 
 #### Merged Pull Requests
+- Automated PR: Standardising Files [#242](https://github.com/chef-cookbooks/habitat/pull/242) ([xorimabot](https://github.com/xorimabot))
 - updating how we handle the bldr_url to accommodate on-prem installed with Automate [#241](https://github.com/chef-cookbooks/habitat/pull/241) ([danielcbright](https://github.com/danielcbright))
 - fixes hab_install guard for resource_hab_sup [#239](https://github.com/chef-cookbooks/habitat/pull/239) ([collinmcneese](https://github.com/collinmcneese))
 - correcting all syntax issue [#238](https://github.com/chef-cookbooks/habitat/pull/238) ([sam1el](https://github.com/sam1el))
