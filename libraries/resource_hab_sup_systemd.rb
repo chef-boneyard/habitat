@@ -29,6 +29,7 @@ class Chef
         super()
 
         service_environment = []
+        service_environment.push("HAB_BLDR_URL=#{new_resource.bldr_url}") if new_resource.bldr_url
         service_environment.push("HAB_AUTH_TOKEN=#{new_resource.auth_token}") if new_resource.auth_token
         service_environment.push("HAB_SUP_GATEWAY_AUTH_TOKEN=#{new_resource.gateway_auth_token}") if new_resource.gateway_auth_token
         systemd_unit 'hab-sup.service' do
