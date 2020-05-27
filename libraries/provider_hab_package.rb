@@ -124,7 +124,11 @@ class Chef
           begin
             origin, pkg_name = name.split('/')
             name_version = [pkg_name, version].compact.join('/').squeeze('/').chomp('/').sub(%r{^\/}, '')
-            url = "#{new_resource.bldr_url.chomp('/')}/depot/channels/#{origin}/#{new_resource.channel}/pkgs/#{name_version}"
+            url = if new_resource.bldr_url.include?('/v1/')
+                    "#{new_resource.bldr_url.chomp('/')}/depot/channels/#{origin}/#{new_resource.channel}/pkgs/#{name_version}"
+                  else
+                    "#{new_resource.bldr_url.chomp('/')}/v1/depot/channels/#{origin}/#{new_resource.channel}/pkgs/#{name_version}"
+                  end
             url << '/latest' unless name_version.count('/') >= 2
             url << "?#{platform_target}" unless platform_target.empty?
 
