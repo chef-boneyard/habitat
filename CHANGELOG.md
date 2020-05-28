@@ -4,7 +4,12 @@ This file is used to list changes made in each version of the habitat cookbook.
 
 ## Unreleased
 <!-- latest_release unreleased -->
-## Unreleased
+
+<!-- latest_release -->
+## 2.2.1 (2020-05-28)
+
+- With the new availabilty of an embedded Builder server with A2 we wanted to add the option of using it with this cookbook. As this changes the URL to the api, we needed to alter the resources that use it.
+- Had idempotance issues with the install resource. Those are now corrected
 
 #### Merged Pull Requests
 - Automated PR: Standardising Files [#242](https://github.com/chef-cookbooks/habitat/pull/242) ([xorimabot](https://github.com/xorimabot))
@@ -14,10 +19,7 @@ This file is used to list changes made in each version of the habitat cookbook.
 - Automated PR: Cookstyle Changes [#237](https://github.com/chef-cookbooks/habitat/pull/237) ([xorimabot](https://github.com/xorimabot))
 <!-- latest_release -->
 
-- resolved cookstyle error: resources/install.rb:24:36 convention: `Layout/TrailingWhitespace`
-- resolved cookstyle error: resources/install.rb:24:37 refactor: `ChefModernize/FoodcriticComments`
-- resolved cookstyle error: resources/service.rb:341:45 convention: `Layout/TrailingWhitespace`
-- resolved cookstyle error: resources/service.rb:341:46 refactor: `ChefModernize/FoodcriticComments`
+
 ## 2.1.0 (2020-05-07)
 
 - Integrated Toml functions as a helper library to remove external gem dependencies. This will also make airgap usage easier
@@ -26,7 +28,6 @@ This file is used to list changes made in each version of the habitat cookbook.
 
 - Feature/toml [#236](https://github.com/chef-cookbooks/habitat/pull/236) ([sam1el](https://github.com/sam1el))
 - adding effortless compatibility [#235](https://github.com/chef-cookbooks/habitat/pull/235) ([sam1el](https://github.com/sam1el))
-
 
 ## 2.0.5 (2020-04-30)
 
