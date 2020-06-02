@@ -4,6 +4,10 @@ This file is used to list changes made in each version of the habitat cookbook.
 
 ## Unreleased
 <!-- latest_release unreleased -->
+- resolved cookstyle error: resources/config.rb:19:1 warning: `ChefDeprecations/ResourceUsesOnlyResourceName`
+- resolved cookstyle error: resources/install.rb:22:1 warning: `ChefDeprecations/ResourceUsesOnlyResourceName`
+- resolved cookstyle error: resources/service.rb:17:1 warning: `ChefDeprecations/ResourceUsesOnlyResourceName`
+- resolved cookstyle error: resources/user_toml.rb:14:1 warning: `ChefDeprecations/ResourceUsesOnlyResourceName`
 
 <!-- latest_release -->
 ## 2.2.1 (2020-05-28)
