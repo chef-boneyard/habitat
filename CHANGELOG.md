@@ -4,11 +4,10 @@ This file is used to list changes made in each version of the habitat cookbook.
 
 ## Unreleased
 <!-- latest_release unreleased -->
-- resolved cookstyle error: resources/config.rb:19:1 warning: `ChefDeprecations/ResourceUsesOnlyResourceName`
-- resolved cookstyle error: resources/install.rb:22:1 warning: `ChefDeprecations/ResourceUsesOnlyResourceName`
-- resolved cookstyle error: resources/service.rb:17:1 warning: `ChefDeprecations/ResourceUsesOnlyResourceName`
-- resolved cookstyle error: resources/user_toml.rb:14:1 warning: `ChefDeprecations/ResourceUsesOnlyResourceName`
+## Unreleased
 
+#### Merged Pull Requests
+- Automated PR: Cookstyle Changes [#243](https://github.com/chef-cookbooks/habitat/pull/243) ([xorimabot](https://github.com/xorimabot))
 <!-- latest_release -->
 ## 2.2.1 (2020-05-28)
 
@@ -21,7 +20,6 @@ This file is used to list changes made in each version of the habitat cookbook.
 - fixes hab_install guard for resource_hab_sup [#239](https://github.com/chef-cookbooks/habitat/pull/239) ([collinmcneese](https://github.com/collinmcneese))
 - correcting all syntax issue [#238](https://github.com/chef-cookbooks/habitat/pull/238) ([sam1el](https://github.com/sam1el))
 - Automated PR: Cookstyle Changes [#237](https://github.com/chef-cookbooks/habitat/pull/237) ([xorimabot](https://github.com/xorimabot))
-<!-- latest_release -->
 
 
 ## 2.1.0 (2020-05-07)
