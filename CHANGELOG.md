@@ -7,6 +7,7 @@ This file is used to list changes made in each version of the habitat cookbook.
 ## Unreleased
 
 #### Merged Pull Requests
+- Automated PR: Standardising Files [#244](https://github.com/chef-cookbooks/habitat/pull/244) ([xorimabot](https://github.com/xorimabot))
 - Automated PR: Cookstyle Changes [#243](https://github.com/chef-cookbooks/habitat/pull/243) ([xorimabot](https://github.com/xorimabot))
 <!-- latest_release -->
 ## 2.2.1 (2020-05-28)
