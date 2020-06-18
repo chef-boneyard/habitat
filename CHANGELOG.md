@@ -7,6 +7,7 @@ This file is used to list changes made in each version of the habitat cookbook.
 ## Unreleased
 
 #### Merged Pull Requests
+- updates custom resources to add resource_name [#246](https://github.com/chef-cookbooks/habitat/pull/246) ([collinmcneese](https://github.com/collinmcneese))
 - Automated PR: Standardising Files [#244](https://github.com/chef-cookbooks/habitat/pull/244) ([xorimabot](https://github.com/xorimabot))
 - Automated PR: Cookstyle Changes [#243](https://github.com/chef-cookbooks/habitat/pull/243) ([xorimabot](https://github.com/xorimabot))
 <!-- latest_release -->
