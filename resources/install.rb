@@ -19,6 +19,7 @@
 #
 require 'chef/http/simple'
 
+resource_name :hab_install
 provides :hab_install
 
 property :name, String, default: ''
