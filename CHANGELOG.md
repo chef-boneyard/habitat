@@ -1,13 +1,14 @@
 # Habitat Cookbook CHANGELOG
 
+This file is used to list changes made in each version of the habitat cookbook.
 ## Unreleased
 <!-- latest_release unreleased -->
-## Unreleased
+
+<!-- latest_release -->
+## 2.2.3 (2020-06-25)
 
 #### Merged Pull Requests
 - correcting some documentation and fixing tagging [#247](https://github.com/chef-cookbooks/habitat/pull/247) ([sam1el](https://github.com/sam1el))
-<!-- latest_release -->
-
 
 ## 2.2.2 (2020-06-18)
 
