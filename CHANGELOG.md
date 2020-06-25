@@ -2,9 +2,13 @@
 
 ## Unreleased
 <!-- latest_release unreleased -->
+## Unreleased
 
-
+#### Merged Pull Requests
+- correcting some documentation and fixing tagging [#247](https://github.com/chef-cookbooks/habitat/pull/247) ([sam1el](https://github.com/sam1el))
 <!-- latest_release -->
+
+
 ## 2.2.2 (2020-06-18)
 
 #### Merged Pull Requests
