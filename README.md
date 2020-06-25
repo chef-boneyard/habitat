@@ -44,17 +44,9 @@ PLEASE NOTE: Without performing one of the above license acceptance steps, all o
 
 ### Habitat
 
-- Habitat version: 1.5.86
+- Habitat version: 1.6.56+ `You can also pin to older versions if desired`
 
-This cookbook is developed lockstep with the latest release of Habitat to ensure compatibility, going forward from 0.33.0 of the cookbook and 0.33.2 of Habitat itself. When new versions of Habitat are released, the version should be updated in these files:
-
-- `README.md`: note required version in this file
-- `resources/install.rb`: set the default to the new version
-- `test/integration/install/default_spec.rb`: to match the version from the resource
-
-Additionally, new versions must be tested that all behavior in the cookbook still works, otherwise the cookbook must be updated to match the behavior in the new version of Habitat.
-
-Users who wish to install a specific version of Habitat should use an older (0.28 or earlier) release of this cookbook, but note that is unsupported and they are advised to upgrade ASAP.
+This cookbook used to base version number off of the latest stable Habitat release and install a specific version of Habitat based upon the cookbook version.  Current behavior is now that the cookbook will install the latest stable release of Habitat on the source Habitat Builder which is contacted by default, but allows for explicit version pinning to be set via cookbook resources.
 
 ### Chef
 
