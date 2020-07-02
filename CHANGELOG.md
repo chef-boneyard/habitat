@@ -3,8 +3,13 @@
 This file is used to list changes made in each version of the habitat cookbook.
 ## Unreleased
 <!-- latest_release unreleased -->
+## Unreleased
 
+#### Merged Pull Requests
+- Automated PR: Standardising Files [#248](https://github.com/chef-cookbooks/habitat/pull/248) ([xorimabot](https://github.com/xorimabot))
 <!-- latest_release -->
+
+
 ## 2.2.3 (2020-06-25)
 
 #### Merged Pull Requests
