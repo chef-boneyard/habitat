@@ -284,7 +284,7 @@ All `event_stream_*` properties are optional, and allow the Habitat Supervisor t
 - `event_stream_site`: Application Dashboard label for the "site" of the application - can be filtered in the dashboard
 - `event_stream_url`: `AUTOMATE_HOSTNAME:4222` - the Chef Automate URL with port 4222 specified (can be changed if needed)
 - `event_stream_token`: Chef Automate token for sending application event stream data
-- `event_stream_certificate`: With `Intermediary Certificates` or, Automate 2 being set to use TLS with a valid cert, you will need to provide `Habitat` with your certificate for communication with Automate to work. [Follow these steps!](https://automate.chef.io/docs/applications-setup/#share-the-tls-certificate-with-chef-habitat)
+- `event_stream_cert`: With `Intermediary Certificates` or, Automate 2 being set to use TLS with a valid cert, you will need to provide `Habitat` with your certificate for communication with Automate to work. [Follow these steps!](https://automate.chef.io/docs/applications-setup/#share-the-tls-certificate-with-chef-habitat)
 - `sup_verstion`: Allows you to choose which version of supervisor you would like to install. Defaults to `latest`. (If a version is provided, it will also install that version of habitat if not previously installed)
 - `launcher_version`: Allows you to choose which version of launcher to install. Defaults to `latest`
 - `service_version`: Allows you to choose which version of the ***Windows Service*** to install. Defaults to `latest`
@@ -322,7 +322,7 @@ hab_sup 'default' do
   event_stream_site 'MySite'
   event_stream_url 'automate.private.net:4222'
   event_stream_token 'myawesomea2clitoken='
-  event_stream_certificate '/hab/cache/ssl/mycert.crt'
+  event_stream_cert '/hab/cache/ssl/mycert.crt'
 end
 
 # Provide specific versions
