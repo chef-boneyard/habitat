@@ -20,7 +20,7 @@ $reply
 EOH
 
 describe json(command: servicecheck) do
-  its(['bldr_url']) { should eq 'https://bldr.habitat.sh' }
+  its(['bldr_url']) { should eq 'https://bldr.habitat.sh/' }
   its(%w(cfg id)) { should eq 'hab-sensu-agent' }
   its(%w(cfg backend-urls)) { should eq ['ws://127.0.0.1:8081'] }
   its(['channel']) { should eq 'stable' }

@@ -18,7 +18,7 @@ grafanaserviceapi = 'curl -v -H "Authorization: Bearer secret" http://localhost:
 describe json(command: grafanaserviceapi) do
   its(['binding_mode']) { should eq 'relaxed' }
   its(['binds']) { should eq ['prom:prometheus.default'] }
-  its(['bldr_url']) { should eq 'https://bldr-test.habitat.sh' }
+  its(['bldr_url']) { should eq 'https://bldr-test.habitat.sh/' }
   its(['channel']) { should eq 'bldr-1321420393699319808' }
   its(%w(health_check_interval secs)) { should eq 32 }
   its(%w(pkg ident)) { should eq 'core/grafana/6.4.3/20191105024430' }

@@ -24,7 +24,7 @@ property :running, [true, false], default: false
 # hab svc options which get included based on the action of the resource
 property :strategy, [Symbol, String], equal_to: [:none, 'none', :'at-once', 'at-once', :rolling, 'rolling'], default: :none, coerce: proc { |s| s.is_a?(String) ? s.to_sym : s }
 property :topology, [Symbol, String], equal_to: [:standalone, 'standalone', :leader, 'leader'], default: :standalone, coerce: proc { |s| s.is_a?(String) ? s.to_sym : s }
-property :bldr_url, String, default: 'https://bldr.habitat.sh'
+property :bldr_url, String, default: 'https://bldr.habitat.sh/'
 property :channel, [Symbol, String], default: :stable, coerce: proc { |s| s.is_a?(String) ? s.to_sym : s }
 property :bind, [String, Array], coerce: proc { |b| b.is_a?(String) ? [b] : b }, default: []
 property :binding_mode, [Symbol, String], equal_to: [:strict, 'strict', :relaxed, 'relaxed'], default: :strict, coerce: proc { |s| s.is_a?(String) ? s.to_sym : s }
@@ -35,7 +35,7 @@ property :remote_sup, String, default: '127.0.0.1:9632', desired_state: false
 # Http port needed for querying/comparing current config value
 property :remote_sup_http, String, default: '127.0.0.1:9631', desired_state: false
 property :gateway_auth_token, String, desired_state: false
-property :update_condition, String
+property :update_condition, [Symbol, String], equal_to: [:latest, 'latest', :'track-channel', 'track-channel'], default: :latest, coerce: proc { |s| s.is_a?(String) ? s.to_sym : s }
 
 load_current_value do
   service_details = get_service_details(service_name)
@@ -143,7 +143,7 @@ rescue
 end
 
 def get_update_condition(service_details)
-  service_details['update_condition']['secs']
+  service_details['update_condition'].to_sym
 rescue
   Chef::Log.debug("Update condition #{service_name} not found on Supervisor API")
   'latest'
