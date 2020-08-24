@@ -6,6 +6,7 @@ This file is used to list changes made in each version of the habitat cookbook.
 ## Unreleased
 
 #### Merged Pull Requests
+- Fixed hab_service flapping on bldr_url and update_condition [#251](https://github.com/chef-cookbooks/habitat/pull/251) ([mattray](https://github.com/mattray))
 - It&#39;s `event_stream_cert` in the code [#249](https://github.com/chef-cookbooks/habitat/pull/249) ([mattray](https://github.com/mattray))
 - Automated PR: Standardising Files [#248](https://github.com/chef-cookbooks/habitat/pull/248) ([xorimabot](https://github.com/xorimabot))
 <!-- latest_release -->
