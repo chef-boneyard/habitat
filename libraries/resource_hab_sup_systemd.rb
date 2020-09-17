@@ -37,7 +37,7 @@ class Chef
                     Description: 'The Habitat Supervisor',
                   },
                   Service: {
-                    LimitNOFILE: (new_resource.limit_no_files if new_resource.limit_no_files),
+                    LimitNOFILE: new_resource.limit_no_files,
                     Environment: service_environment,
                     ExecStart: "/bin/hab sup run #{exec_start_options}",
                     ExecStop: '/bin/hab sup term',
