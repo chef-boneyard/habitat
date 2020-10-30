@@ -45,7 +45,7 @@
             - 'package'
             - 'service'
             - 'sup'
-            - 'sup_toml_config'
+            - 'sup-toml-config'
             - 'config'
             - 'user-toml'
             - 'config-chef-13'
