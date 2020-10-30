@@ -74,7 +74,7 @@ class Chef
 
         if node['platform_family'] == 'windows'
           directory 'C:/hab/sup/default/config' do
-            recusive true
+            recursive true
             only_if { ::Dir.exist?('C:/hab') }
             only_if { use_toml_config() }
             action :create
