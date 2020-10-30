@@ -63,6 +63,14 @@ suites:
     excludes:
       - windows-2016
       - windows-2019
+  - name: sup-toml-config
+    named_run_list: sup_toml_config
+    excludes:
+      - windows-2016
+      - windows-2019
+    verifier:
+      inspec_tests:
+        - path: test/integration/sup_toml_config/default_spec.rb
   - name: install_no_user
     named_run_list: install_no_user
     verifier:
@@ -129,6 +137,14 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/win_sup
+    includes:
+      - windows-2016
+      - windows-2019
+  - name: win-sup-toml-config
+    named_run_list: win_sup_toml_config
+    verifier:
+      inspec_tests:
+        - test/integration/win_sup_toml_config
     includes:
       - windows-2016
       - windows-2019

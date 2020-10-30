@@ -262,6 +262,7 @@ All `event_stream_*` properties are optional, and allow the Habitat Supervisor t
 
 #### Properties
 
+- `toml_config`: Supports using the Supervisor toml configuration instead of passing exec parameters to the service, default is `false`. [reference](https://www.habitat.sh/docs/reference/#supervisor-config)
 - `bldr_url`: The Builder URL for the `hab_package` resource, if needed
 - `permanent_peer`: Only valid for `:run` action, passes `--permanent-peer` to the hab command
 - `listen_ctl`: Only valid for `:run` action, passes `--listen-ctl` with the specified address and port, e.g., `0.0.0.0:9632`, to the hab command
@@ -296,9 +297,11 @@ All `event_stream_*` properties are optional, and allow the Habitat Supervisor t
 # set up with just the defaults
 hab_sup 'default'
 
+# Update listen ports and use Supervisor toml config
 hab_sup 'test-options' do
   listen_http '0.0.0.0:9999'
   listen_gossip '0.0.0.0:9998'
+  toml_config true
 end
 
 # Use with an on-prem Builder
