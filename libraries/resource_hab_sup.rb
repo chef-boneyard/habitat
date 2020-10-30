@@ -105,15 +105,8 @@ class Chef
           end
         else
           directory '/hab/sup/default/config' do
+            mode '0755'
             recursive true
-            only_if { use_toml_config() }
-          end
-
-          directory '/hab/sup/default/config' do
-            owner 'hab'
-            group 'hab'
-            only_if 'id hab'
-            only_if { ::Dir.exist?('/hab/sup/default/config') }
             only_if { use_toml_config() }
           end
 
