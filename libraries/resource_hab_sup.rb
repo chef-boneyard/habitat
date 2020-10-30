@@ -75,12 +75,14 @@ class Chef
         if node['platform_family'] == 'windows'
           directory 'C:/hab/sup/default/config' do
             recusive true
-            only_if { ::Dir.exist?('C:/hab/sup/default') }
+            only_if { ::Dir.exist?('C:/hab') }
             only_if { use_toml_config() }
+            action :create
           end
 
           template 'C:/hab/sup/default/config/sup.toml' do
             source 'sup/sup.toml.erb'
+            sensitive true
             variables(
               bldr_url: new_resource.bldr_url,
               permanent_peer: new_resource.permanent_peer,
@@ -102,16 +104,20 @@ class Chef
               keep_latest_packages: new_resource.keep_latest
             )
             only_if { use_toml_config() }
+            only_if { ::Dir.exist?('C:/hab/sup/default/config') }
           end
         else
           directory '/hab/sup/default/config' do
             mode '0755'
             recursive true
             only_if { use_toml_config() }
+            only_if { ::Dir.exist?('/hab') }
+            action :create
           end
 
           template '/hab/sup/default/config/sup.toml' do
             source 'sup/sup.toml.erb'
+            sensitive true
             variables(
               bldr_url: new_resource.bldr_url,
               permanent_peer: new_resource.permanent_peer,
@@ -133,6 +139,7 @@ class Chef
               keep_latest_packages: new_resource.keep_latest
             )
             only_if { use_toml_config() }
+            only_if { ::Dir.exist?('/hab/sup/default/config') }
           end
         end
       end

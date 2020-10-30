@@ -53,6 +53,7 @@ class Chef
           subscribes :restart, 'systemd_unit[hab-sup.service]'
           subscribes :restart, 'hab_package[core/hab-sup]'
           subscribes :restart, 'hab_package[core/hab-launcher]'
+          subscribes :restart, 'template[/hab/sup/default/config/sup.toml]'
           action [:enable, :start]
           not_if { node['chef_packages']['chef']['chef_root'].include?('/pkgs/chef/chef-infra-client') }
         end

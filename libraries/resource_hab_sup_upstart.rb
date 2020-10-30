@@ -28,16 +28,17 @@ class Chef
 
       action :run do
         super()
-
         template '/etc/init/hab-sup.conf' do
           source 'upstart/hab-sup.conf.erb'
           cookbook 'habitat'
           owner 'root'
           group 'root'
           mode '0644'
-          variables(exec_start_options: exec_start_options,
-                    auth_token: new_resource.auth_token,
-                    gateway_auth_token: new_resource.gateway_auth_token)
+          variables(
+            exec_start_options: exec_start_options,
+            auth_token: new_resource.auth_token,
+            gateway_auth_token: new_resource.gateway_auth_token
+          )
           action :create
         end
 
@@ -47,6 +48,7 @@ class Chef
           subscribes :restart, 'template[/etc/init/hab-sup.conf]'
           subscribes :restart, 'hab_package[core/hab-sup]'
           subscribes :restart, 'hab_package[core/hab-launcher]'
+          subscribes :restart, 'template[/hab/sup/default/config/sup.toml]'
           action [:enable, :start]
           not_if { node['chef_packages']['chef']['chef_root'].include?('/pkgs/chef/chef-infra-client') }
         end
