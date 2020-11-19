@@ -1,28 +1,34 @@
 # Habitat Cookbook CHANGELOG
 
 This file is used to list changes made in each version of the habitat cookbook.
-## Unreleased
-<!-- latest_release unreleased -->
+
 ## Unreleased
 
+<!-- latest_release unreleased -->
+
+<!-- latest_release -->
+
+## 2.2.4 (2020-11-19)
+
 #### Merged Pull Requests
+
 - Adds support for Supervisor toml config [#254](https://github.com/chef-cookbooks/habitat/pull/254) ([collinmcneese](https://github.com/collinmcneese))
 - Cookstyle Bot Auto Corrections with Cookstyle 6.18.8 [#253](https://github.com/chef-cookbooks/habitat/pull/253) ([cookstyle[bot]](https://github.com/cookstyle[bot]))
 - Automated PR: Standardising Files [#252](https://github.com/chef-cookbooks/habitat/pull/252) ([xorimabot](https://github.com/xorimabot))
 - Fixed hab_service flapping on bldr_url and update_condition [#251](https://github.com/chef-cookbooks/habitat/pull/251) ([mattray](https://github.com/mattray))
 - It&#39;s `event_stream_cert` in the code [#249](https://github.com/chef-cookbooks/habitat/pull/249) ([mattray](https://github.com/mattray))
 - Automated PR: Standardising Files [#248](https://github.com/chef-cookbooks/habitat/pull/248) ([xorimabot](https://github.com/xorimabot))
-<!-- latest_release -->
-
 
 ## 2.2.3 (2020-06-25)
 
 #### Merged Pull Requests
+
 - correcting some documentation and fixing tagging [#247](https://github.com/chef-cookbooks/habitat/pull/247) ([sam1el](https://github.com/sam1el))
 
 ## 2.2.2 (2020-06-18)
 
 #### Merged Pull Requests
+
 - updates custom resources to add resource_name [#246](https://github.com/chef-cookbooks/habitat/pull/246) ([collinmcneese](https://github.com/collinmcneese))
 - Automated PR: Standardising Files [#244](https://github.com/chef-cookbooks/habitat/pull/244) ([xorimabot](https://github.com/xorimabot))
 - Automated PR: Cookstyle Changes [#243](https://github.com/chef-cookbooks/habitat/pull/243) ([xorimabot](https://github.com/xorimabot))
@@ -33,12 +39,12 @@ This file is used to list changes made in each version of the habitat cookbook.
 - Had idempotance issues with the install resource. Those are now corrected
 
 #### Merged Pull Requests
+
 - Automated PR: Standardising Files [#242](https://github.com/chef-cookbooks/habitat/pull/242) ([xorimabot](https://github.com/xorimabot))
 - updating how we handle the bldr_url to accommodate on-prem installed with Automate [#241](https://github.com/chef-cookbooks/habitat/pull/241) ([danielcbright](https://github.com/danielcbright))
 - fixes hab_install guard for resource_hab_sup [#239](https://github.com/chef-cookbooks/habitat/pull/239) ([collinmcneese](https://github.com/collinmcneese))
 - correcting all syntax issue [#238](https://github.com/chef-cookbooks/habitat/pull/238) ([sam1el](https://github.com/sam1el))
 - Automated PR: Cookstyle Changes [#237](https://github.com/chef-cookbooks/habitat/pull/237) ([xorimabot](https://github.com/xorimabot))
-
 
 ## 2.1.0 (2020-05-07)
 
@@ -76,7 +82,7 @@ This file is used to list changes made in each version of the habitat cookbook.
 - All current `--event-stream` functions are now available to habitat versions 1.5.86 and up for the `hab_sup` resource
 - `windows-service` Can now be configured properly with `--event-stream` as well has your `HAB_AUTH_TOKEN` `HAB_BLDR_URL` and, `HAB_AUTH_GATEWAY_TOKEN`
 
-***See README.MD for usage of all new functions**
+**\*See README.MD for usage of all new functions**
 
 #### Merged Pull Requests
 
@@ -104,15 +110,13 @@ This file is used to list changes made in each version of the habitat cookbook.
 - changing the windows service cofig to better reflect newer functional… [#223](https://github.com/chef-cookbooks/habitat/pull/223) ([sam1el](https://github.com/sam1el))
 - removing update-confition defaults and tests [#221](https://github.com/chef-cookbooks/habitat/pull/221) ([sam1el](https://github.com/sam1el))
 
-
 ## 1.6.0 (2020-04-02)
 
-#### Merged Pull Requests	- complete overhaul of the windows-service config to refplect current best practice
+#### Merged Pull Requests - complete overhaul of the windows-service config to refplect current best practice
 
 - adding --update-condition funtionality that was added in habitat 1.5.71 [#217](https://github.com/chef-cookbooks/habitat/pull/217) ([sam1el](https://github.com/sam1el))
 - added --update-condition funtionality that was added in habitat 1.5.71. See README.MD for info on usage
 - complete overhaul of the windows-service config to refplect current best practice
-
 
 ## 1.5.10 (2020-04-01)
 
@@ -157,7 +161,7 @@ This file is used to list changes made in each version of the habitat cookbook.
 
 #### Merged Pull Requests
 
-- Extending Windows chef-client compatibility  [#205](https://github.com/chef-cookbooks/habitat/pull/205) ([sam1el](https://github.com/sam1el))
+- Extending Windows chef-client compatibility [#205](https://github.com/chef-cookbooks/habitat/pull/205) ([sam1el](https://github.com/sam1el))
 
 ## 1.5.4 (2020-02-25)
 
@@ -215,7 +219,6 @@ This file is used to list changes made in each version of the habitat cookbook.
 - Cookstyle 5.10 fixes
 - Fixes to properly support loading of services using full ident
 
-
 #### Merged Pull Requests
 
 - Feature/service full ident fix [#185](https://github.com/chef-cookbooks/habitat/pull/185) ([sirajrauff](https://github.com/sirajrauff))
@@ -251,7 +254,7 @@ This file is used to list changes made in each version of the habitat cookbook.
 ## 0.81.0 (2019-05-29)
 
 - Update to hab 0.81.0
-- Implement new habitat license agreement requirements for ```hab_install``` and ```hab_sup``` resources
+- Implement new habitat license agreement requirements for `hab_install` and `hab_sup` resources
 
 #### Merged Pull Requests
 
@@ -270,7 +273,6 @@ This file is used to list changes made in each version of the habitat cookbook.
 #### Merged Pull Requests
 
 - Update to habitat 0.79.1 [#169](https://github.com/chef-cookbooks/habitat/pull/169) ([chef-ci](https://github.com/chef-ci))
-
 
 ## [0.78.0](https://github.com/chef-cookbooks/habitat/tree/0.78.0) (2019-04-02)
 
@@ -295,7 +297,6 @@ This file is used to list changes made in each version of the habitat cookbook.
 
 - Update to habitat 0.74.0
 
-
 ## 0.73.1 (2019-01-30)
 
 - remove duplicate windows query param
@@ -304,21 +305,19 @@ This file is used to list changes made in each version of the habitat cookbook.
 
 - remove duplicate windows query param [#156](https://github.com/chef-cookbooks/habitat/pull/156) ([skylerto](https://github.com/skylerto))
 
-
 ## 0.73.0 (2019-01-25)
 
-* Update Hab to 0.73.0 and launcher to 9167
-* Add binlinking support to hab_package resource
-* Support target architectures correctly in API queries
-* Improved Windows support
-
+- Update Hab to 0.73.0 and launcher to 9167
+- Add binlinking support to hab_package resource
+- Support target architectures correctly in API queries
+- Improved Windows support
 
 #### Merged Pull Requests
 
 - Update hab to 0.73.0 and launcher to 9167 [#154](https://github.com/chef-cookbooks/habitat/pull/154) ([jonlives](https://github.com/jonlives))
 - Install hab-sup from stable release [#153](https://github.com/chef-cookbooks/habitat/pull/153) ([jonlives](https://github.com/jonlives))
 - Full Windows Support For Cookbook [#143](https://github.com/chef-cookbooks/habitat/pull/143) ([wduncanfraser](https://github.com/wduncanfraser))
-- Add binlink property to hab_package resource.  Closes #138 [#139](https://github.com/chef-cookbooks/habitat/pull/139) ([qubitrenegade](https://github.com/qubitrenegade))
+- Add binlink property to hab_package resource. Closes #138 [#139](https://github.com/chef-cookbooks/habitat/pull/139) ([qubitrenegade](https://github.com/qubitrenegade))
 - fix incorrect documentation for hab_package action [#142](https://github.com/chef-cookbooks/habitat/pull/142) ([st-h](https://github.com/st-h))
 - Support targets for API query [#152](https://github.com/chef-cookbooks/habitat/pull/152) ([skylerto](https://github.com/skylerto))
 
@@ -330,19 +329,20 @@ This file is used to list changes made in each version of the habitat cookbook.
 
 ## 0.63.0 (2018-09-18)
 
-*  Update to habitat 0.63.0
+- Update to habitat 0.63.0
 
 ## 0.62.1 (2018-09-07)
 
-* Update hab version to 0.62.1 and pin supervisor version to 8380
-* Refactor cookbook resources for 0.62.1 compatibility
-* Add user_toml resource
-* Add remote supervisor support
-* Add multiple peer support
-* Add auth token support to package resource
-* Add basic support for Windows
+- Update hab version to 0.62.1 and pin supervisor version to 8380
+- Refactor cookbook resources for 0.62.1 compatibility
+- Add user_toml resource
+- Add remote supervisor support
+- Add multiple peer support
+- Add auth token support to package resource
+- Add basic support for Windows
 
 #### Merged Pull Requests
+
 - Refactor hab_service resource [#124](https://github.com/chef-cookbooks/habitat/pull/124) ([wduncanfraser](https://github.com/wduncanfraser))
 - Update to 0.62.1 and launcher 8380 [#129](https://github.com/chef-cookbooks/habitat/pull/129) ([jonlives](https://github.com/jonlives))
 - Added auth token support to package resource [#125](https://github.com/chef-cookbooks/habitat/pull/125) ([wduncanfraser](https://github.com/wduncanfraser))
@@ -381,7 +381,7 @@ This file is used to list changes made in each version of the habitat cookbook.
 
 ## 0.56.1 (2018-06-06)
 
-- Support passing TMPDIR attribute to Habitat install.sh script.  Addresses Issue #90
+- Support passing TMPDIR attribute to Habitat install.sh script. Addresses Issue #90
 - Add: bldr_url property for hab_sup
 - Fix hab_svc when using custom ip:port for supervisor
 - Include toml in the bundle
@@ -391,7 +391,7 @@ This file is used to list changes made in each version of the habitat cookbook.
 
 - Fix hab_svc when using custom ip:port for supervisor [#96](https://github.com/chef-cookbooks/habitat/pull/96) ([JonathanTron](https://github.com/JonathanTron))
 - Add: bldr_url property for hab_sup [#93](https://github.com/chef-cookbooks/habitat/pull/93) ([Atalanta](https://github.com/Atalanta))
-- Support passing TMPDIR attribute to Habitat install.sh script.  #90 [#91](https://github.com/chef-cookbooks/habitat/pull/91) ([qubitrenegade](https://github.com/qubitrenegade))
+- Support passing TMPDIR attribute to Habitat install.sh script. #90 [#91](https://github.com/chef-cookbooks/habitat/pull/91) ([qubitrenegade](https://github.com/qubitrenegade))
 - Include toml in the bundle [#100](https://github.com/chef-cookbooks/habitat/pull/100) ([jtimberman](https://github.com/jtimberman))
 
 ## 0.56.0 (2018-06-05)
