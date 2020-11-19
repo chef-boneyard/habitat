@@ -11,10 +11,6 @@ This cookbook provides resources for working with [Habitat](https://habitat.sh).
 - APIs are subject to change
 - Habitat is a rapidly changing product, and this cookbook may change rapidly as well
 
-## TODOS
-
-- [ ] Remove reliance on `toml-rb` gem.
-
 ## License Note
 
 Habitat requires acceptance of a license before any habitat commands can be run. To accept the Habitat license using this cookbook, the `license` parameter can be set to `accept` for either the `hab_install` or `hab_sup` resources as shown in the below examples:
@@ -46,7 +42,7 @@ PLEASE NOTE: Without performing one of the above license acceptance steps, all o
 
 - Habitat version: 1.6.56+ `You can also pin to older versions if desired`
 
-This cookbook used to base version number off of the latest stable Habitat release and install a specific version of Habitat based upon the cookbook version.  Current behavior is now that the cookbook will install the latest stable release of Habitat on the source Habitat Builder which is contacted by default, but allows for explicit version pinning to be set via cookbook resources.
+This cookbook used to base version number off of the latest stable Habitat release and install a specific version of Habitat based upon the cookbook version. Current behavior is now that the cookbook will install the latest stable release of Habitat on the source Habitat Builder which is contacted by default, but allows for explicit version pinning to be set via cookbook resources.
 
 ### Chef
 
@@ -72,7 +68,7 @@ Installs Habitat on the system using the [install script](https://raw.githubuser
 - `install_url`: URL to the install script, default is from the [habitat repo](https://raw.githubusercontent.com/habitat-sh/habitat/master/components/hab/install.sh)
 - `bldr_url`: Optional URL to an alternate Builder (defaults to the public Builder)
 - `create_user`: Creates the `hab` system user (defaults to `true`)
-- `tmp_dir`: Sets TMPDIR environment variable for location to place temp files.  (required if `/tmp` and `/var/tmp` are mounted `noexec`)
+- `tmp_dir`: Sets TMPDIR environment variable for location to place temp files. (required if `/tmp` and `/var/tmp` are mounted `noexec`)
 - `license`: Specifies acceptance of habitat license when set to `accept` (defaults to empty string).
 - `hab_version`: Specify the version of `Habitat` you would like to install (defaults to latest)
 
@@ -113,7 +109,7 @@ Install the specified Habitat package from builder. Requires that Habitat is ins
 - `bldr_url`: The habitat builder url where packages will be downloaded from (defaults to public habitat builder)
 - `channel`: The release channel to install from (defaults to `stable`)
 - `auth_token`: Auth token for installing a package from a private organization on builder
-- `binlink`: If habitat should attempt to binlink the package.  Acceptable values: `true`, `false`, `:force`.  Will faill on binlinking if set to `true` and binary or binlink exists.
+- `binlink`: If habitat should attempt to binlink the package. Acceptable values: `true`, `false`, `:force`. Will faill on binlinking if set to `true` and binary or binlink exists.
 - `options`: Pass any additional parameters to the habitat install command.
 - `keep_latest`: Ability to uninstall while retaining a specified version (Default is not set. `This feature only works in Habitat 1.5.86+`)
 - `no_deps`: Remove package but retain dependencies (Default is `false`)
@@ -194,7 +190,7 @@ The follow properties are valid for the `load` action.
 - `loaded`: state property indicating whether the service is loaded in the supervisor
 - `running`: state property indicating whether the service is running in the supervisor
 - `strategy`: Passes `--strategy` with the specified update strategy to the hab command. Defaults to `:none`. Other options are `:'at-once'` and `:rolling`
-- `update_condition`: Passes `--update-condition` dictating when this service should updated. Defaults to `latest`. Options are `latest` or `track-channel` ***Note: This requires a minimum habitat version of 1.5.71***
+- `update_condition`: Passes `--update-condition` dictating when this service should updated. Defaults to `latest`. Options are `latest` or `track-channel` **_Note: This requires a minimum habitat version of 1.5.71_**
   - `latest`: Runs the latest package that can be found in the configured channel and local packages.
   - `track-channel`: Always run what is at the head of a given channel. This enables service rollback where demoting a package from a channel will cause the package to rollback to an older version of the package. A ramification of enabling this condition is packages newer than the package at the head of the channel will be automatically uninstalled during a service rollback.
 - `topology`: Passes `--topology` with the specified service topology to the hab command
@@ -254,7 +250,7 @@ Runs a Habitat Supervisor for one or more Habitat Services. It is used in conjun
 The `run` action handles installing Habitat using the `hab_install` resource, ensures that the appropriate versions of the `core/hab-sup` and `core/hab-launcher` packages are installed using `hab_package`, and then drops off the appropriate init system definitions and manages the service.
 
 All `event_stream_*` properties are optional, and allow the Habitat Supervisor to display details about it's status and running services via the [Chef Automate Applications Dashboard](https://automate.chef.io/docs/applications-dashboard/).
-***Note: Automate has TLS on by default. You will need to follow these instructions to make sure habitat has the proper certificates for `event_stram_*` [Share the TLS Certificate with Chef Habitat](https://automate.chef.io/docs/applications-setup/#share-the-tls-certificate-with-chef-habitat)***
+**_Note: Automate has TLS on by default. You will need to follow these instructions to make sure habitat has the proper certificates for `event*stram*_` [Share the TLS Certificate with Chef Habitat](https://automate.chef.io/docs/applications-setup/#share-the-tls-certificate-with-chef-habitat)\***
 
 #### Actions
 
@@ -272,7 +268,7 @@ All `event_stream_*` properties are optional, and allow the Habitat Supervisor t
 - `peer`: Only valid for `:run` action, passes `--peer` with the specified initial peer to the hab command
 - `ring`: Only valid for `:run` action, passes `--ring` with the specified ring key name to the hab command
 - `auto_update`: Passes `--auto-update`. This will set the Habitat supervisor to automatically update itself any time a stable version has been released
-- `update_condition`: Passes `--update-condition` dictating when this service should updated. Defaults to `latest`. Options are `latest` or `track-channel`  ***Note: This requires a minimum habitat version of 1.5.71***
+- `update_condition`: Passes `--update-condition` dictating when this service should updated. Defaults to `latest`. Options are `latest` or `track-channel` **_Note: This requires a minimum habitat version of 1.5.71_**
   - `latest`: Runs the latest package that can be found in the configured channel and local packages.
   - `track-channel`: Always run what is at the head of a given channel. This enables service rollback where demoting a package from a channel will cause the package to rollback to an older version of the package. A ramification of enabling this condition is packages newer than the package at the head of the channel will be automatically uninstalled during a service rollback.
 - `hab_channel`: The channel to install Habitat from. Defaults to stable
@@ -288,7 +284,7 @@ All `event_stream_*` properties are optional, and allow the Habitat Supervisor t
 - `event_stream_cert`: With `Intermediary Certificates` or, Automate 2 being set to use TLS with a valid cert, you will need to provide `Habitat` with your certificate for communication with Automate to work. [Follow these steps!](https://automate.chef.io/docs/applications-setup/#share-the-tls-certificate-with-chef-habitat)
 - `sup_verstion`: Allows you to choose which version of supervisor you would like to install. Defaults to `latest`. (If a version is provided, it will also install that version of habitat if not previously installed)
 - `launcher_version`: Allows you to choose which version of launcher to install. Defaults to `latest`
-- `service_version`: Allows you to choose which version of the ***Windows Service*** to install. Defaults to `latest`
+- `service_version`: Allows you to choose which version of the **_Windows Service_** to install. Defaults to `latest`
 - `keep_latest`: Automatically cleans up old packages. If this flag is enabled, service startup will initiate an uninstall of all previous versions of the associated package. This also applies when a service is restarted due to an update. If a number is passed to this argument, that number of latest versions will be kept. The same logic applies to the Supervisor packag `env:HAB_KEEP_LATEST_PACKAGES=1` (This requires Habitat version `1.5.86+`)
 
 #### Examples
@@ -406,6 +402,7 @@ hab_user_toml 'nginx' do
   })
 end
 ```
+
 ## Maintainers
 
 This cookbook is maintained by the following maintainers:
