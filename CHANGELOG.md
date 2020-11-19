@@ -6,6 +6,7 @@ This file is used to list changes made in each version of the habitat cookbook.
 ## Unreleased
 
 #### Merged Pull Requests
+- Adds support for Supervisor toml config [#254](https://github.com/chef-cookbooks/habitat/pull/254) ([collinmcneese](https://github.com/collinmcneese))
 - Cookstyle Bot Auto Corrections with Cookstyle 6.18.8 [#253](https://github.com/chef-cookbooks/habitat/pull/253) ([cookstyle[bot]](https://github.com/cookstyle[bot]))
 - Automated PR: Standardising Files [#252](https://github.com/chef-cookbooks/habitat/pull/252) ([xorimabot](https://github.com/xorimabot))
 - Fixed hab_service flapping on bldr_url and update_condition [#251](https://github.com/chef-cookbooks/habitat/pull/251) ([mattray](https://github.com/mattray))
