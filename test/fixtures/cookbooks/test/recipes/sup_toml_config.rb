@@ -10,6 +10,7 @@ hab_sup 'tester' do
   license 'accept'
   sup_version '1.6.139'
   launcher_version '13458'
+  toml_config true
 end
 
 ruby_block 'wait-for-sup-default-startup' do
@@ -26,6 +27,7 @@ hab_sup 'test-options' do
   listen_gossip '0.0.0.0:9998'
   notifies :stop, 'hab_sup[tester]', :before
   notifies :delete, 'directory[/hab/sup]', :before
+  toml_config true
 end
 
 ruby_block 'wait-for-sup-chef-es-startup' do
@@ -43,6 +45,7 @@ hab_sup 'test-auth-token' do
   listen_gossip '0.0.0.0:10000'
   notifies :stop, 'hab_sup[test-options]', :before
   notifies :delete, 'directory[/hab/sup]', :before
+  toml_config true
 end
 
 ruby_block 'wait-for-sup-test-auth-token-startup' do
@@ -60,6 +63,7 @@ hab_sup 'test-gateway-auth-token' do
   listen_gossip '0.0.0.0:10000'
   notifies :stop, 'hab_sup[test-auth-token]', :before
   notifies :delete, 'directory[/hab/sup]', :before
+  toml_config true
 end
 
 ruby_block 'wait-for-sup-test-gateway-auth-token-startup' do
@@ -78,6 +82,7 @@ hab_sup 'test-gateway-auth-and-auth-token' do
   listen_gossip '0.0.0.0:10000'
   notifies :stop, 'hab_sup[test-gateway-auth-token]', :before
   notifies :delete, 'directory[/hab/sup]', :before
+  toml_config true
 end
 
 ruby_block 'wait-for-sup-test-gateway-auth-and-auth-token-startup' do
@@ -95,6 +100,7 @@ hab_sup 'single_peer' do
   peer '127.0.0.2'
   notifies :stop, 'hab_sup[test-gateway-auth-and-auth-token]', :before
   notifies :delete, 'directory[/hab/sup]', :before
+  toml_config true
 end
 
 ruby_block 'wait-for-sup-single_peer-startup' do
@@ -112,6 +118,7 @@ hab_sup 'health_check_interval' do
   listen_gossip '0.0.0.0:7998'
   notifies :stop, 'hab_sup[single_peer]', :before
   notifies :delete, 'directory[/hab/sup]', :before
+  toml_config true
 end
 
 ruby_block 'wait-for-sup-health_check_interval-startup' do
@@ -127,6 +134,7 @@ hab_sup 'set_file_limit' do
   limit_no_files '65536'
   notifies :stop, 'hab_sup[single_peer]', :before
   notifies :delete, 'directory[/hab/sup]', :before
+  toml_config true
 end
 
 ruby_block 'wait-for-sup-set_file_limit-startup' do
@@ -144,6 +152,7 @@ hab_sup 'multiple_peers' do
   listen_gossip '0.0.0.0:7998'
   notifies :stop, 'hab_sup[single_peer]', :before
   notifies :delete, 'directory[/hab/sup]', :before
+  toml_config true
 end
 
 ruby_block 'wait-for-sup-multiple_peers-startup' do
