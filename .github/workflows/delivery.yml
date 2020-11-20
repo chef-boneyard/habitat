@@ -1,101 +1,97 @@
 ---
-  name: ci
+name: ci
 
-  on:
-    pull_request:
-    push:
-      branches:
-        - master
+on:
+  pull_request:
+  push:
+    branches:
+      - master
 
-  jobs:
-    delivery:
-      runs-on: ubuntu-latest
-      steps:
-        - name: Check out code
-          uses: actions/checkout@master
-        - name: Run Chef Delivery
-          uses: actionshub/chef-delivery@master
-          env:
-            CHEF_LICENSE: accept-no-persist
+jobs:
+  delivery:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@master
+      - name: Run Chef Delivery
+        uses: actionshub/chef-delivery@master
+        env:
+          CHEF_LICENSE: accept-no-persist
 
-    dokken:
-      needs: [delivery]
-      runs-on: ubuntu-latest
-      strategy:
-        matrix:
-          os:
-            - 'amazonlinux'
-            - 'amazonlinux-2'
-            - 'debian-9'
-            - 'debian-10'
-            - 'centos-6'
-            - 'centos-7'
-            - 'centos-8'
-            - 'oraclelinux-6'
-            - 'oraclelinux-7'
-            # - 'oraclelinux-8'
-            - 'fedora-latest'
-            - 'ubuntu-1604'
-            - 'ubuntu-1804'
-            - 'opensuse-leap-15'
+  dokken:
+    needs: [delivery]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os:
+          - "amazonlinux"
+          - "amazonlinux-2"
+          - "debian-9"
+          - "debian-10"
+          - "centos-6"
+          - "centos-7"
+          - "centos-8"
+          - "oraclelinux-6"
+          - "oraclelinux-7"
+          # - 'oraclelinux-8'
+          - "fedora-latest"
+          - "ubuntu-1604"
+          - "ubuntu-1804"
+          - "opensuse-leap-15"
 
-          suite:
-            - 'install-for-chefspec'
-            - 'install-no-user'
-            - 'package'
-            - 'service'
-            - 'sup'
-            - 'sup-toml-config'
-            - 'config'
-            - 'user-toml'
-            - 'config-chef-13'
-        fail-fast: false
+        suite:
+          - "install-for-chefspec"
+          - "install-no-user"
+          - "package"
+          - "service"
+          - "sup"
+          - "sup-toml-config"
+          - "config"
+          - "user-toml"
+          - "config-chef-13"
+      fail-fast: false
 
-      steps:
-        - name: Check out code
-          uses: actions/checkout@master
-        - name: Install Chef
-          uses: actionshub/chef-install@master
-        - name: Dokken
-          uses: actionshub/kitchen-dokken@master
-          env:
-            CHEF_LICENSE: accept-no-persist
-            KITCHEN_LOCAL_YAML: kitchen.dokken.yml
-          with:
-            suite: ${{ matrix.suite }}
-            os: ${{ matrix.os }}
+    steps:
+      - name: Check out code
+        uses: actions/checkout@master
+      - name: Install Chef
+        uses: actionshub/chef-install@master
+      - name: Dokken
+        uses: actionshub/kitchen-dokken@master
+        env:
+          CHEF_LICENSE: accept-no-persist
+          KITCHEN_LOCAL_YAML: kitchen.dokken.yml
+        with:
+          suite: ${{ matrix.suite }}
+          os: ${{ matrix.os }}
 
-    windows:
-      needs: [delivery]
-      runs-on: windows-2019
-      strategy:
-        matrix:
-          os:
-            - 'windows-2019'
-          suite:
-            - 'win_config'
-            - 'win_package'
-            - 'win_service'
-            - 'win_sup'
-            - 'win_user_toml'
-            - 'win_sup_toml_config'
-        fail-fast: false
-      steps:
-        - name: Check out code
-          uses: actions/checkout@master
-        - name: Install Chef Workstation
-          run: . { iwr -useb https://omnitruck.chef.io/install.ps1 } | iex; install -channel stable -project chef-workstation
-          shell: powershell
-        - name: Add Chef Workstation to PATH
-          run: echo "##[add-path]C:\opscode\chef-workstation\bin\;"
-          shell: powershell
-        - name: Chef Infra Client Run
-          run: chef-solo -c test/solo.rb -o "test::${{ matrix.suite }}"
-          shell: powershell
-          env:
-            CHEF_LICENSE: accept-no-persist
-        - name: Integration Testing
-          run: inspec exec test\integration\${{ matrix.suite }}\default_spec.rb
-          shell: powershell
-          env:
-            CHEF_LICENSE: accept-no-persist
+  # windows:
+  #   needs: [delivery]
+  #   runs-on: windows-2019
+  #   strategy:
+  #     matrix:
+  #       os:
+  #         - "windows-2019"
+  #       suite:
+  #         - "win_config"
+  #         - "win_package"
+  #         - "win_service"
+  #         - "win_sup"
+  #         - "win_user_toml"
+  #         - "win_sup_toml_config"
+  #     fail-fast: false
+  #   steps:
+  #     - name: Check out code
+  #       uses: actions/checkout@master
+  #     - name: Install Chef Workstation
+  #       run: . { iwr -useb https://omnitruck.chef.io/install.ps1 } | iex; install -channel stable -project chef-workstation
+  #       shell: powershell
+  #     - name: Add Chef Workstation to PATH
+  #       run: echo "##[add-path]C:\opscode\chef-workstation\bin\;"
+  #       shell: powershell
+  #     - name: Chef Infra Client Run
+  #       run: chef-solo -c test/solo.rb -o "test::${{ matrix.suite }}"
+  #       shell: powershell
+  #     - name: Integration Testing
+  #       run: inspec exec test\integration\${{ matrix.suite }}\default_spec.rb
+  #       shell: powershell

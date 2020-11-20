@@ -71,7 +71,6 @@ class Chef
                     auth_token: new_resource.auth_token,
                     gateway_auth_token: new_resource.gateway_auth_token
           # win_launcher: win_version
-          action :touch
         end
 
         service 'Habitat' do
