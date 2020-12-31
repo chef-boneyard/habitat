@@ -72,7 +72,7 @@ class Chef
           version new_resource.launcher_version if new_resource.launcher_version
         end
 
-        if node['platform_family'] == 'windows'
+        if platform_family?('windows')
           directory 'C:/hab/sup/default/config' do
             recursive true
             only_if { ::Dir.exist?('C:/hab') }
