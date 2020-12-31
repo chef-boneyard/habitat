@@ -63,4 +63,3 @@ describe file('/hab/sup/default/config/sup.toml') do
   it { should exist }
   its('content') { should match(/peer.*127.0.0.2:9632.*127.0.0.3:9632/) }
 end
-
