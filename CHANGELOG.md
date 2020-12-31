@@ -4,12 +4,17 @@ This file is used to list changes made in each version of the habitat cookbook.
 
 ## Unreleased
 
-<!-- latest_release 2.2.4 -->
+<!-- latest_release unreleased -->
+## Unreleased
+
+#### Merged Pull Requests
+- Cookstyle Bot Auto Corrections with Cookstyle 7.5.2 [#257](https://github.com/chef-cookbooks/habitat/pull/257) ([cookstyle[bot]](https://github.com/cookstyle[bot]))
+<!-- latest_release -->
+
 ## [2.2.4](https://github.com/chef-cookbooks/habitat/tree/2.2.4) (2020-11-19)
 
 #### Merged Pull Requests
 - Changelog [#255](https://github.com/chef-cookbooks/habitat/pull/255) ([sam1el](https://github.com/sam1el))
-<!-- latest_release -->
 
 
 
