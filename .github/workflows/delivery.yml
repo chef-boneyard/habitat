@@ -87,7 +87,7 @@
           run: . { iwr -useb https://omnitruck.chef.io/install.ps1 } | iex; install -channel stable -project chef-workstation
           shell: powershell
         - name: Add Chef Workstation to PATH
-          run: echo "##[add-path]C:\opscode\chef-workstation\bin\;"
+          run: $env:PATH = "C:\opscode\chef-workstation\bin\;" + $env:PATH
           shell: powershell
         - name: Chef Infra Client Run
           run: chef-solo -c test/solo.rb -o "test::${{ matrix.suite }}"
