@@ -50,6 +50,7 @@ platforms:
   driver:
     image: dokken/centos-6
     pid_one_command: /sbin/init
+    chef_version: 16.7 # patch for chef/chef:latest not working with el6
 
 - name: centos-7
   driver:
@@ -65,6 +66,7 @@ platforms:
   driver:
     image: dokken/oraclelinux-6
     pid_one_command: /sbin/init
+    chef_version: 16.7 # patch for chef/chef:latest not working with el6
 
 - name: oraclelinux-7
   driver:
