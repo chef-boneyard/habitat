@@ -8,6 +8,7 @@ This file is used to list changes made in each version of the habitat cookbook.
 ## Unreleased
 
 #### Merged Pull Requests
+- pipeline testing updates [#259](https://github.com/chef-cookbooks/habitat/pull/259) ([collinmcneese](https://github.com/collinmcneese))
 - Cookstyle Bot Auto Corrections with Cookstyle 7.5.2 [#257](https://github.com/chef-cookbooks/habitat/pull/257) ([cookstyle[bot]](https://github.com/cookstyle[bot]))
 <!-- latest_release -->
 
