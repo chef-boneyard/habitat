@@ -6,15 +6,16 @@
     push:
       branches:
         - master
+        - main
 
   jobs:
     delivery:
       runs-on: ubuntu-latest
       steps:
         - name: Check out code
-          uses: actions/checkout@master
+          uses: actions/checkout@main
         - name: Run Chef Delivery
-          uses: actionshub/chef-delivery@master
+          uses: actionshub/chef-delivery@main
           env:
             CHEF_LICENSE: accept-no-persist
 
@@ -53,11 +54,11 @@
 
       steps:
         - name: Check out code
-          uses: actions/checkout@master
+          uses: actions/checkout@main
         - name: Install Chef
-          uses: actionshub/chef-install@master
+          uses: actionshub/chef-install@main
         - name: Dokken
-          uses: actionshub/kitchen-dokken@master
+          uses: actionshub/kitchen-dokken@main
           env:
             CHEF_LICENSE: accept-no-persist
             KITCHEN_LOCAL_YAML: kitchen.dokken.yml
@@ -82,20 +83,26 @@
         fail-fast: false
       steps:
         - name: Check out code
-          uses: actions/checkout@master
+          uses: actions/checkout@main
         - name: Install Chef Workstation
           run: . { iwr -useb https://omnitruck.chef.io/install.ps1 } | iex; install -channel stable -project chef-workstation
           shell: powershell
         - name: Add Chef Workstation to PATH
-          run: echo "##[add-path]C:\opscode\chef-workstation\bin\;"
+          run: |
+            if ( $env:PATH -like "*chef-workstation*" ) {
+              write-output 'Path already set, no action to perform'
+            } else {
+              write-output 'Adding c:\opscode\chef-workstation\bin to path.'
+              echo "c:\opscode\chef-workstation\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+            }
           shell: powershell
         - name: Chef Infra Client Run
-          run: chef-solo -c test/solo.rb -o "test::${{ matrix.suite }}"
+          run: C:\opscode\chef-workstation\bin\chef-solo -c test/solo.rb -o "test::${{ matrix.suite }}"
           shell: powershell
           env:
             CHEF_LICENSE: accept-no-persist
         - name: Integration Testing
-          run: inspec exec test\integration\${{ matrix.suite }}\default_spec.rb
+          run: C:\opscode\chef-workstation\bin\inspec exec test\integration\${{ matrix.suite }}\default_spec.rb
           shell: powershell
           env:
             CHEF_LICENSE: accept-no-persist
