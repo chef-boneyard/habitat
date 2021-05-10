@@ -2,6 +2,13 @@
 
 This file is used to list changes made in each version of the habitat cookbook.
 
+## Unreleased ## Unreleased
+
+- resolved cookstyle error: resources/config.rb:1:1 refactor: `Chef/Deprecations/ResourceWithoutUnifiedTrue`
+- resolved cookstyle error: resources/install.rb:1:1 refactor: `Chef/Deprecations/ResourceWithoutUnifiedTrue`
+- resolved cookstyle error: resources/service.rb:1:1 refactor: `Chef/Deprecations/ResourceWithoutUnifiedTrue`
+- resolved cookstyle error: resources/user_toml.rb:1:1 refactor: `Chef/Deprecations/ResourceWithoutUnifiedTrue`
+
 ## Unreleased
 
 <!-- latest_release unreleased -->
