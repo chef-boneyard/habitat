@@ -16,6 +16,7 @@
 
 resource_name :hab_service
 provides :hab_service
+unified_mode true
 
 property :service_name, String, name_property: true
 property :loaded, [true, false], default: false

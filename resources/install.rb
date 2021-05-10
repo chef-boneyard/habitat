@@ -21,6 +21,7 @@ require 'chef/http/simple'
 
 resource_name :hab_install
 provides :hab_install
+unified_mode true
 
 property :name, String, default: ''
 # The following are only used on *nix
