@@ -18,6 +18,7 @@ require 'json'
 
 resource_name :hab_config
 provides :hab_config
+unified_mode true
 
 property :config, Mash,
          required: true,
