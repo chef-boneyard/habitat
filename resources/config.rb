@@ -19,6 +19,8 @@ require 'json'
 resource_name :hab_config
 provides :hab_config
 
+unified_mode true if respond_to?(:unified_mode)
+
 property :config, Mash,
          required: true,
          coerce: proc { |m| m.is_a?(Hash) ? Mash.new(m) : m }

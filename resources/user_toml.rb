@@ -14,6 +14,8 @@
 resource_name :hab_user_toml
 provides :hab_user_toml
 
+unified_mode true if respond_to?(:unified_mode)
+
 property :config, Mash,
          required: true,
          coerce: proc { |m| m.is_a?(Hash) ? Mash.new(m) : m }

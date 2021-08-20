@@ -22,6 +22,8 @@ require 'chef/http/simple'
 resource_name :hab_install
 provides :hab_install
 
+unified_mode true if respond_to?(:unified_mode)
+
 property :name, String, default: ''
 # The following are only used on *nix
 property :install_url, String, default: 'https://raw.githubusercontent.com/habitat-sh/habitat/master/components/hab/install.sh'
