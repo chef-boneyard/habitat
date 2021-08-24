@@ -4,6 +4,16 @@
 [![CI State](https://github.com/chef-cookbooks/habitat/workflows/delivery/badge.svg)](https://github.com/chef-cookbooks/habitat/actions?query=workflow%3Adelivery)
 [![License](https://img.shields.io/badge/License-Apache%202.0-green.svg)](https://opensource.org/licenses/Apache-2.0)
 
+## EOL Notice
+
+This cookbook is no longer required for configuring or managing Habitat configuration details with Chef Infra. The necessary resources and helpers are now built into Chef Infra Client itself as of Chef Infra Client `17.3`
+
+- [habitat_config](https://docs.chef.io/resources/habitat_config/)
+- [habitat_install](https://docs.chef.io/resources/habitat_install/)
+- [habitat_package](https://docs.chef.io/resources/habitat_package/)
+- [habitat_service](https://docs.chef.io/resources/habitat_service/)
+- [habitat_sup](https://docs.chef.io/resources/habitat_sup/)
+
 ## Description
 
 This cookbook provides resources for working with [Habitat](https://habitat.sh). It is intended that these resources will be included in core Chef at some point in the future, so it is important to note:
