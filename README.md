@@ -4,6 +4,10 @@
 [![CI State](https://github.com/chef-cookbooks/habitat/workflows/delivery/badge.svg)](https://github.com/chef-cookbooks/habitat/actions?query=workflow%3Adelivery)
 [![License](https://img.shields.io/badge/License-Apache%202.0-green.svg)](https://opensource.org/licenses/Apache-2.0)
 
+## Deprecation
+
+Great news: The habitat resources from this cookbook are now included directly in Chef Infra Client 17.3 or later. Due to this we will no longer be making enhancements to this cookbook. If you have any feature requests or would like to open a PR with improvements please direct them to https://github.com/chef/chef
+
 ## Description
 
 This cookbook provides resources for working with [Habitat](https://habitat.sh). It is intended that these resources will be included in core Chef at some point in the future, so it is important to note:
