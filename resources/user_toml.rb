@@ -13,6 +13,7 @@
 # See the License for the specific language governing
 resource_name :hab_user_toml
 provides :hab_user_toml
+unified_mode true
 
 property :config, Mash,
          required: true,
